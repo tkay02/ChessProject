@@ -13,7 +13,7 @@ public class Name {
 	private String team;
 	
 	/** Constructor for the name object */
-	public Name {
+	public Name() {
 		
 		this.name = "CS364 Project";
 		this.team = "A Team";
