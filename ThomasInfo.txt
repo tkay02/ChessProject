@@ -1,4 +1,0 @@
-Name: Thomas Kay
-Team Color: Red
-Team Name: The A Team
-Email: takay1@catamount.wcu.edu
