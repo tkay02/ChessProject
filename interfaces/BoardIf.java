@@ -45,7 +45,7 @@ interface BoardIf {
 	 * 
 	 * @return The chess piece on the specific rank and file.
 	 */
-	PieceIF getPiece(Rank r, File f);
+	PieceIf getPiece(Rank r, File f);
 	/**
 	 * Retrieves the piece based on the specific column and row.
 	 * 
@@ -54,7 +54,7 @@ interface BoardIf {
 	 * 
 	 * @return The chess piece on the specific column and row.
 	 */
-	PieceIF getPiece(int col, char row);
+	PieceIf getPiece(int col, char row);
 	
 	
 }
