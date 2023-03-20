@@ -1,6 +1,13 @@
 package enums;
 
-public enum Files {
+/**
+ * @author Joseph Oladeji
+ * @author Thomas Kay
+ * @author Levi Sweat
+ * @author Nolan Flinchum
+ * @version
+ */
+public enum File {
     A("A", 0),  B("B", 1),  
     C("C", 2),  D("D", 3),  
     E("E", 4),  F("F", 5), 
@@ -9,19 +16,36 @@ public enum Files {
     private String realFile;
     private int arrayFile;
 
-    private Files(String realFile, int arrayFile){
+    /**
+     * 
+     * @param
+     * @param
+     */
+    private File(String realFile, int arrayFile){
         this.realFile = realFile;
         this.arrayFile = arrayFile;
     }
 
+    /**
+     * 
+     * @return
+     */
     public String getRealFile(){
         return realFile;
     }
 
-    public int arrayFile(){
+    /**
+     * 
+     * @return
+     */
+    public int getArrayFile(){
         return arrayFile;
     }
 
+    /**
+     * 
+     * @return
+     */
     public String toString(){
         return "";
     }
