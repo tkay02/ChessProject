@@ -1,6 +1,6 @@
 package interfaces;
 
-interface BoardIf {
+interface BoardIF {
 	
 	 
 	/**
@@ -20,7 +20,7 @@ interface BoardIf {
 	 * 
 	 * @return A matrix of the squares on the board. 
 	 */
-	SquareIf[][] getSquares();
+	SquareIF[][] getSquares();
 	/**
 	 * @param BoardStratergy d.
 	 */
@@ -45,7 +45,7 @@ interface BoardIf {
 	 * 
 	 * @return The chess piece on the specific rank and file.
 	 */
-	PieceIf getPiece(Rank r, File f);
+	PieceIF getPiece(Rank r, File f);
 	/**
 	 * Retrieves the piece based on the specific column and row.
 	 * 
@@ -54,7 +54,7 @@ interface BoardIf {
 	 * 
 	 * @return The chess piece on the specific column and row.
 	 */
-	PieceIf getPiece(int col, char row);
+	PieceIF getPiece(int col, char row);
 	
 	
 }
