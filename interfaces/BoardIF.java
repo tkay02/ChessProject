@@ -1,42 +1,54 @@
 package interfaces;
+import enums.Rank;
+import enums.File;
 
+/**
+ * @author Thomas Kay
+ * @author Joseph Oladeji
+ * @author Nolan Flinchum
+ * @author Levi Sweat
+ * @version 3/21/2023
+ *
+ * Interface for the chess board.
+ */
 interface BoardIF {
 	
-	 
 	/**
 	 * Initiates the chess board.
 	 */
-	void init_board();
+	public void init_board();
 	/**
 	 * Sets up the pieces on the chess board.
 	 */
-	void setup();
+	public void setup();
 	/**
-	 * 
+	 * Draws the chess board in unique color scheme such as mono.
 	 */
-	void draw();
+	public void draw();
 	/**
 	 * Retrieves the collection of squares on the board.
 	 * 
 	 * @return A matrix of the squares on the board. 
 	 */
-	SquareIF[][] getSquares();
+	public SquareIF[][] getSquares();
 	/**
-	 * @param BoardStratergy d.
+	 * Sets/changes the way that the chess board is drawn.
+	 * 
+	 * @param BoardStrategy d The new board strategy in which the chess board is drawn.
 	 */
-	void setDrawStrategy(BoardStrategy d);
+	public void setDrawStrategy(BoardStrategy d);
 	/**
 	 * Returns the width of the board.
 	 * 
 	 * @return The width of the board.
 	 */ 
-	int getWidth();
+	public int getWidth();
 	/**
 	 * Returns the height of the board.
 	 * 
 	 * @return The height of the board.
 	 */ 
-	int getHeight();
+	public int getHeight();
 	/**
 	 * Retrieves the piece based on the specific rank and file.
 	 * 
@@ -45,7 +57,7 @@ interface BoardIF {
 	 * 
 	 * @return The chess piece on the specific rank and file.
 	 */
-	PieceIF getPiece(Rank r, File f);
+	public PieceIF getPiece(Rank r, File f);
 	/**
 	 * Retrieves the piece based on the specific column and row.
 	 * 
@@ -54,7 +66,7 @@ interface BoardIF {
 	 * 
 	 * @return The chess piece on the specific column and row.
 	 */
-	PieceIF getPiece(int col, char row);
+	public PieceIF getPiece(int col, char row);
 	
 	
 }
