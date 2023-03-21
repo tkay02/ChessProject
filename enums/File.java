@@ -1,6 +1,7 @@
 package enums;
 
 /**
+ * This class models 
  * @author Joseph Oladeji
  * @author Thomas Kay
  * @author Levi Sweat
@@ -13,13 +14,15 @@ public enum File {
     E("E", 4),  F("F", 5), 
     G("G", 6),  H("H", 7);
 
-    private String realFile;
-    private int arrayFile;
+    private String realFile; /** This represents the actual File (column) that 
+    will be displayed of the board */
+    private int arrayFile; /** This represents the array index (column) of the board */
 
+   
     /**
-     * 
-     * @param
-     * @param
+     * This method
+     * @param realFile
+     * @param arrayFile
      */
     private File(String realFile, int arrayFile){
         this.realFile = realFile;
