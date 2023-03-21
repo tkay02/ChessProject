@@ -24,7 +24,7 @@ interface BoardIF {
 	/**
 	 * @param BoardStratergy d.
 	 */
-	void setDrawStratergy(BoardStratergy d);
+	void setDrawStrategy(BoardStrategy d);
 	/**
 	 * Returns the width of the board.
 	 * 
