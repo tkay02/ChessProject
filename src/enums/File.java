@@ -1,4 +1,4 @@
-package enums;
+package src.enums;
 
 /**
  * @author Joseph Oladeji

@@ -1,16 +1,19 @@
-package enums;
-
+package src.enums;
 /**
+ * DESCRIPTION
+ * 
  * @author Joseph Oladeji
  * @author Thomas Kay
  * @author Levi Sweat
  * @author Nolan Flinchum
  * @version
  */
+
 public enum ChessPieceType {
 
     KING("K", "King"), QUEEN("Q", "Queen"), ROOK("R", "Rook"),
-    BISHOP("B", "Bishop"), KNIGHT("K", "Knight"), PAWN("P", "PAWN");
+    BISHOP("B", "Bishop"), KNIGHT("K", "Knight"), PAWN("P", "PAWN"),
+    EMPTY("E", "Empty");
 
     private String chessPieceLetter;
     private String chessPieceWord;
