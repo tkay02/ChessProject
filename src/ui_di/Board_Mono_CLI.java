@@ -20,26 +20,25 @@ public class Board_Mono_CLI implements BoardStrategy{
 		//[0][0] -> a8 -> black
 		//
 		String toDisplay = "";
-	for(int i = 0; i < board.getWidth(); i++){
-		for(int j = 0; j < board.getHeight(); j++){
-			if(j % 2 == 0){
-				if(i % 2 == 0){
-					if(board.getPiece(i, j) == PieceIF.empty) toDisplay += ": :";
-					else toDisplay += ":" + board.getPiece(i, j) + ":";
-				}				
-				else{
-					toDisplay += "[ ]";
-				}
-			}
-			else{
-				if(i % 2 == 0){
-					toDisplay += "[ ]";
+		boolean flip = false;
+		String square = "";
+		String pieceLetter = "";
+		Piece piece;
+		for(int i = 0; i < board.getWidth(); i++){
+			for(int j = 0; j < board.getHeight(); j++){
+				piece = (Piece)board.getPiece(i, j);
+				if(piece.equals("empty")) toDisplay += flip ? ": :" : "[ ]";
+				else if(piece.getColor().equals("white")){
+					toDisplay += ":" + piece.getChessPieceType().getChessPieceLetter() + ":";
 				}
 				else{
-					toDisplay += ": :";
+					toDisplay += "[" + piece.getChessPieceType().getChessPieceLetter().toLowerCase() + "]";
 				}
+				flip = !flip;
 			}
+			flip = !flip;
+			toDisplay += "\n";
 		}
-	}
+		System.out.println(toDisplay);
 	}
 }
