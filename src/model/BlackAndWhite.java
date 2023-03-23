@@ -1,4 +1,4 @@
-package model;
+package src.model;
 /**
  * Class that represnts the color black and white.
  * Acts as a superclass for squares and pieces in chess.
@@ -6,8 +6,8 @@ package model;
  * @author A-Team
  * @version 3/20/23
  */
-import interfaces.BlackAndWhiteIF;
-import enums.GameColor;
+import src.interfaces.BlackAndWhiteIF;
+import src.enums.GameColor;
 
 public class BlackAndWhite implements BlackAndWhiteIF {
     

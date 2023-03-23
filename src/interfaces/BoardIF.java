@@ -1,6 +1,6 @@
-package interfaces;
-import enums.Rank;
-import enums.File;
+package src.interfaces;
+import src.enums.Rank;
+import src.enums.File;
 
 /**
  * @author Thomas Kay
@@ -11,7 +11,7 @@ import enums.File;
  *
  * Interface for the chess board.
  */
-interface BoardIF {
+public interface BoardIF {
 	
 	/**
 	 * Initiates the chess board.

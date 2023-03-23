@@ -1,29 +1,41 @@
-package model;
-
-import enums.ChessPieceType;
-import enums.GameColor;
-import interfaces.PieceIF;
-import interfaces.SquareIF;
-import interfaces.BoardIF;
-
+package src.model;
 /**
- * Class that represents a board for chess.
+ * Class to represent the board to play chess on.
  * 
  * @author A-Team
- * @version 3/20/23
+ * @version 3/23/23
  */
+import src.enums.ChessPieceType;
+import src.enums.GameColor;
+import src.enums.File;
+import src.enums.Rank;
+import src.interfaces.PieceIF;
+import src.interfaces.SquareIF;
+import src.interfaces.BoardIF;
+import src.interfaces.BoardStrategy;
 
 public class Board implements BoardIF {
     
+    /* Represents the chess board */
     private SquareIF[][] chessBoard;
+
+    /* The strategy for drawing the board */
     private BoardStrategy drawStrategy;
+
+    /* Width of the board */
     private int width;
+
+    /* Height of the board */
     private int height;
 
+    /**
+     * Constructor for the chess board.
+     */
     public Board(){
         this.width = 8;
         this.height = 8;
         init_board();
+        setup();
     }
 
     /**
@@ -126,7 +138,7 @@ public class Board implements BoardIF {
      * Will call the drawStrategy's draw method to draw the board based on the strategy.
      */
     public void draw(){
-        this.drawStrategy.draw();
+        this.drawStrategy.draw(/* Some BoardIF thing? */);
     }
 
     /**
@@ -134,7 +146,7 @@ public class Board implements BoardIF {
      * 
      * @return the squares that make up the chess board.
      */
-    public SquareIf[][] getSquares(){
+    public SquareIF[][] getSquares(){
         return this.chessBoard;
     }
 
@@ -172,7 +184,7 @@ public class Board implements BoardIF {
      * @param file file of the square we want to get the piece of
      * @return the piece at the provided location
      */
-    public PieceIf getPiece(Rank rank, File file){
+    public PieceIF getPiece(Rank rank, File file){
         //not sure how to do this right now
     }
 
@@ -181,11 +193,12 @@ public class Board implements BoardIF {
      * of the 2D array of squares.
      * 
      * @param col number that represents the column of the 2D square array
-     * @param row number that represents the row of the 2D square array
+     * @param row character that represents the row of the 2D square array
      * @return the piece at the provided location
      */
-    public PieceIf getPiece(int col, int row){
-        return chessBoard[col][row].getPiece();
+    public PieceIF getPiece(int col, char row){
+        //okay idk how to do this either
+        //???? why is row a character ????
     }
 
 }

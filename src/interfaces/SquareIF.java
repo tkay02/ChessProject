@@ -1,4 +1,4 @@
-package interfaces;
+package src.interfaces;
 
 /**
  * @author Thomas Kay

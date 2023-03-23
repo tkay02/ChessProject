@@ -1,9 +1,12 @@
-package model;
+package src.model;
 /**
- * akdhfblkqwjdflqkw
+ * A class that uses ranks and files to represent a position on a chess board.
+ * 
+ * @author A-Team
+ * @version 3/23/23
  */
-import enums.File;
-import enums.Rank;
+import src.enums.File;
+import src.enums.Rank;
 
 public class Position {
     

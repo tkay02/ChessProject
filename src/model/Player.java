@@ -1,20 +1,35 @@
-package model;
+package src.model;
 /**
  * Class that represents a player object.
  * 
  * @author A-Team
- * @version 3/20/23
+ * @version 3/23/23
  */
 
 public class Player {
     
+    /* User's first name */
     private String first;
+
+    /* User's last name */
     private String last;
+    
+    /* User's email */
     private String email;
+    
+    /* User's username */
     private String userID;
+    
+    /* User's password */
     private String password;
+    
+    /* User's number of wins */
     private int wins;
+    
+    /* User's number of losses */
     private int losses;
+    
+    /* User's number of draws */
     private int draws;
 
     /**

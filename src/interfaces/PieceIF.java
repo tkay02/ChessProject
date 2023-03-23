@@ -1,5 +1,5 @@
-package interfaces;
-import enums.ChessPieceType;
+package src.interfaces;
+import src.enums.ChessPieceType;
 
 /**
  * @author Thomas Kay

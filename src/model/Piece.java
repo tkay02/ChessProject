@@ -1,14 +1,13 @@
-package model;
-import interfaces.PieceIF;
+package src.model;
 /**
  * Class that represents a piece object for ChessMeister.
  * 
  * @author A-Team
- * @version 3/20/23
+ * @version 3/23/23
  */
-import interfaces.PieceIF;
-import enums.ChessPieceType;
-import enums.GameColor;
+import src.interfaces.PieceIF;
+import src.enums.ChessPieceType;
+import src.enums.GameColor;
 
 public class Piece extends BlackAndWhite implements PieceIF {
 

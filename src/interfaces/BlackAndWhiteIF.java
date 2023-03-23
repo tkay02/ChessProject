@@ -1,5 +1,5 @@
-package interfaces;
-import enums.GameColor;
+package src.interfaces;
+import src.enums.GameColor;
 
 /**
  * @author Thomas Kay
