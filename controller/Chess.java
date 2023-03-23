@@ -1,4 +1,7 @@
 package controller;
+import interfaces.BoardIF;
+import enums.*;
+import model.Board;
 
 public class Chess {
 
@@ -6,14 +9,15 @@ public class Chess {
 	 * Constructor for game of Chess.
 	 */
 	public Chess() {
-		
+		this.newGame();
 	}
 	
 	/**
 	 * First steps when setting up a new game of Chess
 	 */
 	public void newGame() {
-		
+		Board board = new Board();
+		board.setup(); //create and setup pieces on board
 	}
 	
 	/**
@@ -50,6 +54,14 @@ public class Chess {
 	 */
 	public void move(File fromF, Rank fromR, File toF, Rank toR) {
 		
+	}
+
+	public void startGame(){
+		System.out.println("Let the game begin!\n");
+	}
+
+	public void printBoard(){
+
 	}
 
 }
