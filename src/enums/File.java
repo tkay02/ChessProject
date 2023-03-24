@@ -60,10 +60,7 @@ public enum File {
      * @return
      */
     public File getFileByIndex(int index) {
-        File file = null;
-        for (File oneFile : File.values())
-            file = index == oneFile.getArrayFile() ? oneFile : null;
-        return file;
+        return File.values()[index];
     }
 
     /**

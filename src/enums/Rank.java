@@ -23,10 +23,7 @@ public enum Rank {
     }
 
     public Rank getRankByIndex(int index){
-        Rank rank = null;
-        for(Rank oneRank : Rank.values())
-            rank = index == oneRank.getArrayRank() ? oneRank : null;
-        return rank;
+        return Rank.values()[index];
     }
 
     public String toString(){
