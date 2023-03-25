@@ -1,12 +1,16 @@
 package src.controller;
 
-import src.interfaces.*;
-import src.enums.*;
+import src.enums.File;
+import src.enums.Rank;
+import src.interfaces.BoardIF;
+import src.model.Position;
 import src.model.Board;
+
 
 public class Chess {
 
-	Board board;
+	BoardIF board;
+
 	/**
 	 * Constructor for game of Chess.
 	 */
@@ -54,7 +58,11 @@ public class Chess {
 	 * @param toR Rank of where piece is being moved to
 	 */
 	public void move(File fromF, Rank fromR, File toF, Rank toR) {
-		
+		Position fromPos = new Position(fromR, fromF);
+		Position toPos = new Position(toR, toF);
+		PieceIF piece = chessBoard.getPiece(fromR, fromF);
+
+
 	}
 
 	public void startGame(){
