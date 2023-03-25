@@ -13,6 +13,7 @@ import src.interfaces.PieceIF;
 import src.interfaces.SquareIF;
 import src.interfaces.BoardIF;
 import src.interfaces.BoardStrategy;
+import src.interfaces.MovementStrategy;
 
 public class Board implements BoardIF {
     
@@ -32,9 +33,9 @@ public class Board implements BoardIF {
      * Constructor for the chess board.
      */
     public Board(){
-        chessBoard = new Square[8][8];
         this.width = 8;
         this.height = 8;
+        chessBoard = new Square[height][width];
         init_board();
         setup();
     }
@@ -44,19 +45,13 @@ public class Board implements BoardIF {
      */
     public void init_board(){
         boolean flip = true;
-        for(int i = 0; i < this.width; i++){
-            for(int j = 0; j < this.height; j++){
-                if(flip){
-                    Square whiteSquare = new Square(i, j, GameColor.WHITE);
-                    whiteSquare.setWhite(true);
-                    chessBoard[i][j] = whiteSquare;
-                }
-                else{
-                    Square blackSquare = new Square(i, j, GameColor.BLACK);
-                    blackSquare.setBlack(true);
-                    chessBoard[i][j] = blackSquare;
-                }
-                chessBoard[i][j].setPiece(new Piece(ChessPieceType.EMPTY, GameColor.WHITE));
+        for(int row = 0; row < this.width; row++){
+            for(int col = 0; col < this.height; col++){
+
+                if(flip) setSquare(row, col, true);
+                else setSquare(row, col, false);
+                
+                chessBoard[row][col].setPiece(new Piece(ChessPieceType.EMPTY, GameColor.WHITE));
                 flip = !flip;
             }
             flip = !flip;
@@ -67,78 +62,124 @@ public class Board implements BoardIF {
      * Sets up the pieces on the chess board.
      */
     public void setup(){
-        //Pawns
+        MovementStrategy pawnMoves = new PawnMovement(this);
+
+        // Pawns
         for(int col = 0; col < 8; col++){
-            Piece blackPawn = new Piece(ChessPieceType.PAWN, GameColor.BLACK);
-            blackPawn.setBlack(true);
-            Piece whitePawn = new Piece(ChessPieceType.PAWN, GameColor.WHITE);
-            whitePawn.setWhite(true);
-            chessBoard[1][col].setPiece(blackPawn);
-            chessBoard[6][col].setPiece(whitePawn);
+
+            Piece blackPawn = new Piece(ChessPieceType.PAWN, GameColor.BLACK, pawnMoves);
+            initPiece(blackPawn, false, 1, col);
+
+            Piece whitePawn = new Piece(ChessPieceType.PAWN, GameColor.WHITE, pawnMoves);
+            initPiece(whitePawn, true, 6, col);
+
         }
 
-        //Rooks
+        // Rooks
         Piece blackRook1 = new Piece(ChessPieceType.ROOK, GameColor.BLACK);
-        blackRook1.setBlack(true);
-        chessBoard[0][0].setPiece(blackRook1);
+        initPiece(blackRook1, false, 0, 0);
+
         Piece blackRook2 = new Piece(ChessPieceType.ROOK, GameColor.BLACK);
-        blackRook2.setBlack(true);
-        chessBoard[0][7].setPiece(blackRook2);
+        initPiece(blackRook2, false, 0, 7);
 
         Piece whiteRook1 = new Piece(ChessPieceType.ROOK, GameColor.WHITE);
-        whiteRook1.setWhite(true);
-        chessBoard[7][0].setPiece(whiteRook1);
+        initPiece(whiteRook1, true, 7, 0);
+
         Piece whiteRook2 = new Piece(ChessPieceType.ROOK, GameColor.WHITE);
-        whiteRook2.setWhite(true);
-        chessBoard[7][7].setPiece(whiteRook2);
+        initPiece(whiteRook2, true, 7, 7);
 
         //Knights
         Piece blackKnight1 = new Piece(ChessPieceType.KNIGHT, GameColor.BLACK);
-        blackKnight1.setBlack(true);
-        chessBoard[0][1].setPiece(blackKnight1);
+        initPiece(blackKnight1, false, 0, 1);
+
         Piece blackKnight2 = new Piece(ChessPieceType.KNIGHT, GameColor.BLACK);
-        blackKnight2.setBlack(true);
-        chessBoard[0][6].setPiece(blackKnight2);
+        initPiece(blackKnight2, false, 0, 6);
 
         Piece whiteKnight1 = new Piece(ChessPieceType.KNIGHT, GameColor.WHITE);
-        whiteKnight1.setWhite(true);
-        chessBoard[7][1].setPiece(whiteKnight1);
-        Piece whiteKnight2 = new Piece(ChessPieceType.KNIGHT, GameColor.WHITE);
-        whiteKnight2.setWhite(true);
-        chessBoard[7][6].setPiece(whiteKnight2);
+        initPiece(whiteKnight1, true, 7, 1);
 
-        //Bishops
+        Piece whiteKnight2 = new Piece(ChessPieceType.KNIGHT, GameColor.WHITE);
+        initPiece(whiteKnight2, true, 7, 6);
+
+        // Bishops
         Piece blackBishop1 = new Piece(ChessPieceType.BISHOP, GameColor.BLACK);
-        blackBishop1.setBlack(true);
-        chessBoard[0][2].setPiece(blackBishop1);
+        initPiece(blackBishop1, false, 0, 2);
+
         Piece blackBishop2 = new Piece(ChessPieceType.BISHOP, GameColor.BLACK);
-        blackBishop2.setBlack(true);
-        chessBoard[0][5].setPiece(blackBishop2);
+        initPiece(blackBishop2, false, 0, 5);
 
         Piece whiteBishop1 = new Piece(ChessPieceType.BISHOP, GameColor.WHITE);
-        whiteBishop1.setWhite(true);
-        chessBoard[7][2].setPiece(whiteBishop1);
-        Piece whiteBishop2 = new Piece(ChessPieceType.BISHOP, GameColor.WHITE);
-        whiteBishop2.setWhite(true);
-        chessBoard[7][5].setPiece(whiteBishop2);
+        initPiece(whiteBishop1, true, 7, 2);
 
-        //Queens
+        Piece whiteBishop2 = new Piece(ChessPieceType.BISHOP, GameColor.WHITE);
+        initPiece(whiteBishop2, true, 7, 5);
+
+        // Queens
         Piece blackQueen = new Piece(ChessPieceType.QUEEN, GameColor.BLACK);
-        blackQueen.setBlack(true);
-        chessBoard[0][3].setPiece(blackQueen);
+        initPiece(blackQueen, false, 0, 3);
 
         Piece whiteQueen = new Piece(ChessPieceType.QUEEN, GameColor.WHITE);
-        whiteQueen.setWhite(true);
-        chessBoard[7][3].setPiece(whiteQueen);
-
-        //Kings
+        initPiece(whiteQueen, true, 7, 3);
+        // Kings
         Piece blackKing = new Piece(ChessPieceType.KING, GameColor.BLACK);
-        blackKing.setBlack(true);
-        chessBoard[0][4].setPiece(blackKing);
+        initPiece(blackKing, false, 0, 4);
 
         Piece whiteKing = new Piece(ChessPieceType.KING, GameColor.WHITE);
-        whiteKing.setWhite(true);
-        chessBoard[7][4].setPiece(whiteKing);
+        initPiece(whiteKing, true, 7, 4);
+    }
+
+
+    /**
+     * This method will take a piece, and set it's color depending on the
+     * boolean value passed set its position coordinates for where it'll be placed. 
+     * @param piece - Piece that will be initialized.
+     * @param whiteOrBlack - Boolean value for the piece whether it is black or white.
+     * @param row - Integer value representing the row where the piece will be placed.
+     * @param col - Integer value representing the column where the piece will be placed.
+     */ 
+    private void initPiece(Piece piece, boolean whiteOrBlack, int row, int col){
+        if (whiteOrBlack) piece.setWhite(whiteOrBlack);
+        else piece.setBlack(whiteOrBlack);
+        setBoardPos(piece, row, col);
+    }
+
+    /**
+     * This method takes a piece and sets it's position to the desired
+     * row and column within the board.
+     * @param piece - Piece that will be set at a specified location.
+     * @param row - Integer value representing the row where the piece will be placed.
+     * @param col - Integer value representing the column where the piece will be placed.
+     */
+    private void setBoardPos(Piece piece, int row, int col){
+        chessBoard[row][col].setPiece(piece);
+    }
+
+    /**
+     * This method will go to the row and column within the chessBoard and retrieve the
+     * specified Square.
+     * @param row - Integer value representing the row where the piece will be retrieved from.
+     * @param row - Integer value representing the column where the piece will be retrieved from.
+     */
+    private SquareIF getSquare(int row, int col){
+        return chessBoard[row][col];
+    }
+
+    /**
+     * This method will go to the row and column within the chessBoard and set it to the
+     * specified Square.
+     * @param square - Square object that will be set to the specified location
+     * @param row - Integer value representing the row where the square will be set.
+     * @param row - Integer value representing the column where the square will be set.
+     * @param whiteOrBlack - Boolean value representing whether the square will be black or white.
+     */
+    private void setSquare(int row, int col, boolean whiteOrBlack){
+        GameColor color = whiteOrBlack ? GameColor.WHITE : GameColor.BLACK;
+        Square square = new Square(row, col, color);
+
+        if(whiteOrBlack) square.setWhite(whiteOrBlack);
+        else square.setBlack(whiteOrBlack);
+        
+        chessBoard[row][col] = square;
     }
 
     /**
@@ -192,7 +233,7 @@ public class Board implements BoardIF {
      * @return the piece at the provided location
      */
     public PieceIF getPiece(Rank rank, File file){
-        return chessBoard[rank.getArrayRank()][file.getArrayFile()].getPiece();
+        return getSquare(rank.getArrayRank(), file.getArrayFile()).getPiece();
     }
 
     /**
@@ -204,7 +245,7 @@ public class Board implements BoardIF {
      * @return the piece at the provided location
      */
     public PieceIF getPiece(int row, int col){
-        return chessBoard[row][col].getPiece();
+        return getSquare(row, col).getPiece();
     }
 
 }

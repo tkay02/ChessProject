@@ -6,6 +6,7 @@ package src.model;
  * @version 3/27/2023
  */
 import src.interfaces.PieceIF;
+import src.interfaces.MovementStrategy;
 import src.enums.ChessPieceType;
 import src.enums.GameColor;
 
@@ -17,14 +18,18 @@ public class Piece extends BlackAndWhite implements PieceIF {
     /* Boolean for if a piece has moved or not */
     private boolean hasMoved;
 
+    /* Strategy for the pieces movement */
+    private MovementStrategy moveStrat;
+
     /**
      * Constructor for a piece object.
      * 
      * @param pieceType the type of chess piece
      */
-    public Piece(ChessPieceType pieceType, GameColor color){
+    public Piece(ChessPieceType pieceType, GameColor color, MovementStrategy moveStrat){
         super(color);
         this.pieceType = pieceType;
+        this.moveStrat = moveStrat;
         this.hasMoved = false;
     }
 
@@ -44,6 +49,17 @@ public class Piece extends BlackAndWhite implements PieceIF {
      */
     public void setChessPieceType(ChessPieceType pieceType){
         this.pieceType = pieceType;
+    }
+
+    /**
+     * Determines if the move the player makes is valid.
+     * 
+     * @param from position of square to move from
+     * @param to position of square to move to
+     * @return true if the move is valid, false otherwise
+     */
+    public boolean validateMove(Position from, Position to){
+        return moveStrat.validateMove(from, to);
     }
 
 }
