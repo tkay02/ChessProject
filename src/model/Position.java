@@ -23,9 +23,9 @@ public class Position {
      * @param rank number to represent the rank of the chess board
      * @param file number to represent the file of the chess board
      */
-    public Position(int rankIndex, int fileIndex) {
-        this.rank = rank.getRankByIndex(rankIndex);
-        this.file = file.getFileByIndex(fileIndex);
+    public Position(Rank rank, File file) {
+        this.rank = rank;
+        this.file = file;
     }
 
 }
