@@ -1,10 +1,12 @@
-package controller;
-import interfaces.BoardIF;
-import enums.*;
-import model.Board;
+package src.controller;
+
+import src.interfaces.*;
+import src.enums.*;
+import src.model.Board;
 
 public class Chess {
 
+	Board board;
 	/**
 	 * Constructor for game of Chess.
 	 */
@@ -16,8 +18,7 @@ public class Chess {
 	 * First steps when setting up a new game of Chess
 	 */
 	public void newGame() {
-		Board board = new Board();
-		board.setup(); //create and setup pieces on board
+		board = new Board();
 	}
 	
 	/**
@@ -33,7 +34,7 @@ public class Chess {
 	 * @return
 	 */
 	public BoardIF loadGame(String file) {
-		
+		return new Board();
 	}
 	
 	/**
@@ -62,6 +63,10 @@ public class Chess {
 
 	public void printBoard(){
 
+	}
+
+	public Board getBoard(){
+		return this.board;
 	}
 
 }

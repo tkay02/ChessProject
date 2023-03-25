@@ -1,6 +1,10 @@
 package ui_di;
 
-import interfaces.BoardStrategy;
+import src.interfaces.*;
+import src.enums.*;
+import src.model.*;
+import src.controller.*;
+
 
 /**
  * Creates a colored version of chess board.
@@ -9,6 +13,10 @@ import interfaces.BoardStrategy;
  *
  */
 public class Board_Mono_CLI implements BoardStrategy{
+
+	public Board_Mono_CLI(){
+		
+	}
 
 	/**
 	 * Draws the board
@@ -27,8 +35,8 @@ public class Board_Mono_CLI implements BoardStrategy{
 		for(int i = 0; i < board.getWidth(); i++){
 			for(int j = 0; j < board.getHeight(); j++){
 				piece = (Piece)board.getPiece(i, j);
-				if(piece.equals("empty")) toDisplay += flip ? ": :" : "[ ]";
-				else if(piece.getColor().equals("white")){
+				if(piece.getChessPieceType().getChessPieceLetter().equals("E")) toDisplay += flip ? ": :" : "[ ]";
+				else if(piece.isWhite()){
 					toDisplay += ":" + piece.getChessPieceType().getChessPieceLetter() + ":";
 				}
 				else{

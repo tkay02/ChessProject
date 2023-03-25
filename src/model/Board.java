@@ -5,14 +5,8 @@ package src.model;
  * @author A-Team
  * @version 3/23/23
  */
-import src.enums.ChessPieceType;
-import src.enums.GameColor;
-import src.enums.File;
-import src.enums.Rank;
-import src.interfaces.PieceIF;
-import src.interfaces.SquareIF;
-import src.interfaces.BoardIF;
-import src.interfaces.BoardStrategy;
+import src.enums.*;
+import src.interfaces.*;
 
 public class Board implements BoardIF {
     
@@ -138,7 +132,7 @@ public class Board implements BoardIF {
      * Will call the drawStrategy's draw method to draw the board based on the strategy.
      */
     public void draw(){
-        this.drawStrategy.draw(/* Some BoardIF thing? */);
+        this.drawStrategy.draw(this);
     }
 
     /**

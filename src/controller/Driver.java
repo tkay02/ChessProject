@@ -1,10 +1,9 @@
-package controller;
+package src.controller;
 
-import enums.*;
-import interfaces.*;
-import controller.*;
-import model.*;
-import ui_di.*;
+import src.enums.*;
+import src.interfaces.BoardStrategy;
+import src.model.*;
+import src.ui_di.*;
 
 /**
  * Driver to run the Chess project.
@@ -19,6 +18,9 @@ public class Driver {
 	 */
 	public static void main(String[] args) {
 		Chess match = new Chess();
+		drawStrategy monoBoard = new Board_Mono_CLI();
+		match.getBoard().setDrawStrategy(monoBoard);
+		match.getBoard().draw();
 	}
 
 }
