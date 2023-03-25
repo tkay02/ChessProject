@@ -12,8 +12,8 @@ package src.enums;
 public enum ChessPieceType {
 
     KING("K", "King"), QUEEN("Q", "Queen"), ROOK("R", "Rook"),
-    BISHOP("B", "Bishop"), KNIGHT("K", "Knight"), PAWN("P", "PAWN"),
-    EMPTY("E", "Empty");
+    BISHOP("B", "Bishop"), KNIGHT("N", "Knight"), PAWN("P", "PAWN"),
+    EMPTY(" ", "Empty");
 
     private String chessPieceLetter;
     private String chessPieceWord;

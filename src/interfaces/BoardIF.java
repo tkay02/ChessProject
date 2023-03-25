@@ -62,11 +62,11 @@ public interface BoardIF {
 	 * Retrieves the piece based on the specific column and row.
 	 * 
 	 * @param int col The number of the specific column.
-	 * @param char row The character of the specific row.
+	 * @param int row The character of the specific row.
 	 * 
 	 * @return The chess piece on the specific column and row.
 	 */
-	public PieceIF getPiece(int col, char row);
+	public PieceIF getPiece(int col, int row);
 	
 	
 }

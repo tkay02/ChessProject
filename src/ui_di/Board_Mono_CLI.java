@@ -1,4 +1,4 @@
-package ui_di;
+package src.ui_di;
 
 import src.interfaces.*;
 import src.enums.*;
@@ -32,19 +32,46 @@ public class Board_Mono_CLI implements BoardStrategy{
 		String square = "";
 		String pieceLetter = "";
 		Piece piece;
+		
 		for(int i = 0; i < board.getWidth(); i++){
 			for(int j = 0; j < board.getHeight(); j++){
 				piece = (Piece)board.getPiece(i, j);
-				if(piece.getChessPieceType().getChessPieceLetter().equals("E")) toDisplay += flip ? ": :" : "[ ]";
-				else if(piece.isWhite()){
-					toDisplay += ":" + piece.getChessPieceType().getChessPieceLetter() + ":";
+				if(((Square)board.getSquares()[i][j]).isWhite()){
+					if(piece.isWhite()){
+						toDisplay += ":" + piece.getChessPieceType().getChessPieceLetter() + ":";
+					}
+					else{
+						toDisplay += ":" + piece.getChessPieceType().getChessPieceLetter().toLowerCase() + ":";
+					}
 				}
 				else{
+					if(piece.isWhite()){
+						toDisplay += "[" + piece.getChessPieceType().getChessPieceLetter() + "]";
+					}
+					else{
+						toDisplay += "[" + piece.getChessPieceType().getChessPieceLetter().toLowerCase() + "]";
+					}
+				}
+
+/**
+				piece = (Piece)board.getPiece(i, j);
+				if(piece.getChessPieceType().getChessPieceLetter().equals("E")) toDisplay += flip ? ": :" : "[ ]";
+				else if(piece.isWhite() && !flip){
+					toDisplay += ":" + piece.getChessPieceType().getChessPieceLetter() + ":";
+				}else if(piece.isWhite() && !flip){
+					toDisplay += "[" + piece.getChessPieceType().getChessPieceLetter() + "]";
+				}
+				else if(flip){
 					toDisplay += "[" + piece.getChessPieceType().getChessPieceLetter().toLowerCase() + "]";
+				}else{
+					toDisplay += ":" + piece.getChessPieceType().getChessPieceLetter().toLowerCase() + ":";
+					
 				}
 				flip = !flip;
 			}
 			flip = !flip;
+*/
+			}
 			toDisplay += "\n";
 		}
 		System.out.println(toDisplay);

@@ -9,7 +9,7 @@ import src.model.Board;
 
 public class Chess {
 
-	BoardIF board;
+	Board board;
 
 	/**
 	 * Constructor for game of Chess.

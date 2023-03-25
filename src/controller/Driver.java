@@ -18,7 +18,7 @@ public class Driver {
 	 */
 	public static void main(String[] args) {
 		Chess match = new Chess();
-		drawStrategy monoBoard = new Board_Mono_CLI();
+		Board_Mono_CLI monoBoard = new Board_Mono_CLI();
 		match.getBoard().setDrawStrategy(monoBoard);
 		match.getBoard().draw();
 	}
