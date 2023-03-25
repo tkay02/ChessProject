@@ -2,8 +2,8 @@ package src.model;
 /**
  * Class that represents a player object.
  * 
- * @author A-Team
- * @version 3/23/23
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 3/27/2023
  */
 
 public class Player {

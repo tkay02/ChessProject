@@ -1,16 +1,19 @@
-package ui_di;
-
+package src.ui_di;
 /**
  * Creates a colored version of chess board.
  * 
- * @author Levi, Thomas, Joseph, Nolan
- *
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 3/27/2023
  */
+import src.interfaces.BoardIF;
+import src.model.Piece;
+
 public class Board_Color_CLI {
 	
 	/**
-	 * Draws the board
-	 * @param board
+	 * Draws the board with color.
+	 * 
+	 * @param board the chess board to draw
 	 */
 	public void draw(BoardIF board) {
 		String toDisplay = "";

@@ -2,8 +2,8 @@ package src.model;
 /**
  * Class to represent the board to play chess on.
  * 
- * @author A-Team
- * @version 3/23/23
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 3/27/2023
  */
 import src.enums.ChessPieceType;
 import src.enums.GameColor;
@@ -32,9 +32,9 @@ public class Board implements BoardIF {
      * Constructor for the chess board.
      */
     public Board(){
+        chessBoard = new Square[8][8];
         this.width = 8;
         this.height = 8;
-        chessBoard = new Square[8][8];
         init_board();
         setup();
     }
@@ -50,13 +50,11 @@ public class Board implements BoardIF {
                     Square whiteSquare = new Square(i, j, GameColor.WHITE);
                     whiteSquare.setWhite(true);
                     chessBoard[i][j] = whiteSquare;
-                    // else chessBoard[i][j] = new Square(i, j, GameColor.BLACK);
                 }
                 else{
                     Square blackSquare = new Square(i, j, GameColor.BLACK);
                     blackSquare.setBlack(true);
                     chessBoard[i][j] = blackSquare;
-                    // else chessBoard[i][j] = new Square(i, j, GameColor.WHITE);
                 }
                 chessBoard[i][j].setPiece(new Piece(ChessPieceType.EMPTY, GameColor.WHITE));
                 flip = !flip;
@@ -66,7 +64,7 @@ public class Board implements BoardIF {
     }
 
     /**
-     * This method is inefficicient, I will refactor later
+     * Sets up the pieces on the chess board.
      */
     public void setup(){
         //Pawns
@@ -194,7 +192,6 @@ public class Board implements BoardIF {
      * @return the piece at the provided location
      */
     public PieceIF getPiece(Rank rank, File file){
-        //not sure how to do this right now
         return chessBoard[rank.getArrayRank()][file.getArrayFile()].getPiece();
     }
 
@@ -207,12 +204,7 @@ public class Board implements BoardIF {
      * @return the piece at the provided location
      */
     public PieceIF getPiece(int row, int col){
-        // int numCol = 0;
-        // for(File file : File.values())
-        //     if (numCol == file.getRealFile()) numCol = file.getArrayFile();
         return chessBoard[row][col].getPiece();
-        //okay idk how to do this either
-        //???? why is row a character ????
     }
 
 }

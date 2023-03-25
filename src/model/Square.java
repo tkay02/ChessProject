@@ -2,10 +2,9 @@ package src.model;
 /**
  * Class that represents a square object for ChessMeister.
  * 
- * @author A-Team
- * @version 3/23/23
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 3/27/2023
  */
-import src.enums.GameColor;
 import src.enums.*;
 import src.interfaces.PieceIF;
 import src.interfaces.SquareIF;
@@ -18,6 +17,13 @@ public class Square extends BlackAndWhite implements SquareIF {
     /* Position of the square */
     private Position pos;
 
+    /**
+     * Constructor for the square on a chess board.
+     * 
+     * @param rank rank of the square's position
+     * @param file file of the square's position
+     * @param color color of the square
+     */
     public Square(int rank, int file, GameColor color){
         super(color);
         this.pos = new Position(Rank.values()[rank], File.values()[file]);
