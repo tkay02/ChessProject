@@ -27,4 +27,22 @@ public class Position {
         this.file = file;
     }
 
+    /**
+     * Getter for the rank of the position.
+     * 
+     * @return the rank of the position
+     */
+    public Rank getRank(){
+        return this.rank;
+    }
+
+    /**
+     * Getter for the file of the position.
+     * 
+     * @return the file of the position
+     */
+    public File getFile(){
+        return this.file;
+    }
+
 }

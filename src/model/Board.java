@@ -13,6 +13,7 @@ import src.interfaces.PieceIF;
 import src.interfaces.SquareIF;
 import src.interfaces.BoardIF;
 import src.interfaces.BoardStrategy;
+import src.interfaces.MovementStrategy;
 
 public class Board implements BoardIF {
     
@@ -61,14 +62,15 @@ public class Board implements BoardIF {
      * Sets up the pieces on the chess board.
      */
     public void setup(){
+        MovementStrategy pawnMoves = new PawnMovement(this);
 
         // Pawns
         for(int col = 0; col < 8; col++){
 
-            Piece blackPawn = new Piece(ChessPieceType.PAWN, GameColor.BLACK);
+            Piece blackPawn = new Piece(ChessPieceType.PAWN, GameColor.BLACK, pawnMoves);
             initPiece(blackPawn, false, 1, col);
 
-            Piece whitePawn = new Piece(ChessPieceType.PAWN, GameColor.WHITE);
+            Piece whitePawn = new Piece(ChessPieceType.PAWN, GameColor.WHITE, pawnMoves);
             initPiece(whitePawn, true, 6, col);
 
         }
