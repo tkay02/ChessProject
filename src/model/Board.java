@@ -186,6 +186,7 @@ public class Board implements BoardIF {
      */
     public PieceIF getPiece(Rank rank, File file){
         //not sure how to do this right now
+        return chessBoard[rank.getArrayRank()][file.getArrayFile()].getPiece();
     }
 
     /**
@@ -196,7 +197,12 @@ public class Board implements BoardIF {
      * @param row character that represents the row of the 2D square array
      * @return the piece at the provided location
      */
-    public PieceIF getPiece(int col, char row){
+    public PieceIF getPiece(int row, char col){
+        int numCol = 0;
+        for(File file : File.values())
+            if (numCol == file.getRealFile()) numCol = file.getArrayFile();
+
+        return chessBoard[row][numCol].getPiece();
         //okay idk how to do this either
         //???? why is row a character ????
     }
