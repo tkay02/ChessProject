@@ -16,12 +16,12 @@ package src.enums;
 
 public enum File {
 
-    A("A", 0), B("B", 1),
-    C("C", 2), D("D", 3),
-    E("E", 4), F("F", 5),
-    G("G", 6), H("H", 7);
+    A('A', 0), B('B', 1),
+    C('C', 2), D('D', 3),
+    E('E', 4), F('F', 5),
+    G('G', 6), H('H', 7);
 
-    private String realFile;
+    private char realFile;
     private int arrayFile;
 
     /**
@@ -31,7 +31,7 @@ public enum File {
      * @param realFile  - Column letter that will be displayed to the user
      * @param arrayFile - Column index to access the array.
      */
-    private File(String realFile, int arrayFile) {
+    private File(char realFile, int arrayFile) {
         this.realFile = realFile;
         this.arrayFile = arrayFile;
     }
@@ -40,7 +40,7 @@ public enum File {
      * 
      * @return
      */
-    public String getRealFile() {
+    public char getRealFile() {
         return realFile;
     }
 
