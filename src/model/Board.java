@@ -34,6 +34,7 @@ public class Board implements BoardIF {
     public Board(){
         this.width = 8;
         this.height = 8;
+        chessBoard = new Square[8][8];
         init_board();
         setup();
     }
@@ -42,17 +43,25 @@ public class Board implements BoardIF {
      * Initialize the board with square objects
      */
     public void init_board(){
+        boolean flip = true;
         for(int i = 0; i < this.width; i++){
             for(int j = 0; j < this.height; j++){
-                if(j % 2 == 0){
-                    if(i % 2 == 0) chessBoard[i][j] = new Square(i, j, GameColor.WHITE);
-                    else chessBoard[i][j] = new Square(i, j, GameColor.BLACK);
+                if(flip){
+                    Square whiteSquare = new Square(i, j, GameColor.WHITE);
+                    whiteSquare.setWhite(true);
+                    chessBoard[i][j] = whiteSquare;
+                    // else chessBoard[i][j] = new Square(i, j, GameColor.BLACK);
                 }
                 else{
-                    if(i % 2 == 0) chessBoard[i][j] = new Square(i, j, GameColor.BLACK);
-                    else chessBoard[i][j] = new Square(i, j, GameColor.WHITE);
+                    Square blackSquare = new Square(i, j, GameColor.BLACK);
+                    blackSquare.setBlack(true);
+                    chessBoard[i][j] = blackSquare;
+                    // else chessBoard[i][j] = new Square(i, j, GameColor.WHITE);
                 }
+                chessBoard[i][j].setPiece(new Piece(ChessPieceType.EMPTY, GameColor.WHITE));
+                flip = !flip;
             }
+            flip = !flip;
         }
     }
 
@@ -66,8 +75,8 @@ public class Board implements BoardIF {
             blackPawn.setBlack(true);
             Piece whitePawn = new Piece(ChessPieceType.PAWN, GameColor.WHITE);
             whitePawn.setWhite(true);
-            chessBoard[col][1].setPiece(blackPawn);
-            chessBoard[col][7].setPiece(whitePawn);
+            chessBoard[1][col].setPiece(blackPawn);
+            chessBoard[6][col].setPiece(whitePawn);
         }
 
         //Rooks
@@ -138,7 +147,7 @@ public class Board implements BoardIF {
      * Will call the drawStrategy's draw method to draw the board based on the strategy.
      */
     public void draw(){
-        this.drawStrategy.draw(/* Some BoardIF thing? */);
+        this.drawStrategy.draw(this);
     }
 
     /**
@@ -197,12 +206,11 @@ public class Board implements BoardIF {
      * @param row character that represents the row of the 2D square array
      * @return the piece at the provided location
      */
-    public PieceIF getPiece(int row, char col){
-        int numCol = 0;
-        for(File file : File.values())
-            if (numCol == file.getRealFile()) numCol = file.getArrayFile();
-
-        return chessBoard[row][numCol].getPiece();
+    public PieceIF getPiece(int row, int col){
+        // int numCol = 0;
+        // for(File file : File.values())
+        //     if (numCol == file.getRealFile()) numCol = file.getArrayFile();
+        return chessBoard[row][col].getPiece();
         //okay idk how to do this either
         //???? why is row a character ????
     }

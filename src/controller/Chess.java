@@ -9,20 +9,20 @@ import src.model.Board;
 
 public class Chess {
 
-	BoardIF board;
+	Board board;
 
 	/**
 	 * Constructor for game of Chess.
 	 */
 	public Chess() {
-		this.board = new Board();
+		this.newGame();
 	}
 	
 	/**
 	 * First steps when setting up a new game of Chess
 	 */
 	public void newGame() {
-		
+		board = new Board();
 	}
 	
 	/**
@@ -38,7 +38,7 @@ public class Chess {
 	 * @return
 	 */
 	public BoardIF loadGame(String file) {
-		
+		return new Board();
 	}
 	
 	/**
@@ -63,6 +63,18 @@ public class Chess {
 		PieceIF piece = chessBoard.getPiece(fromR, fromF);
 
 
+	}
+
+	public void startGame(){
+		System.out.println("Let the game begin!\n");
+	}
+
+	public void printBoard(){
+
+	}
+
+	public Board getBoard(){
+		return this.board;
 	}
 
 }

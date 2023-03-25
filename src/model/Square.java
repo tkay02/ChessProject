@@ -6,6 +6,7 @@ package src.model;
  * @version 3/23/23
  */
 import src.enums.GameColor;
+import src.enums.*;
 import src.interfaces.PieceIF;
 import src.interfaces.SquareIF;
 
@@ -19,7 +20,7 @@ public class Square extends BlackAndWhite implements SquareIF {
 
     public Square(int rank, int file, GameColor color){
         super(color);
-        this.pos = new Position(rank, file);
+        this.pos = new Position(Rank.values()[rank], File.values()[file]);
     }
 
 	/**
