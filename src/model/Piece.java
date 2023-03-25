@@ -2,8 +2,8 @@ package src.model;
 /**
  * Class that represents a piece object for ChessMeister.
  * 
- * @author A-Team
- * @version 3/23/23
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 3/27/2023
  */
 import src.interfaces.PieceIF;
 import src.enums.ChessPieceType;
@@ -45,4 +45,5 @@ public class Piece extends BlackAndWhite implements PieceIF {
     public void setChessPieceType(ChessPieceType pieceType){
         this.pieceType = pieceType;
     }
+
 }

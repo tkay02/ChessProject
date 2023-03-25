@@ -1,10 +1,9 @@
 package src.model;
-
 /**
  * A class that uses ranks and files to represent a position on a chess board.
  * 
- * @author A-Team
- * @version 3/23/23
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 3/27/2023
  */
 import src.enums.File;
 import src.enums.Rank;
@@ -23,9 +22,9 @@ public class Position {
      * @param rank number to represent the rank of the chess board
      * @param file number to represent the file of the chess board
      */
-    public Position(int rankIndex, int fileIndex) {
-        this.rank = rank.getRankByIndex(rankIndex);
-        this.file = file.getFileByIndex(fileIndex);
+    public Position(Rank rank, File file) {
+        this.rank = rank;
+        this.file = file;
     }
 
 }

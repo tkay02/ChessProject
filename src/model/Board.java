@@ -2,8 +2,8 @@ package src.model;
 /**
  * Class to represent the board to play chess on.
  * 
- * @author A-Team
- * @version 3/23/23
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 3/27/2023
  */
 import src.enums.ChessPieceType;
 import src.enums.GameColor;
@@ -32,6 +32,7 @@ public class Board implements BoardIF {
      * Constructor for the chess board.
      */
     public Board(){
+        chessBoard = new Square[8][8];
         this.width = 8;
         this.height = 8;
         init_board();
@@ -42,22 +43,28 @@ public class Board implements BoardIF {
      * Initialize the board with square objects
      */
     public void init_board(){
+        boolean flip = true;
         for(int i = 0; i < this.width; i++){
             for(int j = 0; j < this.height; j++){
-                if(j % 2 == 0){
-                    if(i % 2 == 0) chessBoard[i][j] = new Square(i, j, GameColor.WHITE);
-                    else chessBoard[i][j] = new Square(i, j, GameColor.BLACK);
+                if(flip){
+                    Square whiteSquare = new Square(i, j, GameColor.WHITE);
+                    whiteSquare.setWhite(true);
+                    chessBoard[i][j] = whiteSquare;
                 }
                 else{
-                    if(i % 2 == 0) chessBoard[i][j] = new Square(i, j, GameColor.BLACK);
-                    else chessBoard[i][j] = new Square(i, j, GameColor.WHITE);
+                    Square blackSquare = new Square(i, j, GameColor.BLACK);
+                    blackSquare.setBlack(true);
+                    chessBoard[i][j] = blackSquare;
                 }
+                chessBoard[i][j].setPiece(new Piece(ChessPieceType.EMPTY, GameColor.WHITE));
+                flip = !flip;
             }
+            flip = !flip;
         }
     }
 
     /**
-     * This method is inefficicient, I will refactor later
+     * Sets up the pieces on the chess board.
      */
     public void setup(){
         //Pawns
@@ -66,8 +73,8 @@ public class Board implements BoardIF {
             blackPawn.setBlack(true);
             Piece whitePawn = new Piece(ChessPieceType.PAWN, GameColor.WHITE);
             whitePawn.setWhite(true);
-            chessBoard[col][1].setPiece(blackPawn);
-            chessBoard[col][7].setPiece(whitePawn);
+            chessBoard[1][col].setPiece(blackPawn);
+            chessBoard[6][col].setPiece(whitePawn);
         }
 
         //Rooks
@@ -138,7 +145,7 @@ public class Board implements BoardIF {
      * Will call the drawStrategy's draw method to draw the board based on the strategy.
      */
     public void draw(){
-        this.drawStrategy.draw(/* Some BoardIF thing? */);
+        this.drawStrategy.draw(this);
     }
 
     /**
@@ -185,7 +192,6 @@ public class Board implements BoardIF {
      * @return the piece at the provided location
      */
     public PieceIF getPiece(Rank rank, File file){
-        //not sure how to do this right now
         return chessBoard[rank.getArrayRank()][file.getArrayFile()].getPiece();
     }
 
@@ -197,14 +203,8 @@ public class Board implements BoardIF {
      * @param row character that represents the row of the 2D square array
      * @return the piece at the provided location
      */
-    public PieceIF getPiece(int row, char col){
-        int numCol = 0;
-        for(File file : File.values())
-            if (numCol == file.getRealFile()) numCol = file.getArrayFile();
-
-        return chessBoard[row][numCol].getPiece();
-        //okay idk how to do this either
-        //???? why is row a character ????
+    public PieceIF getPiece(int row, int col){
+        return chessBoard[row][col].getPiece();
     }
 
 }

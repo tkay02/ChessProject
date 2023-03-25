@@ -1,15 +1,12 @@
 package src.interfaces;
+/**
+ * Interface for the chess pieces.
+ * 
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 3/27/2023
+ */
 import src.enums.ChessPieceType;
 
-/**
- * @author Thomas Kay
- * @author Joseph Oladeji
- * @author Nolan Flinchum
- * @author Levi Sweat
- * @version 3/21/2023
- *
- * Interface for the chess pieces.
- */
 public interface PieceIF {
 
 	/**
@@ -18,6 +15,7 @@ public interface PieceIF {
 	 * @return The specific chess type that the piece represents.
 	 */
 	public ChessPieceType getChessPieceType();
+
 	/**
 	 * Sets the chess piece to a specific value such as king, queen, pawns, etc.
 	 * 
