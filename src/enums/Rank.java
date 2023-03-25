@@ -22,6 +22,10 @@ public enum Rank {
         return arrayRank;
     }
 
+    public Rank getRankByIndex(int index){
+        return Rank.values()[index];
+    }
+
     public String toString(){
         return "";
     }
