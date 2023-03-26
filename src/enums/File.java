@@ -62,6 +62,20 @@ public enum File {
     }
 
     /**
+     * This method gets the file when given a character to represent the file.
+     * 
+     * @param letter number to represent the file
+     * @return the file represented by the index
+     */
+    public static File getFileByChar(char letter) {
+        File returnFile = null;
+        for(File file : File.values()){
+            if(file.getRealFile() == letter) returnFile = file;
+        }
+        return returnFile;
+    }
+
+    /**
      * Do we really need this?
      * 
      * @return

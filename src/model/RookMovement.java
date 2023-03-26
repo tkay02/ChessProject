@@ -36,16 +36,27 @@ public class RookMovement implements MovementStrategy{
      * @param from the position we're moving from
      */
     public void generateValidMoves(Position start) {
+        this.validMoves.clear();
         int row = start.getRank().getArrayRank();
         int col = start.getFile().getArrayFile();
         Piece currentPiece = (Piece) board.getPiece(row, col);
         boolean up = true, down = true, left = true, right = true;
-        for(int i = 0; i < board.getWidth(); i++){
+        for(int i = 1; i < board.getWidth(); i++){
             if(up) up = validPosition(currentPiece, row - i, col);
             if(down) down = validPosition(currentPiece, row + i, col);
             if(left) left = validPosition(currentPiece, row, col - i);
             if(right) right = validPosition(currentPiece, row, col + i);              
         }
+    }
+
+    public boolean contains(Position otherPos){
+        boolean isContained = false;
+        for(Position pos : validMoves){
+            if(pos.equals(otherPos)){
+                isContained = true;
+            }
+        }
+        return isContained;
     }
 
     /**
@@ -76,13 +87,11 @@ public class RookMovement implements MovementStrategy{
     /**
      * Determines if the move the player makes is valid.
      * 
-     * @param from position of square to move from
      * @param to position of square to move to
      * @return true if the move is valid, false otherwise
      */
-    public boolean validateMove(Position from, Position to) {
-        generateValidMoves(from);
-        return this.validMoves.contains(to);
+    public boolean validateMove(Position to) {
+        return contains(to);
     }
 
     /**
@@ -92,6 +101,7 @@ public class RookMovement implements MovementStrategy{
      * @return An array of possible moves
      */
     public ArrayList<Position> showMoves(Position pos) {
+        generateValidMoves(pos);
         return this.validMoves;
     }   
 

@@ -36,6 +36,7 @@ public class KingMovement implements MovementStrategy {
      * @param from the position we're moving from
      */
     public void generateValidMoves(Position start) {
+        this.validMoves.clear();
         int row = start.getRank().getArrayRank();
         int col = start.getFile().getArrayFile();
         Piece currentPiece = (Piece) board.getPiece(row, col);
@@ -82,12 +83,10 @@ public class KingMovement implements MovementStrategy {
      * and then return a boolean value whether or not the list of valid moves
      * contains the to position.
      * 
-     * @param from - Starting position
      * @param to - Desired ending position to be added
      */
-    public boolean validateMove(Position from, Position to) {
-        generateValidMoves(from);
-        return this.validMoves.contains(to);
+    public boolean validateMove(Position to) {
+        return contains(to);
     }
 
     /**
@@ -98,7 +97,18 @@ public class KingMovement implements MovementStrategy {
      * @param pos - List of valid position the current piece\e can move from.
      */
     public ArrayList<Position> showMoves(Position pos) {
+        generateValidMoves(pos);
         return this.validMoves;
+    }
+
+    public boolean contains(Position otherPos){
+        boolean isContained = false;
+        for(Position pos : validMoves){
+            if(pos.equals(otherPos)){
+                isContained = true;
+            }
+        }
+        return isContained;
     }
 
 }

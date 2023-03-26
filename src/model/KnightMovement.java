@@ -1,15 +1,13 @@
 package src.model;
+/**
+ * Movement Stragety for the Knight Piece
+ * 
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 3/27/2023
+ */
 import src.interfaces.*;
 import java.util.ArrayList;
 import src.enums.*;
-
-/**
- * @Author Thomas Kay ...
- * @Verison 3/27/2023
- * 
- * Movement Stragety for the Knight Piece
- */
-
 
 public class KnightMovement implements MovementStrategy {
     
@@ -34,10 +32,9 @@ public class KnightMovement implements MovementStrategy {
      * @param Board board The board that KnightMovement is using for refrence.
      * @param GameColor color The current color of the Knight for reference.
      */
-    public KnightMovement(Board board, GameColor color) {
+    public KnightMovement(Board board) {
         
         this.board = board;
-        this.color = color;
         this.validMoves = new ArrayList<Position>();
     
     }
@@ -113,35 +110,42 @@ public class KnightMovement implements MovementStrategy {
 
     }
 
+
+    public boolean contains(Position otherPos){
+        boolean isContained = false;
+        for(Position pos : validMoves){
+            if(pos.equals(otherPos)){
+                isContained = true;
+            }
+        }
+        return isContained;
+    }
+
     /**
      * Checks if the move is valid from its current position to its new position.
      * 
      * @param Position from The original position of the Knight.
      * @param Position to The new possible position of the Knight.
-     * @return True if the new position of the Knight from its current position is valid; false otherwise.
+     * @return True if the new position of the Knight is valid; false otherwise.
      */
-    public boolean validateMove(Position from, Position to) {
-
-        this.generateValidMoves(from);
-        return this.validMoves.contains(to);
-        
+    public boolean validateMove(Position to) {
+        return contains(to);
     }
 
     /**
-     * Creates an array that stores all of the possible valid positions from the Knight's current position.
+     * Creates an array that stores all of the possible valid positions from the
+     * Knight's current position.
      * 
      * @param Position pos The current position of the Knight.
      * @return An array that stores all of the possible positions.
      */
-    public Position[] showMoves(Position pos) {
+    public ArrayList<Position> showMoves(Position pos) {
+        Rank rank = pos.getRank();
+        File file = pos.getFile();
+        this.color = ((Piece) board.getPiece(rank, file)).getColor();
 
         this.generateValidMoves(pos);
-        Position[] moves = new Position[this.validMoves.size()];
-        for(int i = 0; i < moves.length; i++) {
-            moves[i] = this.validMoves.get(i);
-        }
-        return moves;
-
+        return this.validMoves;
     }
 
     /**
@@ -330,7 +334,7 @@ public class KnightMovement implements MovementStrategy {
             newPos = null;
         }
         else {
-            newPos = new Position(Rank.getRankByIndex(row-2), File.getFileByIndex(col-1));
+            newPos = new Position(Rank.getRankByIndex(row-2), File.getFileByIndex(col+1));
         }
         return newPos;
 

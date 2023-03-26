@@ -36,11 +36,12 @@ public class BishopMovement implements MovementStrategy {
      * @param start the position we're moving from
      */
     public void generateValidMoves(Position start) {
+        this.validMoves.clear();
         int row = start.getRank().getArrayRank();
         int col = start.getFile().getArrayFile();
         Piece currentPiece = (Piece) board.getPiece(row, col);
         boolean upRight = true, upLeft = true, downLeft = true, downRight = true;
-        for(int i = 0; i < board.getWidth(); i++){
+        for(int i = 1; i < board.getWidth(); i++){
             if(upRight) upRight = validPosition(currentPiece, row - i, col + i);
             if(upLeft) upLeft = validPosition(currentPiece, row - i, col - i);
             if(downLeft) downLeft = validPosition(currentPiece, row + i, col - i);
@@ -78,12 +79,10 @@ public class BishopMovement implements MovementStrategy {
      * and then return a boolean value whether or not the list of valid moves
      * contains the to position.
      * 
-     * @param from - Starting position
      * @param to - Desired ending position to be added
      */
-    public boolean validateMove(Position from, Position to) {
-        generateValidMoves(from);
-        return this.validMoves.contains(to);
+    public boolean validateMove(Position to) {
+        return contains(to);
     }
 
     /**
@@ -94,7 +93,18 @@ public class BishopMovement implements MovementStrategy {
      * @param pos - List of valid position the current piece\e can move from.
      */
     public ArrayList<Position> showMoves(Position pos) {
+        generateValidMoves(pos);
         return this.validMoves;
+    }
+
+    public boolean contains(Position otherPos){
+        boolean isContained = false;
+        for(Position pos : validMoves){
+            if(pos.equals(otherPos)){
+                isContained = true;
+            }
+        }
+        return isContained;
     }
 
 }

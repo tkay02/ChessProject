@@ -33,7 +33,7 @@ public class Square extends BlackAndWhite implements SquareIF {
 	 * Clears any pieces off of the square.
 	 */
     public void clear(){
-        this.piece = null;
+        setPiece(new Piece(ChessPieceType.EMPTY, GameColor.WHITE));
     }
 
     /**

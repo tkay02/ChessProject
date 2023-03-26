@@ -45,4 +45,10 @@ public class Position {
         return this.file;
     }
 
+    public boolean equals(Position pos){
+        boolean isEqual = false;
+        if(this.rank.equals(pos.getRank()) && this.file.equals(pos.getFile())) isEqual = true;
+        return isEqual;
+    }
+
 }

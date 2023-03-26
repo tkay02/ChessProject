@@ -8,9 +8,17 @@ package src.controller;
  * @version 3/27/2023
  */
 import src.interfaces.BoardIF;
+import src.interfaces.BoardStrategy;
 import src.interfaces.PieceIF;
-//import src.model.Position;
 import src.model.Board;
+import src.model.Piece;
+import src.model.Position;
+import src.model.Square;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import src.enums.ChessPieceType;
 import src.enums.File;
 import src.enums.Rank;
 
@@ -22,15 +30,50 @@ public class Chess {
 	/**
 	 * Constructor for the game of chess.
 	 */
-	public Chess() {
-		this.newGame();
+	public Chess(BoardStrategy drawStrategy) {
+		this.newGame(drawStrategy);
 	}
 	
 	/**
 	 * Sets up a new game of chess.
 	 */
-	public void newGame() {
-		board = new Board();
+	public void newGame(BoardStrategy drawStrategy) {
+		this.board = new Board();
+		this.board.setDrawStrategy(drawStrategy);
+		boolean playing = true;
+		String playerOne = "Player One's Turn";
+		String playerTwo = "Player Two's Turn";
+		boolean playerOneTurn = true;
+		Scanner in = new Scanner(System.in);
+		while(playing){
+			System.out.println("Resign? (Y/N): ");
+			if(in.nextLine().equals("Y")) playing = false;
+
+			this.board.draw();
+			if(playerOneTurn) System.out.println(playerOne + "\nRank of piece to move: ");
+			else System.out.println(playerTwo + "\nRank of piece to move: ");
+			Rank fromRank = Rank.getRankByIndex(in.nextInt());
+			System.out.println("File of piece to move: ");
+			File fromFile = File.getFileByChar(in.next().charAt(0));
+
+			Position pos = new Position(fromRank, fromFile);
+			Piece piece = (Piece) board.getPiece(fromRank, fromFile);
+			ArrayList<Position> aL = piece.showMoves(pos);
+			for(Position posn : aL){
+				System.out.print("Valid Position: (" + posn.getRank().getArrayRank() + " " + posn.getFile().getRealFile() + ") ");
+			}
+
+
+			System.out.println("Rank of square to move to: ");
+			Rank toRank = Rank.getRankByIndex(in.nextInt());
+			System.out.println("Rank of square to move to: ");
+			File toFile = File.getFileByChar(in.next().charAt(0));
+
+			move(fromFile, fromRank, toFile, toRank);
+			piece.setHasMoved();
+			playerOneTurn = !playerOneTurn;
+		}
+
 	}
 	
 	/**
@@ -69,10 +112,25 @@ public class Chess {
 	 * @param toR Rank of where piece is being moved to
 	 */
 	public void move(File fromF, Rank fromR, File toF, Rank toR) {
-		//Position fromPos = new Position(fromR, fromF);
-		//Position toPos = new Position(toR, toF);
-		PieceIF piece = board.getPiece(fromR, fromF);
-		//incomplete
+		Position toPos = new Position(toR, toF);
+		System.out.print("What we enter: (" + toPos.getRank().getArrayRank() + " " + toPos.getFile().getRealFile() + ") ");
+
+		Piece piece = (Piece) board.getPiece(fromR, fromF);
+		if(piece.validateMove(toPos)){
+			int fromFileNum = fromF.getArrayFile();
+			int fromRankNum = fromR.getArrayRank();
+			int toFileNum = toF.getArrayFile();
+			int toRankNum = toR.getArrayRank();
+
+			Square fromSquare = (Square) board.getSquare(fromRankNum, fromFileNum);
+			Square toSquare = (Square) board.getSquare(toRankNum, toFileNum);
+
+			toSquare.setPiece(fromSquare.getPiece());
+			fromSquare.clear();
+		}
+		else{
+			System.out.println("Idiot\n");
+		}
 	}
 
 	//Are the functions below necessary?

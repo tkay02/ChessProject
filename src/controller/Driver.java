@@ -19,29 +19,38 @@ public class Driver {
 	 * @param args array of arguments from the command line
 	 */
 	public static void main(String[] args) {
-		Chess match = new Chess();
+
 		//Board_Mono_CLI monoBoard = new Board_Mono_CLI();
 		//Board_Color_CLI colorBoard = new Board_Color_CLI();
 		Scanner in = new Scanner(System.in);
+		Chess match = null;
 		Boolean correctInput = false;
 		String input;
 		BoardStrategy boardColor = new Board_Mono_CLI(); //default is monotone
+		System.out.println("Welcome to ChessMeister!\n\n");
 		while(!correctInput){
-			System.out.println("Choose Board color:\nFor monotone: Board_Mono_CLI\tFor color: Board_Color_CLI");
+			System.out.println("Please select an option:\n1) New Game\n2) Color Settings");
 			input = in.nextLine();
 			switch(input){
-				case "Board_Mono_CLI":
-					boardColor = new Board_Mono_CLI();
+				case "1":
+					match = new Chess(boardColor);
+					//match.getBoard().setDrawStrategy(boardColor);
 					correctInput = true;
 					break;
-				case "Board_Color_CLI":
-					boardColor = new Board_Color_CLI();
-					correctInput = true;
-					break;
+				case "2":
+					System.out.println("Select a color\n1) Monotone Board\n2) Colored Board");
+					input = in.nextLine();
+					switch(input){
+						case "1":
+							boardColor = new Board_Mono_CLI();
+							break;
+						case "2":
+							boardColor = new Board_Color_CLI();
+							break;
+					}
 			}
 		}
-		match.getBoard().setDrawStrategy(boardColor);
-		match.getBoard().draw();
+		in.close();
 	}
 
 }

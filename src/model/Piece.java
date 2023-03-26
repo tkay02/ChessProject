@@ -7,6 +7,9 @@ package src.model;
  */
 import src.interfaces.PieceIF;
 import src.interfaces.MovementStrategy;
+
+import java.util.ArrayList;
+
 import src.enums.ChessPieceType;
 import src.enums.GameColor;
 
@@ -60,8 +63,18 @@ public class Piece extends BlackAndWhite implements PieceIF {
      * @param to position of square to move to
      * @return true if the move is valid, false otherwise
      */
-    public boolean validateMove(Position from, Position to){
-        return moveStrat.validateMove(from, to);
+    public boolean validateMove(Position to){
+        return moveStrat.validateMove(to);
+    }
+
+    /**
+     * Show all valid moves of a piece at a given position.
+     * 
+     * @param pos The position of a piece that wants to move
+     * @return An array of possible moves
+     */
+    public ArrayList<Position> showMoves(Position pos){
+        return moveStrat.showMoves(pos);
     }
 
     /**
@@ -72,6 +85,10 @@ public class Piece extends BlackAndWhite implements PieceIF {
      */
     public boolean hasMoved(){
         return hasMoved;
+    }
+
+    public void setHasMoved(){
+        this.hasMoved = true;
     }
     
 }
