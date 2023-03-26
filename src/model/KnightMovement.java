@@ -350,7 +350,7 @@ public class KnightMovement implements MovementStrategy {
         int col = nums[1];
         Piece piece = (Piece)this.board.getPiece(row, col);
         if(piece.getChessPieceType() != ChessPieceType.EMPTY) {
-            if(this.color != piece.getColor()) {
+            if(this.color == piece.getColor()) {
                 isNotAlly = false;
             }
         }
