@@ -16,6 +16,7 @@ public class KnightMovement implements MovementStrategy {
     /**The maximum length for each side of the chess board*/
     public static final int MAX = 8;
 
+    /**To represent the dimensions of the chessboard*/
     public static final int ROWCOL = 2;
 
     /**Array of valid moves for a selected piece*/
@@ -31,6 +32,7 @@ public class KnightMovement implements MovementStrategy {
      * Constructor for KnightMovement.
      * 
      * @param Board board The board that KnightMovement is using for refrence.
+     * @param GameColor color The current color of the Knight for reference.
      */
     public KnightMovement(Board board, GameColor color) {
         
@@ -40,16 +42,105 @@ public class KnightMovement implements MovementStrategy {
     
     }
 
+    /**
+     * Determines the possible valid moves for the Knight in its current position. Checks if the new possible
+     * position is neither out of bounds or is an ally space. If the move is valid, it's added to the list that
+     * stores the valid moves.
+     * 
+     * @param Position from The current position of the Knight piece.
+     */
     public void generateValidMoves(Position from) {
 
+        //Resets valid moves list when starting a new position
+        this.validMoves.clear();
+        Position newPos;
+        //Checks if up left is a valid move
+        newPos = this.checkUpLeft(from);
+        if(newPos != null) {
+            if(this.notAlly(newPos)) {
+                this.validMoves.add(newPos);
+            }
+        }
+        //Checks if up right is a valid move
+        newPos = this.checkUpRight(from);
+        if(newPos != null) {
+            if(this.notAlly(newPos)) {
+                this.validMoves.add(newPos);
+            }
+        }
+        //Checks if left up is a valid move
+        newPos = this.checkLeftUp(from);
+        if(newPos != null) {
+            if(this.notAlly(newPos)) {
+                this.validMoves.add(newPos);
+            }
+        }
+        //Checks if left down is a valid move
+        newPos = this.checkLeftDown(from);
+        if(newPos != null) {
+            if(this.notAlly(newPos)) {
+                this.validMoves.add(newPos);
+            }
+        }
+        //Checks if right up is a valid move
+        newPos = this.checkRightUp(from);
+        if(newPos != null) {
+            if(this.notAlly(newPos)) {
+                this.validMoves.add(newPos);
+            }
+        }
+        //Checks if right down is a valid move
+        newPos = this.checkRightDown(from);
+        if(newPos != null) {
+            if(this.notAlly(newPos)) {
+                this.validMoves.add(newPos);
+            }
+        }
+        //Checks if down left is a valid move
+        newPos = this.checkDownLeft(from);
+        if(newPos != null) {
+            if(this.notAlly(newPos)) {
+                this.validMoves.add(newPos);
+            }
+        }
+        //Checks if down right is a valid move
+        newPos = this.checkDownRight(from);
+        if(newPos != null) {
+            if(this.notAlly(newPos)) {
+                this.validMoves.add(newPos);
+            }
+        }
+
     }
 
+    /**
+     * Checks if the move is valid from its current position to its new position.
+     * 
+     * @param Position from The original position of the Knight.
+     * @param Position to The new possible position of the Knight.
+     * @return True if the new position of the Knight from its current position is valid; false otherwise.
+     */
     public boolean validateMove(Position from, Position to) {
 
-        return true;
+        this.generateValidMoves(from);
+        return this.validMoves.contains(to);
+        
     }
 
+    /**
+     * Creates an array that stores all of the possible valid positions from the Knight's current position.
+     * 
+     * @param Position pos The current position of the Knight.
+     * @return An array that stores all of the possible positions.
+     */
     public Position[] showMoves(Position pos) {
+
+        this.generateValidMoves(pos);
+        Position[] moves = new Position[this.validMoves.size()];
+        for(int i = 0; i < moves.length; i++) {
+            moves[i] = this.validMoves.get(i);
+        }
+        return moves;
 
     }
 
@@ -245,13 +336,25 @@ public class KnightMovement implements MovementStrategy {
 
     }
 
+    /**
+     * Checks if the next position doesn't have an ally piece.
+     * 
+     * @param Position nextPos The next position within the Knight's moves.
+     * @return True if there's not an ally piece on the new position; false otherwise.
+     */
     private boolean notAlly(Position nextPos) {
 
-        boolean isNotAlly = false;
+        boolean isNotAlly = true;
         int[] nums = this.currentRowAndCol(nextPos);
         int row = nums[0];
         int col = nums[1];
-        Square square = 
+        Piece piece = (Piece)this.board.getPiece(row, col);
+        if(piece.getChessPieceType() != ChessPieceType.EMPTY) {
+            if(this.color != piece.getColor()) {
+                isNotAlly = false;
+            }
+        }
+        return isNotAlly; 
 
     }
 
