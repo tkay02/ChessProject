@@ -1,6 +1,6 @@
 package src.model;
 /**
- * 
+ * Class for the movement strategy of a pawn.
  * 
  * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 3/27/2023
@@ -21,7 +21,9 @@ public class PawnMovement implements MovementStrategy {
     private Board board;
 
     /**
-     * Constructor for the PawnMovement class.
+     * Constructor for the pawn's movement strategy.
+     * 
+     * @param board the chess board reference
      */
     public PawnMovement(Board board){
         this.board = board;
@@ -40,11 +42,11 @@ public class PawnMovement implements MovementStrategy {
         int col = start.getFile().getArrayFile();
         Piece piece = (Piece) board.getPiece(row, col);
         if(piece.isWhite()){
-            if(!piece.hasMoved() && board.getPiece(row - 2, col).getChessPieceType() == ChessPieceType.EMPTY){
-                validMoves.add(new Position(Rank.getRankByIndex(row - 2), start.getFile()));
-            }
             if(board.getPiece(row - 1, col).getChessPieceType() == ChessPieceType.EMPTY){
                 validMoves.add(new Position(Rank.getRankByIndex(row - 1), start.getFile()));
+                if(!piece.hasMoved() && board.getPiece(row - 2, col).getChessPieceType() == ChessPieceType.EMPTY){
+                    validMoves.add(new Position(Rank.getRankByIndex(row - 2), start.getFile()));
+                }
             }
             if(((Piece) board.getPiece(row - 1, col - 1)).isBlack()){
                 validMoves.add(new Position(Rank.getRankByIndex(row - 1), File.getFileByIndex(col - 1)));
@@ -54,11 +56,11 @@ public class PawnMovement implements MovementStrategy {
             }
         }
         else{
-            if(!piece.hasMoved() && board.getPiece(row + 2, col).getChessPieceType() == ChessPieceType.EMPTY){
-                validMoves.add(new Position(Rank.getRankByIndex(row + 2), start.getFile()));
-            }
             if(board.getPiece(row + 1, col).getChessPieceType() == ChessPieceType.EMPTY){
                 validMoves.add(new Position(Rank.getRankByIndex(row + 1), start.getFile()));
+                if(!piece.hasMoved() && board.getPiece(row + 2, col).getChessPieceType() == ChessPieceType.EMPTY){
+                    validMoves.add(new Position(Rank.getRankByIndex(row + 2), start.getFile()));
+                }
             }
             if(((Piece) board.getPiece(row + 1, col - 1)).isBlack()){
                 validMoves.add(new Position(Rank.getRankByIndex(row + 1), File.getFileByIndex(col - 1)));
@@ -69,11 +71,24 @@ public class PawnMovement implements MovementStrategy {
         }
     }
 
+    /**
+     * Determines if the move the player makes is valid.
+     * 
+     * @param from position of square to move from
+     * @param to position of square to move to
+     * @return true if the move is valid, false otherwise
+     */
     public boolean validateMove(Position from, Position to){
         generateValidMoves(from);
         return this.validMoves.contains(to);
     }
 
+    /**
+     * Show all valid moves of a piece at a given position.
+     * 
+     * @param pos The position of a piece that wants to move
+     * @return An array of possible moves
+     */
     public ArrayList<Position> showMoves(Position pos){
         return this.validMoves;
     }

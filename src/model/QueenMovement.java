@@ -1,6 +1,6 @@
 package src.model;
 /**
- * 
+ * Class for the movement strategy of a queen.
  * 
  * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 3/27/2023
@@ -16,13 +16,13 @@ public class QueenMovement implements MovementStrategy {
     /* Array of valid moves for a selected piece */
     private ArrayList<Position> validMoves;
 
-    /* Alias of the chess board used to generate valid moves  */
+    /* Alias of the chess board used to generate valid moves */
     private Board board;
 
     /**
+     * Constructor for the queen's movement strategy.
      * 
-     * 
-     * @param board
+     * @param board the chess board reference
      */
     public QueenMovement(Board board){
         this.board = board;
@@ -53,6 +53,17 @@ public class QueenMovement implements MovementStrategy {
         }
     }
 
+    /**
+     * This method will take a current piece, row, and column and attempt to move the piece to the
+     * specified row and column. If the piece is able to be moved it will be added to the list of
+     * moves, then set the boolean value (valid) to true or false whether it's possible
+     * to move again. It will later return the boolean value.
+     * 
+     * @param row - The row location that the currentPiece may be moved to
+     * @param col - The column location that the currentPiece may be moved to
+     * @param currentPiece - The currentPiece that will be attempted to move
+     * from its original position to the specified row and column in the parameter.
+     */
     private boolean validPosition(Piece currentPiece, int row, int col){
         boolean valid = false;
         if(row < board.getHeight() && row > 0 && col > 0 && col < board.getWidth()){
@@ -67,11 +78,24 @@ public class QueenMovement implements MovementStrategy {
         return valid;
     }
 
+    /**
+     * Determines if the move the player makes is valid.
+     * 
+     * @param from position of square to move from
+     * @param to position of square to move to
+     * @return true if the move is valid, false otherwise
+     */
     public boolean validateMove(Position from, Position to) {
         generateValidMoves(from);
         return this.validMoves.contains(to);
     }
 
+    /**
+     * Show all valid moves of a piece at a given position.
+     * 
+     * @param pos The position of a piece that wants to move
+     * @return An array of possible moves
+     */
     public ArrayList<Position> showMoves(Position pos) {
         return this.validMoves;
     }

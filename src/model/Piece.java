@@ -73,4 +73,5 @@ public class Piece extends BlackAndWhite implements PieceIF {
     public boolean hasMoved(){
         return hasMoved;
     }
+    
 }
