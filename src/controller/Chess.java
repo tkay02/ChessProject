@@ -52,7 +52,7 @@ public class Chess {
 			this.board.draw();
 			if(playerOneTurn) System.out.println(playerOne + "\nRank of piece to move: ");
 			else System.out.println(playerTwo + "\nRank of piece to move: ");
-			Rank fromRank = Rank.getRankByIndex(in.nextInt());
+			Rank fromRank = Rank.getRankByReal(in.nextInt());
 			System.out.println("File of piece to move: ");
 			File fromFile = File.getFileByChar(in.next().charAt(0));
 
@@ -60,12 +60,12 @@ public class Chess {
 			Piece piece = (Piece) board.getPiece(fromRank, fromFile);
 			ArrayList<Position> aL = piece.showMoves(pos);
 			for(Position posn : aL){
-				System.out.print("Valid Position: (" + posn.getRank().getArrayRank() + " " + posn.getFile().getRealFile() + ") ");
+				System.out.print("Valid Position: (" + posn.getRank().getRealRank() + " " + posn.getFile().getRealFile() + ") ");
 			}
 
 
 			System.out.println("Rank of square to move to: ");
-			Rank toRank = Rank.getRankByIndex(in.nextInt());
+			Rank toRank = Rank.getRankByReal(in.nextInt());
 			System.out.println("Rank of square to move to: ");
 			File toFile = File.getFileByChar(in.next().charAt(0));
 
