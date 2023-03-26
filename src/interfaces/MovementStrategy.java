@@ -21,11 +21,10 @@ public interface MovementStrategy {
     /**
      * Determines if the move the player makes is valid.
      * 
-     * @param from position of square to move from
      * @param to position of square to move to
      * @return true if the move is valid, false otherwise
      */
-    public boolean validateMove(Position from, Position to);
+    public boolean validateMove(Position to);
 
     /**
      * Show all valid moves of a piece at a given position.

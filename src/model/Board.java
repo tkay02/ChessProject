@@ -11,6 +11,7 @@ import src.enums.File;
 import src.enums.Rank;
 import src.interfaces.PieceIF;
 import src.interfaces.SquareIF;
+import src.ui_di.Board_Mono_CLI;
 import src.interfaces.BoardIF;
 import src.interfaces.BoardStrategy;
 import src.interfaces.MovementStrategy;
@@ -36,6 +37,7 @@ public class Board implements BoardIF {
         this.width = 8;
         this.height = 8;
         chessBoard = new Square[height][width];
+        this.drawStrategy = new Board_Mono_CLI();
         init_board();
         setup();
     }
@@ -143,7 +145,7 @@ public class Board implements BoardIF {
     private void initPiece(Piece piece, boolean whiteOrBlack, int row, int col, 
         MovementStrategy move){
         if (whiteOrBlack) piece.setWhite(whiteOrBlack);
-        else piece.setBlack(whiteOrBlack);
+        else piece.setBlack(true);
         piece.setMoveStrategy(move);
         setBoardPos(piece, row, col);
     }
@@ -165,7 +167,7 @@ public class Board implements BoardIF {
      * @param row - Integer value representing the row where the piece will be retrieved from.
      * @param row - Integer value representing the column where the piece will be retrieved from.
      */
-    private SquareIF getSquare(int row, int col){
+    public SquareIF getSquare(int row, int col){
         return chessBoard[row][col];
     }
 

@@ -55,7 +55,8 @@ public enum Rank {
      * @return the actual Rank object
      */
     public static Rank getRankByIndex(int index){
-        return Rank.values()[index];
+        
+        return Rank.values()[7 - index];
     }
 
     /**
