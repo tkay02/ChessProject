@@ -62,70 +62,73 @@ public class Board implements BoardIF {
      * Sets up the pieces on the chess board.
      */
     public void setup(){
-        MovementStrategy pawnMoves = new PawnMovement(this);
-
         // Pawns
+        MovementStrategy pawnMoves = new PawnMovement(this);
         for(int col = 0; col < 8; col++){
+            Piece blackPawn = new Piece(ChessPieceType.PAWN, GameColor.BLACK);
+            initPiece(blackPawn, false, 1, col, pawnMoves);
 
-            Piece blackPawn = new Piece(ChessPieceType.PAWN, GameColor.BLACK, pawnMoves);
-            initPiece(blackPawn, false, 1, col);
-
-            Piece whitePawn = new Piece(ChessPieceType.PAWN, GameColor.WHITE, pawnMoves);
-            initPiece(whitePawn, true, 6, col);
-
+            Piece whitePawn = new Piece(ChessPieceType.PAWN, GameColor.WHITE);
+            initPiece(whitePawn, true, 6, col, pawnMoves);
         }
 
         // Rooks
+        MovementStrategy rookMoves = new RookMovement(this);
         Piece blackRook1 = new Piece(ChessPieceType.ROOK, GameColor.BLACK);
-        initPiece(blackRook1, false, 0, 0);
+        initPiece(blackRook1, false, 0, 0, rookMoves);
 
         Piece blackRook2 = new Piece(ChessPieceType.ROOK, GameColor.BLACK);
-        initPiece(blackRook2, false, 0, 7);
+        initPiece(blackRook2, false, 0, 7, rookMoves);
 
         Piece whiteRook1 = new Piece(ChessPieceType.ROOK, GameColor.WHITE);
-        initPiece(whiteRook1, true, 7, 0);
+        initPiece(whiteRook1, true, 7, 0, rookMoves);
 
         Piece whiteRook2 = new Piece(ChessPieceType.ROOK, GameColor.WHITE);
-        initPiece(whiteRook2, true, 7, 7);
+        initPiece(whiteRook2, true, 7, 7, rookMoves);
 
         //Knights
+        MovementStrategy knightMoves = new KnightMovement(this);
         Piece blackKnight1 = new Piece(ChessPieceType.KNIGHT, GameColor.BLACK);
-        initPiece(blackKnight1, false, 0, 1);
+        initPiece(blackKnight1, false, 0, 1, knightMoves);
 
         Piece blackKnight2 = new Piece(ChessPieceType.KNIGHT, GameColor.BLACK);
-        initPiece(blackKnight2, false, 0, 6);
+        initPiece(blackKnight2, false, 0, 6, knightMoves);
 
         Piece whiteKnight1 = new Piece(ChessPieceType.KNIGHT, GameColor.WHITE);
-        initPiece(whiteKnight1, true, 7, 1);
+        initPiece(whiteKnight1, true, 7, 1, knightMoves);
 
         Piece whiteKnight2 = new Piece(ChessPieceType.KNIGHT, GameColor.WHITE);
-        initPiece(whiteKnight2, true, 7, 6);
+        initPiece(whiteKnight2, true, 7, 6, knightMoves);
 
         // Bishops
+        MovementStrategy bishopMoves = new BishopMovement(this);
         Piece blackBishop1 = new Piece(ChessPieceType.BISHOP, GameColor.BLACK);
-        initPiece(blackBishop1, false, 0, 2);
+        initPiece(blackBishop1, false, 0, 2, bishopMoves);
 
         Piece blackBishop2 = new Piece(ChessPieceType.BISHOP, GameColor.BLACK);
-        initPiece(blackBishop2, false, 0, 5);
+        initPiece(blackBishop2, false, 0, 5, bishopMoves);
 
         Piece whiteBishop1 = new Piece(ChessPieceType.BISHOP, GameColor.WHITE);
-        initPiece(whiteBishop1, true, 7, 2);
+        initPiece(whiteBishop1, true, 7, 2, bishopMoves);
 
         Piece whiteBishop2 = new Piece(ChessPieceType.BISHOP, GameColor.WHITE);
-        initPiece(whiteBishop2, true, 7, 5);
+        initPiece(whiteBishop2, true, 7, 5, bishopMoves);
 
         // Queens
+        MovementStrategy queenMoves = new QueenMovement(this);
         Piece blackQueen = new Piece(ChessPieceType.QUEEN, GameColor.BLACK);
-        initPiece(blackQueen, false, 0, 3);
+        initPiece(blackQueen, false, 0, 3, queenMoves);
 
         Piece whiteQueen = new Piece(ChessPieceType.QUEEN, GameColor.WHITE);
-        initPiece(whiteQueen, true, 7, 3);
+        initPiece(whiteQueen, true, 7, 3, queenMoves);
+
         // Kings
+        MovementStrategy kingMoves = new KingMovement(this);
         Piece blackKing = new Piece(ChessPieceType.KING, GameColor.BLACK);
-        initPiece(blackKing, false, 0, 4);
+        initPiece(blackKing, false, 0, 4, kingMoves);
 
         Piece whiteKing = new Piece(ChessPieceType.KING, GameColor.WHITE);
-        initPiece(whiteKing, true, 7, 4);
+        initPiece(whiteKing, true, 7, 4, kingMoves);
     }
 
 
@@ -137,9 +140,11 @@ public class Board implements BoardIF {
      * @param row - Integer value representing the row where the piece will be placed.
      * @param col - Integer value representing the column where the piece will be placed.
      */ 
-    private void initPiece(Piece piece, boolean whiteOrBlack, int row, int col){
+    private void initPiece(Piece piece, boolean whiteOrBlack, int row, int col, 
+        MovementStrategy move){
         if (whiteOrBlack) piece.setWhite(whiteOrBlack);
         else piece.setBlack(whiteOrBlack);
+        piece.setMoveStrategy(move);
         setBoardPos(piece, row, col);
     }
 

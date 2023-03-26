@@ -54,7 +54,7 @@ public enum Rank {
      * @param index the index representing the rank in the 2d array
      * @return the actual Rank object
      */
-    public Rank getRankByIndex(int index){
+    public static Rank getRankByIndex(int index){
         return Rank.values()[index];
     }
 
