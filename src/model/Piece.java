@@ -26,13 +26,15 @@ public class Piece extends BlackAndWhite implements PieceIF {
      * 
      * @param pieceType the type of chess piece
      */
-    public Piece(ChessPieceType pieceType, GameColor color, MovementStrategy moveStrat){
+    public Piece(ChessPieceType pieceType, GameColor color){
         super(color);
         this.pieceType = pieceType;
-        this.moveStrat = moveStrat;
         this.hasMoved = false;
     }
 
+    public void setMoveStrategy(MovementStrategy moveStrat){
+        this.moveStrat = moveStrat;
+    }
     /**
      * Getter for the type of a chess piece.
      * 
@@ -62,4 +64,13 @@ public class Piece extends BlackAndWhite implements PieceIF {
         return moveStrat.validateMove(from, to);
     }
 
+    /**
+     * This method returns a boolean true if the piece has been moved, false 
+     * otherwise.
+     * @return hasMoved - A boolean that represents whether or not the
+     * piece has been moved.
+     */
+    public boolean hasMoved(){
+        return hasMoved;
+    }
 }

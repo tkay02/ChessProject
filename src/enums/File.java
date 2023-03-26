@@ -57,7 +57,7 @@ public enum File {
      * @param index number to represent the file
      * @return the file represented by the index
      */
-    public File getFileByIndex(int index) {
+    public static File getFileByIndex(int index) {
         return File.values()[index];
     }
 

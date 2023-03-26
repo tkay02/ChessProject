@@ -6,6 +6,7 @@ package src.interfaces;
  * @version 3/27/2023
  */
 import src.model.Position;
+import java.util.ArrayList;
 
 public interface MovementStrategy {
     
@@ -15,7 +16,7 @@ public interface MovementStrategy {
      * 
      * @param from the position we're moving from
      */
-    public void generateValidMoves(Position from);
+    public void generateValidMoves(Position start);
 
     /**
      * Determines if the move the player makes is valid.
@@ -32,6 +33,7 @@ public interface MovementStrategy {
      * @param pos The position of a piece that wants to move
      * @return An array of possible moves
      */
-    public Position[] showMoves(Position pos);
+    public ArrayList<Position> showMoves(Position pos);
+    
 
 }
