@@ -33,7 +33,7 @@ public class BishopMovement implements MovementStrategy {
      * Generate all the valid moves of a piece from a current spot,
      * and use it to populate the valid moves array.
      * 
-     * @param from the position we're moving from
+     * @param start the position we're moving from
      */
     public void generateValidMoves(Position start) {
         int row = start.getRank().getArrayRank();
@@ -48,6 +48,18 @@ public class BishopMovement implements MovementStrategy {
         }
     }
 
+    /**
+     * This method will take a current piece, row and col and attempt
+     * move thhe piece to that specified row and column. If the piece
+     * is abled to be move it will be added to the list of moves, then
+     * set the boolean value, valid to true or false whether it's possible
+     * to move again. It will later return the boolean value.
+     * @param row - The row location that the currentPiece may be moved to
+     * @param col - The column location that the currentPiece may be moved to
+     * @param currentPiece - The currentPiece that will be attempted to move
+     * from its original position to the specified row and column in the
+     * parameter.
+     */
     private boolean validPosition(Piece currentPiece, int row, int col){
         boolean valid = false;
         if(row < board.getHeight() && row > 0 && col > 0 && col < board.getWidth()){
@@ -62,11 +74,24 @@ public class BishopMovement implements MovementStrategy {
         return valid;
     }
 
+   /**
+     * This method will generate a list of valid moves for the from position
+     * and then return a boolean value whether or not the list of valid moves
+     * contains the to position.
+     * @param from - Starting position
+     * @param to - Desired ending position to be added
+     */
     public boolean validateMove(Position from, Position to) {
         generateValidMoves(from);
         return this.validMoves.contains(to);
     }
 
+    /**
+     * This method will generate a list of valid moves for the from position
+     * and then return a boolean value whether or not the list of valid moves
+     * contains the to position.
+     * @param pos - List of valid position the current piece\e can move from.
+     */
     public ArrayList<Position> showMoves(Position pos) {
         return this.validMoves;
     }
