@@ -9,6 +9,7 @@ import src.enums.*;
 import src.interfaces.BoardStrategy;
 import src.model.*;
 import src.ui_di.*;
+import java.util.Scanner;
 
 public class Driver {
 
@@ -19,8 +20,27 @@ public class Driver {
 	 */
 	public static void main(String[] args) {
 		Chess match = new Chess();
-		Board_Mono_CLI monoBoard = new Board_Mono_CLI();
-		match.getBoard().setDrawStrategy(monoBoard);
+		//Board_Mono_CLI monoBoard = new Board_Mono_CLI();
+		//Board_Color_CLI colorBoard = new Board_Color_CLI();
+		Scanner in = new Scanner(System.in);
+		Boolean correctInput = false;
+		String input;
+		BoardStrategy boardColor = new Board_Mono_CLI(); //default is monotone
+		while(!correctInput){
+			System.out.println("Choose Board color:\nFor monotone: Board_Mono_CLI\tFor color: Board_Color_CLI");
+			input = in.nextLine();
+			switch(input){
+				case "Board_Mono_CLI":
+					boardColor = new Board_Mono_CLI();
+					correctInput = true;
+					break;
+				case "Board_Color_CLI":
+					boardColor = new Board_Color_CLI();
+					correctInput = true;
+					break;
+			}
+		}
+		match.getBoard().setDrawStrategy(boardColor);
 		match.getBoard().draw();
 	}
 
