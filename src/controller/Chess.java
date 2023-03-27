@@ -2,7 +2,8 @@ package src.controller;
 /**
  * Represents the game of chess. In the future, this class will allow users to start games,
  * end games, save games, load games, and other operations that relate to the ChessMeister
- * service.
+ * service. Currently, it includes the majority of the logic allowing users to play the match,
+ * including error handling if the user makes faulty inputs.
  * 
  * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 3/27/2023
@@ -28,41 +29,38 @@ public class Chess {
 
 	/* The board to play chess on */
 	private Board board;
-	/* The input for the user to enter */
+	/* The input to scan the user's input */
 	private Scanner input;
+	/*A string representing if the user resigned */
 	private String resignation;
+	/*A string representing the user's input for the rank */
 	private String stringRank;
+	/*An int representing the rank of the user that parses stringRank */
 	private int intRank;
+	/*A string representing the user's input for the file */
 	private String stringFile;
+	/*A string representing the user's char input for the file */
 	private char charFile;
-	private ArrayList<String> resignationList =  new  ArrayList<>();
+	/*ArrayList representing valid inputs for the chess board's file */
 	private ArrayList<String> fileList = new ArrayList<>();
+	/*ArrayList representing valid inputs for the chess board's rank */
 	private ArrayList<String> rankList = new  ArrayList<>();
 
 
 
 	/**
-	 * Constructor for the game of chess.
+	 * Constructor for the game of chess. Initializes scanner, ArrayList's of valid inputs, and
+	 * calls newGame with the user's drawStrategy to run the bulk of the program.
 	 *
-	 * @param BoardStrategy drawStrategy The way that the chessboard is drawn.
+	 * @param BoardStrategy drawStrategy user's input for the chessboard
 	 */
 	public Chess(BoardStrategy drawStrategy) {
 		this.input = new Scanner(System.in);
-		this.resignationList.add("Y");
 		String[] fileArray = new String[]{"A", "B", "C", "D", "E", "F", "G", "H"}; 
 		this.fileList.addAll(Arrays.asList(fileArray));
 		String[] rankArray = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
 		this.rankList.addAll(Arrays.asList(rankArray));
 		this.newGame(drawStrategy);
-	}
-
-	/**
-	 * Returns the list that stores the values of the Rank categories.
-	 * 
-	 * @return The list that stores the values of the Rank categories.
-	 */
-	public ArrayList<String> getRankList(){
-		return this.rankList;
 	}
 	
 	/**
@@ -109,41 +107,44 @@ public class Chess {
 		boolean resigned = false;
 		//Checks if the piece chosen by player is one of theirs
 		boolean pieceChecker;
-		String color = "";
+		String color = ""; //White if Player one, black if Player two, to be printed
 		if(player.equals("One")) color = "White";
 		else color = "Black";
 		while(keepGoing){
-			System.out.println(System.out.println("Player " + player + "'s Turn (" + color + " Pieces)." +
+			System.out.println("Player " + player + "'s Turn (" + color + " Pieces)." +
 							   " Type 'Y' to resign, or anything else to continue.");
 			resignation = input.nextLine();
 			//If the player doesn't resign
 			if(!resignation.equals("Y")){
 				//Asks player for rank for piece to move
-				stringRank = prompt("Type the rank of the piece you'd like to move.", getRankList());
-				intRank = Integer.parseInt(stringRank);						
-				//Asks player for file for piece to move
+				stringRank = prompt("Type the rank of the piece you'd like to move.", rankList);
+				intRank = Integer.parseInt(stringRank);//Turn into int after correct input verified						
+
 				stringFile = prompt("Type the file of the piece you'd like to move.", fileList);
-				charFile = stringFile.trim().charAt(0);
+				charFile = stringFile.trim().charAt(0);//Turn into char after correct input verified		
+				
 				//Retrieves position of the chosen piece
 				Rank fromRank = Rank.getRankByReal(intRank);
 				File fromFile = File.getFileByChar(charFile);
 				Position pos = new Position(fromRank, fromFile);
 				Piece piece = (Piece) board.getPiece(fromRank, fromFile);
-				//Checks if the position chosen is equal to the player's piece color
+				//Sets the pieceChecker to black() or white() depending on if its player one or two
 				if(player.equals("One")) pieceChecker = piece.isWhite();
 				else pieceChecker = piece.isBlack();
-				//If piece chosen is valid
-				if(pieceChecker){
+
+				if(pieceChecker){//If piece chosen is valid
 					//List of valid moves for the piece
 					ArrayList<Position> aL = piece.showMoves(pos);
 					//Displays the amount of valid moves that the player can choose from
 					System.out.print("\nValid Moves: ");
 					for(Position posn : aL){
-						System.out.print("(" + posn.getRank().getRealRank() + "," + posn.getFile().getRealFile() + ") ");
+						System.out.print("(" + posn.getRank().getRealRank() + "," + 
+										 posn.getFile().getRealFile() + ") ");
 					}
 					System.out.println("\n");
 					//Asks user for rank for new position to move to
-					stringRank = prompt("Type the rank of the square you'd like to move to.", rankList);
+					stringRank = prompt("Type the rank of the square you'd like to move to.", 
+										rankList);
 					intRank = Integer.parseInt(stringRank);
 					//Asks user for file for new position to move to
 					stringFile = prompt("Type the file of the square you'd like to move to.", fileList);
@@ -154,7 +155,7 @@ public class Chess {
 					if(move(fromFile, fromRank, toFile, toRank)){
 						//Ends player's turn
 						keepGoing = false;
-						piece.setHasMoved();
+						piece.setHasMoved(); //sets the piece to have being moved
 					}
 					else{
 						//Repeats loop
@@ -168,15 +169,13 @@ public class Chess {
 				keepGoing = false;
 				resigned = true;
 			}
-			//ArrayList<Position> aL = piece.showMoves(pos);
-			// for(Position posn : aL){
-			// 	System.out.print("Valid Position: (" + posn.getRank().getRealRank() + " " + posn.getFile().getRealFile() + ") ");
-			// }
 		}
-		return resigned;
+		return resigned; //return whether or not the player has resigned
 	}
+
 	/**
-	 * Sets up a new game of chess. Initializes the board strategy to the chess board.
+	 * Sets up and plays a new game of chess. Initializes the board strategy to the chess board.
+	 * Determines which player is playing and ends the match if there is a resignation.
 	 * 
 	 * @param BoardStrategy drawStrategy Determines how the chess board is drawn.
 	 */
@@ -204,14 +203,14 @@ public class Chess {
 	}
 	
 	/**
-	 * Performs steps to end the game of chess.
+	 * Performs steps to end the game of chess. Not currently implemented, will be in the future.
 	 */
 	public void endGame() {
 		
 	}
 	
 	/**
-	 * Setup for loading a game in.
+	 * Setup for loading a game in. Not currently implemented, will be in the future.
 	 * 
 	 * @param file
 	 * @return
@@ -221,23 +220,24 @@ public class Chess {
 	}
 	
 	/**
-	 * Process of saving a game.
+	 * Process of saving a game. Not currently implemented, will be in the future.
 	 * 
 	 * @param file Name of file to save game as
 	 * @param game Interface of game to be saved
 	 */
 	public void saveGame(String file, BoardIF game) {
-		//BoardIF in other package is not being recognized?
+
 	}
 
 	/**
-	 * Moves piece and updates the board.
+	 * Moves piece and updates the board. If necessary, adds any taken pieces to the correct
+	 * ArrayList.
 	 * 
 	 * @param fromF File of piece to be moved
 	 * @param fromR Rank of piece to be moved
 	 * @param toF File of where piece is being moved to
 	 * @param toR Rank of where piece is being moved to
-	 * @return True if the selected move was validate; false otherwise.
+	 * @return True if the selected move was validate; false otherwise
 	 */
 	public boolean move(File fromF, Rank fromR, File toF, Rank toR) {
 		//Creates new position to move to
@@ -261,14 +261,14 @@ public class Chess {
 
 			//Sets piece to new position and clears from original space
 			Piece toPiece = (Piece) toSquare.getPiece();
-			if(toPiece.isWhite()){
+			if(toPiece.isWhite()){ //if white, the piece needs to be "taken" and added to ArrayList
 				board.getWhiteTakenPieces().add(toPiece.getChessPieceType().getChessPieceLetter());
 			}
-			if(toPiece.isBlack()){
+			if(toPiece.isBlack()){ //if black, the piece needs to be "taken" and added to ArrayList
 				board.getBlackTakenPieces().add(toPiece.getChessPieceType().getChessPieceLetter());
 			}
-			toSquare.setPiece(fromSquare.getPiece());
-			fromSquare.clear();
+			toSquare.setPiece(fromSquare.getPiece()); //put piece at new location
+			fromSquare.clear(); //remove piece from it's previous position on square
 		}
 		else{
 			result = false;

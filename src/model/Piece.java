@@ -5,6 +5,7 @@ package src.model;
  * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 3/27/2023
  */
+
 import src.interfaces.PieceIF;
 import src.interfaces.MovementStrategy;
 
@@ -35,9 +36,15 @@ public class Piece extends BlackAndWhite implements PieceIF {
         this.hasMoved = false;
     }
 
+    /**
+     * Sets the moveStrategy based on the user's input.
+     * 
+     * @param moveStrat user's input moveStrategy
+     */
     public void setMoveStrategy(MovementStrategy moveStrat){
         this.moveStrat = moveStrat;
     }
+
     /**
      * Getter for the type of a chess piece.
      * 
@@ -87,6 +94,9 @@ public class Piece extends BlackAndWhite implements PieceIF {
         return hasMoved;
     }
 
+    /**
+     * Called once a piece has moved, important for limiting the movements of certain pieces.
+     */
     public void setHasMoved(){
         this.hasMoved = true;
     }

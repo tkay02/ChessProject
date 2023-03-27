@@ -1,6 +1,4 @@
 package src.model;
-import java.util.ArrayList;
-
 /**
  * Class to represent the board to play chess on.
  * 
@@ -17,6 +15,7 @@ import src.ui_di.Board_Mono_CLI;
 import src.interfaces.BoardIF;
 import src.interfaces.BoardStrategy;
 import src.interfaces.MovementStrategy;
+import java.util.ArrayList;
 
 public class Board implements BoardIF {
     
@@ -32,7 +31,10 @@ public class Board implements BoardIF {
     /* Height of the board */
     private int height;
 
+    /* List of white pieces that have been taken */
     private ArrayList<String> whiteTakenPieces = new  ArrayList<>();
+
+    /* List of white pieces that have been taken */
 	private ArrayList<String> blackTakenPieces = new  ArrayList<>();
 
     /**
