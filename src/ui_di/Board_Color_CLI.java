@@ -82,20 +82,20 @@ public class Board_Color_CLI implements BoardStrategy{
 				}
 			}
 			//reset the ascii code so that it doesn't extend past the board
-			toDisplay += GameColor.reset_colorings() + "\n";
+			toDisplay += GameColor.resetColor() + "\n";
 		}
 		toDisplay += "Pieces taken by Player One: ";
 		//iterate through ArrayList of black pieces taken to be displayed
 		for(int i = 0; i < board.getBlackTakenPieces().size(); i++){
 			toDisplay += GameColor.BLACK.getText() + "b" + board.getBlackTakenPieces().get(i) +" ";
 		}
-		toDisplay += GameColor.reset_colorings() + "\nPieces taken by Player Two: ";
+		toDisplay += GameColor.resetColor() + "\nPieces taken by Player Two: ";
 		//iterate through ArrayList of white pieces taken to be displayed
 		for(int i = 0; i < board.getWhiteTakenPieces().size(); i++){
 			toDisplay += GameColor.WHITE.getText() + "w" + board.getWhiteTakenPieces().get(i) +" ";
 		}
 		//reset ascii code so the changes don't continue after playing
-		toDisplay += GameColor.reset_colorings() + "\n\n";
+		toDisplay += GameColor.resetColor() + "\n\n";
 		System.out.println(toDisplay);	
 	}
 }

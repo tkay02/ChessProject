@@ -37,13 +37,4 @@ public enum ChessPieceType {
         return this.chessPieceLetter;
     }
     
-    /**
-     * Gets the word representing a chess piece.
-     * 
-     * @return the word representing a chess piece
-     */
-    public String getChessPieceWord(){
-        return this.chessPieceWord;
-    }
-    
 }
