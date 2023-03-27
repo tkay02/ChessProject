@@ -91,7 +91,7 @@ public class KnightMovement implements MovementStrategy {
      */
     public boolean validateMove(Position to) {
         boolean isContained = false;
-        for(Position pos : to){
+        for(Position pos : validMoves){
             if(pos.equals(to)){
                 isContained = true;
             }
