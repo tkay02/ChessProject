@@ -28,7 +28,7 @@ Step 1. Click on the Driver.java file in the workspace then Hit Green Run Button
 ## Video Walkthrough
 Here's a walkthrough of the program:
 <img src='https://i.gyazo.com/ac5503a22e7d2aa182bfe3d02709ef00.mp4'/>
-GIF created with [Gyazo GIF](https://gyazo.com/en).
+
 
 
 ## Description 'What is the program supposed to do?'
