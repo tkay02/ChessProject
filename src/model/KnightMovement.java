@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import src.enums.*;
 
 public class KnightMovement implements MovementStrategy {
-    
-    /**The maximum length for each side of the chess board*/
-    public static final int MAX = 8;
 
     /**Array of valid moves for a selected piece*/
     private ArrayList<Position> validMoves;
@@ -27,7 +24,6 @@ public class KnightMovement implements MovementStrategy {
      * @param GameColor color The current color of the Knight for reference.
      */
     public KnightMovement(Board board) {
-        
         this.board = board;
         this.validMoves = new ArrayList<Position>();
     }
@@ -40,9 +36,7 @@ public class KnightMovement implements MovementStrategy {
      * @param Position from The current position of the Knight piece.
      */
     public void generateValidMoves(Position from) {
-
-        // Resets valid moves list when starting a new position
-        this.validMoves.clear();
+        this.validMoves.clear(); // Resets valid moves list
         int row = from.getRank().getArrayRank();
         int col = from.getFile().getArrayFile();
         Piece currentPiece = (Piece) board.getPiece(row, col);
@@ -54,7 +48,6 @@ public class KnightMovement implements MovementStrategy {
         validPosition(currentPiece, row + 2, col - 1);
         validPosition(currentPiece, row - 2, col + 1);
         validPosition(currentPiece, row - 2, col - 1);
-
     }
 
      /**
@@ -85,16 +78,13 @@ public class KnightMovement implements MovementStrategy {
     /**
      * Checks if the move is valid from its current position to its new position.
      * 
-     * @param Position from The original position of the Knight.
      * @param Position to The new possible position of the Knight.
      * @return True if the new position of the Knight is valid; false otherwise.
      */
     public boolean validateMove(Position to) {
         boolean isContained = false;
         for(Position pos : validMoves){
-            if(pos.equals(to)){
-                isContained = true;
-            }
+            if(pos.equals(to)) isContained = true;
         }
         return isContained;
     }
@@ -110,8 +100,5 @@ public class KnightMovement implements MovementStrategy {
         this.generateValidMoves(pos);
         return this.validMoves;
     }
-
-
- 
 
 }
