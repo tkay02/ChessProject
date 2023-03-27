@@ -26,7 +26,7 @@ Step 0. Import the Java Project
 Step 1. Click on the Driver.java file in the workspace then Hit Green Run Button.
 
 ## Video Walkthrough
-Here's a walkthrough of the program:
+
 <img src='https://i.gyazo.com/ac5503a22e7d2aa182bfe3d02709ef00.mp4'/>
 
 
