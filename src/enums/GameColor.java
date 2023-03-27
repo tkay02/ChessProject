@@ -13,8 +13,10 @@ public enum GameColor{
     /** Black color enumeration */ /** White color enumeration */
     BLACK("\u001b[40m", "\u001b[31m" ), WHITE("\u001b[47m", "\u001b[34m");
 
-    /** The ansi code representing the corresponding enumeration */
+    /** The ansi code representing the background color */
     private String background;
+
+    /** The ansi code representing the text color */
     private String text;
 
     /**
@@ -37,11 +39,19 @@ public enum GameColor{
         return this.background;
     }
 
+    /**
+     * This method will get the text ansi code of the current enumeration.
+     * @return The ansi code representing the text colo
+     */
     public String getText(){
         return this.text;
     }
 
-    public static String reset_colorings(){
+    /**
+     * This method will end and reset the color for the current color's ansi code.
+     * @return The ansi code necessary to terminate a color.
+     */
+    public static String resetColor(){
         return "\u001b[0m";
     }
 }
