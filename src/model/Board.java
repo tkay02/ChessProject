@@ -1,4 +1,6 @@
 package src.model;
+import java.util.ArrayList;
+
 /**
  * Class to represent the board to play chess on.
  * 
@@ -29,6 +31,9 @@ public class Board implements BoardIF {
 
     /* Height of the board */
     private int height;
+
+    private ArrayList<String> whiteTakenPieces = new  ArrayList<>();
+	private ArrayList<String> blackTakenPieces = new  ArrayList<>();
 
     /**
      * Constructor for the chess board.
@@ -253,6 +258,14 @@ public class Board implements BoardIF {
      */
     public PieceIF getPiece(int row, int col){
         return getSquare(row, col).getPiece();
+    }
+
+    public ArrayList<String> getWhiteTakenPieces(){
+        return this.whiteTakenPieces;
+    }
+
+    public ArrayList<String> getBlackTakenPieces(){
+        return this.blackTakenPieces;
     }
 
 }

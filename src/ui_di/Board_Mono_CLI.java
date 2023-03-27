@@ -61,7 +61,15 @@ public class Board_Mono_CLI implements BoardStrategy{
 
 			toDisplay += (board.getWidth() - i) + "\n";
 		}
-		toDisplay += " A  B  C  D  E  F  G  H";
+		toDisplay += " A  B  C  D  E  F  G  H\n";
+		toDisplay += "Pieces taken by Player One: ";
+		for(int i = 0; i < board.getBlackTakenPieces().size(); i++){
+			toDisplay += board.getBlackTakenPieces().get(i).toLowerCase() + " ";
+		}
+		toDisplay += "\nPieces taken by Player Two: ";
+		for(int i = 0; i < board.getWhiteTakenPieces().size(); i++){
+			toDisplay += board.getWhiteTakenPieces().get(i)+ " ";
+		}
 		System.out.println(toDisplay);
 	}
 }

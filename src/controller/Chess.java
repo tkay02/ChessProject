@@ -16,6 +16,7 @@ import src.model.Position;
 import src.model.Square;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -38,28 +39,17 @@ public class Chess {
 	private ArrayList<String> rankList = new  ArrayList<>();
 
 
+
 	/**
 	 * Constructor for the game of chess.
 	 */
 	public Chess(BoardStrategy drawStrategy) {
 		this.input = new Scanner(System.in);
 		this.resignationList.add("Y");
-		this.fileList.add("A");
-		this.fileList.add("B");
-		this.fileList.add("C");
-		this.fileList.add("D");
-		this.fileList.add("E");
-		this.fileList.add("F");
-		this.fileList.add("G");
-		this.fileList.add("H");
-		this.rankList.add("1");
-		this.rankList.add("2");
-		this.rankList.add("3");
-		this.rankList.add("4");
-		this.rankList.add("5");
-		this.rankList.add("6");
-		this.rankList.add("7");
-		this.rankList.add("8");
+		String[] fileArray = new String[]{"A", "B", "C", "D", "E", "F", "G", "H"}; 
+		this.fileList.addAll(Arrays.asList(fileArray));
+		String[] rankArray = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
+		this.rankList.addAll(Arrays.asList(rankArray));
 		this.newGame(drawStrategy);
 	}
 
@@ -205,6 +195,13 @@ public class Chess {
 			Square fromSquare = (Square) board.getSquare(fromRankNum, fromFileNum);
 			Square toSquare = (Square) board.getSquare(toRankNum, toFileNum);
 
+			Piece toPiece = (Piece) toSquare.getPiece();
+			if(toPiece.isWhite()){
+				board.getWhiteTakenPieces().add(toPiece.getChessPieceType().getChessPieceLetter());
+			}
+			if(toPiece.isBlack()){
+				board.getBlackTakenPieces().add(toPiece.getChessPieceType().getChessPieceLetter());
+			}
 			toSquare.setPiece(fromSquare.getPiece());
 			fromSquare.clear();
 		}

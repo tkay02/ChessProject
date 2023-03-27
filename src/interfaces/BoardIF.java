@@ -6,6 +6,10 @@ package src.interfaces;
  * @version 3/27/2023
  */
 import src.enums.Rank;
+import src.model.Piece;
+
+import java.util.ArrayList;
+
 import src.enums.File;
 
 public interface BoardIF {
@@ -72,5 +76,9 @@ public interface BoardIF {
 	 * @return The chess piece on the specific column and row.
 	 */
 	public PieceIF getPiece(int col, int row);
+
+    public ArrayList<String> getWhiteTakenPieces();
+
+    public ArrayList<String> getBlackTakenPieces();	
 	
 }

@@ -59,8 +59,17 @@ public class Board_Color_CLI implements BoardStrategy{
 					}
 				}
 			}
-			toDisplay += GameColor.WHITE.reset_colorings() + "\n";
+			toDisplay += GameColor.reset_colorings() + "\n";
 		}
+		toDisplay += "Pieces taken by Player One: ";
+		for(int i = 0; i < board.getBlackTakenPieces().size(); i++){
+			toDisplay += GameColor.BLACK.getText() + "b" + board.getBlackTakenPieces().get(i) + " ";
+		}
+		toDisplay += GameColor.reset_colorings() + "\nPieces taken by Player Two: ";
+		for(int i = 0; i < board.getWhiteTakenPieces().size(); i++){
+			toDisplay += GameColor.WHITE.getText() + "w" + board.getWhiteTakenPieces().get(i) + " ";
+		}
+		toDisplay += GameColor.reset_colorings();
 		System.out.println(toDisplay);	
 	}
 }

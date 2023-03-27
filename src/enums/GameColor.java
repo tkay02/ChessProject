@@ -41,7 +41,7 @@ public enum GameColor{
         return this.text;
     }
 
-    public String reset_colorings(){
+    public static String reset_colorings(){
         return "\u001b[0m";
     }
 }
