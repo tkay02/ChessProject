@@ -22,7 +22,7 @@ public class Board_Color_CLI implements BoardStrategy{
 	 * @param board the chess board to draw
 	 */
 	public void draw(BoardIF board) {
-		String toDisplay = "     a   b   c   d   e   f   g   h\n\n";
+		String toDisplay = "     A   B   C   D   E   F   G   H\n\n";
 		Piece piece;
 		for(int i = 0; i < board.getWidth(); i++){
 			toDisplay += (board.getWidth() - i) + "   ";

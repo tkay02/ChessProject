@@ -61,7 +61,7 @@ public class Board_Mono_CLI implements BoardStrategy{
 
 			toDisplay += (board.getWidth() - i) + "\n";
 		}
-		toDisplay += " a  b  c  d  e  f  g  h";
+		toDisplay += " A  B  C  D  E  F  G  H";
 		System.out.println(toDisplay);
 	}
 }
