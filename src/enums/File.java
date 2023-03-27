@@ -74,14 +74,5 @@ public enum File {
         }
         return returnFile;
     }
-
-    /**
-     * Do we really need this?
-     * 
-     * @return
-     */
-    public String toString() {
-        return "";
-    }
     
 }

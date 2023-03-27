@@ -58,15 +58,13 @@ public enum Rank {
         return Rank.values()[7 - index];
     }
 
+    /**
+     * This method will get the rank of the enumeration
+     * by the index.
+     * @param index - Integer value of the rank enumeration.
+     * @return The rank enumeration corresponding to the index value passed.
+     */
     public static Rank getRankByReal(int index){
         return Rank.values()[index - 1];
     }
-
-    /**
-     * Is this necessary?
-     */
-    public String toString(){
-        return "";
-    }
-
 }
