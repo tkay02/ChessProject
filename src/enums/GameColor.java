@@ -11,10 +11,11 @@ package src.enums;
 public enum GameColor{
     
     /** Black color enumeration */ /** White color enumeration */
-    BLACK("\u001b[30m"), WHITE("\u001b[37m");
+    BLACK("\u001b[40m", "\u001b[31m" ), WHITE("\u001b[47m", "\u001b[34m");
 
     /** The ansi code representing the corresponding enumeration */
-    private String ansiCode;
+    private String background;
+    private String text;
 
     /**
      * This constructor initializes the color of the enumeration to the
@@ -22,8 +23,9 @@ public enum GameColor{
      * 
      * @param ansiCode code that represents the color
      */
-    private GameColor(String ansiCode){
-        this.ansiCode = ansiCode;
+    private GameColor(String background, String text){
+        this.background = background;
+        this.text = text;
     }
 
     /**
@@ -31,8 +33,15 @@ public enum GameColor{
      * 
      * @return the ansiCode to represent the color
      */
-    public String toString(){
-        return ansiCode;
+    public String getBackground(){
+        return this.background;
     }
 
+    public String getText(){
+        return this.text;
+    }
+
+    public String reset_colorings(){
+        return "\u001b[0m";
+    }
 }

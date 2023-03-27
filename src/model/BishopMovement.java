@@ -62,7 +62,7 @@ public class BishopMovement implements MovementStrategy {
      */
     private boolean validPosition(Piece currentPiece, int row, int col){
         boolean valid = false;
-        if(row < board.getHeight() && row > 0 && col > 0 && col < board.getWidth()){
+        if(row < board.getHeight() && row >= 0 && col >= 0 && col < board.getWidth()){
             Piece otherPiece = (Piece) board.getPiece(row, col);
             if(otherPiece.getChessPieceType() == ChessPieceType.EMPTY){
                 validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col)));
@@ -82,7 +82,11 @@ public class BishopMovement implements MovementStrategy {
      * @param to - Desired ending position to be added
      */
     public boolean validateMove(Position to) {
-        return contains(to);
+        boolean isContained = false;
+        for(Position pos : validMoves){
+            if(pos.equals(to)) isContained = true;
+        }
+        return isContained;
     }
 
     /**
@@ -95,16 +99,6 @@ public class BishopMovement implements MovementStrategy {
     public ArrayList<Position> showMoves(Position pos) {
         generateValidMoves(pos);
         return this.validMoves;
-    }
-
-    public boolean contains(Position otherPos){
-        boolean isContained = false;
-        for(Position pos : validMoves){
-            if(pos.equals(otherPos)){
-                isContained = true;
-            }
-        }
-        return isContained;
     }
 
 }

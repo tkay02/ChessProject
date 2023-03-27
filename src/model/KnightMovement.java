@@ -286,7 +286,7 @@ public class KnightMovement implements MovementStrategy {
         int row = nums[0];
         int col = nums[1];
         Position newPos;
-        if(row - 1 < 0 || col + 2 > MAX) {
+        if(row - 1 <= 0 || col + 2 >= MAX) {
             newPos = null;
         }
         else {

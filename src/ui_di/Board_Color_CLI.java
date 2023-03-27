@@ -1,5 +1,6 @@
 package src.ui_di;
 
+import src.enums.GameColor;
 import src.interfaces.*;
 import src.model.*;
 
@@ -21,35 +22,44 @@ public class Board_Color_CLI implements BoardStrategy{
 	 * @param board the chess board to draw
 	 */
 	public void draw(BoardIF board) {
-		String toDisplay = "";
+		String toDisplay = "     A   B   C   D   E   F   G   H\n\n";
 		Piece piece;
 		for(int i = 0; i < board.getWidth(); i++){
+			toDisplay += (board.getWidth() - i) + "   ";
 			for(int j = 0; j < board.getHeight(); j++){
 				piece = (Piece)board.getPiece(i, j);
 				if(((Square)board.getSquares()[i][j]).isWhite()){
 					if(piece.getChessPieceType().getChessPieceLetter().equals(" ")){
-						toDisplay += "\u001b[47m    ";
+						toDisplay += GameColor.WHITE.getBackground() + "    ";
 					}
 					else if(piece.isWhite()){
-						toDisplay += "\u001b[47m \u001b[34mw" + piece.getChessPieceType().getChessPieceLetter() + "\u001b[47m ";
-					}
+						toDisplay += GameColor.WHITE.getBackground() + " " + 
+									 GameColor.WHITE.getText() + "w" +
+									 piece.getChessPieceType().getChessPieceLetter() + " ";
+					}																					
 					else{
-						toDisplay += "\u001b[47m \u001b[31mb" + piece.getChessPieceType().getChessPieceLetter() + "\u001b[47m ";
+						toDisplay += GameColor.WHITE.getBackground() + " " + 
+									 GameColor.BLACK.getText() + "b" + 
+									 piece.getChessPieceType().getChessPieceLetter() + " ";
 					}
 				}
 				else{
 					if(piece.getChessPieceType().getChessPieceLetter().equals(" ")){
-						toDisplay += "\u001b[40m    ";
+						toDisplay += GameColor.BLACK.getBackground() + "    ";
 					}
 					else if(piece.isWhite()){
-						toDisplay += "\u001b[40m \u001b[34mw" + piece.getChessPieceType().getChessPieceLetter() + "\u001b[40m ";
+						toDisplay += GameColor.BLACK.getBackground() + " " + 
+									 GameColor.WHITE.getText() + "w" + 
+									 piece.getChessPieceType().getChessPieceLetter() + " ";
 					}
 					else{
-						toDisplay += "\u001b[40m \u001b[31mb" + piece.getChessPieceType().getChessPieceLetter() + "\u001b[40m ";
+						toDisplay += GameColor.BLACK.getBackground() + " " + 
+						GameColor.BLACK.getText() + "b" + 
+						piece.getChessPieceType().getChessPieceLetter() + " ";
 					}
 				}
 			}
-			toDisplay += "\u001b[0m\n";
+			toDisplay += GameColor.WHITE.reset_colorings() + "\n";
 		}
 		System.out.println(toDisplay);	
 	}

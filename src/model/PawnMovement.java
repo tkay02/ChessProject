@@ -36,23 +36,19 @@ public class PawnMovement implements MovementStrategy {
      * @param from the position we're moving from
      */
     public void generateValidMoves(Position start){
-        System.out.println("D");
         validMoves.clear();
         int row = start.getRank().getArrayRank();
         int col = start.getFile().getArrayFile();
         Piece piece = (Piece) board.getPiece(row, col);
         if(piece.isWhite()){
-            System.out.println("A");
-            if(row - 1 > 0){
-                System.out.println("B");
+            if(row - 1 >= 0){
                 if(board.getPiece(row - 1, col).getChessPieceType() == ChessPieceType.EMPTY){
-                    System.out.println("C");
                     validMoves.add(new Position(Rank.getRankByIndex(row - 1), start.getFile()));
                     if(!piece.hasMoved() && board.getPiece(row - 2, col).getChessPieceType() == ChessPieceType.EMPTY){
                         validMoves.add(new Position(Rank.getRankByIndex(row - 2), start.getFile()));
                     }
                 }
-                if(col - 1 > 0){
+                if(col - 1 >= 0){
                     if(((Piece) board.getPiece(row - 1, col - 1)).isBlack()){
                         validMoves.add(new Position(Rank.getRankByIndex(row - 1), File.getFileByIndex(col - 1)));
                     }
@@ -72,13 +68,13 @@ public class PawnMovement implements MovementStrategy {
                         validMoves.add(new Position(Rank.getRankByIndex(row + 2), start.getFile()));
                     }
                 }
-                if(col - 1 > 0){
-                    if(((Piece) board.getPiece(row + 1, col - 1)).isBlack()){
+                if(col - 1 >= 0){
+                    if(((Piece) board.getPiece(row + 1, col - 1)).isWhite()){
                         validMoves.add(new Position(Rank.getRankByIndex(row + 1), File.getFileByIndex(col - 1)));
                     }
                 }
                 if(col + 1 < board.getWidth()){
-                    if(((Piece) board.getPiece(row + 1, col + 1)).isBlack()){
+                    if(((Piece) board.getPiece(row + 1, col + 1)).isWhite()){
                         validMoves.add(new Position(Rank.getRankByIndex(row + 1), File.getFileByIndex(col + 1)));
                     }
                 }
@@ -93,20 +89,13 @@ public class PawnMovement implements MovementStrategy {
      * @return true if the move is valid, false otherwise
      */
     public boolean validateMove(Position to){
-        System.out.println(contains(to));
-
-        return contains(to);
-    }
-
-    public boolean contains(Position otherPos){
         boolean isContained = false;
         for(Position pos : validMoves){
-            if(pos.equals(otherPos)){
-                isContained = true;
-            }
+            if(pos.equals(to)) isContained = true;
         }
         return isContained;
     }
+
     /**
      * Show all valid moves of a piece at a given position.
      * 

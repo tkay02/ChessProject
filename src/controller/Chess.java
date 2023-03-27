@@ -16,6 +16,7 @@ import src.model.Position;
 import src.model.Square;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import src.enums.ChessPieceType;
@@ -26,14 +27,114 @@ public class Chess {
 
 	/* The board to play chess on */
 	private Board board;
+	private Scanner input;
+	private String resignation;
+	private String stringRank;
+	private int intRank;
+	private String stringFile;
+	private char charFile;
+	private ArrayList<String> resignationList =  new  ArrayList<>();
+	private ArrayList<String> fileList = new ArrayList<>();
+	private ArrayList<String> rankList = new  ArrayList<>();
+
 
 	/**
 	 * Constructor for the game of chess.
 	 */
 	public Chess(BoardStrategy drawStrategy) {
+		this.input = new Scanner(System.in);
+		this.resignationList.add("Y");
+		this.fileList.add("A");
+		this.fileList.add("B");
+		this.fileList.add("C");
+		this.fileList.add("D");
+		this.fileList.add("E");
+		this.fileList.add("F");
+		this.fileList.add("G");
+		this.fileList.add("H");
+		this.rankList.add("1");
+		this.rankList.add("2");
+		this.rankList.add("3");
+		this.rankList.add("4");
+		this.rankList.add("5");
+		this.rankList.add("6");
+		this.rankList.add("7");
+		this.rankList.add("8");
 		this.newGame(drawStrategy);
 	}
+
+	public ArrayList<String> getRankList(){
+		return this.rankList;
+	}
 	
+	public String prompt(String question, ArrayList<String> list){
+		boolean promptAgain = true;
+		String result = "";
+		while(promptAgain){
+			System.out.println(question);
+			result = input.nextLine();
+			if(list.contains(result)) promptAgain = false;
+		}
+		return result;
+	}
+
+	public boolean playTurn(String player){
+		boolean keepGoing = true;
+		boolean resigned = false;
+		boolean pieceChecker;
+		String color = "";
+		if(player.equals("One")) color = "White";
+		else color = "Black";
+		while(keepGoing){
+			System.out.println("Player " + player + "'s Turn (" + color + " Pieces). Type 'Y' to resign, or anything else to continue.");
+			resignation = input.nextLine();
+			if(!resignation.equals("Y")){
+				stringRank = prompt("Type the rank of the piece you'd like to move.", getRankList());
+				intRank = Integer.parseInt(stringRank);						
+				stringFile = prompt("Type the file of the piece you'd like to move.", fileList);
+				charFile = stringFile.trim().charAt(0);
+				Rank fromRank = Rank.getRankByReal(intRank);
+				File fromFile = File.getFileByChar(charFile);
+				Position pos = new Position(fromRank, fromFile);
+				Piece piece = (Piece) board.getPiece(fromRank, fromFile);
+				if(player.equals("One")) pieceChecker = piece.isWhite();
+				else pieceChecker = piece.isBlack();
+				if(pieceChecker){
+					ArrayList<Position> aL = piece.showMoves(pos);
+
+					System.out.print("\nValid Moves: ");
+					for(Position posn : aL){
+						System.out.print("(" + posn.getRank().getRealRank() + "," + posn.getFile().getRealFile() + ") ");
+					}
+					System.out.println("\n");
+
+					stringRank = prompt("Type the rank of the square you'd like to move to.", rankList);
+					intRank = Integer.parseInt(stringRank);
+					stringFile = prompt("Type the file of the square you'd like to move to.", fileList);
+					charFile = stringFile.trim().charAt(0);
+					Rank toRank = Rank.getRankByReal(intRank);
+					File toFile = File.getFileByChar(charFile);
+					if(move(fromFile, fromRank, toFile, toRank)){
+						keepGoing = false;
+						piece.setHasMoved();
+					}
+					else{
+						System.out.println("Try Again.");
+						keepGoing = true;
+					}
+				}
+			}
+			else{
+				keepGoing = false;
+				resigned = true;
+			}
+			//ArrayList<Position> aL = piece.showMoves(pos);
+			// for(Position posn : aL){
+			// 	System.out.print("Valid Position: (" + posn.getRank().getRealRank() + " " + posn.getFile().getRealFile() + ") ");
+			// }
+		}
+		return resigned;
+	}
 	/**
 	 * Sets up a new game of chess.
 	 */
@@ -41,39 +142,18 @@ public class Chess {
 		this.board = new Board();
 		this.board.setDrawStrategy(drawStrategy);
 		boolean playing = true;
-		String playerOne = "Player One's Turn";
-		String playerTwo = "Player Two's Turn";
-		boolean playerOneTurn = true;
-		Scanner in = new Scanner(System.in);
+		int playerTurn = 0;
 		while(playing){
-			System.out.println("Resign? (Y/N): ");
-			if(in.nextLine().equals("Y")) playing = false;
-
 			this.board.draw();
-			if(playerOneTurn) System.out.println(playerOne + "\nRank of piece to move: ");
-			else System.out.println(playerTwo + "\nRank of piece to move: ");
-			Rank fromRank = Rank.getRankByIndex(in.nextInt());
-			System.out.println("File of piece to move: ");
-			File fromFile = File.getFileByChar(in.next().charAt(0));
-
-			Position pos = new Position(fromRank, fromFile);
-			Piece piece = (Piece) board.getPiece(fromRank, fromFile);
-			ArrayList<Position> aL = piece.showMoves(pos);
-			for(Position posn : aL){
-				System.out.print("Valid Position: (" + posn.getRank().getArrayRank() + " " + posn.getFile().getRealFile() + ") ");
+			if(playerTurn % 2 == 0){
+				if(playTurn("One")) playing = false;
 			}
-
-
-			System.out.println("Rank of square to move to: ");
-			Rank toRank = Rank.getRankByIndex(in.nextInt());
-			System.out.println("Rank of square to move to: ");
-			File toFile = File.getFileByChar(in.next().charAt(0));
-
-			move(fromFile, fromRank, toFile, toRank);
-			piece.setHasMoved();
-			playerOneTurn = !playerOneTurn;
+			else{
+				if(playTurn("Two")) playing = false;	
+			}
+			playerTurn++;
 		}
-
+		input.close();
 	}
 	
 	/**
@@ -111,10 +191,10 @@ public class Chess {
 	 * @param toF File of where piece is being moved to
 	 * @param toR Rank of where piece is being moved to
 	 */
-	public void move(File fromF, Rank fromR, File toF, Rank toR) {
+	public boolean move(File fromF, Rank fromR, File toF, Rank toR) {
 		Position toPos = new Position(toR, toF);
-		System.out.print("What we enter: (" + toPos.getRank().getArrayRank() + " " + toPos.getFile().getRealFile() + ") ");
 
+		boolean result = true;
 		Piece piece = (Piece) board.getPiece(fromR, fromF);
 		if(piece.validateMove(toPos)){
 			int fromFileNum = fromF.getArrayFile();
@@ -129,22 +209,9 @@ public class Chess {
 			fromSquare.clear();
 		}
 		else{
-			System.out.println("Idiot\n");
+			result = false;
 		}
-	}
-
-	//Are the functions below necessary?
-
-	public void startGame(){
-		System.out.println("Let the game begin!\n");
-	}
-
-	public void printBoard(){
-
-	}
-
-	public Board getBoard(){
-		return this.board;
+		return result;
 	}
 
 }

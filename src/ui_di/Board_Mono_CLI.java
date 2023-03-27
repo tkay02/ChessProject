@@ -35,29 +35,33 @@ public class Board_Mono_CLI implements BoardStrategy{
 		//String pieceLetter = "";
 		String toDisplay = "";
 		Piece piece;
+		String pieceLetter;
 		
 		for(int i = 0; i < board.getWidth(); i++){
 			for(int j = 0; j < board.getHeight(); j++){
 				piece = (Piece)board.getPiece(i, j);
+				pieceLetter = piece.getChessPieceType().getChessPieceLetter();
 				if(((Square)board.getSquares()[i][j]).isWhite()){
 					if(piece.isWhite()){
-						toDisplay += ":" + piece.getChessPieceType().getChessPieceLetter() + ":";
+						toDisplay += ":" + pieceLetter + ":";
 					}
 					else{
-						toDisplay += ":" + piece.getChessPieceType().getChessPieceLetter().toLowerCase() + ":";
+						toDisplay += ":" + pieceLetter.toLowerCase() + ":";
 					}
 				}
 				else{
 					if(piece.isWhite()){
-						toDisplay += "[" + piece.getChessPieceType().getChessPieceLetter() + "]";
+						toDisplay += "[" + pieceLetter + "]";
 					}
 					else{
-						toDisplay += "[" + piece.getChessPieceType().getChessPieceLetter().toLowerCase() + "]";
+						toDisplay += "[" + pieceLetter.toLowerCase() + "]";
 					}
 				}
 			}
-			toDisplay += "\n";
+
+			toDisplay += (board.getWidth() - i) + "\n";
 		}
+		toDisplay += " A  B  C  D  E  F  G  H";
 		System.out.println(toDisplay);
 	}
 }
