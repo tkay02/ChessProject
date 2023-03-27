@@ -1,6 +1,7 @@
 package src.controller;
 /**
- * Driver to run the Chess project.
+ * Driver to run the Chess project. Creates a Chess match to run the majority of the program, and
+ * allows the user to select the boardStrategy from the main menu and begin playing.
  * 
  * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 3/27/2023
@@ -17,16 +18,15 @@ public class Driver {
 	 * @param args array of arguments from the command line
 	 */
 	public static void main(String[] args) {
-
 		Scanner in = new Scanner(System.in);
 		Chess match = null;
 		Boolean correctInput = false;
 		String input;
 		BoardStrategy boardColor = null;
-		System.out.println("Welcome to ChessMeister!\n\n");
-		while(!correctInput){
+		System.out.println("Welcome to ChessMeister! Main Menu:\n");
+		while(!correctInput){//continue the loop if the input is incorrect, reprompt user
 			System.out.println("Please select a board color:\n1) Monotone Board\n2) Colored Board");
-			input = in.nextLine();
+			input = in.nextLine(); //take in user's input
 			switch(input){
 				case "1":
 					boardColor = new Board_Mono_CLI();
@@ -38,6 +38,7 @@ public class Driver {
 					break;	
 			}
 		}
+		//creates a new Chess match based on the user's desired board color
 		match = new Chess(boardColor);
 		in.close();
 	}

@@ -6,10 +6,7 @@ package src.interfaces;
  * @version 3/27/2023
  */
 import src.enums.Rank;
-import src.model.Piece;
-
 import java.util.ArrayList;
-
 import src.enums.File;
 
 public interface BoardIF {
@@ -77,8 +74,18 @@ public interface BoardIF {
 	 */
 	public PieceIF getPiece(int col, int row);
 
+    /**
+     * Getter for the ArrayList of white pieces that were taken.
+     * 
+     * @return ArrayList of white pieces that were taken
+     */
     public ArrayList<String> getWhiteTakenPieces();
 
+	/**
+     * Getter for the ArrayList of black pieces that were taken.
+     * 
+     * @return ArrayList of black pieces that were taken
+     */
     public ArrayList<String> getBlackTakenPieces();	
 	
 }

@@ -260,10 +260,20 @@ public class Board implements BoardIF {
         return getSquare(row, col).getPiece();
     }
 
+    /**
+     * Getter for the ArrayList of white pieces that were taken.
+     * 
+     * @return ArrayList of white pieces that were taken
+     */
     public ArrayList<String> getWhiteTakenPieces(){
         return this.whiteTakenPieces;
     }
 
+    /**
+     * Getter for the ArrayList of black pieces that were taken.
+     * 
+     * @return ArrayList of black pieces that were taken
+     */
     public ArrayList<String> getBlackTakenPieces(){
         return this.blackTakenPieces;
     }
