@@ -44,18 +44,22 @@ public class PawnMovement implements MovementStrategy {
             if(row - 1 >= 0){
                 if(board.getPiece(row - 1, col).getChessPieceType() == ChessPieceType.EMPTY){
                     validMoves.add(new Position(Rank.getRankByIndex(row - 1), start.getFile()));
-                    if(!piece.hasMoved() && board.getPiece(row - 2, col).getChessPieceType() == ChessPieceType.EMPTY){
-                        validMoves.add(new Position(Rank.getRankByIndex(row - 2), start.getFile()));
+                    if(!piece.hasMoved() && board.getPiece(row - 2, col).getChessPieceType() == 
+                        ChessPieceType.EMPTY){
+                        validMoves.add(new Position(Rank.getRankByIndex(row - 2), 
+                            start.getFile()));
                     }
                 }
                 if(col - 1 >= 0){
                     if(((Piece) board.getPiece(row - 1, col - 1)).isBlack()){
-                        validMoves.add(new Position(Rank.getRankByIndex(row - 1), File.getFileByIndex(col - 1)));
+                        validMoves.add(new Position(Rank.getRankByIndex(row - 1), 
+                            File.getFileByIndex(col - 1)));
                     }
                 }
                 if(col + 1 < board.getWidth()){
                     if(((Piece) board.getPiece(row - 1, col + 1)).isBlack()){
-                        validMoves.add(new Position(Rank.getRankByIndex(row - 1), File.getFileByIndex(col + 1)));
+                        validMoves.add(new Position(Rank.getRankByIndex(row - 1), 
+                            File.getFileByIndex(col + 1)));
                     }
                 }
             }
@@ -64,18 +68,22 @@ public class PawnMovement implements MovementStrategy {
             if(row + 1 < board.getHeight()){
                 if(board.getPiece(row + 1, col).getChessPieceType() == ChessPieceType.EMPTY){
                     validMoves.add(new Position(Rank.getRankByIndex(row + 1), start.getFile()));
-                    if(!piece.hasMoved() && board.getPiece(row + 2, col).getChessPieceType() == ChessPieceType.EMPTY){
-                        validMoves.add(new Position(Rank.getRankByIndex(row + 2), start.getFile()));
+                    if(!piece.hasMoved() && board.getPiece(row + 2, col).getChessPieceType() == 
+                        ChessPieceType.EMPTY){
+                        validMoves.add(new Position(Rank.getRankByIndex(row + 2), 
+                            start.getFile()));
                     }
                 }
                 if(col - 1 >= 0){
                     if(((Piece) board.getPiece(row + 1, col - 1)).isWhite()){
-                        validMoves.add(new Position(Rank.getRankByIndex(row + 1), File.getFileByIndex(col - 1)));
+                        validMoves.add(new Position(Rank.getRankByIndex(row + 1), 
+                            File.getFileByIndex(col - 1)));
                     }
                 }
                 if(col + 1 < board.getWidth()){
                     if(((Piece) board.getPiece(row + 1, col + 1)).isWhite()){
-                        validMoves.add(new Position(Rank.getRankByIndex(row + 1), File.getFileByIndex(col + 1)));
+                        validMoves.add(new Position(Rank.getRankByIndex(row + 1), 
+                            File.getFileByIndex(col + 1)));
                     }
                 }
             }

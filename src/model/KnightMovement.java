@@ -10,21 +10,12 @@ import java.util.ArrayList;
 import src.enums.*;
 
 public class KnightMovement implements MovementStrategy {
-    
-    /**The maximum length for each side of the chess board*/
-    public static final int MAX = 8;
-
-    /**To represent the dimensions of the chessboard*/
-    public static final int ROWCOL = 2;
 
     /**Array of valid moves for a selected piece*/
     private ArrayList<Position> validMoves;
 
     /**The chess board to be used as referenced to generate valid moves*/
     private Board board;
-
-    /**The color of the Knight*/
-    private GameColor color;
 
     /**
      * Constructor for KnightMovement.
@@ -33,10 +24,8 @@ public class KnightMovement implements MovementStrategy {
      * @param GameColor color The current color of the Knight for reference.
      */
     public KnightMovement(Board board) {
-        
         this.board = board;
         this.validMoves = new ArrayList<Position>();
-    
     }
 
     /**
@@ -47,89 +36,57 @@ public class KnightMovement implements MovementStrategy {
      * @param Position from The current position of the Knight piece.
      */
     public void generateValidMoves(Position from) {
-
-        //Resets valid moves list when starting a new position
-        this.validMoves.clear();
-        Position newPos;
-        //Checks if up left is a valid move
-        newPos = this.checkUpLeft(from);
-        if(newPos != null) {
-            if(this.notAlly(newPos)) {
-                this.validMoves.add(newPos);
-            }
-        }
-        //Checks if up right is a valid move
-        newPos = this.checkUpRight(from);
-        if(newPos != null) {
-            if(this.notAlly(newPos)) {
-                this.validMoves.add(newPos);
-            }
-        }
-        //Checks if left up is a valid move
-        newPos = this.checkLeftUp(from);
-        if(newPos != null) {
-            if(this.notAlly(newPos)) {
-                this.validMoves.add(newPos);
-            }
-        }
-        //Checks if left down is a valid move
-        newPos = this.checkLeftDown(from);
-        if(newPos != null) {
-            if(this.notAlly(newPos)) {
-                this.validMoves.add(newPos);
-            }
-        }
-        //Checks if right up is a valid move
-        newPos = this.checkRightUp(from);
-        if(newPos != null) {
-            if(this.notAlly(newPos)) {
-                this.validMoves.add(newPos);
-            }
-        }
-        //Checks if right down is a valid move
-        newPos = this.checkRightDown(from);
-        if(newPos != null) {
-            if(this.notAlly(newPos)) {
-                this.validMoves.add(newPos);
-            }
-        }
-        //Checks if down left is a valid move
-        newPos = this.checkDownLeft(from);
-        if(newPos != null) {
-            if(this.notAlly(newPos)) {
-                this.validMoves.add(newPos);
-            }
-        }
-        //Checks if down right is a valid move
-        newPos = this.checkDownRight(from);
-        if(newPos != null) {
-            if(this.notAlly(newPos)) {
-                this.validMoves.add(newPos);
-            }
-        }
-
+        this.validMoves.clear(); // Resets valid moves list
+        int row = from.getRank().getArrayRank();
+        int col = from.getFile().getArrayFile();
+        Piece currentPiece = (Piece) board.getPiece(row, col);
+        validPosition(currentPiece, row - 1, col - 2);
+        validPosition(currentPiece, row - 1, col + 2);
+        validPosition(currentPiece, row + 1, col - 2);
+        validPosition(currentPiece, row + 1, col + 2);
+        validPosition(currentPiece, row + 2, col + 1);
+        validPosition(currentPiece, row + 2, col - 1);
+        validPosition(currentPiece, row - 2, col + 1);
+        validPosition(currentPiece, row - 2, col - 1);
     }
 
-
-    public boolean contains(Position otherPos){
-        boolean isContained = false;
-        for(Position pos : validMoves){
-            if(pos.equals(otherPos)){
-                isContained = true;
+     /**
+     * This method will take a current piece, row, and column and attempt to move the piece to the
+     * specified row and column. If the piece is able to be moved it will be added to the list of
+     * moves, then set the boolean value (valid) to true or false whether it's possible
+     * to move again. It will later return the boolean value.
+     * 
+     * @param row - The row location that the currentPiece may be moved to
+     * @param col - The column location that the currentPiece may be moved to
+     * @param currentPiece - The currentPiece that will be attempted to move
+     * from its original position to the specified row and column in the parameter.
+     */
+    private boolean validPosition(Piece currentPiece, int row, int col){
+        boolean valid = false;
+        if(row < board.getHeight() && row >= 0 && col >= 0 && col < board.getWidth()){
+            Piece otherPiece = (Piece) board.getPiece(row, col);
+            if(otherPiece.getChessPieceType() == ChessPieceType.EMPTY){
+                validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col)));
+                valid = true;
+            }else if(otherPiece.getColor() != currentPiece.getColor()){
+                validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col)));
             }
         }
-        return isContained;
+        return valid;
     }
 
     /**
      * Checks if the move is valid from its current position to its new position.
      * 
-     * @param Position from The original position of the Knight.
      * @param Position to The new possible position of the Knight.
      * @return True if the new position of the Knight is valid; false otherwise.
      */
     public boolean validateMove(Position to) {
-        return contains(to);
+        boolean isContained = false;
+        for(Position pos : validMoves){
+            if(pos.equals(to)) isContained = true;
+        }
+        return isContained;
     }
 
     /**
@@ -140,226 +97,8 @@ public class KnightMovement implements MovementStrategy {
      * @return An array that stores all of the possible positions.
      */
     public ArrayList<Position> showMoves(Position pos) {
-        Rank rank = pos.getRank();
-        File file = pos.getFile();
-        this.color = ((Piece) board.getPiece(rank, file)).getColor();
-
         this.generateValidMoves(pos);
         return this.validMoves;
-    }
-
-    /**
-     * Returns an array that stores the current row and column numbers in a basic
-     * integer array. The current row is stored as the first element while the current
-     * column is stored as the second element.
-     * 
-     * @param Position pos The current position of the Knight piece.
-     * @return An integer array that stores the number of the row and column.
-     */
-    private int[] currentRowAndCol(Position pos) {
-
-        int[] rolAndCol = new int[ROWCOL];
-        rolAndCol[0] = pos.getRank().getArrayRank();
-        rolAndCol[1] = pos.getFile().getArrayFile();
-        return rolAndCol;
-
-    }
-
-    /**
-     * Determines if moving up left is a valid move.
-     * 
-     * @param Position pos The current position of the Knight piece.
-     * @return The valid position of moving up left; null if the move is invalid.
-     */
-    private Position checkUpLeft(Position pos) {
-        
-        int[] nums = this.currentRowAndCol(pos);
-        int row = nums[0];
-        int col = nums[1];
-        Position newPos;
-        if(row + 2 >= MAX || col - 1 < 0) {
-            newPos = null;
-        }
-        else {
-            newPos = new Position(Rank.getRankByIndex(row+2), File.getFileByIndex(col-1));
-        }
-        return newPos;
-    
-    }
-
-    /**
-     * Determines if moving up right is a valid move. 
-     * 
-     * @param Position pos The current position of the piece.
-     * @return The valid position of moving up right; null if move is invalid.
-     */
-    private Position checkUpRight(Position pos) {
-
-        int[] nums = this.currentRowAndCol(pos);
-        int row = nums[0];
-        int col = nums[1];
-        Position newPos;
-        if(row + 2 >= MAX || col + 1 >= MAX) {
-            newPos = null;
-        }
-        else {
-            newPos = new Position(Rank.getRankByIndex(row+2), File.getFileByIndex(col+1));
-        }
-        return newPos;
-
-    }
-
-    /**
-     * Determines if moving left up is a valid move. 
-     * 
-     * @param Position pos The current position of the piece.
-     * @return The valid position of moving left up; null if move is invalid.
-     */
-    private Position checkLeftUp(Position pos) {
-
-        int[] nums = this.currentRowAndCol(pos);
-        int row = nums[0];
-        int col = nums[1];
-        Position newPos;
-        if(row + 1 >= MAX || col - 2 < 0) {
-            newPos = null;
-        }
-        else {
-            newPos = new Position(Rank.getRankByIndex(row+1), File.getFileByIndex(col-2));
-        }
-        return newPos;
-    }
-
-    /**
-     * Determines if moving left down is a valid move. 
-     * 
-     * @param Position pos The current position of the piece.
-     * @return The valid position of moving left down; null if move is invalid.
-     */
-    private Position checkLeftDown(Position pos) {
-
-        int[] nums = this.currentRowAndCol(pos);
-        int row = nums[0];
-        int col = nums[1];
-        Position newPos;
-        if(row - 1 < 0 || col - 2 < 0) {
-            newPos = null;
-        }
-        else {
-            newPos = new Position(Rank.getRankByIndex(row-1), File.getFileByIndex(col-2));
-        }
-        return newPos;
-    
-    }
-
-    /**
-     * Determines if moving right up is a valid move. 
-     * 
-     * @param Position pos The current position of the piece.
-     * @return The valid position of moving right up; null if move is invalid.
-     */
-    private Position checkRightUp(Position pos) {
-        
-        int[] nums = this.currentRowAndCol(pos);
-        int row = nums[0];
-        int col = nums[1];
-        Position newPos;
-        if(row + 1 >= MAX || col + 2 >= MAX) {
-            newPos = null;
-        }
-        else {
-            newPos = new Position(Rank.getRankByIndex(row+1), File.getFileByIndex(col+2));
-        }
-        return newPos;
-
-    }
-
-    /**
-     * Determines if moving right down is a valid move. 
-     * 
-     * @param Position pos The current position of the piece.
-     * @return The valid position of moving right down; null if move is invalid.
-     */
-    private Position checkRightDown(Position pos) {
-        
-        int[] nums = this.currentRowAndCol(pos);
-        int row = nums[0];
-        int col = nums[1];
-        Position newPos;
-        if(row - 1 <= 0 || col + 2 >= MAX) {
-            newPos = null;
-        }
-        else {
-            newPos = new Position(Rank.getRankByIndex(row-1), File.getFileByIndex(col+2));
-        }
-        return newPos;
-
-    }
-
-    /**
-     * Determines if moving down left is a valid move. 
-     * 
-     * @param Position pos The current position of the piece.
-     * @return The valid position of moving down left; null if move is invalid.
-     */
-    private Position checkDownLeft(Position pos) {
-        
-        int[] nums = this.currentRowAndCol(pos);
-        int row = nums[0];
-        int col = nums[1];
-        Position newPos;
-        if(row - 2 < 0 || col - 1 < 0) {
-            newPos = null;
-        }
-        else {
-            newPos = new Position(Rank.getRankByIndex(row-2), File.getFileByIndex(col-1));
-        }
-        return newPos;
-
-    }
-
-    /**
-     * Determines if moving down right is a valid move. 
-     * 
-     * @param Position pos The current position of the piece.
-     * @return The valid position of moving down right; null if move is invalid.
-     */
-    private Position checkDownRight(Position pos) {
-        
-        int[] nums = this.currentRowAndCol(pos);
-        int row = nums[0];
-        int col = nums[1];
-        Position newPos;
-        if(row - 2 < 0 || col + 1 >= MAX) {
-            newPos = null;
-        }
-        else {
-            newPos = new Position(Rank.getRankByIndex(row-2), File.getFileByIndex(col+1));
-        }
-        return newPos;
-
-    }
-
-    /**
-     * Checks if the next position doesn't have an ally piece.
-     * 
-     * @param Position nextPos The next position within the Knight's moves.
-     * @return True if there's not an ally piece on the new position; false otherwise.
-     */
-    private boolean notAlly(Position nextPos) {
-
-        boolean isNotAlly = true;
-        int[] nums = this.currentRowAndCol(nextPos);
-        int row = nums[0];
-        int col = nums[1];
-        Piece piece = (Piece)this.board.getPiece(row, col);
-        if(piece.getChessPieceType() != ChessPieceType.EMPTY) {
-            if(this.color == piece.getColor()) {
-                isNotAlly = false;
-            }
-        }
-        return isNotAlly; 
-
     }
 
 }
