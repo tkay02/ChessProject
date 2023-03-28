@@ -1,4 +1,4 @@
-package src.ui_di;
+package src.ui_cli;
 /**
  * Implementation of BoardStrategy that creates a monotone version of the chess board.
  * 

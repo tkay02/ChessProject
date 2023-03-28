@@ -7,7 +7,8 @@ package src.controller;
  * @version 3/27/2023
  */
 import src.interfaces.BoardStrategy;
-import src.ui_di.*;
+import src.ui_cli.*;
+
 import java.util.Scanner;
 
 public class Driver {

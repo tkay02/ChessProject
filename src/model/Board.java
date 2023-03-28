@@ -11,7 +11,7 @@ import src.enums.File;
 import src.enums.Rank;
 import src.interfaces.PieceIF;
 import src.interfaces.SquareIF;
-import src.ui_di.Board_Mono_CLI;
+import src.ui_cli.Board_Mono_CLI;
 import src.interfaces.BoardIF;
 import src.interfaces.BoardStrategy;
 import src.interfaces.MovementStrategy;

@@ -1,4 +1,4 @@
-package src.ui_di;
+package src.ui_cli;
 /**
  * Creates a colored version of chess board. Implements board strategy, and uses GameColor enums
  * to get the unique color of black and white squares and pieces.
