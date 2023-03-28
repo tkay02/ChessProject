@@ -6,7 +6,7 @@ package src.enums;
  * be displayed to the user and the array file, which is the corresponding
  * index within the array.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum (5%), Thomas Kay, Joseph Oladeji (95%), Levi Sweat
  * @version 3/27/2023
  */
 

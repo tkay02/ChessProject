@@ -2,7 +2,7 @@ package src.model;
 /**
  * Class for the movement strategy of a pawn.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum (100%), Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 3/27/2023
  */
 import src.interfaces.MovementStrategy;
@@ -16,7 +16,7 @@ public class PawnMovement implements MovementStrategy {
     /* Array of valid moves for a selected piece */
     private ArrayList<Position> validMoves;
 
-    /* Alias of the chess board used to generate valid moves  */
+    /* Alias of the chess board used to generate valid moves */
     private Board board;
 
     /**

@@ -2,7 +2,7 @@ package src.interfaces;
 /**
  * Interface for the chess pieces.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
  * @version 3/27/2023
  */
 import src.enums.ChessPieceType;

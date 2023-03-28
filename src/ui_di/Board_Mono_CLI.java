@@ -2,7 +2,7 @@ package src.ui_di;
 /**
  * Implementation of BoardStrategy that creates a monotone version of the chess board.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum (25%), Thomas Kay, Joseph Oladeji (25%), Levi Sweat (50%)
  * @version 3/27/2023
  */
 
@@ -13,13 +13,13 @@ import src.model.Square;
 
 public class Board_Mono_CLI implements BoardStrategy{
 	
-	/*String built to display the board once completed. */
+	/* String built to display the board once completed. */
 	private String toDisplay;
 
-	/*Piece representing the current piece when building the board. */
+	/* Piece representing the current piece when building the board. */
 	private Piece piece;
 	
-	/*Represents letter of current piece */
+	/* Represents letter of current piece */
 	private String pieceLetter;
 
 	/**
@@ -78,4 +78,5 @@ public class Board_Mono_CLI implements BoardStrategy{
 		}
 		System.out.println(toDisplay); //print out board
 	}
+	
 }

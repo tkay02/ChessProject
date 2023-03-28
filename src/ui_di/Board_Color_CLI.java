@@ -3,7 +3,7 @@ package src.ui_di;
  * Creates a colored version of chess board. Implements board strategy, and uses GameColor enums
  * to get the unique color of black and white squares and pieces.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat (100%)
  * @version 3/27/2023
  */
 
@@ -15,19 +15,17 @@ import src.model.Square;
 
 public class Board_Color_CLI implements BoardStrategy{
 	
-	/*String built to display the board once completed. */
+	/* String built to display the board once completed. */
 	private String toDisplay;
 
-	/*Piece representing the current piece when building the board. */
+	/* Piece representing the current piece when building the board. */
 	private Piece piece;
-
 
 	/**
 	 * Constructor for Board_Color_CLI class. Initilaizes toDisplay.
 	 */
 	public Board_Color_CLI(){
 		this.toDisplay = "";
-
 	}
 	
 	/**

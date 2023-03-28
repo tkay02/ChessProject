@@ -2,7 +2,7 @@ package src.model;
 /**
  * Class for the movement strategy of a queen.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum (40%), Thomas Kay (20%), Joseph Oladeji (40%), Levi Sweat
  * @version 3/27/2023
  */
 import java.util.ArrayList;

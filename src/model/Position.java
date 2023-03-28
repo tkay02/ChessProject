@@ -2,7 +2,7 @@ package src.model;
 /**
  * A class that uses ranks and files to represent a position on a chess board.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum (70%), Thomas Kay, Joseph Oladeji (30%), Levi Sweat
  * @version 3/27/2023
  */
 import src.enums.File;
@@ -45,6 +45,12 @@ public class Position {
         return this.file;
     }
 
+    /**
+     * Compares two Position objects and checks for equality
+     * 
+     * @param pos other Position to compare
+     * @return true if equal, false otherwise
+     */
     public boolean equals(Position pos){
         boolean isEqual = false;
         if(this.rank.equals(pos.getRank()) && this.file.equals(pos.getFile())) isEqual = true;

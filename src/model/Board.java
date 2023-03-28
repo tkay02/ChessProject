@@ -2,7 +2,7 @@ package src.model;
 /**
  * Class to represent the board to play chess on.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum (25%), Thomas Kay (25%), Joseph Oladeji (25%), Levi Sweat (25%)
  * @version 3/27/2023
  */
 import src.enums.ChessPieceType;
@@ -140,10 +140,10 @@ public class Board implements BoardIF {
         initPiece(whiteKing, true, 7, 4, kingMoves);
     }
 
-
     /**
      * This method will take a piece, and set it's color depending on the
-     * boolean value passed set its position coordinates for where it'll be placed. 
+     * boolean value passed set its position coordinates for where it'll be placed.
+     * 
      * @param piece - Piece that will be initialized.
      * @param whiteOrBlack - Boolean value for the piece whether it is black or white.
      * @param row - Integer value representing the row where the piece will be placed.
@@ -160,6 +160,7 @@ public class Board implements BoardIF {
     /**
      * This method takes a piece and sets it's position to the desired
      * row and column within the board.
+     * 
      * @param piece - Piece that will be set at a specified location.
      * @param row - Integer value representing the row where the piece will be placed.
      * @param col - Integer value representing the column where the piece will be placed.

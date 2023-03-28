@@ -2,7 +2,7 @@ package src.model;
 /**
  * Class for the movement strategy of a king.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum (50%), Thomas Kay, Joseph Oladeji (50%), Levi Sweat
  * @version 3/27/2023
  */
 import java.util.ArrayList;

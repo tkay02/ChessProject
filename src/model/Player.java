@@ -2,7 +2,7 @@ package src.model;
 /**
  * Class that represents a player object.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum (100%), Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 3/27/2023
  */
 

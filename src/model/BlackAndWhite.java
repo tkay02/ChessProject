@@ -3,7 +3,7 @@ package src.model;
  * Class that represnts the color black and white.
  * Acts as a superclass for squares and pieces in chess.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum (100%), Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 3/27/2023
  */
 import src.interfaces.BlackAndWhiteIF;

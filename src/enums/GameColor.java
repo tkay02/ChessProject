@@ -4,19 +4,18 @@ package src.enums;
  * The color enumeraiton holds the corresponding ansi code for the color to be shown in the
  * terminal to change to that specified.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji (50%), Levi Sweat (50%)
  * @version 3/27/2023
  */
 
 public enum GameColor{
     
-    /** Black color enumeration */ /** White color enumeration */
     BLACK("\u001b[40m", "\u001b[31m" ), WHITE("\u001b[47m", "\u001b[34m");
 
-    /** The ansi code representing the background color */
+    /* The ansi code representing the background color */
     private String background;
 
-    /** The ansi code representing the text color */
+    /* The ansi code representing the text color */
     private String text;
 
     /**
@@ -54,4 +53,5 @@ public enum GameColor{
     public static String resetColor(){
         return "\u001b[0m";
     }
+    
 }

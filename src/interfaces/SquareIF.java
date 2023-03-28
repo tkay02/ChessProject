@@ -2,7 +2,7 @@ package src.interfaces;
 /**
  * Interface for the squares on the chess board.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
  * @version 3/27/2023
  */
 

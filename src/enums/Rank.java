@@ -3,7 +3,7 @@ package src.enums;
  * This enumeration class models the Rank also known as the row for the
  * chess board.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum (20%), Thomas Kay, Joseph Oladeji (60%), Levi Sweat (20%)
  * @version 3/27/2023
  */
 
@@ -67,4 +67,5 @@ public enum Rank {
     public static Rank getRankByReal(int index){
         return Rank.values()[index - 1];
     }
+    
 }

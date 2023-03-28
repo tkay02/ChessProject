@@ -2,7 +2,7 @@ package src.enums;
 /**
  * Enumeration to represent the type of chess piece.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji (100%), Levi Sweat
  * @version 3/27/2023
  */
 
