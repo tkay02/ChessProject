@@ -10,7 +10,6 @@ package src.controller;
  */
 import src.interfaces.BoardIF;
 import src.interfaces.BoardStrategy;
-import src.interfaces.PieceIF;
 import src.model.Board;
 import src.model.Piece;
 import src.model.Position;
@@ -18,10 +17,8 @@ import src.model.Square;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
-import src.enums.ChessPieceType;
 import src.enums.File;
 import src.enums.Rank;
 
@@ -56,7 +53,8 @@ public class Chess {
 	 */
 	public Chess(BoardStrategy drawStrategy) {
 		this.input = new Scanner(System.in);
-		String[] fileArray = new String[]{"A", "B", "C", "D", "E", "F", "G", "H"}; 
+		String[] fileArray = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "a", "b", "c",
+										  "d", "e", "f", "g", "h"}; 
 		this.fileList.addAll(Arrays.asList(fileArray));
 		String[] rankArray = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
 		this.rankList.addAll(Arrays.asList(rankArray));
@@ -121,7 +119,7 @@ public class Chess {
 				intRank = Integer.parseInt(stringRank);//Turn into int after correct input verified						
 
 				stringFile = prompt("Type the file of the piece you'd like to move.", fileList);
-				charFile = stringFile.trim().charAt(0);//Turn into char after correct input verified		
+				charFile = stringFile.trim().toUpperCase().charAt(0);//Turn into char after correct input verified		
 				
 				//Retrieves position of the chosen piece
 				Rank fromRank = Rank.getRankByReal(intRank);
@@ -148,7 +146,7 @@ public class Chess {
 					intRank = Integer.parseInt(stringRank);
 					//Asks user for file for new position to move to
 					stringFile = prompt("Type the file of the square you'd like to move to.", fileList);
-					charFile = stringFile.trim().charAt(0);
+					charFile = stringFile.trim().toUpperCase().charAt(0);
 					Rank toRank = Rank.getRankByReal(intRank);
 					File toFile = File.getFileByChar(charFile);
 					//Sets piece to be chosen position if valid

@@ -36,7 +36,7 @@ public class Board_Mono_CLI implements BoardStrategy{
 	 * @param board the chess board to draw
 	 */
 	public void draw(BoardIF board) {
-		String toDisplay = "";		
+		toDisplay = "";		
 		for(int i = 0; i < board.getWidth(); i++){ //iterate through board
 			for(int j = 0; j < board.getHeight(); j++){
 				piece = (Piece)board.getPiece(i, j); //current piece in iteration
