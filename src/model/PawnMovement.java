@@ -13,10 +13,10 @@ import src.enums.File;
 
 public class PawnMovement implements MovementStrategy {
     
-    /* Array of valid moves for a selected piece */
+    /** Array of valid moves for a selected piece **/
     private ArrayList<Position> validMoves;
 
-    /* Alias of the chess board used to generate valid moves */
+    /** Alias of the chess board used to generate valid moves **/
     private Board board;
 
     /**
@@ -74,7 +74,7 @@ public class PawnMovement implements MovementStrategy {
         ((Piece) board.getPiece(row, col - 1)).getChessPieceType() != ChessPieceType.EMPTY)
             validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col - 1)));
         if(col + 1 < board.getWidth() && ((Piece) board.getPiece(row, col + 1)).getColor() 
-        != currentPiece.getColor() && ((Piece) board.getPiece(row, col + 1)).getChessPieceType() 
+*        != currentPiece.getColor() && ((Piece) board.getPiece(row, col + 1)).getChessPieceType() 
         != ChessPieceType.EMPTY)
             validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col + 1)));
 

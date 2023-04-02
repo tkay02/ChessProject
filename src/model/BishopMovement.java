@@ -13,10 +13,10 @@ import src.interfaces.MovementStrategy;
 
 public class BishopMovement implements MovementStrategy {
     
-    /* Array of valid moves for a selected piece */
+    /** Array of valid moves for a selected piece **/
     private ArrayList<Position> validMoves;
 
-    /* Alias of the chess board used to generate valid moves  */
+    /** Alias of the chess board used to generate valid moves  **/
     private Board board;
 
     /**

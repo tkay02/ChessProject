@@ -1,4 +1,4 @@
-package src.model;
+*package src.model;
 /**
  * Class for the movement strategy of a rook.
  * 
@@ -13,10 +13,10 @@ import src.interfaces.MovementStrategy;
 
 public class RookMovement implements MovementStrategy{
  
-    /* Array of valid moves for a selected piece */
+    /** Array of valid moves for a selected piece **/
     private ArrayList<Position> validMoves;
 
-    /* Alias of the chess board used to generate valid moves  */
+    /** Alias of the chess board used to generate valid moves **/
     private Board board;
 
     /**

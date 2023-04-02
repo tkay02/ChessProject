@@ -19,22 +19,22 @@ import java.util.ArrayList;
 
 public class Board implements BoardIF {
     
-    /* Represents the chess board */
+    /** Represents the chess board **/
     private SquareIF[][] chessBoard;
 
-    /* The strategy for drawing the board */
+    /** The strategy for drawing the board **/
     private BoardStrategy drawStrategy;
 
-    /* Width of the board */
+    /** Width of the board **/
     private int width;
 
-    /* Height of the board */
+    /** Height of the board **/
     private int height;
 
-    /* List of white pieces that have been taken */
+    /** List of white pieces that have been taken **/
     private ArrayList<String> whiteTakenPieces = new  ArrayList<>();
 
-    /* List of white pieces that have been taken */
+    /** List of white pieces that have been taken **/
 	private ArrayList<String> blackTakenPieces = new  ArrayList<>();
 
     /**

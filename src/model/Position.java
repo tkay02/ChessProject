@@ -1,4 +1,4 @@
-package src.model;
+*package src.model;
 /**
  * A class that uses ranks and files to represent a position on a chess board.
  * 
@@ -10,10 +10,10 @@ import src.enums.Rank;
 
 public class Position {
 
-    /* Rank enum to represent the position's rank */
+    /** Rank enum to represent the position's rank **/
     private Rank rank;
 
-    /* File enum to represent the position's file */
+    /** File enum to represent the position's file **/
     private File file;
 
     /**

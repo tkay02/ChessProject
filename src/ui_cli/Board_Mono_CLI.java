@@ -1,4 +1,4 @@
-package src.ui_cli;
+*package src.ui_cli;
 /**
  * Implementation of BoardStrategy that creates a monotone version of the chess board.
  * 
@@ -13,13 +13,13 @@ import src.model.Square;
 
 public class Board_Mono_CLI implements BoardStrategy{
 	
-	/* String built to display the board once completed. */
+	/** String built to display the board once completed. **/
 	private String toDisplay;
 
-	/* Piece representing the current piece when building the board. */
+	/** Piece representing the current piece when building the board. **/
 	private Piece piece;
 	
-	/* Represents letter of current piece */
+	/** Represents letter of current piece **/
 	private String pieceLetter;
 
 	/**

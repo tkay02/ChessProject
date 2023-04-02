@@ -1,4 +1,4 @@
-package src.model;
+*package src.model;
 /**
  * Class that represents a piece object for ChessMeister.
  * 
@@ -16,13 +16,13 @@ import src.enums.GameColor;
 
 public class Piece extends BlackAndWhite implements PieceIF {
 
-    /* Represents the type of a chess piece */
+    /** Represents the type of a chess piece **/
     private ChessPieceType pieceType;
 
-    /* Boolean for if a piece has moved or not */
+    /** Boolean for if a piece has moved or not **/
     private boolean hasMoved;
 
-    /* Strategy for the pieces movement */
+    /** Strategy for the pieces movement **/
     private MovementStrategy moveStrat;
 
     /**

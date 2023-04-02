@@ -1,4 +1,4 @@
-package src.model;
+*package src.model;
 /**
  * Class that represents a square object for ChessMeister.
  * 
@@ -11,10 +11,10 @@ import src.interfaces.SquareIF;
 
 public class Square extends BlackAndWhite implements SquareIF {
     
-    /* Represents the current piece on the square */
+    /** Represents the current piece on the square **/
     private PieceIF piece;
 
-    /* Position of the square */
+    /** Position of the square **/
     private Position pos;
 
     /**

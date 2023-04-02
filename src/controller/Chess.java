@@ -24,31 +24,31 @@ import src.enums.Rank;
 
 public class Chess {
 
-	/* The board to play chess on */
+	/** The board to play chess on **/
 	private Board board;
 
-	/* The input to scan the user's input */
+	/** The input to scan the user's input **/
 	private Scanner input;
 	
-	/* A string representing if the user resigned */
+	/** A string representing if the user resigned **/
 	private String resignation;
 	
-	/* A string representing the user's input for the rank */
+	/** A string representing the user's input for the rank **/
 	private String stringRank;
 	
-	/* An int representing the rank of the user that parses stringRank */
+	/** An int representing the rank of the user that parses stringRank **/
 	private int intRank;
 	
-	/* A string representing the user's input for the file */
+	/** A string representing the user's input for the file **/
 	private String stringFile;
 	
-	/* A string representing the user's char input for the file */
+	/** A string representing the user's char input for the file **/
 	private char charFile;
 	
-	/* ArrayList representing valid inputs for the chess board's file */
+	/** ArrayList representing valid inputs for the chess board's file **/
 	private ArrayList<String> fileList = new ArrayList<>();
 	
-	/* ArrayList representing valid inputs for the chess board's rank */
+	/** ArrayList representing valid inputs for the chess board's rank **/
 	private ArrayList<String> rankList = new  ArrayList<>();
 
 	/**

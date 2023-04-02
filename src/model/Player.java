@@ -1,4 +1,4 @@
-package src.model;
+*package src.model;
 /**
  * Class that represents a player object.
  * 
@@ -8,28 +8,28 @@ package src.model;
 
 public class Player {
     
-    /* User's first name */
+    /** User's first name **/
     private String first;
 
-    /* User's last name */
+    /** User's last name **/
     private String last;
     
-    /* User's email */
+    /** User's email **
     private String email;
     
-    /* User's username */
+    /** User's username **/
     private String userID;
     
-    /* User's password */
+    /** User's password **/
     private String password;
     
-    /* User's number of wins */
+    /** User's number of wins **/
     private int wins;
     
-    /* User's number of losses */
+    /** User's number of losses **/
     private int losses;
     
-    /* User's number of draws */
+    /** User's number of draws **/
     private int draws;
 
     /**

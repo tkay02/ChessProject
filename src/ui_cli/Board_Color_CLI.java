@@ -1,4 +1,4 @@
-package src.ui_cli;
+*package src.ui_cli;
 /**
  * Creates a colored version of chess board. Implements board strategy, and uses GameColor enums
  * to get the unique color of black and white squares and pieces.
@@ -15,10 +15,10 @@ import src.model.Square;
 
 public class Board_Color_CLI implements BoardStrategy{
 	
-	/* String built to display the board once completed. */
+	/** String built to display the board once completed. **/
 	private String toDisplay;
 
-	/* Piece representing the current piece when building the board. */
+	/** Piece representing the current piece when building the board. **/
 	private Piece piece;
 
 	/**

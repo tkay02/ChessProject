@@ -1,4 +1,4 @@
-package src.model;
+*package src.model;
 /**
  * Movement Stragety for the Knight Piece
  * 
@@ -11,10 +11,10 @@ import src.enums.*;
 
 public class KnightMovement implements MovementStrategy {
 
-    /* Array of valid moves for a selected piece */
+    /** Array of valid moves for a selected piece **/
     private ArrayList<Position> validMoves;
 
-    /* The chess board to be used as referenced to generate valid moves */
+    /** The chess board to be used as referenced to generate valid moves **/
     private Board board;
 
     /**
