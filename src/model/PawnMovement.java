@@ -64,16 +64,18 @@ public class PawnMovement implements MovementStrategy {
         boolean oneSpace = board.getPiece(row, col).getChessPieceType() == ChessPieceType.EMPTY;
         boolean twoSpace = board.getPiece(row + dir, col).getChessPieceType() == 
         ChessPieceType.EMPTY;
+
         if(oneSpace){
             validMoves.add(new Position(Rank.getRankByIndex(row), start.getFile()));
             if(!currentPiece.hasMoved() && twoSpace)
                 validMoves.add(new Position(Rank.getRankByIndex(row + dir), start.getFile()));
         }
-        if(col - 1 >= 0 && ((Piece) board.getPiece(row, col - 1)).getColor() != 
-        currentPiece.getColor())
+        if(col - 1 >= 0 && ((Piece) board.getPiece(row, col - 1)).getColor() != currentPiece.getColor() && 
+        ((Piece) board.getPiece(row, col - 1)).getChessPieceType() != ChessPieceType.EMPTY)
             validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col - 1)));
-        if(col + 1 < board.getWidth() && ((Piece) board.getPiece(row, col + 1)).getColor() != 
-        currentPiece.getColor())
+        if(col + 1 < board.getWidth() && ((Piece) board.getPiece(row, col + 1)).getColor() 
+        != currentPiece.getColor() && ((Piece) board.getPiece(row, col + 1)).getChessPieceType() 
+        != ChessPieceType.EMPTY)
             validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col + 1)));
 
     }
