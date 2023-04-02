@@ -53,17 +53,22 @@ public class Board implements BoardIF {
      * Initialize the board with square objects
      */
     public void init_board(){
-        boolean flip = true;
+        boolean flipSquare = true;
         for(int row = 0; row < this.width; row++){
             for(int col = 0; col < this.height; col++){
 
-                if(flip) setSquare(row, col, true);
-                else setSquare(row, col, false);
+                if(flipSquare) { 
+                    setSquare(row, col, true);
+                    chessBoard[row][col].setPiece(new Piece(ChessPieceType.EMPTY, GameColor.WHITE));
+                }
+                else {
+                    setSquare(row, col, false);
+                    chessBoard[row][col].setPiece(new Piece(ChessPieceType.EMPTY, GameColor.BLACK));
+                }
                 
-                chessBoard[row][col].setPiece(new Piece(ChessPieceType.EMPTY, GameColor.WHITE));
-                flip = !flip;
+                flipSquare = !flipSquare;
             }
-            flip = !flip;
+            flipSquare = !flipSquare;
         }
     }
 

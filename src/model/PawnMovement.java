@@ -33,61 +33,51 @@ public class PawnMovement implements MovementStrategy {
      * Generate all the valid moves of a piece from a current spot,
      * and use it to populate the valid moves array.
      * 
-     * @param from the position we're moving from
+     * @param start the position we're moving from
      */
     public void generateValidMoves(Position start){
         validMoves.clear();
         int row = start.getRank().getArrayRank();
         int col = start.getFile().getArrayFile();
         Piece piece = (Piece) board.getPiece(row, col);
-        if(piece.isWhite()){
-            if(row - 1 >= 0){
-                if(board.getPiece(row - 1, col).getChessPieceType() == ChessPieceType.EMPTY){
-                    validMoves.add(new Position(Rank.getRankByIndex(row - 1), start.getFile()));
-                    if(!piece.hasMoved() && board.getPiece(row - 2, col).getChessPieceType() == 
-                        ChessPieceType.EMPTY){
-                        validMoves.add(new Position(Rank.getRankByIndex(row - 2), 
-                            start.getFile()));
-                    }
-                }
-                if(col - 1 >= 0){
-                    if(((Piece) board.getPiece(row - 1, col - 1)).isBlack()){
-                        validMoves.add(new Position(Rank.getRankByIndex(row - 1), 
-                            File.getFileByIndex(col - 1)));
-                    }
-                }
-                if(col + 1 < board.getWidth()){
-                    if(((Piece) board.getPiece(row - 1, col + 1)).isBlack()){
-                        validMoves.add(new Position(Rank.getRankByIndex(row - 1), 
-                            File.getFileByIndex(col + 1)));
-                    }
-                }
-            }
+
+        if(piece.isWhite() && row - 1 >= 0) validPosition(piece, row - 1, col, -1, start);
+        else if(row + 1 < board.getHeight()) validPosition(piece, row + 1, col, 1, start);
+    }
+
+    
+    /**
+     * This method will take a current piece, row, and column and attempt to move the piece to the
+     * specified row and column. If the piece is able to be moved it will be added to the list of
+     * moves, then set the boolean value (valid) to true or false whether it's possible
+     * to move again. It will later return the boolean value.
+     * 
+     * @param currentPiece - The currentPiece that will be attempted to move.
+     * from its original position to the specified row and column in the parameter.
+     * @param row - The row location that the currentPiece may be moved to.
+     * @param col - The column location that the currentPiece may be moved to.
+     * @param dir - The direction in which the row will be moved, if it is 1 then down,
+     * if it is -1 then it is up.
+     * @param start - the position we're moving from.
+     */
+    private void validPosition(Piece currentPiece, int row, int col, int dir, Position start){
+        boolean oneSpace = board.getPiece(row, col).getChessPieceType() == ChessPieceType.EMPTY;
+        boolean twoSpace = board.getPiece(row + dir, col).getChessPieceType() == 
+        ChessPieceType.EMPTY;
+
+        if(oneSpace){
+            validMoves.add(new Position(Rank.getRankByIndex(row), start.getFile()));
+            if(!currentPiece.hasMoved() && twoSpace)
+                validMoves.add(new Position(Rank.getRankByIndex(row + dir), start.getFile()));
         }
-        else{
-            if(row + 1 < board.getHeight()){
-                if(board.getPiece(row + 1, col).getChessPieceType() == ChessPieceType.EMPTY){
-                    validMoves.add(new Position(Rank.getRankByIndex(row + 1), start.getFile()));
-                    if(!piece.hasMoved() && board.getPiece(row + 2, col).getChessPieceType() == 
-                        ChessPieceType.EMPTY){
-                        validMoves.add(new Position(Rank.getRankByIndex(row + 2), 
-                            start.getFile()));
-                    }
-                }
-                if(col - 1 >= 0){
-                    if(((Piece) board.getPiece(row + 1, col - 1)).isWhite()){
-                        validMoves.add(new Position(Rank.getRankByIndex(row + 1), 
-                            File.getFileByIndex(col - 1)));
-                    }
-                }
-                if(col + 1 < board.getWidth()){
-                    if(((Piece) board.getPiece(row + 1, col + 1)).isWhite()){
-                        validMoves.add(new Position(Rank.getRankByIndex(row + 1), 
-                            File.getFileByIndex(col + 1)));
-                    }
-                }
-            }
-        }
+        if(col - 1 >= 0 && ((Piece) board.getPiece(row, col - 1)).getColor() != currentPiece.getColor() && 
+        ((Piece) board.getPiece(row, col - 1)).getChessPieceType() != ChessPieceType.EMPTY)
+            validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col - 1)));
+        if(col + 1 < board.getWidth() && ((Piece) board.getPiece(row, col + 1)).getColor() 
+        != currentPiece.getColor() && ((Piece) board.getPiece(row, col + 1)).getChessPieceType() 
+        != ChessPieceType.EMPTY)
+            validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col + 1)));
+
     }
 
     /**
