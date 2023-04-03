@@ -1,6 +1,7 @@
 package src.model;
 /**
- * Class for the movement strategy of a pawn.
+ * This class models the movement of a pawn and examines all the possible 
+ * movements a pawn can make given the row and column of the pawn.
  * 
  * @author Nolan Flinchum (100%), Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 3/27/2023
@@ -22,7 +23,7 @@ public class PawnMovement implements MovementStrategy {
     /**
      * Constructor for the pawn's movement strategy.
      * 
-     * @param board the chess board reference
+     * @param board - the chess board reference
      */
     public PawnMovement(Board board){
         this.board = board;
@@ -33,7 +34,7 @@ public class PawnMovement implements MovementStrategy {
      * Generate all the valid moves of a piece from a current spot,
      * and use it to populate the valid moves array.
      * 
-     * @param start the position we're moving from
+     * @param start - the position we're moving from
      */
     public void generateValidMoves(Position start){
         validMoves.clear();
@@ -61,20 +62,30 @@ public class PawnMovement implements MovementStrategy {
      * @param start - the position we're moving from.
      */
     private void validPosition(Piece currentPiece, int row, int col, int dir, Position start){
-        boolean oneSpace = board.getPiece(row, col).getChessPieceType() == ChessPieceType.EMPTY;
-        boolean twoSpace = board.getPiece(row + dir, col).getChessPieceType() == 
-        ChessPieceType.EMPTY;
 
-        if(oneSpace){
+        // If the square at the specified row and column is empty then add it to the
+        // list of possible moves
+        if(board.getPiece(row, col).getChessPieceType() == ChessPieceType.EMPTY){
             validMoves.add(new Position(Rank.getRankByIndex(row), start.getFile()));
-            if(!currentPiece.hasMoved() && twoSpace)
+            // If the square infront of the previous checked square is empty, then add it
+            // to the list of possible moves.
+            if(!currentPiece.hasMoved() && board.getPiece(row + dir, col).getChessPieceType() == 
+            ChessPieceType.EMPTY)
                 validMoves.add(new Position(Rank.getRankByIndex(row + dir), start.getFile()));
         }
+
+        // If the piece diagnol to the current pawn is a piece of the opposite color, 
+        // and the current column minus 1 is greater than or equal to the first column
+        // and not an empty square, then add it to the list of possible moves
         if(col - 1 >= 0 && ((Piece) board.getPiece(row, col - 1)).getColor() != currentPiece.getColor() && 
         ((Piece) board.getPiece(row, col - 1)).getChessPieceType() != ChessPieceType.EMPTY)
             validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col - 1)));
+
+        // If the piece diagnol to the current pawn is a piece of the opposite color
+        // and the current column plus 1 is less than the last column
+        // and not an empty square, then add it to the list of possible moves
         if(col + 1 < board.getWidth() && ((Piece) board.getPiece(row, col + 1)).getColor() 
-*        != currentPiece.getColor() && ((Piece) board.getPiece(row, col + 1)).getChessPieceType() 
+        != currentPiece.getColor() && ((Piece) board.getPiece(row, col + 1)).getChessPieceType() 
         != ChessPieceType.EMPTY)
             validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col + 1)));
 
@@ -83,7 +94,7 @@ public class PawnMovement implements MovementStrategy {
     /**
      * Determines if the move the player makes is valid.
      * 
-     * @param to position of square to move to
+     * @param to - position of square to move to
      * @return true if the move is valid, false otherwise
      */
     public boolean validateMove(Position to){
@@ -97,7 +108,7 @@ public class PawnMovement implements MovementStrategy {
     /**
      * Show all valid moves of a piece at a given position.
      * 
-     * @param pos The position of a piece that wants to move
+     * @param pos - The position of a piece that wants to move
      * @return An array of possible moves
      */
     public ArrayList<Position> showMoves(Position pos){
