@@ -14,7 +14,7 @@ public class Player {
     /** User's last name **/
     private String last;
     
-    /** User's email **
+    /** User's email **/
     private String email;
     
     /** User's username **/
