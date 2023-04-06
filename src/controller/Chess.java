@@ -191,13 +191,13 @@ public class Chess {
 		boolean playing = true;
 		int playerTurn = 0;
 		while(playing){
-			//Displays current status of the chess board
-			this.board.draw();
 			//Changes the current player turn
 			if(playerTurn % 2 == 0){
+				this.board.draw(true);
 				if(playTurn("One")) playing = false;
 			}
 			else{
+				this.board.draw(false);
 				if(playTurn("Two")) playing = false;	
 			}
 			playerTurn++;

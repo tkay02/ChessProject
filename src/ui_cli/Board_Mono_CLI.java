@@ -1,82 +1,73 @@
-*package src.ui_cli;
+package src.ui_cli;
+
+import src.interfaces.BoardIF;
+import src.model.Piece;
 /**
  * Implementation of BoardStrategy that creates a monotone version of the chess board.
  * 
  * @author Nolan Flinchum (25%), Thomas Kay, Joseph Oladeji (25%), Levi Sweat (50%)
  * @version 3/27/2023
  */
-
-import src.interfaces.BoardIF;
-import src.interfaces.BoardStrategy;
-import src.model.Piece;
-import src.model.Square;
-
-public class Board_Mono_CLI implements BoardStrategy{
+public class Board_Mono_CLI extends Board_Display{
 	
-	/** String built to display the board once completed. **/
-	private String toDisplay;
 
-	/** Piece representing the current piece when building the board. **/
-	private Piece piece;
-	
-	/** Represents letter of current piece **/
-	private String pieceLetter;
-
-	/**
-	 * Constructor for a monotone board. Initializes toDisplay.
-	 */
-	public Board_Mono_CLI(){
-		this.toDisplay = "";
+	@Override
+	public String whiteSquare(Piece piece) {
+		String result = "";
+		String pieceLetter = piece.getChessPieceType().getChessPieceLetter();
+		if(piece.isWhite()){
+			result += ":" + pieceLetter + ":";
+		}
+		//if the piece is black, lowercase the letter to be displayed
+		else{
+			result += ":" + pieceLetter.toLowerCase() + ":";
+		}
+		return result;
 	}
 
-	/**
-	 * Draws the board passed in, using ': :' to represent white squares and '[ ]' to represent
-	 * black squares. White pieces are capitalized letters, while black pieces are loewrcase.
-	 * 
-	 * @param board the chess board to draw
-	 */
-	public void draw(BoardIF board) {
-		toDisplay = "";		
-		for(int i = 0; i < board.getWidth(); i++){ //iterate through board
-			for(int j = 0; j < board.getHeight(); j++){
-				piece = (Piece)board.getPiece(i, j); //current piece in iteration
-				pieceLetter = piece.getChessPieceType().getChessPieceLetter();
-				//if the square is white
-				if(((Square)board.getSquares()[i][j]).isWhite()){
-					//if piece is white, display the pieceLetter
-					if(piece.isWhite()){
-						toDisplay += ":" + pieceLetter + ":";
-					}
-					//if the piece is black, lowercase the letter to be displayed
-					else{
-						toDisplay += ":" + pieceLetter.toLowerCase() + ":";
-					}
-				}
-				else{//square must be black
-					//if piece is white, display the uppercase letter
-					if(piece.isWhite()){
-						toDisplay += "[" + pieceLetter + "]";
-					}
-					//if piece is black, lowercase the letter to display
-					else{
-						toDisplay += "[" + pieceLetter.toLowerCase() + "]";
-					}
-				}
-			}
-			toDisplay += (board.getWidth() - i) + "\n"; //rank to display on side of board
+	@Override
+	public String blackSquare(Piece piece) {
+		String result = "";
+		String pieceLetter = piece.getChessPieceType().getChessPieceLetter();
+		//if piece is white, display the uppercase letter
+		if(piece.isWhite()){
+			result += "[" + pieceLetter + "]";
 		}
-		toDisplay += " A  B  C  D  E  F  G  H\n";
-		toDisplay += "Pieces taken by Player One: ";
+		//if piece is black, lowercase the letter to display
+		else{
+			result += "[" + pieceLetter.toLowerCase() + "]";
+		}
+		return result;
+	}
+
+	@Override
+	public String takenPieces(BoardIF board){
+		String result = "";
+		result += "Pieces taken by Player One: ";
 		//iterate through ArrayList of black pieces taken to be displayed
 		for(int i = 0; i < board.getBlackTakenPieces().size(); i++){
-			toDisplay += board.getBlackTakenPieces().get(i).toLowerCase() + " ";
+			result += board.getBlackTakenPieces().get(i).toLowerCase() + " ";
 		}
-		toDisplay += "\nPieces taken by Player Two: ";
+		result += "\nPieces taken by Player Two: ";
 		//iterate through ArrayList of white pieces taken to be displayed
 		for(int i = 0; i < board.getWhiteTakenPieces().size(); i++){
-			toDisplay += board.getWhiteTakenPieces().get(i)+ " ";
+			result += board.getWhiteTakenPieces().get(i)+ " ";
 		}
-		System.out.println(toDisplay); //print out board
+		return result + "\n";
+	}
+
+	@Override
+	public String displayRank(int rank) {
+		return String.valueOf(rank) + " ";
+	}
+
+	@Override
+	public String displayWhiteFile() {
+		return "   A  B  C  D  E  F  G  H\n";
 	}
 	
+	@Override
+	public String displayBlackFile(){
+		return "   H  G  F  E  D  C  B  A\n";
+	}
 }

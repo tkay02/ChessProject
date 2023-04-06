@@ -24,7 +24,7 @@ public interface BoardIF {
 	/**
 	 * Draws the chess board in unique color scheme such as mono.
 	 */
-	public void draw();
+	public void draw(boolean drawWhite);
 
 	/**
 	 * Retrieves the collection of squares on the board.

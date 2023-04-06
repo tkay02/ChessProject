@@ -13,6 +13,9 @@ public interface BoardStrategy {
 	 * 
 	 * @param BoardIF board The chess board whose color scheme is being changed.
 	 */
-	public void draw(BoardIF board);
+	public void drawWhite(BoardIF board);
+
+	public void drawBlack(BoardIF board);
+
 	
 }

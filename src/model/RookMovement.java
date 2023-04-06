@@ -1,4 +1,4 @@
-*package src.model;
+package src.model;
 /**
  * Class for the movement strategy of a rook.
  * 
