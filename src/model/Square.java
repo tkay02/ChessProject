@@ -1,4 +1,4 @@
-*package src.model;
+package src.model;
 /**
  * Class that represents a square object for ChessMeister.
  * 

@@ -1,4 +1,4 @@
-*package src.model;
+package src.model;
 /**
  * Movement Stragety for the Knight Piece
  * 

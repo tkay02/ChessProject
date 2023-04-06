@@ -1,4 +1,4 @@
-*package src.model;
+package src.model;
 /**
  * A class that uses ranks and files to represent a position on a chess board.
  * 
