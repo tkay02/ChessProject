@@ -1,13 +1,5 @@
 package src.controller;
-/**
- * Represents the game of chess. In the future, this class will allow users to start games,
- * end games, save games, load games, and other operations that relate to the ChessMeister
- * service. Currently, it includes the majority of the logic allowing users to play the match,
- * including error handling if the user makes faulty inputs.
- * 
- * @author Nolan Flinchum (5%), Thomas Kay (5%), Joseph Oladeji (5%), Levi Sweat (85%)
- * @version 3/27/2023
- */
+
 import src.interfaces.BoardIF;
 import src.interfaces.BoardStrategy;
 import src.model.Board;
@@ -21,6 +13,16 @@ import java.util.Scanner;
 
 import src.enums.File;
 import src.enums.Rank;
+
+/**
+ * Represents the game of chess. In the future, this class will allow users to start games,
+ * end games, save games, load games, and other operations that relate to the ChessMeister
+ * service. Currently, it includes the majority of the logic allowing users to play the match,
+ * including error handling if the user makes faulty inputs.
+ * 
+ * @author Nolan Flinchum (5%), Thomas Kay (5%), Joseph Oladeji (5%), Levi Sweat (85%)
+ * @version 3/27/2023
+ */
 
 public class Chess {
 

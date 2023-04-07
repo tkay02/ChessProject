@@ -1,21 +1,30 @@
 package src.model;
-/**
- * Class to represent the board to play chess on.
- * 
- * @author Nolan Flinchum (25%), Thomas Kay (25%), Joseph Oladeji (25%), Levi Sweat (25%)
- * @version 3/27/2023
- */
+
 import src.enums.ChessPieceType;
 import src.enums.GameColor;
 import src.enums.File;
 import src.enums.Rank;
 import src.interfaces.PieceIF;
 import src.interfaces.SquareIF;
+import src.movement.BishopMovement;
+import src.movement.KingMovement;
+import src.movement.KnightMovement;
+import src.movement.MovementStrategy;
+import src.movement.PawnMovement;
+import src.movement.QueenMovement;
+import src.movement.RookMovement;
 import src.ui_cli.Board_Mono_CLI;
 import src.interfaces.BoardIF;
 import src.interfaces.BoardStrategy;
-import src.interfaces.MovementStrategy;
+
 import java.util.ArrayList;
+
+/**
+ * Class to represent the board to play chess on.
+ * 
+ * @author Nolan Flinchum (25%), Thomas Kay (25%), Joseph Oladeji (25%), Levi Sweat (25%)
+ * @version 3/27/2023
+ */
 
 public class Board implements BoardIF {
     

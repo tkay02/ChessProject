@@ -4,6 +4,13 @@ import src.interfaces.BoardIF;
 import src.model.Piece;
 import src.model.Square;
 
+/**
+ *  This class allows for methods to draw a chess board with colored pieces,
+where blue pieces represent white pieces and red pieces represent black pieces.
+It also displays the rank and file to help users make moves, and shows
+
+the pieces that have been taken thus far by each player.
+ */
 public abstract class Board_Display implements BoardStrategy{
     
     /** String built to display the board once completed. **/
