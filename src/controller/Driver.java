@@ -1,4 +1,10 @@
 package src.controller;
+
+import src.interfaces.BoardStrategy;
+import src.ui_cli.*;
+
+import java.util.Scanner;
+
 /**
  * Driver to run the Chess project. Creates a Chess match to run the majority of the program, and
  * allows the user to select the boardStrategy from the main menu and begin playing.
@@ -6,10 +12,6 @@ package src.controller;
  * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat (100%)
  * @version 3/27/2023
  */
-import src.interfaces.BoardStrategy;
-import src.ui_cli.*;
-
-import java.util.Scanner;
 
 public class Driver {
 

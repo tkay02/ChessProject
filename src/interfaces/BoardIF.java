@@ -1,13 +1,15 @@
 package src.interfaces;
+
+import src.enums.Rank;
+import java.util.ArrayList;
+import src.enums.File;
+
 /**
  * Interface for the chess board.
  * 
  * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
  * @version 3/27/2023
  */
-import src.enums.Rank;
-import java.util.ArrayList;
-import src.enums.File;
 
 public interface BoardIF {
 	

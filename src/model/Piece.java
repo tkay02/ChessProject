@@ -1,18 +1,20 @@
 package src.model;
+
+
+import src.interfaces.PieceIF;
+import src.movement.MovementStrategy;
+
+import java.util.ArrayList;
+
+import src.enums.ChessPieceType;
+import src.enums.GameColor;
+
 /**
  * Class that represents a piece object for ChessMeister.
  * 
  * @author Nolan Flinchum (100%), Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 3/27/2023
  */
-
-import src.interfaces.PieceIF;
-import src.interfaces.MovementStrategy;
-
-import java.util.ArrayList;
-
-import src.enums.ChessPieceType;
-import src.enums.GameColor;
 
 public class Piece extends BlackAndWhite implements PieceIF {
 

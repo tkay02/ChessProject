@@ -1,13 +1,15 @@
 package src.model;
+
+import src.enums.*;
+import src.interfaces.PieceIF;
+import src.interfaces.SquareIF;
+
 /**
  * Class that represents a square object for ChessMeister.
  * 
  * @author Nolan Flinchum (100%), Thomas Kay, Joseph Oladeji, Levi Sweat 
  * @version 3/27/2023
  */
-import src.enums.*;
-import src.interfaces.PieceIF;
-import src.interfaces.SquareIF;
 
 public class Square extends BlackAndWhite implements SquareIF {
     

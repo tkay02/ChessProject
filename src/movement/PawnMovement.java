@@ -1,4 +1,14 @@
-package src.model;
+package src.movement;
+
+import src.model.Board;
+import src.model.Piece;
+import src.model.Position;
+
+import java.util.ArrayList;
+import src.enums.ChessPieceType;
+import src.enums.Rank;
+import src.enums.File;
+
 /**
  * This class models the movement of a pawn and examines all the possible 
  * movements a pawn can make given the row and column of the pawn.
@@ -6,28 +16,16 @@ package src.model;
  * @author Nolan Flinchum (100%), Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 3/27/2023
  */
-import src.interfaces.MovementStrategy;
-import java.util.ArrayList;
-import src.enums.ChessPieceType;
-import src.enums.Rank;
-import src.enums.File;
 
-public class PawnMovement implements MovementStrategy {
+public class PawnMovement extends MovementStrategy {
     
-    /** Array of valid moves for a selected piece **/
-    private ArrayList<Position> validMoves;
-
-    /** Alias of the chess board used to generate valid moves **/
-    private Board board;
-
     /**
      * Constructor for the pawn's movement strategy.
      * 
      * @param board - the chess board reference
      */
     public PawnMovement(Board board){
-        this.board = board;
-        this.validMoves = new ArrayList<>();
+        super(board);
     }
 
     /**
@@ -38,10 +36,14 @@ public class PawnMovement implements MovementStrategy {
      */
     public void generateValidMoves(Position start){
         validMoves.clear();
+        // Get the row of the starting position
         int row = start.getRank().getArrayRank();
+        // Get the column of the starting position
         int col = start.getFile().getArrayFile();
+        // Grab the piece at the specified row and column on the board
         Piece piece = (Piece) board.getPiece(row, col);
-
+        // If the piece is White decrement the row, so the piece moves downwards
+        // Otherwise increment the row so the piece goes upwards if it's black
         if(piece.isWhite() && row - 1 >= 0) validPosition(piece, row - 1, col, -1, start);
         else if(row + 1 < board.getHeight()) validPosition(piece, row + 1, col, 1, start);
     }
@@ -81,7 +83,7 @@ public class PawnMovement implements MovementStrategy {
         ((Piece) board.getPiece(row, col - 1)).getChessPieceType() != ChessPieceType.EMPTY)
             validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col - 1)));
 
-        // If the piece diagnol to the current pawn is a piece of the opposite color
+        // If the piece diag7nol to the current pawn is a piece of the opposite color
         // and the current column plus 1 is less than the last column
         // and not an empty square, then add it to the list of possible moves
         if(col + 1 < board.getWidth() && ((Piece) board.getPiece(row, col + 1)).getColor() 
@@ -89,31 +91,6 @@ public class PawnMovement implements MovementStrategy {
         != ChessPieceType.EMPTY)
             validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col + 1)));
 
-    }
-
-    /**
-     * Determines if the move the player makes is valid.
-     * 
-     * @param to - position of square to move to
-     * @return true if the move is valid, false otherwise
-     */
-    public boolean validateMove(Position to){
-        boolean isContained = false;
-        for(Position pos : validMoves){
-            if(pos.equals(to)) isContained = true;
-        }
-        return isContained;
-    }
-
-    /**
-     * Show all valid moves of a piece at a given position.
-     * 
-     * @param pos - The position of a piece that wants to move
-     * @return An array of possible moves
-     */
-    public ArrayList<Position> showMoves(Position pos){
-        generateValidMoves(pos);
-        return this.validMoves;
     }
 
 }

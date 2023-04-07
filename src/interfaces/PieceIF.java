@@ -1,11 +1,13 @@
 package src.interfaces;
+
+import src.enums.ChessPieceType;
+
 /**
  * Interface for the chess pieces.
  * 
  * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
  * @version 3/27/2023
  */
-import src.enums.ChessPieceType;
 
 public interface PieceIF {
 
