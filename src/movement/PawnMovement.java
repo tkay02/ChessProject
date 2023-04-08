@@ -1,14 +1,10 @@
 package src.movement;
-
 import src.model.Board;
 import src.model.Piece;
 import src.model.Position;
-
-import java.util.ArrayList;
 import src.enums.ChessPieceType;
 import src.enums.Rank;
 import src.enums.File;
-
 /**
  * This class models the movement of a pawn and examines all the possible 
  * movements a pawn can make given the row and column of the pawn.
@@ -76,14 +72,14 @@ public class PawnMovement extends MovementStrategy {
                 validMoves.add(new Position(Rank.getRankByIndex(row + dir), start.getFile()));
         }
 
-        // If the piece diagnol to the current pawn is a piece of the opposite color, 
+        // If the piece diagonal to the current pawn is a piece of the opposite color, 
         // and the current column minus 1 is greater than or equal to the first column
         // and not an empty square, then add it to the list of possible moves
         if(col - 1 >= 0 && ((Piece) board.getPiece(row, col - 1)).getColor() != currentPiece.getColor() && 
         ((Piece) board.getPiece(row, col - 1)).getChessPieceType() != ChessPieceType.EMPTY)
             validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col - 1)));
 
-        // If the piece diag7nol to the current pawn is a piece of the opposite color
+        // If the piece diagonal to the current pawn is a piece of the opposite color
         // and the current column plus 1 is less than the last column
         // and not an empty square, then add it to the list of possible moves
         if(col + 1 < board.getWidth() && ((Piece) board.getPiece(row, col + 1)).getColor() 

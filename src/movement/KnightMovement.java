@@ -1,6 +1,5 @@
 package src.movement;
 
-import src.interfaces.*;
 import src.model.Board;
 import src.model.Piece;
 import src.model.Position;
@@ -25,9 +24,9 @@ public class KnightMovement extends MovementStrategy {
     }
 
     /**
-     * Determines the possible valid moves for the Knight in its current position. Checks if the new possible
-     * position is neither out of bounds or is an ally space. If the move is valid, it's added to the list that
-     * stores the valid moves.
+     * Determines the possible valid moves for the Knight in its current position. Checks if the
+     * new possible position is neither out of bounds or is an ally space. If the move is valid,
+     * it's added to the list that stores the valid moves.
      * 
      * @param Position from The current position of the Knight piece.
      */
