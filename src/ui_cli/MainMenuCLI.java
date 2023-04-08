@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import src.interfaces.MainMenuIF;
 
-public class Main_Menu_CLI implements MainMenuIF{
+public class MainMenuCLI implements MainMenuIF{
         
     /** ArrayList representing valid inputs for the main menu */
     private ArrayList<String> mainMenuInput = new  ArrayList<>();
@@ -14,7 +14,7 @@ public class Main_Menu_CLI implements MainMenuIF{
     /** The input to scan the user's input **/
     private Scanner input;
 
-    public Main_Menu_CLI(){
+    public MainMenuCLI(){
 		this.input = new Scanner(System.in);
 
         String[] menuInput = new String[]{"0", "1", "2", "3", "4", "5"};

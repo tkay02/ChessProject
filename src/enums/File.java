@@ -15,10 +15,10 @@ public enum File {
     A('A', 0), B('B', 1), C('C', 2), D('D', 3),
     E('E', 4), F('F', 5), G('G', 6), H('H', 7);
 
-    /* The letter to represent a file on a chess board */
+    /** The letter to represent a file on a chess board **/
     private char realFile;
 
-    /* The number to represent a file on a chess board */
+    /** The number to represent a file on a chess board **/
     private int arrayFile;
 
     /**

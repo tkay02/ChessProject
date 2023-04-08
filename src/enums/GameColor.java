@@ -12,10 +12,10 @@ public enum GameColor{
     
     BLACK("\u001b[40m", "\u001b[31m" ), WHITE("\u001b[47m", "\u001b[34m");
 
-    /* The ansi code representing the background color */
+    /** The ansi code representing the background color **/
     private String background;
 
-    /* The ansi code representing the text color */
+    /** The ansi code representing the text color **/
     private String text;
 
     /**

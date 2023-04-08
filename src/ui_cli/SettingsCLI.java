@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Settings_CLI implements SettingsIF{
+public class SettingsCLI implements SettingsIF{
 
     /** The input to scan the user's input **/
     private Scanner input;
@@ -19,7 +19,7 @@ public class Settings_CLI implements SettingsIF{
 
     private String boardStratStatus;
 
-    public Settings_CLI(){
+    public SettingsCLI(){
         this.input = new Scanner(System.in);
         
         this.undoStatus = "";
@@ -33,7 +33,7 @@ public class Settings_CLI implements SettingsIF{
     public String displaySettings(BoardStrategy boardStrat, boolean undo, boolean showMoves) {
         String result = "";
         boolean promptAgain = true;
-        boardStratStatus = (boardStrat instanceof Board_Color_CLI) ? "color" : "mono";
+        boardStratStatus = (boardStrat instanceof BoardColorCLI) ? "color" : "mono";
         undoStatus = undo ? "on" : "off";
         showMovesStatus = showMoves ? "on" : "off";
 

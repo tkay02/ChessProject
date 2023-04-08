@@ -8,7 +8,7 @@ import src.model.Piece;
  * @author Nolan Flinchum (25%), Thomas Kay, Joseph Oladeji (25%), Levi Sweat (50%)
  * @version 3/27/2023
  */
-public class Board_Mono_CLI extends Board_Display_CLI{
+public class BoardMonoCLI extends BoardDisplayCLI{
 	
 
 	@Override
