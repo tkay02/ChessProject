@@ -10,7 +10,7 @@ import src.model.Piece;
  * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat (100%)
  * @version 3/27/2023
  */
-public class Board_Color_CLI extends Board_Display{
+public class Board_Color_CLI extends Board_Display_CLI{
 	
 	/**
 	 * Constructor for Board_Color_CLI class. Initilaizes toDisplay.

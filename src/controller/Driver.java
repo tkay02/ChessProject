@@ -21,29 +21,8 @@ public class Driver {
 	 * @param args array of arguments from the command line
 	 */
 	public static void main(String[] args) {
-		Scanner in = new Scanner(System.in);
-		Chess match = null;
-		Boolean correctInput = false;
-		String input;
-		BoardStrategy boardColor = null;
-		System.out.println("Welcome to ChessMeister! Main Menu:\n");
-		while(!correctInput){//continue the loop if the input is incorrect, reprompt user
-			System.out.println("Please select a board color:\n1) Monotone Board\n2) Colored Board");
-			input = in.nextLine(); //take in user's input
-			switch(input){
-				case "1":
-					boardColor = new Board_Mono_CLI();
-					correctInput = true;
-					break;
-				case "2":
-					boardColor = new Board_Color_CLI();
-					correctInput = true;
-					break;	
-			}
-		}
-		//creates a new Chess match based on the user's desired board color
-		match = new Chess(boardColor);
-		in.close();
+		Chess ch = new Chess();
+		ch.go();
 	}
 
 }
