@@ -4,42 +4,42 @@ import src.enums.File;
 import src.enums.Rank;
 import src.model.Board;
 import src.model.Piece;
+import src.model.Position;
+import java.util.ArrayList;
 /**
  * Interface for the way that the chess board is drawn in regards to color.
  *
  * @author Nolan Flinchum (100%), Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 3/27/2023
  */
-import src.model.Position;
-import java.util.ArrayList;
 
 public abstract class MovementStrategy {
 
      /** Array of valid moves for a selected piece **/
      public static ArrayList<Position> validMoves;
 
-     /** Alias of the chess board used to generate valid moves  **/
+     /** Alias of the chess board used to generate valid moves **/
      public static Board board;
     
     /**
-     * Constructor for the pawn's movement strategy.
+     * Constructor for any movement strategy.
      * 
-     * @param board - the chess board reference
+     * @param board the chess board reference
      */
     public MovementStrategy(Board board){
-        this.board = board;
-        validMoves = new ArrayList<>();
+        MovementStrategy.board = board;
+        MovementStrategy.validMoves = new ArrayList<>();
     }
 
     /**
      * Generate all the valid moves of a piece from a current spot,
      * and use it to populate the valid moves array.
      * 
-     * @param from the position we're moving from
+     * @param start the position we're moving from
      */
     public abstract void generateValidMoves(Position start);
 
-  /**
+    /**
      * Determines if the move the player makes is valid.
      * 
      * @param to - position of square to move to
@@ -57,7 +57,7 @@ public abstract class MovementStrategy {
      * Show all valid moves of a piece at a given position.
      * 
      * @param pos - The position of a piece that wants to move
-     * @return An array of possible moves
+     * @return an array of possible moves
      */
     public ArrayList<Position> showMoves(Position pos){
         generateValidMoves(pos);
@@ -72,8 +72,7 @@ public abstract class MovementStrategy {
      * 
      * @param row - The row location that the currentPiece may be moved to
      * @param col - The column location that the currentPiece may be moved to
-     * @param currentPiece - The currentPiece that will be attempted to move
-     * from its original position to the specified row and column in the parameter.
+     * @param currentPiece - The currentPiece that we will be attempt to move
      */
     public boolean validPosition(Piece currentPiece, int row, int col){
         boolean valid = false;

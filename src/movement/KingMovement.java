@@ -33,17 +33,14 @@ public class KingMovement extends MovementStrategy {
         int row = start.getRank().getArrayRank();
         int col = start.getFile().getArrayFile();
         Piece currentPiece = (Piece) board.getPiece(row, col);
-        boolean up = true, down = true, left = true, right = true, upRight = true,
-                upLeft = true, downLeft = true, downRight = true;
-
-        if(up) up = validPosition(currentPiece, row - 1, col);
-        if(down) down = validPosition(currentPiece, row + 1, col);
-        if(left) left = validPosition(currentPiece, row, col - 1);
-        if(right) right = validPosition(currentPiece, row, col + 1);
-        if(upRight) upRight = validPosition(currentPiece, row - 1, col + 1);
-        if(upLeft) upLeft = validPosition(currentPiece, row - 1, col - 1);
-        if(downLeft) downLeft = validPosition(currentPiece, row + 1, col - 1);
-        if(downRight) downRight = validPosition(currentPiece, row + 1, col + 1);                
+        validPosition(currentPiece, row - 1, col);
+        validPosition(currentPiece, row + 1, col);
+        validPosition(currentPiece, row, col - 1);
+        validPosition(currentPiece, row, col + 1);
+        validPosition(currentPiece, row - 1, col + 1);
+        validPosition(currentPiece, row - 1, col - 1);
+        validPosition(currentPiece, row + 1, col - 1);
+        validPosition(currentPiece, row + 1, col + 1);                
     }
 
 }

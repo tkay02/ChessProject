@@ -11,9 +11,7 @@ import src.model.Position;
  * @version 3/27/2023
  */
 
-public class BishopMovement extends MovementStrategy {
-    
-
+public class BishopMovement extends QueenMovement {
 
     /**
      * Constructor for the bishop's movement strategy.
@@ -35,13 +33,7 @@ public class BishopMovement extends MovementStrategy {
         int row = start.getRank().getArrayRank();
         int col = start.getFile().getArrayFile();
         Piece currentPiece = (Piece) board.getPiece(row, col);
-        boolean upRight = true, upLeft = true, downLeft = true, downRight = true;
-        for(int i = 1; i < board.getWidth(); i++){
-            if(upRight) upRight = validPosition(currentPiece, row - i, col + i);
-            if(upLeft) upLeft = validPosition(currentPiece, row - i, col - i);
-            if(downLeft) downLeft = validPosition(currentPiece, row + i, col - i);
-            if(downRight) downRight = validPosition(currentPiece, row + i, col + i);                
-        }
+        crossMoves(currentPiece, row, col); //check diagonally
     }
 
 }

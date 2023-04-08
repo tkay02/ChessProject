@@ -1,5 +1,4 @@
 package src.movement;
-
 import src.model.Board;
 import src.model.Piece;
 import src.model.Position;
@@ -11,9 +10,7 @@ import src.model.Position;
  * @version 3/27/2023
  */
 
-public class RookMovement extends MovementStrategy{
- 
-
+public class RookMovement extends QueenMovement{
 
     /**
      * Constructor for the rook's movement strategy.
@@ -35,13 +32,7 @@ public class RookMovement extends MovementStrategy{
         int row = start.getRank().getArrayRank();
         int col = start.getFile().getArrayFile();
         Piece currentPiece = (Piece) board.getPiece(row, col);
-        boolean up = true, down = true, left = true, right = true;
-        for(int i = 1; i < board.getWidth(); i++){
-            if(up) up = validPosition(currentPiece, row - i, col);
-            if(down) down = validPosition(currentPiece, row + i, col);
-            if(left) left = validPosition(currentPiece, row, col - i);
-            if(right) right = validPosition(currentPiece, row, col + i);              
-        }
+        plusMoves(currentPiece, row, col); //check veritcally and horizontally   
     }
 
 }
