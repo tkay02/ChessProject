@@ -6,14 +6,8 @@ import src.enums.File;
 import src.enums.Rank;
 import src.interfaces.PieceIF;
 import src.interfaces.SquareIF;
-import src.movement.BishopMovement;
-import src.movement.KingMovement;
-import src.movement.KnightMovement;
-import src.movement.MovementStrategy;
-import src.movement.PawnMovement;
-import src.movement.QueenMovement;
-import src.movement.RookMovement;
-import src.ui_cli.Board_Mono_CLI;
+import src.movement.*;
+import src.ui_cli.BoardMonoCLI;
 import src.interfaces.BoardIF;
 import src.interfaces.BoardStrategy;
 
@@ -41,10 +35,10 @@ public class Board implements BoardIF {
     private int height;
 
     /** List of white pieces that have been taken **/
-    private ArrayList<String> whiteTakenPieces = new  ArrayList<>();
+    private ArrayList<String> whiteTakenPieces = new ArrayList<>();
 
     /** List of white pieces that have been taken **/
-	private ArrayList<String> blackTakenPieces = new  ArrayList<>();
+	private ArrayList<String> blackTakenPieces = new ArrayList<>();
 
     /**
      * Constructor for the chess board.
@@ -53,7 +47,7 @@ public class Board implements BoardIF {
         this.width = 8;
         this.height = 8;
         chessBoard = new Square[height][width];
-        this.drawStrategy = new Board_Mono_CLI();
+        this.drawStrategy = new BoardMonoCLI();
         init_board();
         setup();
     }
@@ -74,7 +68,6 @@ public class Board implements BoardIF {
                     setSquare(row, col, false);
                     chessBoard[row][col].setPiece(new Piece(ChessPieceType.EMPTY, GameColor.BLACK));
                 }
-                
                 flipSquare = !flipSquare;
             }
             flipSquare = !flipSquare;

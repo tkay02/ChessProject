@@ -18,7 +18,7 @@ public abstract class MovementStrategy {
      /** Array of valid moves for a selected piece **/
      public static ArrayList<Position> validMoves;
 
-     /** Alias of the chess board used to generate valid moves  **/
+     /** Alias of the chess board used to generate valid moves **/
      public static Board board;
     
     /**
@@ -45,7 +45,8 @@ public abstract class MovementStrategy {
      * @param to - position of square to move to
      * @return true if the move is valid, false otherwise
      */
-    public boolean validateMove(Position to){
+    public boolean validateMove(Position from, Position to){
+        generateValidMoves(from);
         boolean isContained = false;
         for(Position pos : validMoves){
             if(pos.equals(to)) isContained = true;

@@ -11,7 +11,7 @@ import src.ui_cli.MainMenuCLI;
 import src.ui_cli.PlayChessCLI;
 import src.ui_cli.RulesCLI;
 import src.ui_cli.SettingsCLI;
-
+import src.enums.ChessPieceType;
 import src.enums.File;
 import src.enums.Rank;
 
@@ -140,21 +140,16 @@ public class Chess {
 	}
 
 	public void playGame(){
-		//Initializes the board strategy in the way that
-		playChess = new PlayChessCLI(undo, showMoves);
+		this.playChess = new PlayChessCLI(undo, showMoves);
 		this.board.setDrawStrategy(drawStrat);
 		boolean playing = true;
 		int playerTurn = 0;
 		while(playing){
 			//Changes the current player turn
-			if(playerTurn % 2 == 0){
-				this.board.draw(true);
-				if(playTurn()) playing = false;
-			}
-			else{
-				this.board.draw(false);
-				if(playTurn()) playing = false;	
-			}
+			if(playerTurn % 2 == 0) this.board.draw(true);
+			else this.board.draw(false);
+
+			if(playTurn()) playing = false;	
 			playerTurn++;
 		}
 
@@ -162,16 +157,35 @@ public class Chess {
 
 	public boolean playTurn(){
 		boolean quit = false;
-		boolean keepGoing = true;
-        while(keepGoing){
+		boolean turnNotOver = true;
+        while(turnNotOver){
             String userInput = playChess.playChessDisplay();
             switch(userInput){
                 case "0":
-                    keepGoing = false;
+					turnNotOver = false;
 					quit = true;
 					break;
-                case "1":
-					//ACTUALLY NEED TO MOVE BRO
+                case "1": //Move
+					String move = playChess.makeMove();
+					String[] parts = move.split(",");
+					parts[0] = parts[0].trim();
+					parts[1] = parts[1].trim();
+					File fromF = File.getFileByChar(parts[0].charAt(0));
+					File toF = File.getFileByChar(parts[1].charAt(0));
+					Rank fromR = Rank.getRankByReal(Character.getNumericValue(parts[0].charAt(1)));
+					Rank toR = Rank.getRankByReal(Character.getNumericValue(parts[1].charAt(1)));
+					if(board.getPiece(fromR, fromF).getChessPieceType() == ChessPieceType.EMPTY){
+						System.out.println("Error, no piece at " + parts[0]);
+					}
+					else{
+						if(move(fromF, fromR, toF, toR)){
+							turnNotOver = false;
+							((Piece)board.getPiece(fromR, fromF)).setHasMoved();
+						}
+						else{
+							System.out.println("Invalid Move");
+						}
+					}
 					break;
 				case "2":
 					//UNDOOOOOO
@@ -229,14 +243,14 @@ public class Chess {
 	 * @return True if the selected move was validate; false otherwise
 	 */
 	public boolean move(File fromF, Rank fromR, File toF, Rank toR) {
-		//Creates new position to move to
+		Position fromPos = new Position(fromR, fromF);
 		Position toPos = new Position(toR, toF);
 
 		//Retrieves piece from current position
 		boolean result = true;
 		Piece piece = (Piece) board.getPiece(fromR, fromF);
 		//If move is valid
-		if(piece.validateMove(toPos)){
+		if(piece.validateMove(fromPos, toPos)){
 			//Retrieves the row and column numbers from original and new position
 			int fromFileNum = fromF.getArrayFile();
 			int fromRankNum = fromR.getArrayRank();

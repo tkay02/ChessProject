@@ -9,7 +9,7 @@ public class PlayChessCLI implements PlayChessIF {
     /** The input to scan the user's input **/
     private Scanner input;
 
-    /** ArrayList representing valid inputs to play */
+    /** ArrayList representing valid inputs to play **/
     private ArrayList<String> playInput = new  ArrayList<>();
 
     public PlayChessCLI(boolean undoStatus, boolean showMovesStatus){
@@ -33,28 +33,14 @@ public class PlayChessCLI implements PlayChessIF {
             System.out.println("5: Save Game\n0: Concede and exit game");
             result = input.nextLine();
 			//If the player's input is part of the list of answers, ends loop
-			//Repeats otherwise
 			if(playInput.contains(result)) promptAgain = false;
             else System.out.println("\nIncorrect Input. Try Again.\n");
 		}
         return result;
     }
 
-    // public String playGame(){
-    //     boolean keepGoing = true;
-    //     String result = "";
-    //     while(keepGoing){
-    //         String userInput = playChessDisplay();
-    //         switch(userInput){
-    //             case "0":
-    //                 keepGoing = false;
-    //                 result = "0"
-    //                 break;
-    //             case "1":
-    //                 result = "1";
-    //         }
-    //     }
-
-    //     return result;
-    // }
+    public String makeMove(){
+        System.out.println("Make Move:");
+        return input.nextLine();
+    }
 }

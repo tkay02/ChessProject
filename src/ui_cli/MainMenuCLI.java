@@ -7,9 +7,8 @@ import src.interfaces.MainMenuIF;
 
 public class MainMenuCLI implements MainMenuIF{
         
-    /** ArrayList representing valid inputs for the main menu */
-    private ArrayList<String> mainMenuInput = new  ArrayList<>();
-
+    /** ArrayList representing valid inputs for the main menu **/
+    private ArrayList<String> mainMenuInput = new ArrayList<>();
 
     /** The input to scan the user's input **/
     private Scanner input;
