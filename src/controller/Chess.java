@@ -5,16 +5,12 @@ import src.model.Board;
 import src.model.Piece;
 import src.model.Position;
 import src.model.Square;
-import src.ui_cli.Board_Color_CLI;
-import src.ui_cli.Board_Mono_CLI;
-import src.ui_cli.Main_Menu_CLI;
-import src.ui_cli.Play_Chess_CLI;
-import src.ui_cli.Rules_CLI;
-import src.ui_cli.Settings_CLI;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
+import src.ui_cli.BoardColorCLI;
+import src.ui_cli.BoardMonoCLI;
+import src.ui_cli.MainMenuCLI;
+import src.ui_cli.PlayChessCLI;
+import src.ui_cli.RulesCLI;
+import src.ui_cli.SettingsCLI;
 
 import src.enums.File;
 import src.enums.Rank;
@@ -64,15 +60,15 @@ public class Chess {
 	 */
 	public Chess(){
 		this.board = new Board();
-		drawStrat = new Board_Color_CLI(); //default BoardStrategy is color
+		drawStrat = new BoardColorCLI(); //default BoardStrategy is color
 		board.setDrawStrategy(drawStrat); 
 
-		this.mainMenu = new Main_Menu_CLI();
+		this.mainMenu = new MainMenuCLI();
 		this.menuString = "";
 
-		this.rulesDisplay = new Rules_CLI();
+		this.rulesDisplay = new RulesCLI();
+		this.settingsDisplay = new SettingsCLI();
 
-		this.settingsDisplay = new Settings_CLI();
 		this.undo = true; //can undo by default
 		this.showMoves = true; //can showMoves by default
 	}
@@ -145,7 +141,7 @@ public class Chess {
 
 	public void playGame(){
 		//Initializes the board strategy in the way that
-		playChess = new Play_Chess_CLI(undo, showMoves);
+		playChess = new PlayChessCLI(undo, showMoves);
 		this.board.setDrawStrategy(drawStrat);
 		boolean playing = true;
 		int playerTurn = 0;
@@ -296,8 +292,8 @@ public class Chess {
 	public boolean setDrawStrat(String strat){
 		boolean result = true;
 
-		if(strat.equals("mono")) this.drawStrat = new Board_Mono_CLI();
-		else if(strat.equals("color")) this.drawStrat = new Board_Color_CLI();
+		if(strat.equals("mono")) this.drawStrat = new BoardMonoCLI();
+		else if(strat.equals("color")) this.drawStrat = new BoardColorCLI();
 		else result = false;
 
 		return result;

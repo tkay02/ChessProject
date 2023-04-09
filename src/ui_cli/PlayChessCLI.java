@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Play_Chess_CLI implements PlayChessIF {
+public class PlayChessCLI implements PlayChessIF {
     
     /** The input to scan the user's input **/
     private Scanner input;
@@ -12,7 +12,7 @@ public class Play_Chess_CLI implements PlayChessIF {
     /** ArrayList representing valid inputs to play */
     private ArrayList<String> playInput = new  ArrayList<>();
 
-    public Play_Chess_CLI(boolean undoStatus, boolean showMovesStatus){
+    public PlayChessCLI(boolean undoStatus, boolean showMovesStatus){
         this.input = new Scanner(System.in);
 
         //2 -> undo, 4 -> show moves

@@ -11,7 +11,7 @@ It also displays the rank and file to help users make moves, and shows
 
 the pieces that have been taken thus far by each player.
  */
-public abstract class Board_Display_CLI implements BoardStrategy{
+public abstract class BoardDisplayCLI implements BoardStrategy{
     
     /** String built to display the board once completed. **/
 	private String toDisplay;
@@ -22,7 +22,7 @@ public abstract class Board_Display_CLI implements BoardStrategy{
 	/**
 	 * Constructor for Board_Color_CLI class. Initilaizes toDisplay.
 	 */
-	public Board_Display_CLI(){
+	public BoardDisplayCLI(){
 		this.toDisplay = "";
 	}
     

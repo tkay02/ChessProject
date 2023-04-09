@@ -2,12 +2,12 @@ package src.ui_cli;
 import java.util.Scanner;
 
 import src.interfaces.RulesIF;
-public class Rules_CLI implements RulesIF {
+public class RulesCLI implements RulesIF {
 
     /** The input to scan the user's input **/
     private Scanner input;
 
-    public Rules_CLI(){
+    public RulesCLI(){
 		this.input = new Scanner(System.in);
     }
 

@@ -11,10 +11,10 @@ public enum ChessPieceType {
     KING("K", "King"), QUEEN("Q", "Queen"), ROOK("R", "Rook"),
     BISHOP("B", "Bishop"), KNIGHT("N", "Knight"), PAWN("P", "Pawn"), EMPTY(" ", "Empty");
 
-    /* Letter representing a chess piece */
+    /** Letter representing a chess piece **/
     private String chessPieceLetter;
 
-    /* Word representing a chess piece */
+    /** Word representing a chess piece **/
     private String chessPieceWord;
 
     /**
