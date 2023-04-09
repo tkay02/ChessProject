@@ -45,7 +45,8 @@ public abstract class MovementStrategy {
      * @param to - position of square to move to
      * @return true if the move is valid, false otherwise
      */
-    public boolean validateMove(Position to){
+    public boolean validateMove(Position from, Position to){
+        generateValidMoves(from);
         boolean isContained = false;
         for(Position pos : validMoves){
             if(pos.equals(to)) isContained = true;

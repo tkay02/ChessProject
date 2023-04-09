@@ -12,10 +12,10 @@ public enum Rank {
     R1(1, 7), R2(2, 6), R3(3, 5), R4(4, 4),
     R5(5, 3), R6(6, 2), R7(7, 1), R8(8, 0);
 
-    /* The number to be displayed for a rank */
+    /** The number to be displayed for a rank **/
     private int realRank;
 
-    /* The number representing the rank's position in the 2d array */
+    /** The number representing the rank's position in the 2d array **/
     private int arrayRank;
 
     /**

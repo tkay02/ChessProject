@@ -72,8 +72,8 @@ public class Piece extends BlackAndWhite implements PieceIF {
      * @param to position of square to move to
      * @return true if the move is valid, false otherwise
      */
-    public boolean validateMove(Position to){
-        return moveStrat.validateMove(to);
+    public boolean validateMove(Position from, Position to){
+        return moveStrat.validateMove(from, to);
     }
 
     /**
