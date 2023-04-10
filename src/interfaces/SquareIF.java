@@ -1,4 +1,7 @@
 package src.interfaces;
+
+import src.model.Position;
+
 /**
  * Interface for the squares on the chess board.
  * 
@@ -26,5 +29,7 @@ public interface SquareIF {
 	 * @return The specific chess piece that is on the spuare.
 	 */
 	public PieceIF getPiece();
+
+	public Position getPosition();
 
 }

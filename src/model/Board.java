@@ -207,9 +207,9 @@ public class Board implements BoardIF {
     /**
      * Will call the drawStrategy's draw method to draw the board based on the strategy.
      */
-    public void draw(boolean drawWhite){
-        if(drawWhite) this.drawStrategy.drawWhite(this);
-        else this.drawStrategy.drawBlack(this);
+    public void draw(boolean drawWhite, ArrayList<src.model.Position> validMoves){
+        if(drawWhite) this.drawStrategy.drawWhite(this, validMoves);
+        else this.drawStrategy.drawBlack(this, validMoves);
     }
 
     /**

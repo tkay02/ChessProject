@@ -2,6 +2,9 @@ package src.interfaces;
 
 import src.enums.Rank;
 import java.util.ArrayList;
+
+import javax.swing.text.Position;
+
 import src.enums.File;
 
 /**
@@ -26,7 +29,7 @@ public interface BoardIF {
 	/**
 	 * Draws the chess board in unique color scheme such as mono.
 	 */
-	public void draw(boolean drawWhite);
+	public void draw(boolean drawWhite, ArrayList<src.model.Position> validMoves);
 
 	/**
 	 * Retrieves the collection of squares on the board.

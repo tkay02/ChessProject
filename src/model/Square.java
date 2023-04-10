@@ -56,4 +56,8 @@ public class Square extends BlackAndWhite implements SquareIF {
         this.piece = piece;
     }
 
+    public Position getPosition(){
+        return this.pos;
+    }
+
 }

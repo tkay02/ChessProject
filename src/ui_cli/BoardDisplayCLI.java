@@ -1,5 +1,11 @@
 package src.ui_cli;
 import src.interfaces.BoardStrategy;
+
+import java.util.ArrayList;
+
+import src.model.Position;
+
+import src.enums.File;
 import src.interfaces.BoardIF;
 import src.model.Piece;
 import src.model.Square;
@@ -33,18 +39,28 @@ public abstract class BoardDisplayCLI implements BoardStrategy{
 	 * 
 	 * @param board the chess board to draw
 	 */
-	public void drawWhite(BoardIF board) {
+	public void drawWhite(BoardIF board, ArrayList<Position> validMoves) {
         toDisplay = "\n";
+		String fileRank = "";
 		for(int i = 0; i < board.getWidth(); i++){ //iterate through board
 			toDisplay += displayRank(board.getWidth() - i); //rank to display on side of board
 			for(int j = 0; j < board.getHeight(); j++){
 				piece = (Piece)board.getPiece(i, j);
+
 				//if the square is white
 				if(((Square)board.getSquares()[i][j]).isWhite()){
                     toDisplay += whiteSquare(piece);
                 }
 				else{//square must be black
                     toDisplay += blackSquare(piece);
+				}
+
+				Position pos = board.getSquares()[i][j].getPosition();
+				boolean isContained = false;
+				for(Position posn : validMoves) if(posn.equals(pos)) isContained = true;
+				if(isContained){
+					System.out.println("g;ldhjsfl;vdkj");
+					//Tiny little gray dot or something
 				}
 			}
             toDisplay += "\n";
@@ -54,18 +70,27 @@ public abstract class BoardDisplayCLI implements BoardStrategy{
 		System.out.println(toDisplay); //print out the string
 	}
 
-    public void drawBlack(BoardIF board) {
+    public void drawBlack(BoardIF board, ArrayList<Position> validMoves) {
         toDisplay = "\n";
 		for(int i = 7; i >= 0; i--){ //iterate through board
 			toDisplay += displayRank(board.getWidth() - i); //rank to display on side of board
 			for(int j = 7; j >= 0; j--){
 				piece = (Piece)board.getPiece(i, j);
+
 				//if the square is white
 				if(((Square)board.getSquares()[i][j]).isWhite()){
                     toDisplay += whiteSquare(piece);
                 }
 				else{//square must be black
                     toDisplay += blackSquare(piece);
+				}
+
+				Position pos = board.getSquares()[i][j].getPosition();
+				boolean isContained = false;
+				for(Position posn : validMoves) if(posn.equals(pos)) isContained = true;
+				if(isContained){
+					System.out.println("g;ldhjsfl;vdkj");
+					//Tiny little gray dot or something
 				}
 			}
             toDisplay += "\n";
@@ -74,6 +99,24 @@ public abstract class BoardDisplayCLI implements BoardStrategy{
         toDisplay += takenPieces(board); //display the pieces that have been taken
 		System.out.println(toDisplay); //print out the string
 	}
+
+	// public void showMoves(BoardIF board, ArrayList<Position>){
+    //     toDisplay = "\n";
+	// 	for(int i = 7; i >= 0; i--){ //iterate through board
+	// 		toDisplay += displayRank(board.getWidth() - i); //rank to display on side of board
+	// 		for(int j = 7; j >= 0; j--){
+	// 			piece = (Piece)board.getPiece(i, j);
+	// 			//if the square is white
+	// 			if(((Square)board.getSquares()[i][j]).isWhite()){
+    //                 toDisplay += whiteSquare(piece);
+    //             }
+	// 			else{//square must be black
+    //                 toDisplay += blackSquare(piece);
+	// 			}
+	// 		}
+    //         toDisplay += "\n";
+	// 	}
+	// }
 
     public abstract String whiteSquare(Piece piece);
 

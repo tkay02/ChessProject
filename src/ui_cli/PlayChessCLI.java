@@ -10,7 +10,7 @@ public class PlayChessCLI implements PlayChessIF {
     private Scanner input;
 
     /** ArrayList representing valid inputs to play **/
-    private ArrayList<String> playInput = new  ArrayList<>();
+    private ArrayList<String> playInput = new ArrayList<>();
 
     public PlayChessCLI(boolean undoStatus, boolean showMovesStatus){
         this.input = new Scanner(System.in);

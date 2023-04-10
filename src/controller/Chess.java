@@ -11,6 +11,10 @@ import src.ui_cli.MainMenuCLI;
 import src.ui_cli.PlayChessCLI;
 import src.ui_cli.RulesCLI;
 import src.ui_cli.SettingsCLI;
+import src.ui_cli.ShowMovesCLI;
+
+import java.util.ArrayList;
+
 import src.enums.ChessPieceType;
 import src.enums.File;
 import src.enums.Rank;
@@ -46,6 +50,9 @@ public class Chess {
 	/** Used for playing match screen **/
 	private PlayChessIF playChess;
 
+	/** Used to show moves of a piece **/
+	private ShowMovesIF showMovesDisplay;
+
 	/** True if players can undo, false if undo is off **/
 	private boolean undo;
 
@@ -68,6 +75,7 @@ public class Chess {
 
 		this.rulesDisplay = new RulesCLI();
 		this.settingsDisplay = new SettingsCLI();
+		this.showMovesDisplay = new ShowMovesCLI();
 
 		this.undo = true; //can undo by default
 		this.showMoves = true; //can showMoves by default
@@ -144,10 +152,11 @@ public class Chess {
 		this.board.setDrawStrategy(drawStrat);
 		boolean playing = true;
 		int playerTurn = 0;
+		ArrayList<Position> empty = new ArrayList<>();
 		while(playing){
 			//Changes the current player turn
-			if(playerTurn % 2 == 0) this.board.draw(true);
-			else this.board.draw(false);
+			if(playerTurn % 2 == 0) this.board.draw(true, empty);
+			else this.board.draw(false, empty);
 
 			if(playTurn()) playing = false;	
 			playerTurn++;
@@ -177,15 +186,11 @@ public class Chess {
 					if(board.getPiece(fromR, fromF).getChessPieceType() == ChessPieceType.EMPTY){
 						System.out.println("Error, no piece at " + parts[0]);
 					}
-					else{
-						if(move(fromF, fromR, toF, toR)){
-							turnNotOver = false;
-							((Piece)board.getPiece(fromR, fromF)).setHasMoved();
-						}
-						else{
-							System.out.println("Invalid Move");
-						}
+					else if(move(fromF, fromR, toF, toR)){
+						turnNotOver = false;
+						((Piece)board.getPiece(fromR, fromF)).setHasMoved();
 					}
+					else System.out.println("Invalid Move");
 					break;
 				case "2":
 					//UNDOOOOOO
@@ -194,7 +199,7 @@ public class Chess {
 					//REDOOOOOOO
 					break;
 				case "4":
-					//SHOW MOVESSSS
+					showMovesDisplay.showMoves(this.board);
 					break;
 				case "5":
 					//SAVE GAMEEE
