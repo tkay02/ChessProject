@@ -36,12 +36,11 @@ public class Chess {
 	/** The board to play chess on **/
 	private Board board;
 
+	/** Strategy for drawing the board **/
+	private BoardStrategy drawStrat;
+
 	/** Used for main menu screen **/
 	private MainMenuIF mainMenu;
-
-	private String menuString;
-
-	private BoardStrategy drawStrat;
 
 	/** Used for Rules Screen **/
 	private RulesIF rulesDisplay;
@@ -79,7 +78,6 @@ public class Chess {
 		board.setDrawStrategy(drawStrat); 
 
 		this.mainMenu = new MainMenuCLI();
-		this.menuString = "";
 
 		this.rulesDisplay = new RulesCLI();
 		this.settingsDisplay = new SettingsCLI();
@@ -101,8 +99,7 @@ public class Chess {
 	public void go() {
 		boolean returnToMain = true;
 		while(returnToMain){
-			menuString = mainMenu.userInteraction();
-			switch(menuString){
+			switch(mainMenu.userInteraction()){
 				case "0":
 					returnToMain = false;
 					break;
@@ -245,8 +242,14 @@ public class Chess {
 		Position fromPos = lastMove.getToPos();
 		Rank fromR = fromPos.getRank();
 		File fromF = fromPos.getFile();
+		Piece takenPiece = (Piece) lastMove.getPiece();
+		String takenPieceLetter = takenPiece.getChessPieceType().getChessPieceLetter();
+		System.out.println(takenPieceLetter);
 		forceMove(fromF, fromR, toPos.getFile(), toPos.getRank());
-		board.getSquare(fromR.getArrayRank(), fromF.getArrayFile()).setPiece(lastMove.getPiece());
+		board.getSquare(fromR.getArrayRank(), fromF.getArrayFile()).setPiece(takenPiece);
+		System.out.println(takenPiece.isBlack());
+		if(takenPiece.isBlack()) board.getBlackTakenPieces().remove(takenPieceLetter);
+		if(takenPiece.isWhite()) board.getWhiteTakenPieces().remove(takenPieceLetter);
 		this.movesIndex--;
 		if(!userUndo) this.moves.pop();
 	}
