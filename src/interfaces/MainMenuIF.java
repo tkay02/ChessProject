@@ -7,5 +7,5 @@ public interface MainMenuIF {
 
     public String promptSignUp(String question);
 
-    public String promptSignIn(FileReader database);
+    public boolean promptSignIn(FileReader database);
 }

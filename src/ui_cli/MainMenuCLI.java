@@ -22,11 +22,10 @@ public class MainMenuCLI implements MainMenuIF{
     }
 
     public String userInteraction(){
-        String prompt = "Main Menu:\n===========\n1: Play Chess\n2: View Rules\n" + 
+        String prompt = "\nMain Menu:\n===========\n1: Play Chess\n2: View Rules\n" + 
         "3: Sign In\n4: Sign Up\n5: Define Players\n6: Settings\n7: Load Game\n0: Quit";
         System.out.println(prompt);
-        String userInput = input.nextLine();
-
+        String userInput = input.next();
 
 		while(!mainMenuInput.contains(userInput)){
              System.out.println("\nIncorrect Input. Try Again.\n");
@@ -47,21 +46,38 @@ public class MainMenuCLI implements MainMenuIF{
         return result;
     }
 
-    public String promptSignIn(FileReader database){
+    public boolean promptSignIn(FileReader database){
+        boolean valid = false;
         System.out.print("Enter your username: ");
         String user = input.next();
         System.out.print("Enter your password: ");
         String password = input.next();
-        input.close();
 
-        input = new Scanner(database);
-        String userPass;
-        while(input.hasNextLine()){
-            if(input.nextLine().equals("#Player")){
-                userPass = input.nextLine() + ":" + input.nextLine();
-            }
+        Scanner dbScan = new Scanner(database);
+
+        while(dbScan.hasNextLine()){
+            if(dbScan.nextLine().equals("#Player")){
+                if(dbScan.nextLine().equals(user) && dbScan.nextLine().equals(password)) 
+                    valid = true;
+            }else dbScan.nextLine();
         }
-        return "";
+
+        dbScan.close();
+
+        if(valid)
+            System.out.println("Succesfully logged in as " + user);
+        else{
+            System.out.println("Invalid username or password");
+            System.out.print("Would you like to try again (Y/N)? ");
+            String answer = input.next();
+            while(!answer.toUpperCase().equals("Y") && !answer.toUpperCase().equals("N")){
+                System.out.println("Would you like to try again (Y/N)? ");
+                answer = input.next();
+            }
+            if(answer.toUpperCase().equals("Y")) promptSignIn(database);
+        }
+
+        return true;
     }
 
     

@@ -37,6 +37,8 @@ import src.enums.Rank;
 
 public class Chess {
 
+	/** The type OS System the current user is using */
+
 	/** The board to play chess on **/
 	private Board board;
 
@@ -71,7 +73,7 @@ public class Chess {
 	/**Players for the actual chess game*/
 	Player playerOne, playerTwo;
 
-	final private String PLAYER_DB_LOCATION = "src\\databases\\PlayerDatabase.txt";
+	private String PLAYER_DB_LOCATION = "src/databases/PlayerDatabase.txt";
 
 	/**
 	 * Constructor for the game of chess. Initializes scanner, ArrayList's of valid inputs, and
@@ -81,12 +83,14 @@ public class Chess {
 	 */
 	public Chess(){
 		this.board = new Board();
-		drawStrat = new BoardColorCLI(); //default BoardStrategy is color
+		drawStrat = new BoardColorCLI(); // Default BoardStrategy is color
 		board.setDrawStrategy(drawStrat); 
+		if(System.getProperty("os.name").startsWith("Windows"))
+			PLAYER_DB_LOCATION = "src\\databases\\PlayerDatabase.txt";
 
 		this.mainMenu = new MainMenuCLI();
 		this.menuString = "";
-
+		
 		this.rulesDisplay = new RulesCLI();
 		this.settingsDisplay = new SettingsCLI();
 		this.showMovesDisplay = new ShowMovesCLI();
@@ -141,13 +145,13 @@ public class Chess {
 	
 	private void signIn(){
 		FileReader playerDatabase = readerFile(PLAYER_DB_LOCATION);
-		String username = mainMenu.promptSignIn(playerDatabase);
+		mainMenu.promptSignIn(playerDatabase);
 	}
 
 	private void signUp(){
 		FileWriter playerDatabase = writerFile(PLAYER_DB_LOCATION);
-		String username = mainMenu.promptSignUp("Enter the username you would like:");
-		String password = mainMenu.promptSignUp("Enter the password you would like:");
+		String username = mainMenu.promptSignUp("Enter the username you would like: ");
+		String password = mainMenu.promptSignUp("Enter the password you would like: ");
 		try {
 			playerDatabase.append("#Player\n");
 			playerDatabase.append(username + "\n");
