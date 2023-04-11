@@ -52,6 +52,13 @@ public enum File {
     }
 
     /**
+     * Returns the visual representation of the file.
+     */
+    public String toString() {
+        return "" + this.realFile;
+    }
+
+    /**
      * This method gets the file when given an index to represent the file.
      * 
      * @param index number to represent the file
