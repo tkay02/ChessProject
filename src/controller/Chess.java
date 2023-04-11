@@ -123,6 +123,10 @@ public class Chess {
 
 	}
 	
+	/**
+	 * Calls an external UI class so that users can interact with the settings menu.
+	 * Their response to the settings menu will be handled here.
+	 */
 	public void settingsInteraction(){
 		boolean returnToSettings = true;
 		while(returnToSettings){
@@ -154,6 +158,7 @@ public class Chess {
 
 	}
 
+
 	public void playGame(){
 		this.playChess = new PlayChessCLI(undo, showMoves);
 		this.board.setDrawStrategy(drawStrat);
@@ -171,6 +176,12 @@ public class Chess {
 
 	}
 
+	/**
+	 * Calls an external UI class to prompt the user with the Play Chess menu. The option that
+	 * the user selects while playing a game of chess are evaluated and carried out here.
+	 * 
+	 * @return boolean value to determine if the game is over through resignation
+	 */
 	public boolean playTurn(){
 		boolean quit = false;
 		boolean turnNotOver = true;
@@ -236,6 +247,14 @@ public class Chess {
 		return quit;
 	}
 
+	/**
+	 * This method will undo a move during the game if the user selects the option. If the user
+	 * is performing the undo, the boolean in the parameter will be true, and the undone move
+	 * will not be popped off of the list of moves. If the system is performing the undo, the
+	 * move is popped off of the list so the user can't redo the system's move.
+	 * 
+	 * @param userUndo true if the user is performing undo, false otherwise
+	 */
 	public void undo(boolean userUndo){
 		Move lastMove = this.moves.get(this.movesIndex);
 		Position toPos = lastMove.getFromPos();
@@ -254,6 +273,9 @@ public class Chess {
 		if(!userUndo) this.moves.pop();
 	}
 	
+	/**
+	 * This method will redo a move if a move has been undone.
+	 */
 	public void redo(){
 		this.movesIndex++;
 		Move move = this.moves.get(this.movesIndex);
@@ -261,7 +283,6 @@ public class Chess {
 		Position toPos = move.getToPos();
 		forceMove(fromPos.getFile(), fromPos.getRank(), toPos.getFile(), toPos.getRank());
 	}
-
 
 	/**
 	 * Performs steps to end the game of chess. Not currently implemented, will be in the future.
@@ -271,10 +292,9 @@ public class Chess {
 	}
 
 	/**
-	 * 
 	 * Setup for loading a game in. Not currently implemented, will be in the future.
 	 * 
-	 * @param file
+	 * @param file name of the file that holds the saved game
 	 * @return
 	 */
 	public BoardIF loadGame(String file) {
@@ -284,8 +304,8 @@ public class Chess {
 	/**
 	 * Process of saving a game. Not currently implemented, will be in the future.
 	 * 
-	 * @param file Name of file to save game as
-	 * @param game Interface of game to be saved
+	 * @param file name of file to save game as
+	 * @param game interface of game to be saved
 	 */
 	public void saveGame(String file, BoardIF game) {
 
@@ -293,28 +313,22 @@ public class Chess {
 
 	/**
 	 * Moves piece and updates the board. If necessary, adds any taken pieces to the correct
-	 * ArrayList.
+	 * ArrayList to display taken pieces.
 	 * 
 	 * @param fromF File of piece to be moved
 	 * @param fromR Rank of piece to be moved
 	 * @param toF File of where piece is being moved to
 	 * @param toR Rank of where piece is being moved to
-	 * @return True if the selected move was validate; false otherwise
+	 * @return True if the selected move was valid, false otherwise
 	 */
 	public boolean move(File fromF, Rank fromR, File toF, Rank toR) {
 		Position fromPos = new Position(fromR, fromF);
 		Position toPos = new Position(toR, toF);
-
-		//Retrieves piece from current position
 		boolean result = true;
-		Piece piece = (Piece) board.getPiece(fromR, fromF);
-		//If move is valid
-		if(piece.validateMove(fromPos, toPos)){
-			forceMove(fromF, fromR, toF, toR);
-		}
-		else{
-			result = false;
-		}
+		Piece piece = (Piece) board.getPiece(fromR, fromF); //piece from current position
+
+		if(piece.validateMove(fromPos, toPos)) forceMove(fromF, fromR, toF, toR);
+		else result = false; //return false if move was invalid
 		return result;
 	}
 
