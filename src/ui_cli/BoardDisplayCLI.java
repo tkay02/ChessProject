@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import src.model.Position;
 
-import src.enums.File;
 import src.interfaces.BoardIF;
 import src.model.Piece;
 import src.model.Square;
@@ -41,7 +40,6 @@ public abstract class BoardDisplayCLI implements BoardStrategy{
 	 */
 	public void drawWhite(BoardIF board, ArrayList<Position> validMoves) {
         toDisplay = "\n";
-		String fileRank = "";
 		for(int i = 0; i < board.getWidth(); i++){ //iterate through board
 			toDisplay += displayRank(board.getWidth() - i); //rank to display on side of board
 			for(int j = 0; j < board.getHeight(); j++){
@@ -56,12 +54,10 @@ public abstract class BoardDisplayCLI implements BoardStrategy{
 				}
 
 				Position pos = board.getSquares()[i][j].getPosition();
-				boolean isContained = false;
-				for(Position posn : validMoves) if(posn.equals(pos)) isContained = true;
-				if(isContained){
-					System.out.println("g;ldhjsfl;vdkj");
-					//Tiny little gray dot or something
+				for(Position validMove : validMoves){
+					if(validMove.equals(pos)) System.out.println(";)");//Something highlighted
 				}
+
 			}
             toDisplay += "\n";
 		}
@@ -86,12 +82,10 @@ public abstract class BoardDisplayCLI implements BoardStrategy{
 				}
 
 				Position pos = board.getSquares()[i][j].getPosition();
-				boolean isContained = false;
-				for(Position posn : validMoves) if(posn.equals(pos)) isContained = true;
-				if(isContained){
-					System.out.println("g;ldhjsfl;vdkj");
-					//Tiny little gray dot or something
+				for(Position validMove : validMoves){
+					if(validMove.equals(pos)) System.out.println(":p");//Something highlighted
 				}
+
 			}
             toDisplay += "\n";
 		}
