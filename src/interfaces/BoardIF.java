@@ -92,5 +92,6 @@ public interface BoardIF {
      * @return ArrayList of black pieces that were taken
      */
     public ArrayList<String> getBlackTakenPieces();	
-	
+
+
 }

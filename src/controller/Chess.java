@@ -2,6 +2,7 @@ package src.controller;
 
 import src.interfaces.*;
 import src.model.Board;
+import src.model.Move;
 import src.model.Piece;
 import src.model.Position;
 import src.model.Square;
@@ -14,6 +15,7 @@ import src.ui_cli.SettingsCLI;
 import src.ui_cli.ShowMovesCLI;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import src.enums.ChessPieceType;
 import src.enums.File;
@@ -59,6 +61,12 @@ public class Chess {
 	/** True if possible moves are displayed, false if not **/
 	private boolean showMoves;
 
+	/** Arraylist of the positions of the board. **/
+	private LinkedList<Move> moves;
+
+	/** Index for the moves LinkedList. **/
+	private int movesIndex;
+
 	/**
 	 * Constructor for the game of chess. Initializes scanner, ArrayList's of valid inputs, and
 	 * calls newGame with the user's drawStrategy to run the bulk of the program.
@@ -79,6 +87,8 @@ public class Chess {
 
 		this.undo = true; //can undo by default
 		this.showMoves = true; //can showMoves by default
+		this.moves = new LinkedList<Move>();
+		this.movesIndex = -1;
 	}
 	
 
@@ -158,7 +168,7 @@ public class Chess {
 			if(playerTurn % 2 == 0) this.board.draw(true, empty);
 			else this.board.draw(false, empty);
 
-			if(playTurn()) playing = false;	
+			if(playTurn()) playing = false;
 			playerTurn++;
 		}
 
@@ -183,20 +193,40 @@ public class Chess {
 					File toF = File.getFileByChar(parts[1].charAt(0));
 					Rank fromR = Rank.getRankByReal(Character.getNumericValue(parts[0].charAt(1)));
 					Rank toR = Rank.getRankByReal(Character.getNumericValue(parts[1].charAt(1)));
+					PieceIF piece = board.getPiece(toR, toF); //the piece that will be captured
 					if(board.getPiece(fromR, fromF).getChessPieceType() == ChessPieceType.EMPTY){
 						System.out.println("Error, no piece at " + parts[0]);
 					}
 					else if(move(fromF, fromR, toF, toR)){
-						turnNotOver = false;
 						((Piece)board.getPiece(fromR, fromF)).setHasMoved();
+
+						while(this.moves.size() - 1 > this.movesIndex) this.moves.pop();
+	
+						Position fromPos = new Position(fromR, fromF);
+						Position toPos = new Position(toR, toF);
+						this.moves.add(new Move(fromPos, toPos, piece));
+						this.movesIndex++;
+						turnNotOver = false;
 					}
 					else System.out.println("Invalid Move");
 					break;
 				case "2":
-					//UNDOOOOOO
+					if(this.movesIndex >= 0){
+						turnNotOver = false;
+						undo(true);
+					}
+					else{
+						System.out.println("Undo is unavailable right now");
+					}
 					break;
 				case "3":
-					//REDOOOOOOO
+					if(this.movesIndex < this.moves.size() - 1){
+						turnNotOver = false;
+						redo();
+					}
+					else{
+						System.out.println("Redo is unavailable right now");
+					}
 					break;
 				case "4":
 					showMovesDisplay.showMoves(this.board);
@@ -208,6 +238,27 @@ public class Chess {
         }
 		return quit;
 	}
+
+	public void undo(boolean userUndo){
+		Move lastMove = this.moves.get(this.movesIndex);
+		Position toPos = lastMove.getFromPos();
+		Position fromPos = lastMove.getToPos();
+		Rank fromR = fromPos.getRank();
+		File fromF = fromPos.getFile();
+		forceMove(fromF, fromR, toPos.getFile(), toPos.getRank());
+		board.getSquare(fromR.getArrayRank(), fromF.getArrayFile()).setPiece(lastMove.getPiece());
+		this.movesIndex--;
+		if(!userUndo) this.moves.pop();
+	}
+	
+	public void redo(){
+		this.movesIndex++;
+		Move move = this.moves.get(this.movesIndex);
+		Position fromPos = move.getFromPos();
+		Position toPos = move.getToPos();
+		forceMove(fromPos.getFile(), fromPos.getRank(), toPos.getFile(), toPos.getRank());
+	}
+
 
 	/**
 	 * Performs steps to end the game of chess. Not currently implemented, will be in the future.
@@ -256,32 +307,36 @@ public class Chess {
 		Piece piece = (Piece) board.getPiece(fromR, fromF);
 		//If move is valid
 		if(piece.validateMove(fromPos, toPos)){
-			//Retrieves the row and column numbers from original and new position
-			int fromFileNum = fromF.getArrayFile();
-			int fromRankNum = fromR.getArrayRank();
-			int toFileNum = toF.getArrayFile();
-			int toRankNum = toR.getArrayRank();
-
-			//Retrieves square from current position
-			Square fromSquare = (Square) board.getSquare(fromRankNum, fromFileNum);
-			//Retrieves squre from new position
-			Square toSquare = (Square) board.getSquare(toRankNum, toFileNum);
-
-			//Sets piece to new position and clears from original space
-			Piece toPiece = (Piece) toSquare.getPiece();
-			if(toPiece.isWhite()){ //if white, the piece needs to be "taken" and added to ArrayList
-				board.getWhiteTakenPieces().add(toPiece.getChessPieceType().getChessPieceLetter());
-			}
-			if(toPiece.isBlack()){ //if black, the piece needs to be "taken" and added to ArrayList
-				board.getBlackTakenPieces().add(toPiece.getChessPieceType().getChessPieceLetter());
-			}
-			toSquare.setPiece(fromSquare.getPiece()); //put piece at new location
-			fromSquare.clear(); //remove piece from it's previous position on square
+			forceMove(fromF, fromR, toF, toR);
 		}
 		else{
 			result = false;
 		}
 		return result;
+	}
+
+
+	public void forceMove(File fromF, Rank fromR, File toF, Rank toR){
+		//Retrieves the row and column numbers from original and new position
+		int fromFileNum = fromF.getArrayFile();
+		int fromRankNum = fromR.getArrayRank();
+		int toFileNum = toF.getArrayFile();
+		int toRankNum = toR.getArrayRank();
+
+		//Retrieves square from current position
+		Square fromSquare = (Square) board.getSquare(fromRankNum, fromFileNum);
+		//Retrieves squre from new position
+		Square toSquare = (Square) board.getSquare(toRankNum, toFileNum);
+
+		Piece toPiece = (Piece) toSquare.getPiece();
+		if(toPiece.isWhite()){ //if white, the piece needs to be "taken" and added to ArrayList
+			board.getWhiteTakenPieces().add(toPiece.getChessPieceType().getChessPieceLetter());
+		}
+		if(toPiece.isBlack()){ //if black, the piece needs to be "taken" and added to ArrayList
+			board.getBlackTakenPieces().add(toPiece.getChessPieceType().getChessPieceLetter());
+		}
+		toSquare.setPiece(fromSquare.getPiece()); //put piece at new location
+		fromSquare.clear(); //remove piece from it's previous position on square
 	}
 
 	/**
