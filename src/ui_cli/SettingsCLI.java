@@ -36,7 +36,6 @@ public class SettingsCLI implements SettingsIF{
         boardStratStatus = (boardStrat instanceof BoardColorCLI) ? "color" : "mono";
         undoStatus = undo ? "on" : "off";
         showMovesStatus = showMoves ? "on" : "off";
-
 		while(promptAgain){
             System.out.println("Settings:\n===========\nBoard: " + boardStratStatus + "\nUndo is "
                                + undoStatus + "\nShow moves is " + showMovesStatus + "\n\n" + 

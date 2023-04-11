@@ -1,7 +1,6 @@
 package src.interfaces;
 
 import java.util.ArrayList;
-
 import src.model.Position;
 
 public interface ShowMovesIF {

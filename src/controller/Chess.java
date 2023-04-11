@@ -1,12 +1,18 @@
 package src.controller;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import src.interfaces.*;
 import src.model.Board;
 import src.model.Piece;
+import src.model.Player;
 import src.model.Position;
 import src.model.Square;
 import src.ui_cli.BoardColorCLI;
 import src.ui_cli.BoardMonoCLI;
+import src.ui_cli.DefinePlayerCLI;
 import src.ui_cli.MainMenuCLI;
 import src.ui_cli.PlayChessCLI;
 import src.ui_cli.RulesCLI;
@@ -53,11 +59,19 @@ public class Chess {
 	/** Used to show moves of a piece **/
 	private ShowMovesIF showMovesDisplay;
 
+	/**Used to define the players settings*/
+	private DefinePlayerCLI definePlayers;
+
 	/** True if players can undo, false if undo is off **/
 	private boolean undo;
 
 	/** True if possible moves are displayed, false if not **/
 	private boolean showMoves;
+
+	/**Players for the actual chess game*/
+	Player playerOne, playerTwo;
+
+	final private String PLAYER_DB_LOCATION = "src\\databases\\PlayerDatabase.txt";
 
 	/**
 	 * Constructor for the game of chess. Initializes scanner, ArrayList's of valid inputs, and
@@ -76,9 +90,12 @@ public class Chess {
 		this.rulesDisplay = new RulesCLI();
 		this.settingsDisplay = new SettingsCLI();
 		this.showMovesDisplay = new ShowMovesCLI();
-
+		this.definePlayers = new DefinePlayerCLI();
 		this.undo = true; //can undo by default
 		this.showMoves = true; //can showMoves by default
+		playerOne = new Player("Player 1");
+		playerTwo = new Player("Player 2");
+
 	}
 	
 
@@ -104,19 +121,63 @@ public class Chess {
 					rulesDisplay.displayRules(); //NOT COMPLETED
 					break;
 				case "3":
-					System.out.println("NOT CURRENTLY IMPLEMENTED.");
+					signIn();
 					break;
 				case "4":
-					settingsInteraction();
+					signUp();
 					break;
 				case "5":
+					displayPlayerOptions();
+					break;
+				case "6":
+					settingsInteraction();
+					break;
+				case "7":
 					System.out.println("NOT CURRENTLY IMPLEMENTED.");
 			}
 		}
 
 	}
 	
-	public void settingsInteraction(){
+	private void signIn(){
+		FileReader playerDatabase = readerFile(PLAYER_DB_LOCATION);
+		String username = mainMenu.promptSignIn(playerDatabase);
+	}
+
+	private void signUp(){
+		FileWriter playerDatabase = writerFile(PLAYER_DB_LOCATION);
+		String username = mainMenu.promptSignUp("Enter the username you would like:");
+		String password = mainMenu.promptSignUp("Enter the password you would like:");
+		try {
+			playerDatabase.append("#Player\n");
+			playerDatabase.append(username + "\n");
+			playerDatabase.append(password + "\n");
+			playerDatabase.close();
+		} catch (IOException e) {
+			System.out.println("Unable to write player" + username + " to database");
+		}
+
+	}
+
+	private FileWriter writerFile(String file){
+		FileWriter newFile = null;
+
+		try { newFile = new FileWriter(file, true); } 
+		catch (IOException exception) { System.out.println("Unable to read " + file); }
+
+		return newFile;
+	}
+
+	private FileReader readerFile(String file){
+		FileReader newFile = null;
+
+		try { newFile = new FileReader(file); } 
+		catch (IOException exception) { System.out.println("Unable to read " + file); }
+
+		return newFile;
+	}
+
+	private void settingsInteraction(){
 		boolean returnToSettings = true;
 		while(returnToSettings){
 			String settingsInput = settingsDisplay.displaySettings(drawStrat, undo, showMoves);
@@ -147,7 +208,12 @@ public class Chess {
 
 	}
 
-	public void playGame(){
+	private void displayPlayerOptions(){
+		playerOne.setUsername(definePlayers.definePlayer(1));
+		playerTwo.setUsername(definePlayers.definePlayer(2));
+	}
+
+	private void playGame(){
 		this.playChess = new PlayChessCLI(undo, showMoves);
 		this.board.setDrawStrategy(drawStrat);
 		boolean playing = true;
@@ -164,7 +230,7 @@ public class Chess {
 
 	}
 
-	public boolean playTurn(){
+	private boolean playTurn(){
 		boolean quit = false;
 		boolean turnNotOver = true;
         while(turnNotOver){
@@ -247,7 +313,7 @@ public class Chess {
 	 * @param toR Rank of where piece is being moved to
 	 * @return True if the selected move was validate; false otherwise
 	 */
-	public boolean move(File fromF, Rank fromR, File toF, Rank toR) {
+	private boolean move(File fromF, Rank fromR, File toF, Rank toR) {
 		Position fromPos = new Position(fromR, fromF);
 		Position toPos = new Position(toR, toF);
 

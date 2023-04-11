@@ -1,9 +1,7 @@
 package src.interfaces;
 
 import java.util.ArrayList;
-
-import javax.swing.text.Position;
-
+import src.model.Position;
 /**
  * Interface for the way that the chess board is drawn in regards to color.
  * 
