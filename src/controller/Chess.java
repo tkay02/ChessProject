@@ -167,10 +167,11 @@ public class Chess {
 		ArrayList<Position> empty = new ArrayList<>();
 		while(playing){
 			//Changes the current player turn
+			System.out.println("WHAT IS PLAYERTURN " + playerTurn);
 			if(playerTurn % 2 == 0) this.board.draw(true, empty);
 			else this.board.draw(false, empty);
 
-			if(playTurn()) playing = false;
+			if(playTurn(playerTurn)) playing = false;
 			playerTurn++;
 		}
 
@@ -182,7 +183,7 @@ public class Chess {
 	 * 
 	 * @return boolean value to determine if the game is over through resignation
 	 */
-	public boolean playTurn(){
+	public boolean playTurn(int playerTurn){
 		boolean quit = false;
 		boolean turnNotOver = true;
         while(turnNotOver){
@@ -237,7 +238,7 @@ public class Chess {
 					}
 					break;
 				case "4":
-					showMovesDisplay.showMoves(this.board);
+					showMovesDisplay.showMoves(this.board, playerTurn);
 					break;
 				case "5":
 					//SAVE GAMEEE

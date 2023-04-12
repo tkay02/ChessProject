@@ -2,6 +2,7 @@ package src.ui_cli;
 import src.enums.GameColor;
 import src.interfaces.BoardIF;
 import src.model.Piece;
+import src.model.Position;
 
 /**
  * Creates a colored version of chess board. Implements board strategy, and uses GameColor enums
@@ -95,5 +96,19 @@ public class BoardColorCLI extends BoardDisplayCLI{
 	@Override
 	public String displayBlackFile(){
 		return "    H   G   F   E   D   C   B   A\n";
+	}
+
+	public String displayValidMoves(Piece piece){
+		String result = GameColor.showMoveColor() + " ";
+		if(piece.isWhite()){
+			result += GameColor.WHITE.getText() + "w" + piece.getChessPieceType().getChessPieceLetter() + " ";
+		}
+		else if(piece.isBlack()){
+			result += GameColor.BLACK.getText() + "b" + piece.getChessPieceType().getChessPieceLetter() + " ";
+		}
+		else{
+			result += "   ";
+		}
+		return result + GameColor.resetColor();
 	}
 }
