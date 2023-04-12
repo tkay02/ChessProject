@@ -140,7 +140,6 @@ public class Chess {
 					System.out.println("NOT CURRENTLY IMPLEMENTED.");
 			}
 		}
-
 	}
 	
 	private void signIn(){
