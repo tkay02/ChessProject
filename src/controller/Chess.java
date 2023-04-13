@@ -1,18 +1,28 @@
 package src.controller;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import src.interfaces.*;
 import src.model.Board;
 import src.model.Move;
 import src.model.Piece;
+import src.model.Player;
 import src.model.Position;
 import src.model.Square;
 import src.ui_cli.BoardColorCLI;
 import src.ui_cli.BoardMonoCLI;
+import src.ui_cli.DefinePlayerCLI;
 import src.ui_cli.MainMenuCLI;
 import src.ui_cli.PlayChessCLI;
 import src.ui_cli.RulesCLI;
 import src.ui_cli.SettingsCLI;
 import src.ui_cli.ShowMovesCLI;
+
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -32,6 +42,8 @@ import src.enums.Rank;
  */
 
 public class Chess {
+
+	/** The type OS System the current user is using */
 
 	/** The board to play chess on **/
 	private Board board;
@@ -63,8 +75,17 @@ public class Chess {
 	/** Arraylist of the positions of the board. **/
 	private LinkedList<Move> moves;
 
+	/**Used to define the players settings*/
+	private DefinePlayerCLI definePlayers;
+
 	/** Index for the moves LinkedList. **/
 	private int movesIndex;
+
+	/**Players for the actual chess game*/
+	Player playerOne, playerTwo;
+
+	/** Field for player database location*/
+	private String PLAYER_DB_LOCATION = "src/databases/PlayerDatabase.txt";
 
 	/**
 	 * Constructor for the game of chess. Initializes scanner, ArrayList's of valid inputs, and
@@ -74,19 +95,25 @@ public class Chess {
 	 */
 	public Chess(){
 		this.board = new Board();
-		drawStrat = new BoardColorCLI(); //default BoardStrategy is color
+		drawStrat = new BoardColorCLI(); // Default BoardStrategy is color
 		board.setDrawStrategy(drawStrat); 
+		if(System.getProperty("os.name").startsWith("Windows"))
+			PLAYER_DB_LOCATION = "src\\databases\\PlayerDatabase.txt";
 
 		this.mainMenu = new MainMenuCLI();
-
+		
 		this.rulesDisplay = new RulesCLI();
 		this.settingsDisplay = new SettingsCLI();
 		this.showMovesDisplay = new ShowMovesCLI();
-
+		this.definePlayers = new DefinePlayerCLI();
 		this.undo = true; //can undo by default
 		this.showMoves = true; //can showMoves by default
 		this.moves = new LinkedList<Move>();
 		this.movesIndex = -1;
+		if(System.getProperty("os.name").startsWith("Windows"))
+			PLAYER_DB_LOCATION = "src\\databases\\PlayerDatabase.txt";
+		playerOne = new Player("Player 1");
+		playerTwo = new Player("Player 2");
 	}
 	
 
@@ -111,16 +138,62 @@ public class Chess {
 					rulesDisplay.displayRules(); //NOT COMPLETED
 					break;
 				case "3":
-					System.out.println("NOT CURRENTLY IMPLEMENTED.");
+					signIn();
 					break;
 				case "4":
-					settingsInteraction();
+					signUp();
 					break;
 				case "5":
+					displayPlayerOptions();
+					break;
+				case "6":
+					settingsInteraction();
+					break;
+				case "7":
 					System.out.println("NOT CURRENTLY IMPLEMENTED.");
 			}
 		}
+	}
 
+	private void signIn(){
+		FileReader playerDatabase = readerFile(PLAYER_DB_LOCATION);
+		mainMenu.promptSignIn(playerDatabase);
+	}
+
+	private void signUp(){
+		FileWriter playerDatabase = writerFile(PLAYER_DB_LOCATION);
+		String username = mainMenu.promptSignUp("Enter the username you would like: ");
+		String password = mainMenu.promptSignUp("Enter the password you would like: ");
+		try {
+			playerDatabase.append("#Player\n" + username + "\n" + password + "\n");
+			playerDatabase.close();
+		} catch (IOException e) {
+			System.out.println("Unable to write player" + username + " to database");
+		}
+
+	}
+
+	private FileWriter writerFile(String file){
+		FileWriter newFile = null;
+
+		try { newFile = new FileWriter(file, true); } 
+		catch (IOException exception) { System.out.println("Unable to read " + file); }
+
+		return newFile;
+	}
+
+	private FileReader readerFile(String file){
+		FileReader newFile = null;
+
+		try { newFile = new FileReader(file); } 
+		catch (IOException exception) { System.out.println("Unable to read " + file); }
+
+		return newFile;
+	}
+
+	private void displayPlayerOptions(){
+		playerOne.setUsername(definePlayers.definePlayer(1));
+		playerTwo.setUsername(definePlayers.definePlayer(2));
 	}
 	
 	/**
@@ -167,10 +240,11 @@ public class Chess {
 		ArrayList<Position> empty = new ArrayList<>();
 		while(playing){
 			//Changes the current player turn
+			System.out.println("WHAT IS PLAYERTURN " + playerTurn);
 			if(playerTurn % 2 == 0) this.board.draw(true, empty);
 			else this.board.draw(false, empty);
 
-			if(playTurn()) playing = false;
+			if(playTurn(playerTurn)) playing = false;
 			playerTurn++;
 		}
 
@@ -182,7 +256,7 @@ public class Chess {
 	 * 
 	 * @return boolean value to determine if the game is over through resignation
 	 */
-	public boolean playTurn(){
+	public boolean playTurn(int playerTurn){
 		boolean quit = false;
 		boolean turnNotOver = true;
         while(turnNotOver){
@@ -237,7 +311,7 @@ public class Chess {
 					}
 					break;
 				case "4":
-					showMovesDisplay.showMoves(this.board);
+					showMovesDisplay.showMoves(this.board, playerTurn);
 					break;
 				case "5":
 					//SAVE GAMEEE
@@ -321,7 +395,7 @@ public class Chess {
 	 * @param toR Rank of where piece is being moved to
 	 * @return True if the selected move was valid, false otherwise
 	 */
-	public boolean move(File fromF, Rank fromR, File toF, Rank toR) {
+	private boolean move(File fromF, Rank fromR, File toF, Rank toR) {
 		Position fromPos = new Position(fromR, fromF);
 		Position toPos = new Position(toR, toF);
 		boolean result = true;

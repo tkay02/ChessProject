@@ -43,21 +43,24 @@ public abstract class BoardDisplayCLI implements BoardStrategy{
 		for(int i = 0; i < board.getWidth(); i++){ //iterate through board
 			toDisplay += displayRank(board.getWidth() - i); //rank to display on side of board
 			for(int j = 0; j < board.getHeight(); j++){
+				
 				piece = (Piece)board.getPiece(i, j);
-
-				//if the square is white
-				if(((Square)board.getSquares()[i][j]).isWhite()){
-                    toDisplay += whiteSquare(piece);
-                }
-				else{//square must be black
-                    toDisplay += blackSquare(piece);
-				}
-
-				Position pos = board.getSquares()[i][j].getPosition();
+				boolean validPosition = false;
 				for(Position validMove : validMoves){
-					if(validMove.equals(pos)) System.out.println(";)");//Something highlighted
+					if(validMove.getRank().getArrayRank() == i && validMove.getFile().getArrayFile() == j){
+						validPosition = true;
+						toDisplay += showMoves(piece);
+					}
 				}
-
+				if(!validPosition){
+					//if the square is white
+					if(((Square)board.getSquares()[i][j]).isWhite()){
+						toDisplay += whiteSquare(piece);
+					}
+					else{//square must be black
+						toDisplay += blackSquare(piece);
+					}
+				}
 			}
             toDisplay += "\n";
 		}
@@ -72,26 +75,36 @@ public abstract class BoardDisplayCLI implements BoardStrategy{
 			toDisplay += displayRank(board.getWidth() - i); //rank to display on side of board
 			for(int j = 7; j >= 0; j--){
 				piece = (Piece)board.getPiece(i, j);
-
-				//if the square is white
-				if(((Square)board.getSquares()[i][j]).isWhite()){
-                    toDisplay += whiteSquare(piece);
-                }
-				else{//square must be black
-                    toDisplay += blackSquare(piece);
-				}
-
-				Position pos = board.getSquares()[i][j].getPosition();
+				
+				boolean  validPosition = false;
 				for(Position validMove : validMoves){
-					if(validMove.equals(pos)) System.out.println(":p");//Something highlighted
+					if(validMove.getRank().getArrayRank() == i && validMove.getFile().getArrayFile() == j){
+						validPosition = true;
+						toDisplay += showMoves(piece);
+					}
+				}
+				if(!validPosition){
+					//if the square is white
+					if(((Square)board.getSquares()[i][j]).isWhite()){
+						toDisplay += whiteSquare(piece);
+					}
+					else{//square must be black
+						toDisplay += blackSquare(piece);
+					}
 				}
 
+				//Position pos = board.getSquares()[i][j].getPosition();
+				//toDisplay += showMoves(validMoves, pos);
 			}
             toDisplay += "\n";
 		}
         toDisplay += displayBlackFile(); //display the file along the bottom of the board
         toDisplay += takenPieces(board); //display the pieces that have been taken
 		System.out.println(toDisplay); //print out the string
+	}
+
+	public String showMoves(Piece piece){
+		return displayValidMoves(piece);
 	}
 
 	// public void showMoves(BoardIF board, ArrayList<Position>){
@@ -112,7 +125,8 @@ public abstract class BoardDisplayCLI implements BoardStrategy{
 	// 	}
 	// }
 
-    public abstract String whiteSquare(Piece piece);
+
+	public abstract String whiteSquare(Piece piece);
 
     public abstract String blackSquare(Piece piece);
 
@@ -123,5 +137,7 @@ public abstract class BoardDisplayCLI implements BoardStrategy{
     public abstract String displayWhiteFile();
 
     public abstract String displayBlackFile();
+
+	public abstract String displayValidMoves(Piece piece);
 
 }

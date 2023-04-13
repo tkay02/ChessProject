@@ -18,7 +18,7 @@ public class Player {
     private String email;
     
     /** User's username **/
-    private String userID;
+    private String username;
     
     /** User's password **/
     private String password;
@@ -32,6 +32,21 @@ public class Player {
     /** User's number of draws **/
     private int draws;
 
+     /**
+     * Constructor for a player object that initializes the username and game stats.
+     * This constructor doesn't initialize the player's name and email, because this could be
+     * optional information to fill out in an account settings page possibly implemented in the
+     * future.
+     * 
+     * @param userID String that holds the user's username
+     */
+    public Player(String username){
+        this.username = username;
+        this.wins = 0;
+        this.losses = 0;
+        this.draws = 0;
+    }
+
     /**
      * Constructor for a player object that initializes the username, password, and game stats.
      * This constructor doesn't initialize the player's name and email, because this could be
@@ -39,10 +54,10 @@ public class Player {
      * future.
      * 
      * @param userID String that holds the user's username
-     * @param password String that holds the user's password
+     * @param password String that holds thse user's password
      */
-    public Player(String userID, String password){
-        this.userID = userID;
+    public Player(String username, String password){
+        this.username = username;
         this.password = password;
         this.wins = 0;
         this.losses = 0;
@@ -52,7 +67,7 @@ public class Player {
     /**
      * Setter for the user's first name.
      * 
-     * @param first String that holds the user's first name
+     * @param first String that holds the user's firt name
      */
     public void setFirstName(String first){
         this.first = first;
@@ -74,6 +89,23 @@ public class Player {
      */
     public void setEmail(String email){
         this.email = email;   
+    }
+    
+
+     /**
+     * Get the user's username
+     * @return username - String that holds the user's username
+     */
+    public void setUsername(String username){
+        this.username = username;
+    }
+
+    /**
+     * Get the user's username
+     * @return username - String that holds the user's username
+     */
+    public String getUsername(){
+        return username;
     }
 
 }
