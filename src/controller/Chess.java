@@ -14,6 +14,10 @@ import src.ui_cli.RulesCLI;
 import src.ui_cli.SettingsCLI;
 import src.ui_cli.ShowMovesCLI;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -63,8 +67,17 @@ public class Chess {
 	/** Arraylist of the positions of the board. **/
 	private LinkedList<Move> moves;
 
+	/**Used to define the players settings*/
+	private DefinePlayerCLI definePlayers;
+
 	/** Index for the moves LinkedList. **/
 	private int movesIndex;
+
+	/**Players for the actual chess game*/
+	Player playerOne, playerTwo;
+
+	/** Field for player database location*/
+	private String PLAYER_DB_LOCATION = "src/databases/PlayerDatabase.txt";
 
 	/**
 	 * Constructor for the game of chess. Initializes scanner, ArrayList's of valid inputs, and
@@ -82,11 +95,15 @@ public class Chess {
 		this.rulesDisplay = new RulesCLI();
 		this.settingsDisplay = new SettingsCLI();
 		this.showMovesDisplay = new ShowMovesCLI();
-
+		this.definePlayers = new DefinePlayerCLI();
 		this.undo = true; //can undo by default
 		this.showMoves = true; //can showMoves by default
 		this.moves = new LinkedList<Move>();
 		this.movesIndex = -1;
+		if(System.getProperty("os.name").startsWith("Windows"))
+			PLAYER_DB_LOCATION = "src\\databases\\PlayerDatabase.txt";
+		playerOne = new Player("Player 1");
+		playerTwo = new Player("Player 2");
 	}
 	
 
@@ -99,7 +116,8 @@ public class Chess {
 	public void go() {
 		boolean returnToMain = true;
 		while(returnToMain){
-			switch(mainMenu.userInteraction()){
+			menuString = mainMenu.userInteraction();
+			switch(menuString){
 				case "0":
 					returnToMain = false;
 					break;
@@ -111,16 +129,62 @@ public class Chess {
 					rulesDisplay.displayRules(); //NOT COMPLETED
 					break;
 				case "3":
-					System.out.println("NOT CURRENTLY IMPLEMENTED.");
+					signIn();
 					break;
 				case "4":
-					settingsInteraction();
+					signUp();
 					break;
 				case "5":
+					displayPlayerOptions();
+					break;
+				case "6":
+					settingsInteraction();
+					break;
+				case "7":
 					System.out.println("NOT CURRENTLY IMPLEMENTED.");
 			}
 		}
+	}
 
+	private void signIn(){
+		FileReader playerDatabase = readerFile(PLAYER_DB_LOCATION);
+		mainMenu.promptSignIn(playerDatabase);
+	}
+
+	private void signUp(){
+		FileWriter playerDatabase = writerFile(PLAYER_DB_LOCATION);
+		String username = mainMenu.promptSignUp("Enter the username you would like: ");
+		String password = mainMenu.promptSignUp("Enter the password you would like: ");
+		try {
+			playerDatabase.append("#Player\n" + username + "\n" + password + "\n");
+			playerDatabase.close();
+		} catch (IOException e) {
+			System.out.println("Unable to write player" + username + " to database");
+		}
+
+	}
+
+	private FileWriter writerFile(String file){
+		FileWriter newFile = null;
+
+		try { newFile = new FileWriter(file, true); } 
+		catch (IOException exception) { System.out.println("Unable to read " + file); }
+
+		return newFile;
+	}
+
+	private FileReader readerFile(String file){
+		FileReader newFile = null;
+
+		try { newFile = new FileReader(file); } 
+		catch (IOException exception) { System.out.println("Unable to read " + file); }
+
+		return newFile;
+	}
+
+	private void displayPlayerOptions(){
+		playerOne.setUsername(definePlayers.definePlayer(1));
+		playerTwo.setUsername(definePlayers.definePlayer(2));
 	}
 	
 	/**
