@@ -70,4 +70,19 @@ public class BoardMonoCLI extends BoardDisplayCLI{
 	public String displayBlackFile(){
 		return "   H  G  F  E  D  C  B  A\n";
 	}
+
+	public String displayValidMoves(Piece piece){
+	String result = "-";
+	if(piece.isWhite()){
+		result +=  piece.getChessPieceType().getChessPieceLetter() + "-";
+	}
+	else if(piece.isBlack()){
+		result += piece.getChessPieceType().getChessPieceLetter().toLowerCase() + "-";
+	}
+	else{
+		result += " -";
+	}
+	return result;
+	}
+
 }

@@ -54,9 +54,7 @@ public class Position {
      * @return true if equal, false otherwise
      */
     public boolean equals(Position pos){
-        boolean isEqual = false;
-        if(this.rank.equals(pos.getRank()) && this.file.equals(pos.getFile())) isEqual = true;
-        return isEqual;
+        return this.rank.equals(pos.getRank()) && this.file.equals(pos.getFile());
     }
 
 }

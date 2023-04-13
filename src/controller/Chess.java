@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import src.interfaces.*;
 import src.model.Board;
+import src.model.Move;
 import src.model.Piece;
 import src.model.Player;
 import src.model.Position;
@@ -19,7 +20,12 @@ import src.ui_cli.RulesCLI;
 import src.ui_cli.SettingsCLI;
 import src.ui_cli.ShowMovesCLI;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import src.enums.ChessPieceType;
 import src.enums.File;
@@ -42,12 +48,11 @@ public class Chess {
 	/** The board to play chess on **/
 	private Board board;
 
+	/** Strategy for drawing the board **/
+	private BoardStrategy drawStrat;
+
 	/** Used for main menu screen **/
 	private MainMenuIF mainMenu;
-
-	private String menuString;
-
-	private BoardStrategy drawStrat;
 
 	/** Used for Rules Screen **/
 	private RulesIF rulesDisplay;
@@ -70,9 +75,19 @@ public class Chess {
 	/** True if possible moves are displayed, false if not **/
 	private boolean showMoves;
 
+	/** Arraylist of the positions of the board. **/
+	private LinkedList<Move> moves;
+
+	/**Used to define the players settings*/
+	private DefinePlayerCLI definePlayers;
+
+	/** Index for the moves LinkedList. **/
+	private int movesIndex;
+
 	/**Players for the actual chess game*/
 	Player playerOne, playerTwo;
 
+	/** Field for player database location*/
 	private String PLAYER_DB_LOCATION = "src/databases/PlayerDatabase.txt";
 
 	/**
@@ -89,17 +104,19 @@ public class Chess {
 			PLAYER_DB_LOCATION = "src\\databases\\PlayerDatabase.txt";
 
 		this.mainMenu = new MainMenuCLI();
-		this.menuString = "";
-		
+
 		this.rulesDisplay = new RulesCLI();
 		this.settingsDisplay = new SettingsCLI();
 		this.showMovesDisplay = new ShowMovesCLI();
 		this.definePlayers = new DefinePlayerCLI();
 		this.undo = true; //can undo by default
 		this.showMoves = true; //can showMoves by default
+		this.moves = new LinkedList<Move>();
+		this.movesIndex = -1;
+		if(System.getProperty("os.name").startsWith("Windows"))
+			PLAYER_DB_LOCATION = "src\\databases\\PlayerDatabase.txt";
 		playerOne = new Player("Player 1");
 		playerTwo = new Player("Player 2");
-
 	}
 	
 
@@ -141,7 +158,7 @@ public class Chess {
 			}
 		}
 	}
-	
+
 	private void signIn(){
 		FileReader playerDatabase = readerFile(PLAYER_DB_LOCATION);
 		mainMenu.promptSignIn(playerDatabase);
@@ -152,9 +169,7 @@ public class Chess {
 		String username = mainMenu.promptSignUp("Enter the username you would like: ");
 		String password = mainMenu.promptSignUp("Enter the password you would like: ");
 		try {
-			playerDatabase.append("#Player\n");
-			playerDatabase.append(username + "\n");
-			playerDatabase.append(password + "\n");
+			playerDatabase.append("#Player\n" + username + "\n" + password + "\n");
 			playerDatabase.close();
 		} catch (IOException e) {
 			System.out.println("Unable to write player" + username + " to database");
@@ -180,7 +195,16 @@ public class Chess {
 		return newFile;
 	}
 
-	private void settingsInteraction(){
+	private void displayPlayerOptions(){
+		playerOne.setUsername(definePlayers.definePlayer(1));
+		playerTwo.setUsername(definePlayers.definePlayer(2));
+	}
+	
+	/**
+	 * Calls an external UI class so that users can interact with the settings menu.
+	 * Their response to the settings menu will be handled here.
+	 */
+	public void settingsInteraction(){
 		boolean returnToSettings = true;
 		while(returnToSettings){
 			String settingsInput = settingsDisplay.displaySettings(drawStrat, undo, showMoves);
@@ -211,12 +235,8 @@ public class Chess {
 
 	}
 
-	private void displayPlayerOptions(){
-		playerOne.setUsername(definePlayers.definePlayer(1));
-		playerTwo.setUsername(definePlayers.definePlayer(2));
-	}
 
-	private void playGame(){
+	public void playGame(){
 		this.playChess = new PlayChessCLI(undo, showMoves);
 		this.board.setDrawStrategy(drawStrat);
 		boolean playing = true;
@@ -224,16 +244,23 @@ public class Chess {
 		ArrayList<Position> empty = new ArrayList<>();
 		while(playing){
 			//Changes the current player turn
+			System.out.println("WHAT IS PLAYERTURN " + playerTurn);
 			if(playerTurn % 2 == 0) this.board.draw(true, empty);
 			else this.board.draw(false, empty);
 
-			if(playTurn()) playing = false;	
+			if(playTurn(playerTurn)) playing = false;
 			playerTurn++;
 		}
 
 	}
 
-	private boolean playTurn(){
+	/**
+	 * Calls an external UI class to prompt the user with the Play Chess menu. The option that
+	 * the user selects while playing a game of chess are evaluated and carried out here.
+	 * 
+	 * @return boolean value to determine if the game is over through resignation
+	 */
+	public boolean playTurn(int playerTurn){
 		boolean quit = false;
 		boolean turnNotOver = true;
         while(turnNotOver){
@@ -252,23 +279,43 @@ public class Chess {
 					File toF = File.getFileByChar(parts[1].charAt(0));
 					Rank fromR = Rank.getRankByReal(Character.getNumericValue(parts[0].charAt(1)));
 					Rank toR = Rank.getRankByReal(Character.getNumericValue(parts[1].charAt(1)));
+					PieceIF piece = board.getPiece(toR, toF); //the piece that will be captured
 					if(board.getPiece(fromR, fromF).getChessPieceType() == ChessPieceType.EMPTY){
 						System.out.println("Error, no piece at " + parts[0]);
 					}
 					else if(move(fromF, fromR, toF, toR)){
-						turnNotOver = false;
 						((Piece)board.getPiece(fromR, fromF)).setHasMoved();
+
+						while(this.moves.size() - 1 > this.movesIndex) this.moves.pop();
+	
+						Position fromPos = new Position(fromR, fromF);
+						Position toPos = new Position(toR, toF);
+						this.moves.add(new Move(fromPos, toPos, piece));
+						this.movesIndex++;
+						turnNotOver = false;
 					}
 					else System.out.println("Invalid Move");
 					break;
 				case "2":
-					//UNDOOOOOO
+					if(this.movesIndex >= 0){
+						turnNotOver = false;
+						undo(true);
+					}
+					else{
+						System.out.println("Undo is unavailable right now");
+					}
 					break;
 				case "3":
-					//REDOOOOOOO
+					if(this.movesIndex < this.moves.size() - 1){
+						turnNotOver = false;
+						redo();
+					}
+					else{
+						System.out.println("Redo is unavailable right now");
+					}
 					break;
 				case "4":
-					showMovesDisplay.showMoves(this.board);
+					showMovesDisplay.showMoves(this.board, playerTurn);
 					break;
 				case "5":
 					//SAVE GAMEEE
@@ -279,6 +326,43 @@ public class Chess {
 	}
 
 	/**
+	 * This method will undo a move during the game if the user selects the option. If the user
+	 * is performing the undo, the boolean in the parameter will be true, and the undone move
+	 * will not be popped off of the list of moves. If the system is performing the undo, the
+	 * move is popped off of the list so the user can't redo the system's move.
+	 * 
+	 * @param userUndo true if the user is performing undo, false otherwise
+	 */
+	public void undo(boolean userUndo){
+		Move lastMove = this.moves.get(this.movesIndex);
+		Position toPos = lastMove.getFromPos();
+		Position fromPos = lastMove.getToPos();
+		Rank fromR = fromPos.getRank();
+		File fromF = fromPos.getFile();
+		Piece takenPiece = (Piece) lastMove.getPiece();
+		String takenPieceLetter = takenPiece.getChessPieceType().getChessPieceLetter();
+		System.out.println(takenPieceLetter);
+		forceMove(fromF, fromR, toPos.getFile(), toPos.getRank());
+		board.getSquare(fromR.getArrayRank(), fromF.getArrayFile()).setPiece(takenPiece);
+		System.out.println(takenPiece.isBlack());
+		if(takenPiece.isBlack()) board.getBlackTakenPieces().remove(takenPieceLetter);
+		if(takenPiece.isWhite()) board.getWhiteTakenPieces().remove(takenPieceLetter);
+		this.movesIndex--;
+		if(!userUndo) this.moves.pop();
+	}
+	
+	/**
+	 * This method will redo a move if a move has been undone.
+	 */
+	public void redo(){
+		this.movesIndex++;
+		Move move = this.moves.get(this.movesIndex);
+		Position fromPos = move.getFromPos();
+		Position toPos = move.getToPos();
+		forceMove(fromPos.getFile(), fromPos.getRank(), toPos.getFile(), toPos.getRank());
+	}
+
+	/**
 	 * Performs steps to end the game of chess. Not currently implemented, will be in the future.
 	 */
 	public void endGame() {
@@ -286,10 +370,9 @@ public class Chess {
 	}
 
 	/**
-	 * 
 	 * Setup for loading a game in. Not currently implemented, will be in the future.
 	 * 
-	 * @param file
+	 * @param file name of the file that holds the saved game
 	 * @return
 	 */
 	public BoardIF loadGame(String file) {
@@ -299,8 +382,8 @@ public class Chess {
 	/**
 	 * Process of saving a game. Not currently implemented, will be in the future.
 	 * 
-	 * @param file Name of file to save game as
-	 * @param game Interface of game to be saved
+	 * @param file name of file to save game as
+	 * @param game interface of game to be saved
 	 */
 	public void saveGame(String file, BoardIF game) {
 
@@ -308,49 +391,47 @@ public class Chess {
 
 	/**
 	 * Moves piece and updates the board. If necessary, adds any taken pieces to the correct
-	 * ArrayList.
+	 * ArrayList to display taken pieces.
 	 * 
 	 * @param fromF File of piece to be moved
 	 * @param fromR Rank of piece to be moved
 	 * @param toF File of where piece is being moved to
 	 * @param toR Rank of where piece is being moved to
-	 * @return True if the selected move was validate; false otherwise
+	 * @return True if the selected move was valid, false otherwise
 	 */
 	private boolean move(File fromF, Rank fromR, File toF, Rank toR) {
 		Position fromPos = new Position(fromR, fromF);
 		Position toPos = new Position(toR, toF);
-
-		//Retrieves piece from current position
 		boolean result = true;
-		Piece piece = (Piece) board.getPiece(fromR, fromF);
-		//If move is valid
-		if(piece.validateMove(fromPos, toPos)){
-			//Retrieves the row and column numbers from original and new position
-			int fromFileNum = fromF.getArrayFile();
-			int fromRankNum = fromR.getArrayRank();
-			int toFileNum = toF.getArrayFile();
-			int toRankNum = toR.getArrayRank();
+		Piece piece = (Piece) board.getPiece(fromR, fromF); //piece from current position
 
-			//Retrieves square from current position
-			Square fromSquare = (Square) board.getSquare(fromRankNum, fromFileNum);
-			//Retrieves squre from new position
-			Square toSquare = (Square) board.getSquare(toRankNum, toFileNum);
-
-			//Sets piece to new position and clears from original space
-			Piece toPiece = (Piece) toSquare.getPiece();
-			if(toPiece.isWhite()){ //if white, the piece needs to be "taken" and added to ArrayList
-				board.getWhiteTakenPieces().add(toPiece.getChessPieceType().getChessPieceLetter());
-			}
-			if(toPiece.isBlack()){ //if black, the piece needs to be "taken" and added to ArrayList
-				board.getBlackTakenPieces().add(toPiece.getChessPieceType().getChessPieceLetter());
-			}
-			toSquare.setPiece(fromSquare.getPiece()); //put piece at new location
-			fromSquare.clear(); //remove piece from it's previous position on square
-		}
-		else{
-			result = false;
-		}
+		if(piece.validateMove(fromPos, toPos)) forceMove(fromF, fromR, toF, toR);
+		else result = false; //return false if move was invalid
 		return result;
+	}
+
+
+	public void forceMove(File fromF, Rank fromR, File toF, Rank toR){
+		//Retrieves the row and column numbers from original and new position
+		int fromFileNum = fromF.getArrayFile();
+		int fromRankNum = fromR.getArrayRank();
+		int toFileNum = toF.getArrayFile();
+		int toRankNum = toR.getArrayRank();
+
+		//Retrieves square from current position
+		Square fromSquare = (Square) board.getSquare(fromRankNum, fromFileNum);
+		//Retrieves squre from new position
+		Square toSquare = (Square) board.getSquare(toRankNum, toFileNum);
+
+		Piece toPiece = (Piece) toSquare.getPiece();
+		if(toPiece.isWhite()){ //if white, the piece needs to be "taken" and added to ArrayList
+			board.getWhiteTakenPieces().add(toPiece.getChessPieceType().getChessPieceLetter());
+		}
+		if(toPiece.isBlack()){ //if black, the piece needs to be "taken" and added to ArrayList
+			board.getBlackTakenPieces().add(toPiece.getChessPieceType().getChessPieceLetter());
+		}
+		toSquare.setPiece(fromSquare.getPiece()); //put piece at new location
+		fromSquare.clear(); //remove piece from it's previous position on square
 	}
 
 	/**
