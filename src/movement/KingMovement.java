@@ -12,7 +12,7 @@ import src.model.Position;
  */
 
 public class KingMovement extends MovementStrategy {
-  
+
     /**
      * Constructor for the king's movement strategy.
      * 
@@ -26,21 +26,20 @@ public class KingMovement extends MovementStrategy {
      * Generate all the valid moves of a piece from a current spot,
      * and use it to populate the valid moves array.
      * 
-     * @param from the position we're moving from
+     * @param start the position we're moving from
      */
     public void generateValidMoves(Position start) {
         validMoves.clear();
         int row = start.getRank().getArrayRank();
         int col = start.getFile().getArrayFile();
         Piece currentPiece = (Piece) board.getPiece(row, col);
-        validPosition(currentPiece, row - 1, col);
-        validPosition(currentPiece, row + 1, col);
-        validPosition(currentPiece, row, col - 1);
-        validPosition(currentPiece, row, col + 1);
-        validPosition(currentPiece, row - 1, col + 1);
-        validPosition(currentPiece, row - 1, col - 1);
-        validPosition(currentPiece, row + 1, col - 1);
-        validPosition(currentPiece, row + 1, col + 1);                
+        validPosition(currentPiece, row - 1, col, start);
+        validPosition(currentPiece, row + 1, col, start);
+        validPosition(currentPiece, row, col - 1, start);
+        validPosition(currentPiece, row, col + 1, start);
+        validPosition(currentPiece, row - 1, col + 1, start);
+        validPosition(currentPiece, row - 1, col - 1, start);
+        validPosition(currentPiece, row + 1, col - 1, start);
+        validPosition(currentPiece, row + 1, col + 1, start);                
     }
-
 }

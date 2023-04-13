@@ -32,19 +32,16 @@ public class PawnMovement extends MovementStrategy {
      */
     public void generateValidMoves(Position start){
         validMoves.clear();
-        // Get the row of the starting position
-        int row = start.getRank().getArrayRank();
-        // Get the column of the starting position
-        int col = start.getFile().getArrayFile();
-        // Grab the piece at the specified row and column on the board
-        Piece piece = (Piece) board.getPiece(row, col);
+        int row = start.getRank().getArrayRank(); // Get the row of the starting position
+        int col = start.getFile().getArrayFile(); // Get the column of the starting position
+        Piece piece = (Piece) board.getPiece(row, col); // Grab the piece at specified position
+
         // If the piece is White decrement the row, so the piece moves downwards
         // Otherwise increment the row so the piece goes upwards if it's black
         if(piece.isWhite() && row - 1 >= 0) validPosition(piece, row - 1, col, -1, start);
         else if(row + 1 < board.getHeight()) validPosition(piece, row + 1, col, 1, start);
     }
 
-    
     /**
      * This method will take a current piece, row, and column and attempt to move the piece to the
      * specified row and column. If the piece is able to be moved it will be added to the list of
@@ -60,23 +57,26 @@ public class PawnMovement extends MovementStrategy {
      * @param start - the position we're moving from.
      */
     private void validPosition(Piece currentPiece, int row, int col, int dir, Position start){
-
         // If the square at the specified row and column is empty then add it to the
         // list of possible moves
         if(board.getPiece(row, col).getChessPieceType() == ChessPieceType.EMPTY){
-            validMoves.add(new Position(Rank.getRankByIndex(row), start.getFile()));
+            if(tryMove(currentPiece, row, col, start))
+                validMoves.add(new Position(Rank.getRankByIndex(row), start.getFile()));
+
             // If the square infront of the previous checked square is empty, then add it
             // to the list of possible moves.
             if(!currentPiece.hasMoved() && board.getPiece(row + dir, col).getChessPieceType() == 
             ChessPieceType.EMPTY)
-                validMoves.add(new Position(Rank.getRankByIndex(row + dir), start.getFile()));
+                if(tryMove(currentPiece, row + dir, col, start))
+                    validMoves.add(new Position(Rank.getRankByIndex(row + dir), start.getFile()));
         }
 
         // If the piece diagonal to the current pawn is a piece of the opposite color, 
         // and the current column minus 1 is greater than or equal to the first column
         // and not an empty square, then add it to the list of possible moves
-        if(col - 1 >= 0 && ((Piece) board.getPiece(row, col - 1)).getColor() != currentPiece.getColor() && 
-        ((Piece) board.getPiece(row, col - 1)).getChessPieceType() != ChessPieceType.EMPTY)
+        if(col - 1 >= 0 && ((Piece) board.getPiece(row, col - 1)).getColor() != 
+        currentPiece.getColor() && ((Piece) board.getPiece(row, col - 1)).getChessPieceType() != 
+        ChessPieceType.EMPTY && tryMove(currentPiece, row, col - 1, start))
             validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col - 1)));
 
         // If the piece diagonal to the current pawn is a piece of the opposite color
@@ -84,9 +84,7 @@ public class PawnMovement extends MovementStrategy {
         // and not an empty square, then add it to the list of possible moves
         if(col + 1 < board.getWidth() && ((Piece) board.getPiece(row, col + 1)).getColor() 
         != currentPiece.getColor() && ((Piece) board.getPiece(row, col + 1)).getChessPieceType() 
-        != ChessPieceType.EMPTY)
+        != ChessPieceType.EMPTY && tryMove(currentPiece, row, col + 1, start))
             validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col + 1)));
-
     }
-
 }

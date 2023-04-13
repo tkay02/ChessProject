@@ -33,7 +33,7 @@ public class BishopMovement extends QueenMovement {
         int row = start.getRank().getArrayRank();
         int col = start.getFile().getArrayFile();
         Piece currentPiece = (Piece) board.getPiece(row, col);
-        crossMoves(currentPiece, row, col); //check diagonally
+        crossMoves(currentPiece, row, col, start); //check diagonally
     }
 
 }

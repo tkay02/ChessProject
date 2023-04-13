@@ -87,6 +87,9 @@ public class Chess {
 	/** Field for player database location*/
 	private String PLAYER_DB_LOCATION = "src/databases/PlayerDatabase.txt";
 
+	/** Field representing if a player is in check or not **/
+	private boolean inCheck;
+
 	/**
 	 * Constructor for the game of chess. Initializes scanner, ArrayList's of valid inputs, and
 	 * calls newGame with the user's drawStrategy to run the bulk of the program.
@@ -94,14 +97,13 @@ public class Chess {
 	 * @param BoardStrategy drawStrategy user's input for the chessboard
 	 */
 	public Chess(){
-		this.board = new Board();
+		this.board = new Board(this);
 		drawStrat = new BoardColorCLI(); // Default BoardStrategy is color
 		board.setDrawStrategy(drawStrat); 
 		if(System.getProperty("os.name").startsWith("Windows"))
 			PLAYER_DB_LOCATION = "src\\databases\\PlayerDatabase.txt";
 
 		this.mainMenu = new MainMenuCLI();
-		
 		this.rulesDisplay = new RulesCLI();
 		this.settingsDisplay = new SettingsCLI();
 		this.showMovesDisplay = new ShowMovesCLI();
@@ -114,6 +116,7 @@ public class Chess {
 			PLAYER_DB_LOCATION = "src\\databases\\PlayerDatabase.txt";
 		playerOne = new Player("Player 1");
 		playerTwo = new Player("Player 2");
+		this.inCheck = false;
 	}
 	
 
@@ -257,6 +260,7 @@ public class Chess {
 	 * @return boolean value to determine if the game is over through resignation
 	 */
 	public boolean playTurn(int playerTurn){
+		System.out.println("Turn: " + this.movesIndex);
 		boolean quit = false;
 		boolean turnNotOver = true;
         while(turnNotOver){
@@ -275,19 +279,12 @@ public class Chess {
 					File toF = File.getFileByChar(parts[1].charAt(0));
 					Rank fromR = Rank.getRankByReal(Character.getNumericValue(parts[0].charAt(1)));
 					Rank toR = Rank.getRankByReal(Character.getNumericValue(parts[1].charAt(1)));
-					PieceIF piece = board.getPiece(toR, toF); //the piece that will be captured
 					if(board.getPiece(fromR, fromF).getChessPieceType() == ChessPieceType.EMPTY){
 						System.out.println("Error, no piece at " + parts[0]);
 					}
 					else if(move(fromF, fromR, toF, toR)){
-						((Piece)board.getPiece(fromR, fromF)).setHasMoved();
-
+						((Piece)board.getPiece(toR, toF)).setHasMoved();
 						while(this.moves.size() - 1 > this.movesIndex) this.moves.pop();
-	
-						Position fromPos = new Position(fromR, fromF);
-						Position toPos = new Position(toR, toF);
-						this.moves.add(new Move(fromPos, toPos, piece));
-						this.movesIndex++;
 						turnNotOver = false;
 					}
 					else System.out.println("Invalid Move");
@@ -330,17 +327,18 @@ public class Chess {
 	 * @param userUndo true if the user is performing undo, false otherwise
 	 */
 	public void undo(boolean userUndo){
+		System.out.println("asfvgasdgfasdvafdv");
 		Move lastMove = this.moves.get(this.movesIndex);
+		System.out.println("Undo: " + this.movesIndex);
 		Position toPos = lastMove.getFromPos();
 		Position fromPos = lastMove.getToPos();
 		Rank fromR = fromPos.getRank();
 		File fromF = fromPos.getFile();
 		Piece takenPiece = (Piece) lastMove.getPiece();
 		String takenPieceLetter = takenPiece.getChessPieceType().getChessPieceLetter();
-		System.out.println(takenPieceLetter);
+		System.out.println(takenPiece.getChessPieceType().getChessPieceLetter());
 		forceMove(fromF, fromR, toPos.getFile(), toPos.getRank());
 		board.getSquare(fromR.getArrayRank(), fromF.getArrayFile()).setPiece(takenPiece);
-		System.out.println(takenPiece.isBlack());
 		if(takenPiece.isBlack()) board.getBlackTakenPieces().remove(takenPieceLetter);
 		if(takenPiece.isWhite()) board.getWhiteTakenPieces().remove(takenPieceLetter);
 		this.movesIndex--;
@@ -358,6 +356,44 @@ public class Chess {
 		forceMove(fromPos.getFile(), fromPos.getRank(), toPos.getFile(), toPos.getRank());
 	}
 
+    public boolean check(Position kingPos, boolean isWhite){
+
+		int row = kingPos.getRank().getArrayRank();
+        int col = kingPos.getFile().getArrayFile();
+
+		ArrayList<ChessPieceType> wantedPieces = new ArrayList<>();
+		wantedPieces.add(ChessPieceType.QUEEN);
+		wantedPieces.add(ChessPieceType.ROOK);
+
+		//search for rooks and queens
+		boolean up = true, down = true, left = true, right = true;
+		for(int i = 1; i < board.getWidth(); i++){
+            if(up) up = search(isWhite, row - i, col, wantedPieces);
+            if(down) down = search(isWhite, row + i, col, wantedPieces);
+            if(left) left = search(isWhite, row, col - i, wantedPieces);
+            if(right) right = search(isWhite, row, col + i, wantedPieces);
+		}
+        return this.inCheck;
+    }
+
+	private boolean search(boolean isWhite, int row, int col, ArrayList<ChessPieceType> wantedP){
+		boolean stopSearch = true;
+        if(row < board.getHeight() && row >= 0 && col >= 0 && col < board.getWidth()){
+			Piece otherPiece = (Piece) board.getPiece(row, col);
+			if(otherPiece.getChessPieceType() == ChessPieceType.EMPTY){
+				stopSearch = false;
+			}
+			else if(otherPiece.isWhite() == isWhite){
+				stopSearch = true;
+			}
+			else if(wantedP.contains(otherPiece.getChessPieceType())){	
+				stopSearch = true;
+				this.inCheck = true;
+			}
+		}
+		return stopSearch;
+	}
+
 	/**
 	 * Performs steps to end the game of chess. Not currently implemented, will be in the future.
 	 */
@@ -372,7 +408,7 @@ public class Chess {
 	 * @return
 	 */
 	public BoardIF loadGame(String file) {
-		return new Board();
+		return new Board(this);
 	}
 	
 	/**
@@ -395,19 +431,23 @@ public class Chess {
 	 * @param toR Rank of where piece is being moved to
 	 * @return True if the selected move was valid, false otherwise
 	 */
-	private boolean move(File fromF, Rank fromR, File toF, Rank toR) {
+	public boolean move(File fromF, Rank fromR, File toF, Rank toR) {
 		Position fromPos = new Position(fromR, fromF);
 		Position toPos = new Position(toR, toF);
 		boolean result = true;
 		Piece piece = (Piece) board.getPiece(fromR, fromF); //piece from current position
+
+		this.movesIndex++;
+		PieceIF takenPiece = board.getPiece(toR, toF); //the piece that will be captured
+		this.moves.add(new Move(fromPos, toPos, takenPiece));
 
 		if(piece.validateMove(fromPos, toPos)) forceMove(fromF, fromR, toF, toR);
 		else result = false; //return false if move was invalid
 		return result;
 	}
 
-
 	public void forceMove(File fromF, Rank fromR, File toF, Rank toR){
+
 		//Retrieves the row and column numbers from original and new position
 		int fromFileNum = fromF.getArrayFile();
 		int fromRankNum = fromR.getArrayRank();
@@ -428,6 +468,35 @@ public class Chess {
 		}
 		toSquare.setPiece(fromSquare.getPiece()); //put piece at new location
 		fromSquare.clear(); //remove piece from it's previous position on square
+	}
+
+	public boolean tryMove(Piece currentPiece, int row, int col, Position fromPos){
+		System.out.println("before tryMove: " + this.movesIndex);
+		boolean valid = true;
+        boolean isWhite = true;
+        Rank fromRank = fromPos.getRank();
+        File fromFile = fromPos.getFile();
+        Rank toRank = Rank.getRankByIndex(row);
+        File toFile = File.getFileByIndex(col);
+
+        this.movesIndex++;
+		PieceIF takenPiece = board.getPiece(toRank, toFile); //the piece that will be captured
+		Position toPos = new Position(toRank, toFile);
+		this.moves.add(new Move(fromPos, toPos, takenPiece));
+
+        forceMove(fromFile, fromRank, toFile, toRank);
+
+        Position kingPos;
+        if(currentPiece.isWhite()) kingPos = board.getWhiteKingPos();
+        else{
+            kingPos = board.getBlackKingPos();
+            isWhite = false;
+        }
+        if(check(kingPos, isWhite)) valid = false;
+        undo(false);
+		System.out.println("after tryMove: " + this.movesIndex);
+
+        return valid;
 	}
 
 	/**
