@@ -66,9 +66,6 @@ public class Chess {
 	/** Used to show moves of a piece **/
 	private ShowMovesIF showMovesDisplay;
 
-	/**Used to define the players settings*/
-	private DefinePlayerCLI definePlayers;
-
 	/** True if players can undo, false if undo is off **/
 	private boolean undo;
 
@@ -104,7 +101,7 @@ public class Chess {
 			PLAYER_DB_LOCATION = "src\\databases\\PlayerDatabase.txt";
 
 		this.mainMenu = new MainMenuCLI();
-
+		
 		this.rulesDisplay = new RulesCLI();
 		this.settingsDisplay = new SettingsCLI();
 		this.showMovesDisplay = new ShowMovesCLI();
@@ -129,8 +126,7 @@ public class Chess {
 	public void go() {
 		boolean returnToMain = true;
 		while(returnToMain){
-			menuString = mainMenu.userInteraction();
-			switch(menuString){
+			switch(mainMenu.userInteraction()){
 				case "0":
 					returnToMain = false;
 					break;
