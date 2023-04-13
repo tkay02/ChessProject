@@ -62,7 +62,7 @@ public class Position {
      * the current position. Can be used to store positions within a file.
      */
     public String toString() {
-        return this.file.toString() + this.rank.toString();
+        return "" + this.file + this.rank;
     }
 
 }
