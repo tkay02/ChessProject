@@ -1,13 +1,19 @@
 package src.controller;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import src.interfaces.*;
 import src.model.Board;
 import src.model.Move;
 import src.model.Piece;
+import src.model.Player;
 import src.model.Position;
 import src.model.Square;
 import src.ui_cli.BoardColorCLI;
 import src.ui_cli.BoardMonoCLI;
+import src.ui_cli.DefinePlayerCLI;
 import src.ui_cli.MainMenuCLI;
 import src.ui_cli.PlayChessCLI;
 import src.ui_cli.RulesCLI;
@@ -37,6 +43,8 @@ import src.enums.Rank;
 
 public class Chess {
 
+	/** The type OS System the current user is using */
+
 	/** The board to play chess on **/
 	private Board board;
 
@@ -57,6 +65,9 @@ public class Chess {
 
 	/** Used to show moves of a piece **/
 	private ShowMovesIF showMovesDisplay;
+
+	/**Used to define the players settings*/
+	private DefinePlayerCLI definePlayers;
 
 	/** True if players can undo, false if undo is off **/
 	private boolean undo;
@@ -87,8 +98,10 @@ public class Chess {
 	 */
 	public Chess(){
 		this.board = new Board();
-		drawStrat = new BoardColorCLI(); //default BoardStrategy is color
+		drawStrat = new BoardColorCLI(); // Default BoardStrategy is color
 		board.setDrawStrategy(drawStrat); 
+		if(System.getProperty("os.name").startsWith("Windows"))
+			PLAYER_DB_LOCATION = "src\\databases\\PlayerDatabase.txt";
 
 		this.mainMenu = new MainMenuCLI();
 
@@ -386,7 +399,7 @@ public class Chess {
 	 * @param toR Rank of where piece is being moved to
 	 * @return True if the selected move was valid, false otherwise
 	 */
-	public boolean move(File fromF, Rank fromR, File toF, Rank toR) {
+	private boolean move(File fromF, Rank fromR, File toF, Rank toR) {
 		Position fromPos = new Position(fromR, fromF);
 		Position toPos = new Position(toR, toF);
 		boolean result = true;
