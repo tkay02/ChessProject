@@ -49,6 +49,13 @@ public enum Rank {
     }
 
     /**
+     * Returns the visual representation of the rank.
+     */
+    public String toString() {
+        return "" + this.realRank;
+    }
+
+    /**
      * Gets the rank when provided the index.
      * 
      * @param index the index representing the rank in the 2d array

@@ -57,4 +57,12 @@ public class Position {
         return this.rank.equals(pos.getRank()) && this.file.equals(pos.getFile());
     }
 
+    /**
+     * Returns the string representation of the position. Places the file in front of the rank in regards to
+     * the current position. Can be used to store positions within a file.
+     */
+    public String toString() {
+        return "" + this.file + this.rank;
+    }
+
 }
