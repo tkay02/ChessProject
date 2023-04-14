@@ -32,7 +32,7 @@ public class RookMovement extends QueenMovement{
         int row = start.getRank().getArrayRank();
         int col = start.getFile().getArrayFile();
         Piece currentPiece = (Piece) board.getPiece(row, col);
-        plusMoves(currentPiece, row, col); //check veritcally and horizontally   
+        plusMoves(currentPiece, row, col, start); //check veritcally and horizontally   
     }
 
 }

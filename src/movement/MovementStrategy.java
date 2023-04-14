@@ -73,17 +73,24 @@ public abstract class MovementStrategy {
      * @param col - The column location that the currentPiece may be moved to
      * @param currentPiece - The currentPiece that we will be attempt to move
      */
-    public boolean validPosition(Piece currentPiece, int row, int col){
+    public boolean validPosition(Piece currentPiece, int row, int col, Position fromPos){
         boolean valid = false;
         if(row < board.getHeight() && row >= 0 && col >= 0 && col < board.getWidth()){
             Piece otherPiece = (Piece) board.getPiece(row, col);
             if(otherPiece.getChessPieceType() == ChessPieceType.EMPTY){
-                validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col)));
-                valid = true;
+                if(tryMove(currentPiece, row, col, fromPos)){
+                    validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col)));
+                    valid = true;
+                }
             }else if(otherPiece.getColor() != currentPiece.getColor()){
-                validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col)));
+                if(tryMove(currentPiece, row, col, fromPos))
+                    validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col)));
             }
         }
         return valid;
     } 
+
+    public boolean tryMove(Piece currentPiece, int row, int col, Position fromPos){
+        return board.tryMove(currentPiece, row, col, fromPos);
+    }
 }
