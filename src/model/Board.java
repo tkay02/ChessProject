@@ -308,6 +308,14 @@ public class Board implements BoardIF {
         return this.blackKingPos;
     }
 
+    public void setWhiteKingPos(Rank toRank, File toFile){
+        this.whiteKingPos = new Position(toRank, toFile);
+    }
+
+    public void setBlackKingPos(Rank toRank, File toFile){
+        this.blackKingPos = new Position(toRank, toFile);
+    }
+
     public boolean tryMove(Piece currentPiece, int row, int col, Position fromPos){
         return chess.tryMove(currentPiece, row, col, fromPos);
     }

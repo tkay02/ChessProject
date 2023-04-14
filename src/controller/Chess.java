@@ -235,8 +235,6 @@ public class Chess {
 		int playerTurn = 0;
 		ArrayList<Position> empty = new ArrayList<>();
 		while(playing){
-			//Changes the current player turn
-			System.out.println("WHAT IS PLAYERTURN " + playerTurn);
 			if(playerTurn % 2 == 0) this.board.draw(true, empty);
 			else this.board.draw(false, empty);
 
@@ -277,8 +275,10 @@ public class Chess {
 						System.out.println("Error, no piece at " + parts[0]);
 					}
 					else if(move(fromF, fromR, toF, toR)){
-						((Piece)board.getPiece(toR, toF)).setHasMoved();
 						while(this.moves.size() - 1 > this.movesIndex) this.moves.pop();
+						Piece movedPiece = (Piece)board.getPiece(toR, toF);
+						movedPiece.setHasMoved();
+
 						if(check(board.getWhiteKingPos(), true) || check(board.getBlackKingPos(), false)){
 							System.out.println("\t### Check! ###");
 						}
@@ -457,7 +457,7 @@ public class Chess {
 		Square fromSquare = (Square) board.getSquare(fromRankNum, fromFileNum);
 		//Retrieves squre from new position
 		Square toSquare = (Square) board.getSquare(toRankNum, toFileNum);
-
+		Piece fromPiece = (Piece) fromSquare.getPiece();
 		Piece toPiece = (Piece) toSquare.getPiece();
 		if(toPiece.isWhite()){ //if white, the piece needs to be "taken" and added to ArrayList
 			board.getWhiteTakenPieces().add(toPiece.getChessPieceType().getChessPieceLetter());
@@ -467,6 +467,11 @@ public class Chess {
 		}
 		toSquare.setPiece(fromSquare.getPiece()); //put piece at new location
 		fromSquare.clear(); //remove piece from it's previous position on square
+
+		if(fromPiece.getChessPieceType() == ChessPieceType.KING){
+			if(fromPiece.isWhite()) board.setWhiteKingPos(toR, toF);
+			else board.setBlackKingPos(toR, toF);
+		}
 	}
 
 	public boolean tryMove(Piece currentPiece, int row, int col, Position fromPos){
