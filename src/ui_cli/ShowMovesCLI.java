@@ -49,7 +49,7 @@ public class ShowMovesCLI implements ShowMovesIF{
         Rank fromR = Rank.getRankByReal(Character.getNumericValue(userInput.charAt(1)));
         Piece piece = (Piece) board.getPiece(fromR, fromF);
         if(piece.getChessPieceType() != ChessPieceType.EMPTY){
- 		    if(turn % 2 == 0) board.draw(true, piece.showMoves(new Position(fromR, fromF))); //NEED TO KNOW WHO'S TURN IT IS
+ 		    if(turn % 2 == 0) board.draw(true, piece.showMoves(new Position(fromR, fromF)));
             else board.draw(false, piece.showMoves(new Position(fromR, fromF)));
         }
         else{
