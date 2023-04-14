@@ -61,17 +61,17 @@ public class RulesCLI implements RulesIF {
         System.out.println("The knights are placed next to the rooks, which the bishops are placed next to the knights");
         System.out.println("The queens are placed on the file D and the kings are placed on file E");
         System.out.println("The pawns are placed on the second ranks (the rank above/below the other pieces)\n");
-        System.out.println("8\u001b[34m \u001b[47m R \u001b[40m N \u001b[47m B \u001b[40m Q \u001b[47m K \u001b[40m B \u001b[47m N \u001b[40m R \u001b[0m");
-        System.out.println("7\u001b[34m \u001b[40m P \u001b[47m P \u001b[40m P \u001b[47m P \u001b[40m P \u001b[47m P \u001b[40m P \u001b[47m P \u001b[0m");
+        System.out.println("8\u001b[31m \u001b[47m R \u001b[40m N \u001b[47m B \u001b[40m Q \u001b[47m K \u001b[40m B \u001b[47m N \u001b[40m R \u001b[0m");
+        System.out.println("7\u001b[31m \u001b[40m P \u001b[47m P \u001b[40m P \u001b[47m P \u001b[40m P \u001b[47m P \u001b[40m P \u001b[47m P \u001b[0m");
         System.out.println("6 \u001b[47m   \u001b[40m   \u001b[47m   \u001b[40m   \u001b[47m   \u001b[40m   \u001b[47m   \u001b[40m   \u001b[0m");
         System.out.println("5 \u001b[40m   \u001b[47m   \u001b[40m   \u001b[47m   \u001b[40m   \u001b[47m   \u001b[40m   \u001b[47m   \u001b[0m");
         System.out.println("4 \u001b[47m   \u001b[40m   \u001b[47m   \u001b[40m   \u001b[47m   \u001b[40m   \u001b[47m   \u001b[40m   \u001b[0m");
         System.out.println("3 \u001b[40m   \u001b[47m   \u001b[40m   \u001b[47m   \u001b[40m   \u001b[47m   \u001b[40m   \u001b[47m   \u001b[0m");
-        System.out.println("2\u001b[31m \u001b[47m P \u001b[40m P \u001b[47m P \u001b[40m P \u001b[47m P \u001b[40m P \u001b[47m P \u001b[40m P \u001b[0m");
-        System.out.println("1\u001b[31m \u001b[40m R \u001b[47m N \u001b[40m B \u001b[47m Q \u001b[40m K \u001b[47m B \u001b[40m N \u001b[47m R \u001b[0m");
+        System.out.println("2\u001b[34m \u001b[47m P \u001b[40m P \u001b[47m P \u001b[40m P \u001b[47m P \u001b[40m P \u001b[47m P \u001b[40m P \u001b[0m");
+        System.out.println("1\u001b[34m \u001b[40m R \u001b[47m N \u001b[40m B \u001b[47m Q \u001b[40m K \u001b[47m B \u001b[40m N \u001b[47m R \u001b[0m");
         System.out.println("   A  B  C  D  E  F  G  H\n");
-        System.out.println("\u001b[41m   \u001b[0m - White pieces");
-        System.out.println("\u001b[44m   \u001b[0m - Black pieces");
+        System.out.println("\u001b[44m   \u001b[0m - White pieces");
+        System.out.println("\u001b[41m   \u001b[0m - Black pieces");
         System.out.println("1-8 - Ranks");
         System.out.println("A-H - Files\n");
         System.out.println("Quick reminder: white always goes first\n");
@@ -205,7 +205,7 @@ public class RulesCLI implements RulesIF {
         System.out.println("The pawn can usually only move one space forward; however, it does have some exceptions:");
         System.out.println(">A pawn can move two spaces forward from its starting position");
         System.out.println(">A pawn can move forward diagonally by capturing an opposing piece");
-        System.out.println(">However, a pawn cannot move if there is another piece in front of it\n");
+        System.out.println(">However, a pawn cannot move if there is another piece in front of it, which includes other pawns\n");
         System.out.println("\u001b[40m   \u001b[47m   \u001b[42m[ ]\u001b[47m   \u001b[40m   \u001b[0m");
         System.out.println("\u001b[47m   \u001b[43m[ ]\u001b[41m[ ]\u001b[43m[ ]\u001b[47m   \u001b[0m");
         System.out.println("\u001b[40m   \u001b[47m   \u001b[44m P \u001b[47m   \u001b[40m   \u001b[0m");
@@ -225,18 +225,44 @@ public class RulesCLI implements RulesIF {
      * being finished.
      */
     public void overview() {
-        System.out.println("\nThe main objection of the game is to checkmate the enemy king");
-        System.out.println("Whenever an opposing piece is placed in the direction of the king, the king is placed in a state called check");
+        System.out.println("\nThe main objection of the game is to checkmate the enemy king\n");
+        System.out.println("Whenever an opposing piece is placed in the direction of the king, the king is placed in a state called check\n");
+        System.out.println("An example of a situation that puts your king in check:\n");
+        System.out.println("\u001b[34m\u001b[40m   \u001b[47m   \u001b[41m[K]\u001b[47m B \u001b[40m   \u001b[0m");
+        System.out.println("\u001b[47m   \u001b[40m   \u001b[41m[ ]\u001b[40m   \u001b[47m   \u001b[0m");
+        System.out.println("\u001b[34m\u001b[40m R \u001b[47m   \u001b[40m\u001b[31m Q \u001b[47m   \u001b[40m   \u001b[0m\n");
+        System.out.println("\u001b[41m   \u001b[0m - Danger path toward King\n");
         System.out.println("When placed in check, the player only has three possible moves:");
-        System.out.println(">Move the king away from incoming danger");
-        System.out.println(">Capture the enemy piece that's putting the king in check");
-        System.out.println(">Have a chess piece block the incoming danger directed toward the king");
+        System.out.println(">Move the king away from incoming danger\n");
+        System.out.println("\u001b[34m\u001b[40m   \u001b[47m K \u001b[40m   \u001b[47m B \u001b[40m   \u001b[0m");
+        System.out.println("\u001b[47m   \u001b[40m   \u001b[47m   \u001b[40m   \u001b[47m   \u001b[0m");
+        System.out.println("\u001b[34m\u001b[40m R \u001b[47m   \u001b[40m\u001b[31m Q \u001b[47m   \u001b[40m   \u001b[0m\n");
+        System.out.println(">Capture the enemy piece that's putting the king in check\n");
+        System.out.println("\u001b[34m\u001b[40m   \u001b[47m   \u001b[40m K \u001b[47m B \u001b[40m   \u001b[0m");
+        System.out.println("\u001b[47m   \u001b[40m   \u001b[47m   \u001b[40m   \u001b[47m   \u001b[0m");
+        System.out.println("\u001b[34m\u001b[40m   \u001b[47m   \u001b[40m R \u001b[47m   \u001b[40m   \u001b[0m\n");
+        System.out.println(">Or have a chess piece block the incoming danger directed toward the king\n");
+        System.out.println("\u001b[34m\u001b[40m   \u001b[47m   \u001b[40m K \u001b[47m   \u001b[40m   \u001b[0m");
+        System.out.println("\u001b[34m\u001b[47m   \u001b[40m   \u001b[47m B \u001b[40m   \u001b[47m   \u001b[0m");
+        System.out.println("\u001b[34m\u001b[40m R \u001b[47m   \u001b[40m\u001b[31m Q \u001b[47m   \u001b[40m   \u001b[0m\n");
         System.out.println("Any other moves are invalid if the king is in check");
-        System.out.println("If the king's in check and there's no possible moves that could be made to get out of check, then that's checkmate");
+        System.out.println("If the king's in check and there's no possible moves that could be made to get out of check, then that's checkmate\n");
+        System.out.println("An example of a checkmate:\n");
+        System.out.println("\u001b[31m\u001b[40m K \u001b[47m   \u001b[40m   \u001b[0m");
+        System.out.println("\u001b[47m   \u001b[40m   \u001b[47m   \u001b[0m");
+        System.out.println("\u001b[34m\u001b[40m R \u001b[47m Q \u001b[40m   \u001b[0m\n");
+        System.out.println("In this example, checkmate is achieved by the rook makes the enemy king into check vertically and the queen makes the king");
+        System.out.println("into check horizontally and diagonally with nothing that the enemy can do");
         System.out.println("\nHowever, checkmate is not the only condition that could end the game");
-        System.out.println("A stalemate can occur if no legal moves can be played");
+        System.out.println("A draw can occur if checkmate is not possible");
+        System.out.println("\nOne condition that a draw can occur is a stalemate if there are no possible legal moves that could be made");
         System.out.println("By no legal moves, meaning that the king moves and make itself into check");
-        System.out.println("Another condition that can cause a stalemate is if the game is over 50 turns\n");
+        System.out.println("An example of a stalemate:\n");
+        System.out.println("\u001b[34m\u001b[40m K \u001b[47m   \u001b[40m   \u001b[0m");
+        System.out.println("\u001b[31m\u001b[47m   \u001b[40m   \u001b[47m Q \u001b[0m\n");
+        System.out.println("In this example, with the king being the only piece left, cannot move as all possible moves will bring itself ");
+        System.out.println("to be checked by the enemy queen\n");
+        System.out.println("Another condition that can cause a draw is if the game is over 50 turns\n");
         this.repeat();
     }
     
