@@ -21,7 +21,7 @@ public class ShowMovesCLI implements ShowMovesIF{
 	private ArrayList<String> fileList = new ArrayList<>();
 	
 	/** ArrayList representing valid inputs for the chess board's rank **/
-	private ArrayList<String> rankList = new  ArrayList<>();
+	private ArrayList<String> rankList = new ArrayList<>();
 
     public ShowMovesCLI(){
         this.input = new Scanner(System.in);
@@ -38,12 +38,9 @@ public class ShowMovesCLI implements ShowMovesIF{
         while(keepGoing){
             System.out.println("Show moves for what piece? ");
             userInput = input.nextLine();
-            if(fileList.contains(String.valueOf(userInput.charAt(0)))){
-                keepGoing = false;
-            }
-            if(rankList.contains(String.valueOf(userInput.charAt(0)))){
-                keepGoing = false;
-            }
+
+            if(fileList.contains(String.valueOf(userInput.charAt(0)))) keepGoing = false;
+            if(rankList.contains(String.valueOf(userInput.charAt(1)))) keepGoing = false;
         }
         File fromF = File.getFileByChar(userInput.charAt(0));
         Rank fromR = Rank.getRankByReal(Character.getNumericValue(userInput.charAt(1)));

@@ -43,8 +43,6 @@ import src.enums.Rank;
 
 public class Chess {
 
-	/** The type OS System the current user is using */
-
 	/** The board to play chess on **/
 	private Board board;
 
@@ -102,7 +100,6 @@ public class Chess {
 		board.setDrawStrategy(drawStrat); 
 		if(System.getProperty("os.name").startsWith("Windows"))
 			PLAYER_DB_LOCATION = "src\\databases\\PlayerDatabase.txt";
-
 		this.mainMenu = new MainMenuCLI();
 		this.rulesDisplay = new RulesCLI();
 		this.settingsDisplay = new SettingsCLI();
@@ -112,14 +109,11 @@ public class Chess {
 		this.showMoves = true; //can showMoves by default
 		this.moves = new LinkedList<Move>();
 		this.movesIndex = -1;
-		if(System.getProperty("os.name").startsWith("Windows"))
-			PLAYER_DB_LOCATION = "src\\databases\\PlayerDatabase.txt";
 		playerOne = new Player("Player 1");
 		playerTwo = new Player("Player 2");
 		this.inCheck = false;
 	}
 	
-
 	/**
 	 * Sets up and plays a new game of chess. Initializes the board strategy to the chess board.
 	 * Determines which player is playing and ends the match if there is a resignation.
@@ -234,7 +228,6 @@ public class Chess {
 
 	}
 
-
 	public void playGame(){
 		this.playChess = new PlayChessCLI(undo, showMoves);
 		this.board.setDrawStrategy(drawStrat);
@@ -250,7 +243,6 @@ public class Chess {
 			if(playTurn(playerTurn)) playing = false;
 			playerTurn++;
 		}
-
 	}
 
 	/**
@@ -332,7 +324,9 @@ public class Chess {
 	 * @param userUndo true if the user is performing undo, false otherwise
 	 */
 	public void undo(boolean userUndo){
-		Move lastMove = this.moves.get(this.movesIndex);
+		Move lastMove;
+		if(userUndo) lastMove = this.moves.get(this.movesIndex);
+		else lastMove = this.moves.getLast();
 		Position toPos = lastMove.getFromPos();
 		Position fromPos = lastMove.getToPos();
 		Rank fromR = fromPos.getRank();
@@ -361,7 +355,7 @@ public class Chess {
 
     public boolean check(Position kingPos, boolean isWhite){
 		int row = kingPos.getRank().getArrayRank();
-        int col = kingPos.getFile().getArrayFile();
+        int col = kingPos.getFile().getArrayFile(); //how do i update king's position?
 		ArrayList<ChessPieceType> wantedPieces = new ArrayList<>();
 
 		//search for checking rooks and queens
@@ -402,12 +396,12 @@ public class Chess {
 		wantedPieces.clear();
 		wantedPieces.add(ChessPieceType.PAWN);
 		if(isWhite){
-			search(isWhite, row + 1, col - 1, wantedPieces);
-			search(isWhite, row + 1, col + 1, wantedPieces);
-		}
-		else{
 			search(isWhite, row - 1, col - 1, wantedPieces);
 			search(isWhite, row - 1, col + 1, wantedPieces);
+		}
+		else{
+			search(isWhite, row + 1, col - 1, wantedPieces);
+			search(isWhite, row + 1, col + 1, wantedPieces);
 		}
 
         return this.inCheck;
@@ -501,7 +495,7 @@ public class Chess {
             isWhite = false;
         }
         if(check(kingPos, isWhite)){
-			System.out.println("\n\nYou are in check! You can't move!\n\n");
+			System.out.println("\n\nYou are in check! You can't move this piece!\n\n");
 			valid = false;
 		}
         undo(false);
