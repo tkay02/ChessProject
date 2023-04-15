@@ -20,10 +20,6 @@ import src.ui_cli.RulesCLI;
 import src.ui_cli.SettingsCLI;
 import src.ui_cli.ShowMovesCLI;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -84,6 +80,7 @@ public class Chess {
 
 	/** Field for player database location*/
 	private String PLAYER_DB_LOCATION = "src/databases/PlayerDatabase.txt";
+	// CHANGE TO AN ABSOLUTE PATH ASAP!!!!!!!!!!!!!!!!1
 
 	/** Field representing if a player is in check or not **/
 	private boolean inCheck;
@@ -132,7 +129,7 @@ public class Chess {
 					returnToMain = false;
 					break;
 				case "2":
-					rulesDisplay.displayRules(); //NOT COMPLETED
+					rulesDisplay.displayRules();
 					break;
 				case "3":
 					signIn();
@@ -147,7 +144,7 @@ public class Chess {
 					settingsInteraction();
 					break;
 				case "7":
-					System.out.println("NOT CURRENTLY IMPLEMENTED.");
+
 			}
 		}
 	}
