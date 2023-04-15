@@ -90,6 +90,16 @@ public abstract class MovementStrategy {
         return valid;
     } 
 
+    /**
+     * Will attempt to make the move by calling the tryMove method in Board.java
+     * using the board reference in this class.
+     * 
+     * @param currentPiece the piece to be moved
+     * @param row number representing the rank position in the 2D array
+     * @param col number representing the file position in the 2d array
+     * @param fromPos the position the moving piece starts on
+     * @return true if the move attempted was valid, false otherwise
+     */
     public boolean tryMove(Piece currentPiece, int row, int col, Position fromPos){
         return board.tryMove(currentPiece, row, col, fromPos);
     }

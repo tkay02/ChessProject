@@ -235,8 +235,6 @@ public class Chess {
 		int playerTurn = 0;
 		ArrayList<Position> empty = new ArrayList<>();
 		while(playing){
-			//Changes the current player turn
-			System.out.println("WHAT IS PLAYERTURN " + playerTurn);
 			if(playerTurn % 2 == 0) this.board.draw(true, empty);
 			else this.board.draw(false, empty);
 
@@ -277,8 +275,10 @@ public class Chess {
 						System.out.println("Error, no piece at " + parts[0]);
 					}
 					else if(move(fromF, fromR, toF, toR)){
-						((Piece)board.getPiece(toR, toF)).setHasMoved();
 						while(this.moves.size() - 1 > this.movesIndex) this.moves.pop();
+						Piece movedPiece = (Piece)board.getPiece(toR, toF);
+						movedPiece.setHasMoved();
+
 						if(check(board.getWhiteKingPos(), true) || check(board.getBlackKingPos(), false)){
 							System.out.println("\t### Check! ###");
 						}
@@ -292,7 +292,7 @@ public class Chess {
 						undo(true);
 					}
 					else{
-						System.out.println("Undo is unavailable right now");
+						System.out.println("\nUndo is unavailable right now\n");
 					}
 					break;
 				case "3":
@@ -301,7 +301,7 @@ public class Chess {
 						redo();
 					}
 					else{
-						System.out.println("Redo is unavailable right now");
+						System.out.println("\nRedo is unavailable right now\n");
 					}
 					break;
 				case "4":
@@ -333,7 +333,6 @@ public class Chess {
 		File fromF = fromPos.getFile();
 		Piece takenPiece = (Piece) lastMove.getPiece();
 		String takenPieceLetter = takenPiece.getChessPieceType().getChessPieceLetter();
-		System.out.println(takenPiece.getChessPieceType().getChessPieceLetter());
 		forceMove(fromF, fromR, toPos.getFile(), toPos.getRank());
 		board.getSquare(fromR.getArrayRank(), fromF.getArrayFile()).setPiece(takenPiece);
 		if(takenPiece.isBlack()) board.getBlackTakenPieces().remove(takenPieceLetter);
@@ -353,12 +352,22 @@ public class Chess {
 		forceMove(fromPos.getFile(), fromPos.getRank(), toPos.getFile(), toPos.getRank());
 	}
 
+	/**
+	 * This function checks if a king is in check by forming an arrayList of "wanted" pieces
+	 * and searching around the king for the "wanted" pieces that would be a danger to the
+	 * king.
+	 * 
+	 * @param kingPos the position of the king
+	 * @param isWhite true if the king is white, false if it's black
+	 * @return true of the king is in check, false otherwise
+	 */
     public boolean check(Position kingPos, boolean isWhite){
+		this.inCheck = false;
 		int row = kingPos.getRank().getArrayRank();
-        int col = kingPos.getFile().getArrayFile(); //how do i update king's position?
+        int col = kingPos.getFile().getArrayFile();
 		ArrayList<ChessPieceType> wantedPieces = new ArrayList<>();
 
-		//search for checking rooks and queens
+		//search for "checking" rooks and queens
 		wantedPieces.add(ChessPieceType.QUEEN);
 		wantedPieces.add(ChessPieceType.ROOK);
 		boolean up = true, down = true, left = true, right = true;
@@ -369,7 +378,7 @@ public class Chess {
             if(right) right = search(isWhite, row, col + i, wantedPieces);
 		}
 
-		//search for checking bishops and queens
+		//search for "checking" bishops and queens
 		wantedPieces.remove(ChessPieceType.ROOK);
 		wantedPieces.add(ChessPieceType.BISHOP);
 		boolean upRight = true, upLeft = true, downLeft = true, downRight = true;
@@ -380,7 +389,7 @@ public class Chess {
             if(downRight) downRight = search(isWhite, row + i, col + i, wantedPieces);     
         }
 
-		//search for checking knights
+		//search for "checking" knights
 		wantedPieces.clear();
 		wantedPieces.add(ChessPieceType.KNIGHT);
 		search(isWhite, row - 1, col - 2, wantedPieces);
@@ -392,7 +401,7 @@ public class Chess {
         search(isWhite, row - 2, col + 1, wantedPieces);
         search(isWhite, row - 2, col - 1, wantedPieces);
 
-		//search for checking pawns
+		//search for "checking" pawns
 		wantedPieces.clear();
 		wantedPieces.add(ChessPieceType.PAWN);
 		if(isWhite){
@@ -407,21 +416,31 @@ public class Chess {
         return this.inCheck;
     }
 
+	/**
+	 * This helper function searches the provided square for a piece in the "wanted" list
+	 * that could check a queen.
+	 * 
+	 * @param isWhite true if the king is white, false otherwise
+	 * @param row represents the rank of the provided square
+	 * @param col represents the file of the provided square
+	 * @param wantedP list of chessPieceTypes that pose a threat to the king provided
+	 * @return true if the square holds an opposite color piece contained in the "wantedP" list,
+	 * 		   false otherwise
+	 */
 	private boolean search(boolean isWhite, int row, int col, ArrayList<ChessPieceType> wantedP){
 		boolean continueSearch = false;
         if(row < board.getHeight() && row >= 0 && col >= 0 && col < board.getWidth()){
 			Piece otherPiece = (Piece) board.getPiece(row, col);
-			if(otherPiece.getChessPieceType() == ChessPieceType.EMPTY)
-				continueSearch = true;
-			else if(wantedP.contains(otherPiece.getChessPieceType()) && otherPiece.isWhite() != isWhite)
-				this.inCheck = true;
+			ChessPieceType otherType = otherPiece.getChessPieceType();
+			if(otherType == ChessPieceType.EMPTY) continueSearch = true;
+			else if(wantedP.contains(otherType) && otherPiece.isWhite() != isWhite) inCheck = true;
 		}
 		return continueSearch;
 	}
 
 	/**
-	 * Moves piece and updates the board. If necessary, adds any taken pieces to the correct
-	 * ArrayList to display taken pieces.
+	 * Moves piece and updates the board if the move is valid. If necessary, adds any taken pieces
+	 * to the correct ArrayList to display taken pieces.
 	 * 
 	 * @param fromF File of piece to be moved
 	 * @param fromR Rank of piece to be moved
@@ -445,19 +464,24 @@ public class Chess {
 		return result;
 	}
 
+	/**
+	 * Will force a piece to move regardless of whether it's valid or not.
+	 * 
+	 * @param fromF file of the piece to be moved
+	 * @param fromR rank of the piece to be moved
+	 * @param toF file of where the piece is going to
+	 * @param toR rank of where the piece is going to
+	 */
 	public void forceMove(File fromF, Rank fromR, File toF, Rank toR){
-
 		//Retrieves the row and column numbers from original and new position
 		int fromFileNum = fromF.getArrayFile();
 		int fromRankNum = fromR.getArrayRank();
 		int toFileNum = toF.getArrayFile();
 		int toRankNum = toR.getArrayRank();
 
-		//Retrieves square from current position
 		Square fromSquare = (Square) board.getSquare(fromRankNum, fromFileNum);
-		//Retrieves squre from new position
 		Square toSquare = (Square) board.getSquare(toRankNum, toFileNum);
-
+		Piece fromPiece = (Piece) fromSquare.getPiece();
 		Piece toPiece = (Piece) toSquare.getPiece();
 		if(toPiece.isWhite()){ //if white, the piece needs to be "taken" and added to ArrayList
 			board.getWhiteTakenPieces().add(toPiece.getChessPieceType().getChessPieceLetter());
@@ -467,9 +491,28 @@ public class Chess {
 		}
 		toSquare.setPiece(fromSquare.getPiece()); //put piece at new location
 		fromSquare.clear(); //remove piece from it's previous position on square
+
+		if(fromPiece.getChessPieceType() == ChessPieceType.KING){
+			if(fromPiece.isWhite()) board.setWhiteKingPos(toR, toF);
+			else board.setBlackKingPos(toR, toF);
+		}
 	}
 
+	/**
+     * Will attempt to see if a move is valid by forcing the move to occur, checking if their
+	 * team's king is in check, and then undoing the move. If their king was in check, the move
+	 * is invalid.
+     * 
+     * @param currentPiece the piece to be moved
+     * @param row number representing the rank position in the 2D array
+     * @param col number representing the file position in the 2d array
+     * @param fromPos the position the moving piece starts on
+     * @return true if the move attempted was valid, false otherwise
+     */
 	public boolean tryMove(Piece currentPiece, int row, int col, Position fromPos){
+		boolean wasInCheck = false;
+		if(this.inCheck) wasInCheck = true; //store if the king was already in check
+		//this.inCheck = false; //assume the king isn't in check before we check new positions
 		boolean valid = true;
         boolean isWhite = true;
         Rank fromRank = fromPos.getRank();
@@ -480,26 +523,20 @@ public class Chess {
         this.movesIndex++;
 		PieceIF takenPiece = board.getPiece(toRank, toFile); //the piece that will be captured
 		Position toPos = new Position(toRank, toFile);
-		this.moves.add(new Move(fromPos, toPos, takenPiece));
-		forceMove(fromFile, fromRank, toFile, toRank);
+		this.moves.add(new Move(fromPos, toPos, takenPiece)); //add move to move list
+		forceMove(fromFile, fromRank, toFile, toRank); //force the move to occur
 
-		//System.out.println("during tryMove, after adding it: ");
-		//for(Move move : moves){
-		//	System.out.println(move);
-		//}
-
-        Position kingPos;
+        Position kingPos; //find king position and king color for determining if its in check
         if(currentPiece.isWhite()) kingPos = board.getWhiteKingPos();
         else{
             kingPos = board.getBlackKingPos();
             isWhite = false;
         }
-        if(check(kingPos, isWhite)){
-			System.out.println("\n\nYou are in check! You can't move this piece!\n\n");
-			valid = false;
-		}
-        undo(false);
-		this.inCheck = false;
+        if(check(kingPos, isWhite)) valid = false;
+
+        undo(false); //use the sytem's undo to undo the move we tried
+		if(wasInCheck) this.inCheck = true; //put the king back in check if it was prior
+		else this.inCheck = false; //leave the king out of check it wasn't prior
         return valid;
 	}
 
