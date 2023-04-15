@@ -74,7 +74,8 @@ public class RulesCLI implements RulesIF {
         System.out.println("\u001b[41m   \u001b[0m - Black pieces");
         System.out.println("1-8 - Ranks");
         System.out.println("A-H - Files\n");
-        System.out.println("Quick reminder: white always goes first\n");
+        System.out.println("Quick reminder: white always goes first");
+        System.out.println("Notation for chess pieces: File-Rank (i.e. A3)\n");
         this.repeat();
     }
     
