@@ -1,6 +1,6 @@
 package src.ui_cli;
 
-import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.Scanner;
 
 import src.interfaces.SaveGameIF;
@@ -13,16 +13,18 @@ public class SaveGameCLI implements SaveGameIF {
         input = new Scanner(System.in);
     }
 
-    public void saveGame(){
-        System.out.println("Enter file path: ");
-        String filePath = input.next();
-        FileReader gameFile = new FileReader(filePath);
-        Scanner fileScanner = new Scanner(gameFile);
+    public String promptSaveGame(){
+        System.out.println("\nEnter file path: ");
+        return input.next();
+    }
+    public void saveGame(String filePath, String fileContent){
+        
         try{
-            // FileHandler gameFile = new FileHandler(filePath, false);
-            // Scanner 
+            FileWriter gameFile = new FileWriter(filePath, false);
+            gameFile.write(fileContent);
+            gameFile.close();
         }catch(Exception e){
-
+            System.out.println("There was trouble saving the game instance!");
         }
     }
 
