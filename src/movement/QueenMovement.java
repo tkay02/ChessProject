@@ -33,8 +33,8 @@ public class QueenMovement extends MovementStrategy {
         int row = start.getRank().getArrayRank();
         int col = start.getFile().getArrayFile();
         Piece currentPiece = (Piece) board.getPiece(row, col);
-        plusMoves(currentPiece, row, col); //check veritcally and horizontally    
-        crossMoves(currentPiece, row, col); //check diagonally
+        plusMoves(currentPiece, row, col, start); //check veritcally and horizontally    
+        crossMoves(currentPiece, row, col, start); //check diagonally
     }    
 
     /**
@@ -44,13 +44,13 @@ public class QueenMovement extends MovementStrategy {
      * @param row row of the current piece
      * @param col column of the current piece
      */
-    public void plusMoves(Piece currentPiece, int row, int col){
+    public void plusMoves(Piece currentPiece, int row, int col, Position fromPos){
         boolean up = true, down = true, left = true, right = true;
         for(int i = 1; i < board.getWidth(); i++){
-            if(up) up = validPosition(currentPiece, row - i, col);
-            if(down) down = validPosition(currentPiece, row + i, col);
-            if(left) left = validPosition(currentPiece, row, col - i);
-            if(right) right = validPosition(currentPiece, row, col + i);
+            if(up) up = validPosition(currentPiece, row - i, col, fromPos);
+            if(down) down = validPosition(currentPiece, row + i, col, fromPos);
+            if(left) left = validPosition(currentPiece, row, col - i, fromPos);
+            if(right) right = validPosition(currentPiece, row, col + i, fromPos);
         }
     }
 
@@ -61,13 +61,13 @@ public class QueenMovement extends MovementStrategy {
      * @param row row of the current piece
      * @param col column of the current piece
      */
-    public void crossMoves(Piece currentPiece, int row, int col){
+    public void crossMoves(Piece currentPiece, int row, int col, Position fromPos){
         boolean upRight = true, upLeft = true, downLeft = true, downRight = true;
         for(int i = 1; i < board.getWidth(); i++){
-            if(upRight) upRight = validPosition(currentPiece, row - i, col + i);
-            if(upLeft) upLeft = validPosition(currentPiece, row - i, col - i);
-            if(downLeft) downLeft = validPosition(currentPiece, row + i, col - i);
-            if(downRight) downRight = validPosition(currentPiece, row + i, col + i);     
+            if(upRight) upRight = validPosition(currentPiece, row - i, col + i, fromPos);
+            if(upLeft) upLeft = validPosition(currentPiece, row - i, col - i, fromPos);
+            if(downLeft) downLeft = validPosition(currentPiece, row + i, col - i, fromPos);
+            if(downRight) downRight = validPosition(currentPiece, row + i, col + i, fromPos);     
         }
     }
 }

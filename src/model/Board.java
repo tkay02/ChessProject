@@ -1,5 +1,6 @@
 package src.model;
 
+import src.controller.Chess;
 import src.enums.ChessPieceType;
 import src.enums.GameColor;
 import src.enums.File;
@@ -21,6 +22,9 @@ import java.util.ArrayList;
  */
 
 public class Board implements BoardIF {
+
+    /** A reference to the game of chess that is being played **/
+    private Chess chess;
     
     /** Represents the chess board **/
     private SquareIF[][] chessBoard;
@@ -40,10 +44,17 @@ public class Board implements BoardIF {
     /** List of white pieces that have been taken **/
 	private ArrayList<String> blackTakenPieces = new ArrayList<>();
 
+    /** Represents the position of the white king on the board **/
+    private Position whiteKingPos = new Position(Rank.R1, File.E);
+
+    /** Represents the position of the black king on the board **/
+    private Position blackKingPos = new Position(Rank.R8, File.E);
+
     /**
      * Constructor for the chess board.
      */
-    public Board(){
+    public Board(Chess chessGame){
+        this.chess = chessGame;
         this.width = 8;
         this.height = 8;
         chessBoard = new Square[height][width];
@@ -287,6 +298,18 @@ public class Board implements BoardIF {
      */
     public ArrayList<String> getBlackTakenPieces(){
         return this.blackTakenPieces;
+    }
+
+    public Position getWhiteKingPos(){
+        return this.whiteKingPos;
+    }
+
+    public Position getBlackKingPos(){
+        return this.blackKingPos;
+    }
+
+    public boolean tryMove(Piece currentPiece, int row, int col, Position fromPos){
+        return chess.tryMove(currentPiece, row, col, fromPos);
     }
 
 }

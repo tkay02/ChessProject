@@ -35,14 +35,14 @@ public class KnightMovement extends MovementStrategy {
         int row = from.getRank().getArrayRank();
         int col = from.getFile().getArrayFile();
         Piece currentPiece = (Piece) board.getPiece(row, col);
-        validPosition(currentPiece, row - 1, col - 2);
-        validPosition(currentPiece, row - 1, col + 2);
-        validPosition(currentPiece, row + 1, col - 2);
-        validPosition(currentPiece, row + 1, col + 2);
-        validPosition(currentPiece, row + 2, col + 1);
-        validPosition(currentPiece, row + 2, col - 1);
-        validPosition(currentPiece, row - 2, col + 1);
-        validPosition(currentPiece, row - 2, col - 1);
+        validPosition(currentPiece, row - 1, col - 2, from);
+        validPosition(currentPiece, row - 1, col + 2, from);
+        validPosition(currentPiece, row + 1, col - 2, from);
+        validPosition(currentPiece, row + 1, col + 2, from);
+        validPosition(currentPiece, row + 2, col + 1, from);
+        validPosition(currentPiece, row + 2, col - 1, from);
+        validPosition(currentPiece, row - 2, col + 1, from);
+        validPosition(currentPiece, row - 2, col - 1, from);
     }
 
 }

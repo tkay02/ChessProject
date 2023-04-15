@@ -35,4 +35,12 @@ public class Move {
         return this.piece;
     }
 
+    /**
+     * TESTING
+     */
+    public String toString(){
+        String toReturn = "from: " + from.getFile() + from.getRank() + " to: " + to.getFile() + to.getRank() + " piece: " + piece.getChessPieceType();
+        return toReturn;
+    }
+
 }

@@ -76,7 +76,7 @@ public abstract class BoardDisplayCLI implements BoardStrategy{
 			for(int j = 7; j >= 0; j--){
 				piece = (Piece)board.getPiece(i, j);
 				
-				boolean  validPosition = false;
+				boolean validPosition = false;
 				for(Position validMove : validMoves){
 					if(validMove.getRank().getArrayRank() == i && validMove.getFile().getArrayFile() == j){
 						validPosition = true;
