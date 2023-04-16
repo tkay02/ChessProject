@@ -18,7 +18,6 @@ public class SaveGameCLI implements SaveGameIF {
         return input.next();
     }
     public void saveGame(String filePath, String fileContent){
-        
         try{
             FileWriter gameFile = new FileWriter(filePath, false);
             gameFile.write(fileContent);

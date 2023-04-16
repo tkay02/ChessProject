@@ -25,11 +25,9 @@ public class ShowMovesCLI implements ShowMovesIF{
 
     public ShowMovesCLI(){
         this.input = new Scanner(System.in);
-		String[] fileArray = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "a", "b", "c",
-										  "d", "e", "f", "g", "h"}; 
-		this.fileList.addAll(Arrays.asList(fileArray));
-		String[] rankArray = new String[]{"1", "2", "3", "4", "5", "6", "7", "8"};
-		this.rankList.addAll(Arrays.asList(rankArray));
+		this.fileList.addAll(Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "a", "b", "c",
+        "d", "e", "f", "g", "h"));
+		this.rankList.addAll(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8"));
     }
 
     public String showMoves(BoardIF board, int turn){

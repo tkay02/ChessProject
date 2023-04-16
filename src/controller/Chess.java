@@ -316,7 +316,7 @@ public class Chess {
 					showMovesDisplay.showMoves(this.board, playerTurn);
 					break;
 				case "5":
-					if(moves.size() > 0){
+					if(movesIndex >= 0){
 						String fileLocation = gameSaver.promptSaveGame();
 						saveGame(fileLocation, board);
 						quit = true;
@@ -581,11 +581,8 @@ public class Chess {
 				String[] positions = fileData[i].split(":");
 				File fromFile = File.getFileByChar(positions[0].charAt(0));
 				Rank fromRank = Rank.getRankByReal(Character.getNumericValue(positions[0].charAt(1)));
-				// Position from = new Position(fromRank, fromFile);
 				File toFile = File.getFileByChar(positions[1].charAt(0));
 				Rank toRank = Rank.getRankByReal(Character.getNumericValue(positions[1].charAt(1)));
-				// Position to = new Position(toRank, toFile);
-				// Move move = new Move(from, to, board.getPiece(fromRank, fromFile));
 				move(fromFile, fromRank, toFile, toRank);
 			}
 		}
