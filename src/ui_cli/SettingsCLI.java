@@ -26,8 +26,7 @@ public class SettingsCLI implements SettingsIF{
         this.showMovesStatus = "";
         this.boardStratStatus = "";
 
-        String[] inputArray = new String[]{"0", "1", "2", "3", "4", "5", "6"};
-        this.settingsInput.addAll(Arrays.asList(inputArray));
+        this.settingsInput.addAll(Arrays.asList("0", "1", "2", "3", "4", "5", "6"));
     }
 
     public String displaySettings(BoardStrategy boardStrat, boolean undo, boolean showMoves) {

@@ -16,8 +16,7 @@ public class PlayChessCLI implements PlayChessIF {
         this.input = new Scanner(System.in);
 
         //2 -> undo, 4 -> show moves
-        String[] playArray = new String[]{"0", "1", "3", "5"};
-        this.playInput.addAll(Arrays.asList(playArray));
+        this.playInput.addAll(Arrays.asList("0", "1", "3", "5"));
         if(undoStatus) playInput.add("2");
         if(showMovesStatus) playInput.add("4");
     }

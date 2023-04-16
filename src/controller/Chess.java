@@ -14,9 +14,11 @@ import src.model.Square;
 import src.ui_cli.BoardColorCLI;
 import src.ui_cli.BoardMonoCLI;
 import src.ui_cli.DefinePlayerCLI;
+import src.ui_cli.LoadGameCLI;
 import src.ui_cli.MainMenuCLI;
 import src.ui_cli.PlayChessCLI;
 import src.ui_cli.RulesCLI;
+import src.ui_cli.SaveGameCLI;
 import src.ui_cli.SettingsCLI;
 import src.ui_cli.ShowMovesCLI;
 
@@ -72,6 +74,12 @@ public class Chess {
 	/**Used to define the players settings*/
 	private DefinePlayerCLI definePlayers;
 
+	/** Used to load previous games */
+	private LoadGameCLI gameLoader;
+
+	/** Used to save previous games */
+	private SaveGameCLI gameSaver;
+
 	/** Index for the moves LinkedList. **/
 	private int movesIndex;
 
@@ -102,6 +110,8 @@ public class Chess {
 		this.settingsDisplay = new SettingsCLI();
 		this.showMovesDisplay = new ShowMovesCLI();
 		this.definePlayers = new DefinePlayerCLI();
+		this.gameLoader = new LoadGameCLI();
+		this.gameSaver = new SaveGameCLI();
 		this.undo = true; //can undo by default
 		this.showMoves = true; //can showMoves by default
 		this.moves = new LinkedList<Move>();
@@ -126,7 +136,6 @@ public class Chess {
 					break;
 				case "1":
 					playGame();
-					returnToMain = false;
 					break;
 				case "2":
 					rulesDisplay.displayRules();
@@ -144,7 +153,8 @@ public class Chess {
 					settingsInteraction();
 					break;
 				case "7":
-
+					loadGame(gameLoader.getFilePath());
+					break;
 			}
 		}
 	}
@@ -238,6 +248,7 @@ public class Chess {
 			if(playTurn(playerTurn)) playing = false;
 			playerTurn++;
 		}
+		
 	}
 
 	/**
@@ -305,7 +316,13 @@ public class Chess {
 					showMovesDisplay.showMoves(this.board, playerTurn);
 					break;
 				case "5":
-					//SAVE GAMEEE
+					if(movesIndex >= 0){
+						String fileLocation = gameSaver.promptSaveGame();
+						saveGame(fileLocation, board);
+						quit = true;
+						turnNotOver = false;
+					}else System.out.println("\nNot enough moves made to save game.\n");
+					
 					break;
             }
         }
@@ -550,8 +567,25 @@ public class Chess {
 	 * @param file name of the file that holds the saved game
 	 * @return
 	 */
-	public BoardIF loadGame(String file) {
-		return new Board(this);
+	public void loadGame(String file) {
+		String fileContent = "";
+		if(!file.isEmpty()){
+			fileContent = gameLoader.loadGame(file);
+			System.out.println(fileContent);
+			String[] fileData = fileContent.split(";");
+			String[] players = fileData[fileData.length - 1].split(":");
+
+			playerOne.setUsername(players[0]);
+			playerTwo.setUsername(players[1]);
+			for(int i = 0; i < fileData.length - 1; i++){
+				String[] positions = fileData[i].split(":");
+				File fromFile = File.getFileByChar(positions[0].charAt(0));
+				Rank fromRank = Rank.getRankByReal(Character.getNumericValue(positions[0].charAt(1)));
+				File toFile = File.getFileByChar(positions[1].charAt(0));
+				Rank toRank = Rank.getRankByReal(Character.getNumericValue(positions[1].charAt(1)));
+				move(fromFile, fromRank, toFile, toRank);
+			}
+		}
 	}
 	
 	/**
@@ -561,7 +595,16 @@ public class Chess {
 	 * @param game interface of game to be saved
 	 */
 	public void saveGame(String file, BoardIF game) {
-
+		String fileContent = "";
+		for(int i = 0; i < moves.size(); i++){
+			Move move = moves.get(i);
+			fileContent += "" + String.valueOf(move.getFromPos().getFile().getRealFile()) + 
+			move.getFromPos().getRank().getRealRank() + ":" + 
+			String.valueOf(move.getToPos().getFile().getRealFile()) + 
+			move.getToPos().getRank().getRealRank() + ";";
+		}
+		fileContent += playerOne.getUsername() + ":" + playerTwo.getUsername();
+		gameSaver.saveGame(file, fileContent);
 	}
 
 	/**
