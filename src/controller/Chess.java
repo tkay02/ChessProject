@@ -601,19 +601,16 @@ public class Chess {
 
 			int moveIndex = Integer.parseInt(fileData[fileData.length - 1]);
 			for(int i = 0; i < fileData.length - 2; i++){
-				playerTurn++;
 				String[] positions = fileData[i].split(":");
 				File fromFile = File.getFileByChar(positions[0].charAt(0));
 				Rank fromRank = Rank.getRankByReal(Character.getNumericValue(positions[0].charAt(1)));
 				File toFile = File.getFileByChar(positions[1].charAt(0));
 				Rank toRank = Rank.getRankByReal(Character.getNumericValue(positions[1].charAt(1)));
 				move(fromFile, fromRank, toFile, toRank);
+				playerTurn++;
 			}
 	
-			for(int i = moves.size(); i > moveIndex + 1; i--){
-				undo(true);
-				playerTurn--;
-			}
+			for(int i = moves.size(); i > moveIndex + 1; i--) undo(true);
 
 		}
 	}
