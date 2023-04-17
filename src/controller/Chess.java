@@ -590,17 +590,20 @@ public class Chess {
 			fileContent = gameLoader.loadGame(file);
 			System.out.println(fileContent);
 			String[] fileData = fileContent.split(";");
-			String[] players = fileData[fileData.length - 1].split(":");
-
+			String[] players = fileData[fileData.length - 2].split(":");
 			playerOne.setUsername(players[0]);
 			playerTwo.setUsername(players[1]);
-			for(int i = 0; i < fileData.length - 1; i++){
+			int moveIndex = Integer.parseInt(fileData[fileData.length - 1]);
+			for(int i = 0; i < fileData.length - 2; i++){
 				String[] positions = fileData[i].split(":");
 				File fromFile = File.getFileByChar(positions[0].charAt(0));
 				Rank fromRank = Rank.getRankByReal(Character.getNumericValue(positions[0].charAt(1)));
 				File toFile = File.getFileByChar(positions[1].charAt(0));
 				Rank toRank = Rank.getRankByReal(Character.getNumericValue(positions[1].charAt(1)));
 				move(fromFile, fromRank, toFile, toRank);
+			}
+			for(int i = moves.size(); i > moveIndex; i--){
+				undo(true);
 			}
 		}
 	}
@@ -621,6 +624,8 @@ public class Chess {
 			move.getToPos().getRank().getRealRank() + ";";
 		}
 		fileContent += playerOne.getUsername() + ":" + playerTwo.getUsername();
+		fileContent += ";" + movesIndex;
+
 		gameSaver.saveGame(file, fileContent);
 	}
 

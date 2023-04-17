@@ -14,7 +14,7 @@ public class SaveGameCLI implements SaveGameIF {
     }
 
     public String promptSaveGame(){
-        System.out.println("\nEnter file path: ");
+        System.out.print("Enter file path: ");
         return input.next();
     }
     public void saveGame(String filePath, String fileContent){
