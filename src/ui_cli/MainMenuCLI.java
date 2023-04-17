@@ -16,9 +16,7 @@ public class MainMenuCLI implements MainMenuIF{
 
     public MainMenuCLI(){
 		this.input = new Scanner(System.in);
-
-        String[] menuInput = new String[]{"0", "1", "2", "3", "4", "5", "6", "7"};
-        this.mainMenuInput.addAll(Arrays.asList(menuInput));
+        this.mainMenuInput.addAll(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7"));
     }
 
     public String userInteraction(){
@@ -68,13 +66,6 @@ public class MainMenuCLI implements MainMenuIF{
             System.out.println("Succesfully logged in as " + user);
         else{
             System.out.println("Invalid username or password");
-            System.out.print("Would you like to try again (Y/N)? ");
-            String answer = input.next();
-            while(!answer.toUpperCase().equals("Y") && !answer.toUpperCase().equals("N")){
-                System.out.println("Would you like to try again (Y/N)? ");
-                answer = input.next();
-            }
-            if(answer.toUpperCase().equals("Y")) promptSignIn(database);
         }
 
         return true;

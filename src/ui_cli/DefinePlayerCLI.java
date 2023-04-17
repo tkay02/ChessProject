@@ -1,9 +1,6 @@
 package src.ui_cli;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
-
 import src.interfaces.DefinePlayerIF;
 
 public class DefinePlayerCLI implements DefinePlayerIF {
