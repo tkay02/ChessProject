@@ -88,6 +88,9 @@ public class Chess {
 	/** Index for the moves LinkedList. **/
 	private int movesIndex;
 
+	/** Current player's turn as a number */
+	private int playerTurn; 
+
 	/**Players for the actual chess game*/
 	Player playerOne, playerTwo;
 
@@ -121,6 +124,7 @@ public class Chess {
 		this.showMoves = true; //can showMoves by default
 		this.moves = new LinkedList<Move>();
 		this.movesIndex = -1;
+		this.playerTurn = 0;
 		playerOne = new Player("Player 1");
 		playerTwo = new Player("Player 2");
 		this.inCheck = false;
@@ -244,7 +248,6 @@ public class Chess {
 		this.playChess = new PlayChessCLI(undo, showMoves);
 		this.board.setDrawStrategy(drawStrat);
 		boolean playing = true;
-		int playerTurn = 0;
 		ArrayList<Position> empty = new ArrayList<>();
 		while(playing){
 			if(playerTurn % 2 == 0) this.board.draw(true, empty);
@@ -312,7 +315,7 @@ public class Chess {
 					else System.out.println("Invalid Move");
 					break;
 				case "2":
-					if(this.movesIndex >= 0){
+					if(moves.size() > 0){
 						turnNotOver = false;
 						undo(true);
 					}
@@ -370,6 +373,7 @@ public class Chess {
 		if(takenPiece.isWhite()) board.getWhiteTakenPieces().remove(takenPieceLetter);
 		this.movesIndex--;
 		if(!userUndo) this.moves.removeLast();
+
 	}
 	
 	/**
@@ -593,8 +597,11 @@ public class Chess {
 			String[] players = fileData[fileData.length - 2].split(":");
 			playerOne.setUsername(players[0]);
 			playerTwo.setUsername(players[1]);
+			System.out.println(fileData[fileData.length - 3]);
+
 			int moveIndex = Integer.parseInt(fileData[fileData.length - 1]);
 			for(int i = 0; i < fileData.length - 2; i++){
+				playerTurn++;
 				String[] positions = fileData[i].split(":");
 				File fromFile = File.getFileByChar(positions[0].charAt(0));
 				Rank fromRank = Rank.getRankByReal(Character.getNumericValue(positions[0].charAt(1)));
@@ -602,9 +609,12 @@ public class Chess {
 				Rank toRank = Rank.getRankByReal(Character.getNumericValue(positions[1].charAt(1)));
 				move(fromFile, fromRank, toFile, toRank);
 			}
-			for(int i = moves.size(); i > moveIndex; i--){
+	
+			for(int i = moves.size(); i > moveIndex + 1; i--){
 				undo(true);
+				playerTurn--;
 			}
+
 		}
 	}
 	
