@@ -4,6 +4,6 @@ public interface PlayChessIF {
     
      public String playChessDisplay();
 
-     public String makeMove();
+     public String[] makeMove();
 
 }

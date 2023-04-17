@@ -3,8 +3,20 @@ package src.controller;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
-import src.interfaces.*;
+import src.enums.ChessPieceType;
+import src.enums.File;
+import src.enums.Rank;
+import src.interfaces.BoardIF;
+import src.interfaces.BoardStrategy;
+import src.interfaces.MainMenuIF;
+import src.interfaces.PieceIF;
+import src.interfaces.PlayChessIF;
+import src.interfaces.RulesIF;
+import src.interfaces.SettingsIF;
+import src.interfaces.ShowMovesIF;
 import src.model.Board;
 import src.model.Move;
 import src.model.Piece;
@@ -21,13 +33,6 @@ import src.ui_cli.RulesCLI;
 import src.ui_cli.SaveGameCLI;
 import src.ui_cli.SettingsCLI;
 import src.ui_cli.ShowMovesCLI;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-
-import src.enums.ChessPieceType;
-import src.enums.File;
-import src.enums.Rank;
 
 /**
  * Represents the game of chess. In the future, this class will allow users to start games,
@@ -271,14 +276,26 @@ public class Chess {
 					quit = true;
 					break;
                 case "1": //Move
-					String move = playChess.makeMove();
-					String[] parts = move.split(",");
-					parts[0] = parts[0].trim();
-					parts[1] = parts[1].trim();
+					String[] parts = playChess.makeMove();
 					File fromF = File.getFileByChar(parts[0].charAt(0));
 					File toF = File.getFileByChar(parts[1].charAt(0));
 					Rank fromR = Rank.getRankByReal(Character.getNumericValue(parts[0].charAt(1)));
 					Rank toR = Rank.getRankByReal(Character.getNumericValue(parts[1].charAt(1)));
+					Piece fromPiece1 = (Piece) board.getPiece(fromR, fromF);
+					
+					if(playerTurn % 2 == 0){
+						if(!fromPiece1.isWhite()){
+							System.out.println("You cannot move a piece that is not yours.");
+							break;
+						}
+					}
+					else{
+						if(!fromPiece1.isBlack()){
+							System.out.println("You cannot move a piece that is not yours.");
+							break;
+						}
+					}
+
 					if(board.getPiece(fromR, fromF).getChessPieceType() == ChessPieceType.EMPTY){
 						System.out.println("Error, no piece at " + parts[0]);
 					}
@@ -589,7 +606,7 @@ public class Chess {
 	}
 	
 	/**
-	 * Process of saving a game. Not currently implemented, will be in the future.
+	 * Process of saving a game.
 	 * 
 	 * @param file name of file to save game as
 	 * @param game interface of game to be saved
