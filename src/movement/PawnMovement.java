@@ -65,7 +65,7 @@ public class PawnMovement extends MovementStrategy {
 
             // If the square infront of the previous checked square is empty, then add it
             // to the list of possible moves.
-            if(!currentPiece.hasMoved() && board.getPiece(row + dir, col).getChessPieceType() == 
+            if(currentPiece.hasNotMoved() && board.getPiece(row + dir, col).getChessPieceType() == 
             ChessPieceType.EMPTY)
                 if(tryMove(currentPiece, row + dir, col, start))
                     validMoves.add(new Position(Rank.getRankByIndex(row + dir), start.getFile()));

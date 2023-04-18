@@ -74,7 +74,7 @@ public class Chess {
 	private boolean showMoves;
 	
 	/** Arraylist of the positions of the board. **/
-	private LinkedList<Move> moves;
+	private LinkedList<Move> moves = new LinkedList<Move>(); // MOVE TO BOARD???
 	
 	/**Used to define the players settings*/
 	private DefinePlayerCLI definePlayers;
@@ -89,7 +89,7 @@ public class Chess {
 	private int movesIndex;
 	
 	/** Current player's turn as a number */
-	private int playerTurn; 
+	private int turn; 
 	
 	/**Players for the actual chess game*/
 	Player playerOne, playerTwo;
@@ -122,9 +122,8 @@ public class Chess {
 		this.gameSaver = new SaveGameCLI();
 		this.undo = true; //can undo by default
 		this.showMoves = true; //can showMoves by default
-		this.moves = new LinkedList<Move>();
 		this.movesIndex = -1;
-		this.playerTurn = 0;
+		this.turn = 0;
 		playerOne = new Player("Player 1");
 		playerTwo = new Player("Player 2");
 		this.inCheck = false;
@@ -162,6 +161,7 @@ public class Chess {
 				settingsInteraction();
 				break;
 				case "7":
+				this.board = new Board(this);
 				loadGame(gameLoader.getFilePath());
 				break;
 			}
@@ -170,15 +170,23 @@ public class Chess {
 	
 	private void signIn(){
 		FileReader playerDatabase = readerFile(PLAYER_DB_LOCATION);
-		mainMenu.promptSignIn(playerDatabase);
+		String content = mainMenu.promptSignIn(playerDatabase);
+		if(!content.isEmpty()){
+			String[] playerInfo = content.split(":");
+			playerOne = new Player(playerInfo[0], playerInfo[1], Integer.parseInt(playerInfo[2]),
+			Integer.parseInt(playerInfo[3]), Integer.parseInt(playerInfo[4]));
+		}
 	}
 	
 	private void signUp(){
 		FileWriter playerDatabase = writerFile(PLAYER_DB_LOCATION);
 		String username = mainMenu.promptSignUp("Enter the username you would like: ");
+		playerOne.setUsername(username);
 		String password = mainMenu.promptSignUp("Enter the password you would like: ");
+		playerOne.setPassword(password);
 		try {
-			playerDatabase.append("#Player\n" + username + "\n" + password + "\n");
+			playerDatabase.append(username + ":" + password + ":" + playerOne.getWins() + ":" +
+			playerOne.getDraws() + ":" + playerOne.getLosses());
 			playerDatabase.close();
 		} catch (IOException e) {
 			System.out.println("Unable to write player" + username + " to database");
@@ -250,13 +258,12 @@ public class Chess {
 		boolean playing = true;
 		ArrayList<Position> empty = new ArrayList<>();
 		while(playing){
-			if(playerTurn % 2 == 0) this.board.draw(true, empty, playerOne.getUsername(),
+			if(turn % 2 == 0) this.board.draw(true, empty, playerOne.getUsername(),
 			playerTwo.getUsername());
 			else this.board.draw(false, empty, playerOne.getUsername(), 
 			playerTwo.getUsername());
-			
-			if(playTurn(playerTurn)) playing = false;
-			playerTurn++;
+			if(playTurn(turn)) playing = false;
+			else turn++;
 		}
 		
 	}
@@ -267,7 +274,7 @@ public class Chess {
 	* 
 	* @return boolean value to determine if the game is over through resignation
 	*/
-	public boolean playTurn(int playerTurn){
+	public boolean playTurn(int turn){
 		for(Move move : moves){
 			System.out.println(move); //testing
 		}
@@ -276,8 +283,15 @@ public class Chess {
 		while(turnNotOver){
 			String userInput = playChess.playChessDisplay();
 			switch(userInput){
-				case "0":
-				this.board = new Board(this);
+				case "0": //Resign
+				if(turn % 2 == 0){
+					endGame(false, playerOne);
+					System.out.println(playerTwo.getUsername() + " wins by Resigation.");
+				}
+				else{ 
+					endGame(false, playerTwo);
+					System.out.println(playerOne.getUsername() + " wins by Resigation.");
+				}
 				turnNotOver = false;
 				quit = true;
 				break;
@@ -289,7 +303,7 @@ public class Chess {
 				Rank toR = Rank.getRankByReal(Character.getNumericValue(parts[1].charAt(1)));
 				Piece fromPiece1 = (Piece) board.getPiece(fromR, fromF);
 				
-				if(playerTurn % 2 == 0){
+				if(turn % 2 == 0){
 					if(!fromPiece1.isWhite()){
 						System.out.println("You cannot move a piece that is not yours.");
 						break;
@@ -306,13 +320,33 @@ public class Chess {
 					System.out.println("Error, no piece at " + parts[0]);
 				}
 				else if(move(fromF, fromR, toF, toR)){
-					while(this.moves.size() - 1 > this.movesIndex) this.moves.pop();
-					Piece movedPiece = (Piece)board.getPiece(toR, toF);
-					movedPiece.setHasMoved();
-					
-					if(check(board.getWhiteKingPos(), true) || check(board.getBlackKingPos(), false)){
-						System.out.println("\t### Check! ###");
+					while(this.moves.size() - 1 > this.movesIndex) this.moves.removeLast();
+					if(checkNoValidMoves(true)){
+						if(check(board.getWhiteKingPos(), true)){
+							System.out.println("\t " + playerTwo.getUsername() + " wins by Checkmate!");
+							endGame(false, playerOne);
+						}else{
+							System.out.println("\t Draw by stalemate!");
+							endGame(true, playerOne);
+						}
+						quit = true;
 					}
+					
+					if(checkNoValidMoves(false)){
+						if(check(board.getBlackKingPos(), false)){
+							endGame(false, playerTwo);
+							System.out.println("\t " + playerOne.getUsername() + " wins by Checkmate!");
+						}else{
+							System.out.println("\t Draw by stalemate!");
+							endGame(true, playerTwo);
+						}
+						quit = true;
+					}
+
+					if(check(board.getWhiteKingPos(), true) ||
+					check(board.getBlackKingPos(), false) && !quit)
+					System.out.println("\t### Check! ###");
+					
 					turnNotOver = false;
 				}
 				else System.out.println("Invalid Move");
@@ -330,13 +364,15 @@ public class Chess {
 				if(this.movesIndex < this.moves.size() - 1){
 					turnNotOver = false;
 					redo();
+					turn++;
 				}
 				else{
 					System.out.println("\nRedo is unavailable right now\n");
 				}
 				break;
 				case "4":
-				showMovesDisplay.showMoves(this.board, playerTurn);
+				showMovesDisplay.showMoves(this.board, turn, playerOne.getUsername(), 
+													   playerTwo.getUsername());
 				break;
 				case "5":
 				if(moves.size() > 0){
@@ -370,6 +406,7 @@ public class Chess {
 		File fromF = fromPos.getFile();
 		Piece takenPiece = (Piece) lastMove.getPiece();
 		String takenPieceLetter = takenPiece.getChessPieceType().getChessPieceLetter();
+		if(userUndo) ((Piece)board.getPiece(fromR, fromF)).decMoveCount();
 		forceMove(fromF, fromR, toPos.getFile(), toPos.getRank());
 		board.getSquare(fromR.getArrayRank(), fromF.getArrayFile()).setPiece(takenPiece);
 		if(takenPiece.isBlack()) board.getBlackTakenPieces().remove(takenPieceLetter);
@@ -387,7 +424,33 @@ public class Chess {
 		Move move = this.moves.get(this.movesIndex);
 		Position fromPos = move.getFromPos();
 		Position toPos = move.getToPos();
+		((Piece)board.getPiece(fromPos.getRank(), fromPos.getFile())).incMoveCount();
 		forceMove(fromPos.getFile(), fromPos.getRank(), toPos.getFile(), toPos.getRank());
+	}
+	
+	/**
+	* This function checks if a player has valid moves by looking through the board and
+	* checking each piece's valid moves list. If a team has no valid moves while they are in
+	* check, it's checkmate. If a team has no valid moves while they are not in check, it's
+	* a draw by stalemate.
+	* 
+	* @param isWhite true if we're looking for white pieces, false if we're looking for
+	*                   black pieces
+	* @return true if the player has no valid moves, false otherwise
+	*/
+	public boolean checkNoValidMoves(boolean isWhite){
+		boolean noValidMoves = true;
+		for(int i = 0; i < board.getWidth(); i++){
+			for(int j = 0; j < board.getHeight(); j++){
+				Piece piece = (Piece) board.getPiece(i, j);
+				ChessPieceType pieceType = piece.getChessPieceType();
+				if(piece.isWhite() == isWhite && pieceType != ChessPieceType.EMPTY){
+					Position pos = new Position(Rank.getRankByIndex(i), File.getFileByIndex(j));
+					if(!piece.showMoves(pos).isEmpty()) noValidMoves = false;
+				}
+			}
+		}
+		return noValidMoves;
 	}
 	
 	/**
@@ -493,6 +556,7 @@ public class Chess {
 		Piece piece = (Piece) board.getPiece(fromR, fromF); //piece from current position
 		
 		if(piece.validateMove(fromPos, toPos)){
+			piece.incMoveCount();
 			this.movesIndex++;
 			PieceIF takenPiece = board.getPiece(toR, toF); //the piece that will be captured
 			this.moves.add(new Move(fromPos, toPos, takenPiece));
@@ -521,150 +585,174 @@ public class Chess {
 		Square toSquare = (Square) board.getSquare(toRankNum, toFileNum);
 		Piece fromPiece = (Piece) fromSquare.getPiece();
 		Piece toPiece = (Piece) toSquare.getPiece();
-		if(toPiece.isWhite()){ //if white, the piece needs to be "taken" and added to ArrayList
+		if(toPiece.isWhite()) //if white, the piece needs to be "taken" and added to ArrayList
 		board.getWhiteTakenPieces().add(toPiece.getChessPieceType().getChessPieceLetter());
-	}
-	if(toPiece.isBlack()){ //if black, the piece needs to be "taken" and added to ArrayList
-	board.getBlackTakenPieces().add(toPiece.getChessPieceType().getChessPieceLetter());
-}
-toSquare.setPiece(fromSquare.getPiece()); //put piece at new location
-fromSquare.clear(); //remove piece from it's previous position on square
-
-if(fromPiece.getChessPieceType() == ChessPieceType.KING){
-	if(fromPiece.isWhite()) board.setWhiteKingPos(toR, toF);
-	else board.setBlackKingPos(toR, toF);
-}
-}
-
-/**
-* Will attempt to see if a move is valid by forcing the move to occur, checking if their
-* team's king is in check, and then undoing the move. If their king was in check, the move
-* is invalid.
-* 
-* @param currentPiece the piece to be moved
-* @param row number representing the rank position in the 2D array
-* @param col number representing the file position in the 2d array
-* @param fromPos the position the moving piece starts on
-* @return true if the move attempted was valid, false otherwise
-*/
-public boolean tryMove(Piece currentPiece, int row, int col, Position fromPos){
-	boolean wasInCheck = false;
-	if(this.inCheck) wasInCheck = true; //store if the king was already in check
-	//this.inCheck = false; //assume the king isn't in check before we check new positions
-	boolean valid = true;
-	boolean isWhite = true;
-	Rank fromRank = fromPos.getRank();
-	File fromFile = fromPos.getFile();
-	Rank toRank = Rank.getRankByIndex(row);
-	File toFile = File.getFileByIndex(col);
-	
-	this.movesIndex++;
-	PieceIF takenPiece = board.getPiece(toRank, toFile); //the piece that will be captured
-	Position toPos = new Position(toRank, toFile);
-	this.moves.add(new Move(fromPos, toPos, takenPiece)); //add move to move list
-	forceMove(fromFile, fromRank, toFile, toRank); //force the move to occur
-	
-	Position kingPos; //find king position and king color for determining if its in check
-	if(currentPiece.isWhite()) kingPos = board.getWhiteKingPos();
-	else{
-		kingPos = board.getBlackKingPos();
-		isWhite = false;
-	}
-	if(check(kingPos, isWhite)) valid = false;
-	
-	undo(false); //use the sytem's undo to undo the move we tried
-	if(wasInCheck) this.inCheck = true; //put the king back in check if it was prior
-	else this.inCheck = false; //leave the king out of check it wasn't prior
-	return valid;
-}
-
-/**
-* Performs steps to end the game of chess. Not currently implemented, will be in the future.
-*/
-public void endGame() {
-	
-}
-
-/**
-* Setup for loading a game in. Not currently implemented, will be in the future.
-* 
-* @param file name of the file that holds the saved game
-* @return
-*/
-public void loadGame(String file) {
-	String fileContent = "";
-	if(!file.isEmpty()){
-		fileContent = gameLoader.loadGame(file);
-		String[] fileData = fileContent.split(";");
-		String[] players = fileData[fileData.length - 2].split(":");
-		System.out.println(fileData[fileData.length - 3]);
+		if(toPiece.isBlack()) //if black, the piece needs to be "taken" and added to ArrayList
+		board.getBlackTakenPieces().add(toPiece.getChessPieceType().getChessPieceLetter());
+		toSquare.setPiece(fromSquare.getPiece()); //put piece at new location
+		fromSquare.clear(); //remove piece from it's previous position on square
 		
-		int moveIndex = Integer.parseInt(fileData[fileData.length - 1]);
-		for(int i = 0; i < fileData.length - 2; i++){
-			String[] positions = fileData[i].split(":");
-			File fromFile = File.getFileByChar(positions[0].charAt(0));
-			Rank fromRank = Rank.getRankByReal(Character.getNumericValue(positions[0].charAt(1)));
-			File toFile = File.getFileByChar(positions[1].charAt(0));
-			Rank toRank = Rank.getRankByReal(Character.getNumericValue(positions[1].charAt(1)));
-			move(fromFile, fromRank, toFile, toRank);
-			playerTurn++;
+		if(fromPiece.getChessPieceType() == ChessPieceType.KING){
+			if(fromPiece.isWhite()) board.setWhiteKingPos(toR, toF);
+			else board.setBlackKingPos(toR, toF);
 		}
-		
-		for(int i = moves.size(); i > moveIndex + 1; i--) undo(true);
-		
 	}
-}
-
-/**
-* Process of saving a game.
-* 
-* @param file name of file to save game as
-* @param game interface of game to be saved
-*/
-public void saveGame(String file, BoardIF game) {
-	String fileContent = "";
-	for(int i = 0; i < moves.size(); i++){
-		Move move = moves.get(i);
-		fileContent += "" + String.valueOf(move.getFromPos().getFile().getRealFile()) + 
-		move.getFromPos().getRank().getRealRank() + ":" + 
-		String.valueOf(move.getToPos().getFile().getRealFile()) + 
-		move.getToPos().getRank().getRealRank() + ";";
-	}
-	fileContent += playerOne.getUsername() + ":" + playerTwo.getUsername();
-	fileContent += ";" + movesIndex;
 	
-	gameSaver.saveGame(file, fileContent);
-}
-
-/**
-* Used in the settings to determine if the undo is usable in match or not
-* 
-* @param status true if players can undo, false if not
-*/
-public void setUndo(boolean status){
-	this.undo = status;
-}
-
-/**
-* Used in the settings to determine if the showMoves is usable in match or not.
-* 
-* @param status true if players can showMoves, false if not
-*/
-public void setShowMoves(boolean status){
-	this.showMoves = status;
-}
-
-/**
-* Used in settings to set the color of the board.
-* 
-* @param strat string representing new drawStrat of board
-* @return true if drawStrat is set, false if not
-*/
-public boolean setDrawStrat(String strat){
-	boolean result = true;
-	if(strat.equals("mono")) this.drawStrat = new BoardMonoCLI();
-	else if(strat.equals("color")) this.drawStrat = new BoardColorCLI();
-	else result = false;
-	return result;
-}
+	/**
+	* Will attempt to see if a move is valid by forcing the move to occur, checking if their
+	* team's king is in check, and then undoing the move. If their king was in check, the move
+	* is invalid.
+	* 
+	* @param currentPiece the piece to be moved
+	* @param row number representing the rank position in the 2D array
+	* @param col number representing the file position in the 2d array
+	* @param fromPos the position the moving piece starts on
+	* @return true if the move attempted was valid, false otherwise
+	*/
+	public boolean tryMove(Piece currentPiece, int row, int col, Position fromPos){
+		boolean wasInCheck = false;
+		if(this.inCheck) wasInCheck = true; //store if the king was already in check
+		//this.inCheck = false; //assume the king isn't in check before we check new positions
+		boolean valid = true;
+		boolean isWhite = true;
+		Rank fromRank = fromPos.getRank();
+		File fromFile = fromPos.getFile();
+		Rank toRank = Rank.getRankByIndex(row);
+		File toFile = File.getFileByIndex(col);
+		
+		this.movesIndex++;
+		PieceIF takenPiece = board.getPiece(toRank, toFile); //the piece that will be captured
+		Position toPos = new Position(toRank, toFile);
+		this.moves.add(new Move(fromPos, toPos, takenPiece)); //add move to move list
+		forceMove(fromFile, fromRank, toFile, toRank); //force the move to occur
+		
+		Position kingPos; //find king position and king color for determining if its in check
+		if(currentPiece.isWhite()) kingPos = board.getWhiteKingPos();
+		else{
+			kingPos = board.getBlackKingPos();
+			isWhite = false;
+		}
+		if(check(kingPos, isWhite)) valid = false;
+		
+		undo(false); //use the sytem's undo to undo the move we tried
+		if(wasInCheck) this.inCheck = true; //put the king back in check if it was prior
+		else this.inCheck = false; //leave the king out of check it wasn't prior
+		return valid;
+	}
+	
+	/**
+	* Performs steps to end the game of chess. Not currently implemented, will be in the future.
+	*
+	*
+	*/
+	public void endGame(boolean draw, Player loser){
+		this.board = new Board(this);
+		moves.clear();
+		movesIndex = -1;
+		turn = 0;
+		if(draw) { 
+			playerOne.addDraw();
+			playerTwo.addDraw();
+		}else if(loser == playerOne){
+			playerOne.addLoss();
+			playerTwo.addWin();
+		}else{
+			playerOne.addWin();
+			playerTwo.addLoss();
+		}
+		if(playerOne.getPassword() != null) updatePlayers();
+	}
+	
+	public void updatePlayers(){
+		mainMenu.updateDatabase(readerFile(PLAYER_DB_LOCATION), writerFile(PLAYER_DB_LOCATION),
+		playerOne.toString(), PLAYER_DB_LOCATION);
+	}
+	
+	/**
+	* Setup for loading a game in. Not currently implemented, will be in the future.
+	* 
+	* @param file name of the file that holds the saved game
+	* @return
+	*/
+	public void loadGame(String file) {
+		
+		String fileContent = "";
+		this.board = new Board(this);
+		turn = 0;
+		moves.clear();
+		movesIndex = -1;
+		if(!file.isEmpty()){
+			fileContent = gameLoader.loadGame(file);
+			String[] fileData = fileContent.split(";");
+			String[] players = fileData[fileData.length - 2].split(":");
+			System.out.println(fileData[fileData.length - 3]);
+			
+			int moveIndex = Integer.parseInt(fileData[fileData.length - 1]);
+			for(int i = 0; i < fileData.length - 2; i++){
+				String[] positions = fileData[i].split(":");
+				File fromFile = File.getFileByChar(positions[0].charAt(0));
+				Rank fromRank = Rank.getRankByReal(Character.getNumericValue(positions[0].charAt(1)));
+				File toFile = File.getFileByChar(positions[1].charAt(0));
+				Rank toRank = Rank.getRankByReal(Character.getNumericValue(positions[1].charAt(1)));
+				move(fromFile, fromRank, toFile, toRank);
+				turn++;
+			}
+			
+			for(int i = moves.size(); i > moveIndex + 1; i--) undo(true);
+			
+		}
+	}
+	
+	/**
+	* Process of saving a game.
+	* 
+	* @param file name of file to save game as
+	* @param game interface of game to be saved
+	*/
+	public void saveGame(String file, BoardIF game) {
+		String fileContent = "";
+		for(int i = 0; i < moves.size(); i++){
+			Move move = moves.get(i);
+			fileContent += "" + String.valueOf(move.getFromPos().getFile().getRealFile()) + 
+			move.getFromPos().getRank().getRealRank() + ":" + 
+			String.valueOf(move.getToPos().getFile().getRealFile()) + 
+			move.getToPos().getRank().getRealRank() + ";";
+		}
+		fileContent += playerOne.getUsername() + ":" + playerTwo.getUsername();
+		fileContent += ";" + movesIndex;
+		
+		gameSaver.saveGame(file, fileContent);
+	}
+	
+	/**
+	* Used in the settings to determine if the undo is usable in match or not
+	* 
+	* @param status true if players can undo, false if not
+	*/
+	public void setUndo(boolean status){
+		this.undo = status;
+	}
+	
+	/**
+	* Used in the settings to determine if the showMoves is usable in match or not.
+	* 
+	* @param status true if players can showMoves, false if not
+	*/
+	public void setShowMoves(boolean status){
+		this.showMoves = status;
+	}
+	
+	/**
+	* Used in settings to set the color of the board.
+	* 
+	* @param strat string representing new drawStrat of board
+	* @return true if drawStrat is set, false if not
+	*/
+	public boolean setDrawStrat(String strat){
+		boolean result = true;
+		if(strat.equals("mono")) this.drawStrat = new BoardMonoCLI();
+		else if(strat.equals("color")) this.drawStrat = new BoardColorCLI();
+		else result = false;
+		return result;
+	}
 }

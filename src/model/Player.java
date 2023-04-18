@@ -54,7 +54,7 @@ public class Player {
      * future.
      * 
      * @param userID String that holds the user's username
-     * @param password String that holds thse user's password
+     * @param password String that holds the user's password
      */
     public Player(String username, String password){
         this.username = username;
@@ -63,6 +63,27 @@ public class Player {
         this.losses = 0;
         this.draws = 0;
     }
+
+     /**
+     * Constructor for a player object that initializes the username, password, and game stats.
+     * This constructor doesn't initialize the player's name and email, because this could be
+     * optional information to fill out in an account settings page possibly implemented in the
+     * future.
+     * 
+     * @param userID String that holds the user's username
+     * @param password String that holds the user's password
+     * @param wins Integer that holds the user's wins
+     * @param draws Integer that holds the user's password
+     * @param losses Integer that holds the user's password
+     */
+    public Player(String username, String password, int wins, int draws, int losses){
+        this.username = username;
+        this.password = password;
+        this.wins = wins;
+        this.losses = losses;
+        this.draws = draws;
+    }
+
 
     /**
      * Setter for the user's first name.
@@ -101,11 +122,70 @@ public class Player {
     }
 
     /**
+    * Get the user's username
+    * @return username - String that holds the user's username
+    */
+    public void setPassword(String pass){
+        this.password = pass;
+    }
+
+    /**
      * Get the user's username
      * @return username - String that holds the user's username
      */
     public String getUsername(){
         return username;
+    }
+
+     /**
+     * Get the user's password
+     * @return password - String that holds the user's password
+     */
+    public String getPassword(){
+        return password;
+    }
+
+    /**
+     * Get the user's wins
+     * @return wins - Integer that holds the user's wins
+     */
+    public Integer getWins(){
+        return wins;
+    }
+    
+    /**
+     * Get the user's losses
+     * @return losses - Integer that holds the user's losses
+     */
+    public Integer getLosses(){
+        return losses;
+    }
+
+    /**
+     * Get the user's draws
+     * @return draws - Integer that holds the user's draws
+     */
+    public Integer getDraws(){
+        return draws;
+    }
+
+    /**
+     * This method will increment the designated players 
+     */
+    public void addWin(){
+        this.wins += 1;
+    }
+
+    public void addLoss(){
+        this.losses += 1;
+    }
+
+    public void addDraw(){
+        this.draws += 1;
+    }
+
+    public String toString(){
+        return username +  ":" + password + ":" + wins + ":" + draws + ":" + losses;
     }
 
 }

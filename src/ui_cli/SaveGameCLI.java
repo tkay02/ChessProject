@@ -14,7 +14,8 @@ public class SaveGameCLI implements SaveGameIF {
     }
 
     public String promptSaveGame(){
-        System.out.print("Enter file path: ");
+        System.out.print("Enter file path (YOU MUST ENTER AN ABSOLUTE PATH ie." + 
+        " C:\\cms\\Downloads\\Game.txt): ");
         return input.next();
     }
     public void saveGame(String filePath, String fileContent){

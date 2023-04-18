@@ -30,7 +30,7 @@ public class ShowMovesCLI implements ShowMovesIF{
 		this.rankList.addAll(Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8"));
     }
 
-    public String showMoves(BoardIF board, int turn){
+    public String showMoves(BoardIF board, int turn, String player1, String player2){
         boolean keepGoing = true;
         String userInput = "";
         while(keepGoing){
@@ -44,8 +44,8 @@ public class ShowMovesCLI implements ShowMovesIF{
         Rank fromR = Rank.getRankByReal(Character.getNumericValue(userInput.charAt(1)));
         Piece piece = (Piece) board.getPiece(fromR, fromF);
         if(piece.getChessPieceType() != ChessPieceType.EMPTY){
- 		    if(turn % 2 == 0) board.draw(true, piece.showMoves(new Position(fromR, fromF)));
-            else board.draw(false, piece.showMoves(new Position(fromR, fromF)));
+ 		    if(turn % 2 == 0) board.draw(true, piece.showMoves(new Position(fromR, fromF)), player1, player2);
+            else board.draw(false, piece.showMoves(new Position(fromR, fromF)), player1, player2);
         }
         else{
             System.out.println("Error, no piece at " + userInput);
