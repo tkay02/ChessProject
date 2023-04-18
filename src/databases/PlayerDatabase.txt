@@ -22,12 +22,3 @@ don
 #Player
 yessuh
 nossuh
-<<<<<<< HEAD
-#Player
-Thomas
-kay
-#Player
-Tom
-123
-=======
->>>>>>> 5a006adced3ac3821ec9613eec5c0ba66630ebbd
