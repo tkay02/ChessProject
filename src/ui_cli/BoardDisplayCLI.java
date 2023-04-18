@@ -38,7 +38,7 @@ public abstract class BoardDisplayCLI implements BoardStrategy{
 	 * 
 	 * @param board the chess board to draw
 	 */
-	public void drawWhite(BoardIF board, ArrayList<Position> validMoves) {
+	public void drawWhite(BoardIF board, ArrayList<Position> validMoves, String player1, String player2) {
         toDisplay = "\n";
 		for(int i = 0; i < board.getWidth(); i++){ //iterate through board
 			toDisplay += displayRank(board.getWidth() - i); //rank to display on side of board
@@ -65,11 +65,11 @@ public abstract class BoardDisplayCLI implements BoardStrategy{
             toDisplay += "\n";
 		}
         toDisplay += displayWhiteFile(); //display the file along the bottom of the board
-        toDisplay += takenPieces(board); //display the pieces that have been taken
+        toDisplay += takenPieces(board, player1, player2); //display the pieces that have been taken
 		System.out.println(toDisplay); //print out the string
 	}
 
-    public void drawBlack(BoardIF board, ArrayList<Position> validMoves) {
+    public void drawBlack(BoardIF board, ArrayList<Position> validMoves, String player1, String player2) {
         toDisplay = "\n";
 		for(int i = 7; i >= 0; i--){ //iterate through board
 			toDisplay += displayRank(board.getWidth() - i); //rank to display on side of board
@@ -99,7 +99,7 @@ public abstract class BoardDisplayCLI implements BoardStrategy{
             toDisplay += "\n";
 		}
         toDisplay += displayBlackFile(); //display the file along the bottom of the board
-        toDisplay += takenPieces(board); //display the pieces that have been taken
+        toDisplay += takenPieces(board, player1, player2); //display the pieces that have been taken
 		System.out.println(toDisplay); //print out the string
 	}
 
@@ -130,7 +130,7 @@ public abstract class BoardDisplayCLI implements BoardStrategy{
 
     public abstract String blackSquare(Piece piece);
 
-    public abstract String takenPieces(BoardIF Board);
+    public abstract String takenPieces(BoardIF Board, String player1, String player2);
 
     public abstract String displayRank(int rank);
 
