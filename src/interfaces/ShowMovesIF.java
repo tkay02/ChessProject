@@ -5,6 +5,6 @@ import src.model.Position;
 
 public interface ShowMovesIF {
     
-    public String showMoves(BoardIF board, int turn);
+    public String showMoves(BoardIF board, int turn, String player1, String player2);
 
 }

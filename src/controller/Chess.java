@@ -371,7 +371,8 @@ public class Chess {
 				}
 				break;
 				case "4":
-				showMovesDisplay.showMoves(this.board, turn);
+				showMovesDisplay.showMoves(this.board, turn, playerOne.getUsername(), 
+													   playerTwo.getUsername());
 				break;
 				case "5":
 				if(moves.size() > 0){
