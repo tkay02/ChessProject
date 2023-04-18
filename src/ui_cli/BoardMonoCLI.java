@@ -43,12 +43,12 @@ public class BoardMonoCLI extends BoardDisplayCLI{
 	@Override
 	public String takenPieces(BoardIF board, String player1, String player2){
 		String result = "";
-		result += "Pieces taken by " + player1;
+		result += "Pieces taken by " + player1 + ": ";
 		//iterate through ArrayList of black pieces taken to be displayed
 		for(int i = 0; i < board.getBlackTakenPieces().size(); i++){
 			result += board.getBlackTakenPieces().get(i).toLowerCase() + " ";
 		}
-		result += "\nPieces taken by " + player2;
+		result += "\nPieces taken by " + player2 + ": ";
 		//iterate through ArrayList of white pieces taken to be displayed
 		for(int i = 0; i < board.getWhiteTakenPieces().size(); i++){
 			result += board.getWhiteTakenPieces().get(i)+ " ";
