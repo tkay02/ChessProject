@@ -27,7 +27,7 @@ public interface BoardIF {
 	/**
 	 * Draws the chess board in unique color scheme such as mono.
 	 */
-	public void draw(boolean drawWhite, ArrayList<src.model.Position> validMoves);
+	public void draw(boolean drawWhite, ArrayList<src.model.Position> validMoves, String player1, String player2);
 
 	/**
 	 * Retrieves the collection of squares on the board.
