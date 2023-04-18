@@ -45,7 +45,8 @@ public class RulesCLI implements RulesIF {
     }
 
     /**
-     * Displays the rules of how the board is prepared for a game of chess.
+     * Displays the rules of how the board is prepared for a game of chess. Includes a quiz
+     * to test the player's knowledge of chess notation.
      */
     private void boardSetup() {
         System.out.println("\nThe game is played on an 8x8 black & white board with each player "+
@@ -67,8 +68,115 @@ public class RulesCLI implements RulesIF {
                            "other pieces)\n");
         this.printBoard();
         System.out.println("Quick reminder: white always goes first");
-        System.out.println("Notation for chess pieces: File-Rank (i.e. A3)\n");
-        this.repeat();
+        System.out.print("\nWould you like to learn about chess notation? (Press 1 for yes) : ");
+        String result = input.nextLine();
+        if(result.equals("1")) quiz();
+    }
+
+    /**
+     * Helper function to test user's knowledge of chess notation.
+     */
+    public void quiz() {
+        System.out.println("\nTo select specific pieces/positions on the chessboard, the format "+
+                           "goes like this: \n\n\tFile of Position + Rank of Position");
+        System.out.println("\nAn example of this notation would be like this:\n");
+        System.out.println("1\u001b[34m \u001b[40m   \u001b[47m Q \u001b[40m   \u001b[0m");
+        System.out.println("   A  B  C ");
+        System.out.println("\nThe queen piece is at the location of B1");
+        System.out.println("Quick reminder: The file is written as a capital in regards to "+
+                          "notation!");
+        System.out.print("\nWould like to test your knowledge of chess notation? "+
+                         "(Press 1 to take the quiz) ");
+        String result = input.nextLine();
+        if(result.equals("1")) {
+            question1();
+            question2();
+            question3();
+            System.out.println("Thank you for taking this quiz!\n");
+            repeat();
+        }
+    }
+
+    /**
+     * First question of the optional quiz for boardSetup.
+     */
+    public void question1() {
+        System.out.println("\nQuestion 1:\n");
+        String answer = "C1";
+        System.out.println("2 \u001b[47m   \u001b[40m   \u001b[47m   \u001b[40m   \u001b[47m   "+
+                           "\u001b[40m   \u001b[0m");
+        System.out.println("1\u001b[34m \u001b[40m P \u001b[47m P \u001b[41m P \u001b[47m P "+
+                          "\u001b[40m P \u001b[47m P \u001b[0m");
+        System.out.println("   A  B  C  D  E  F ");
+        quizQuestion("What's the location of the piece in the red shaded region?", answer);
+        System.out.print("\nGreat Job! Press Enter to go to the next question : ");
+        input.nextLine();
+    }
+
+    /**
+     * Second question of the optional quiz for boardSetup.
+     */
+    public void question2() {
+        System.out.println("\nQuestion 2:\n");
+        String answer1 = "A1";
+        String answer2 = "D4";
+        System.out.println("4 \u001b[40m   \u001b[47m   \u001b[40m   \u001b[44m   \u001b[0m");
+        System.out.println("3 \u001b[47m   \u001b[40m   \u001b[47m   \u001b[40m   \u001b[0m");
+        System.out.println("2 \u001b[40m   \u001b[47m   \u001b[40m   \u001b[47m   \u001b[0m");
+        System.out.println("1 \u001b[41m Q \u001b[40m   \u001b[47m   \u001b[40m   \u001b[0m");
+        System.out.println("   A  B  C  D ");
+        quizQuestion("What's the location of the piece in the red shaded region?", answer1);
+        System.out.println("Correct!");
+        quizQuestion("What's the piece's destination in blue?", answer2);
+        System.out.print("\nGreat Job! Press Enter to go to the next question : ");
+        input.nextLine();
+    }
+
+    /**
+     * Final question to the quiz for boardSetup.
+     */
+    public void question3() {
+        System.out.println("\nFinal Question:\n");
+        String checkAnswer = "C8";
+        String safetyAnswer = "B8";
+        String removeAnswer = "A6";
+        String posAnswer1 = "C6";
+        String blockAnswer = "D8";
+        String posAnswer2 = "C7";
+        System.out.println("8 \u001b[34m\u001b[40m   \u001b[47m   \u001b[40m K \u001b[47m B "+
+                           "\u001b[40m   \u001b[0m");
+        System.out.println("7 \u001b[47m   \u001b[40m   \u001b[47m   \u001b[40m   \u001b[47m   "+
+                           "\u001b[0m");
+        System.out.println("6 \u001b[34m\u001b[40m R \u001b[47m   \u001b[40m\u001b[31m Q "+
+                           "\u001b[47m   \u001b[40m   \u001b[0m");
+        System.out.println("   A  B  C  D  E");
+        quizQuestion("What's the location of the piece currently in check?", checkAnswer);
+        System.out.println("Correct!");
+        quizQuestion("Where's the location to move the king out of check?", safetyAnswer);
+        System.out.println("Correct!");
+        quizQuestion("What's the location of the piece to remove the enemy?", removeAnswer);
+        System.out.println("Correct!");
+        quizQuestion("To where to remove the enemy?", posAnswer1);
+        System.out.println("Correct!");
+        quizQuestion("What's the location of the piece to block the enemy?", blockAnswer);
+        System.out.println("Correct!");
+        quizQuestion("To where to block the enemy?", posAnswer2);
+        System.out.println("Excellent Work!\n");
+    }
+
+    /**
+     * Helper function for the quiz questions to format the question and answer.
+     * 
+     * @param String question The specific question.
+     * @param String answer The specific answer to the question.
+     */
+    private void quizQuestion(String question, String answer) {
+        String result = "";
+        while(!result.equals(answer)) {
+            System.out.print("\n" + question + " ");
+            result = input.nextLine();
+            if(!result.equals(answer)) System.out.println("Try again");
+        }
     }
 
     /**
@@ -340,6 +448,8 @@ public class RulesCLI implements RulesIF {
         System.out.println("\u001b[34m\u001b[40m R \u001b[47m   \u001b[40m\u001b[31m Q "+
                            "\u001b[47m   \u001b[40m   \u001b[0m\n");
         System.out.println("Any other moves are invalid if the king is in check");
+        System.out.print("\nPress enter to continue: ");
+        input.nextLine();
     }
 
     /**
@@ -356,6 +466,8 @@ public class RulesCLI implements RulesIF {
                            "king into check vertically and the queen makes the king");
         System.out.println("into check horizontally and diagonally with nothing that the enemy "+
                            "can do");
+        System.out.print("\nPress enter to continue: ");
+        input.nextLine();
     }
 
     private void draw() {
