@@ -22,7 +22,7 @@ public class Piece extends BlackAndWhite implements PieceIF {
     private ChessPieceType pieceType;
 
     /** Boolean for if a piece has moved or not **/
-    private boolean hasMoved;
+    private int moveCount;
 
     /** Strategy for the pieces movement **/
     private MovementStrategy moveStrat;
@@ -35,7 +35,7 @@ public class Piece extends BlackAndWhite implements PieceIF {
     public Piece(ChessPieceType pieceType, GameColor color){
         super(color);
         this.pieceType = pieceType;
-        this.hasMoved = false;
+        this.moveCount = 0;
     }
 
     /**
@@ -92,15 +92,21 @@ public class Piece extends BlackAndWhite implements PieceIF {
      * @return hasMoved - A boolean that represents whether or not the
      * piece has been moved.
      */
-    public boolean hasMoved(){
-        return hasMoved;
+    public boolean hasNotMoved(){
+        return this.moveCount == 0;
     }
 
     /**
-     * Called once a piece has moved, important for limiting the movements of certain pieces.
+     * Increases the move count of a piece by one.
      */
-    public void setHasMoved(){
-        this.hasMoved = true;
+    public void incMoveCount(){
+        this.moveCount++;
     }
-    
+
+    /**
+     * Decreases the move count of a piece by one.
+     */
+    public void decMoveCount(){
+        this.moveCount--;
+    }
 }

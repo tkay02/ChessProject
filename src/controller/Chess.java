@@ -283,7 +283,7 @@ public class Chess {
 		while(turnNotOver){
 			String userInput = playChess.playChessDisplay();
 			switch(userInput){
-				case "0":
+				case "0": //Resign
 				if(turn % 2 == 0){
 					endGame(false, playerOne);
 					System.out.println(playerTwo.getUsername() + " wins by Resigation.");
@@ -320,20 +320,14 @@ public class Chess {
 					System.out.println("Error, no piece at " + parts[0]);
 				}
 				else if(move(fromF, fromR, toF, toR)){
-					while(this.moves.size() - 1 > this.movesIndex) this.moves.pop();
-					Piece movedPiece = (Piece)board.getPiece(toR, toF);
-					movedPiece.setHasMoved();
+					while(this.moves.size() - 1 > this.movesIndex) this.moves.removeLast();
 					if(checkNoValidMoves(true)){
 						if(check(board.getWhiteKingPos(), true)){
-							endGame(false, playerOne);
 							System.out.println("\t " + playerTwo.getUsername() + " wins by Checkmate!");
-							//and then break out before we check for check
-							//white wins
-						}
-						else{
+							endGame(false, playerOne);
+						}else{
 							System.out.println("\t Draw by stalemate!");
 							endGame(true, playerOne);
-							//and then break out before whatever / draw
 						}
 						quit = true;
 					}
@@ -342,16 +336,13 @@ public class Chess {
 						if(check(board.getBlackKingPos(), false)){
 							endGame(false, playerTwo);
 							System.out.println("\t " + playerOne.getUsername() + " wins by Checkmate!");
-							//and then break out before we check for check
-							// black wins
-						}
-						else{
+						}else{
 							System.out.println("\t Draw by stalemate!");
 							endGame(true, playerTwo);
-							//and then break out before whatever / draw
 						}
 						quit = true;
 					}
+
 					if(check(board.getWhiteKingPos(), true) ||
 					check(board.getBlackKingPos(), false) && !quit)
 					System.out.println("\t### Check! ###");
@@ -414,6 +405,7 @@ public class Chess {
 		File fromF = fromPos.getFile();
 		Piece takenPiece = (Piece) lastMove.getPiece();
 		String takenPieceLetter = takenPiece.getChessPieceType().getChessPieceLetter();
+		if(userUndo) ((Piece)board.getPiece(fromR, fromF)).decMoveCount();
 		forceMove(fromF, fromR, toPos.getFile(), toPos.getRank());
 		board.getSquare(fromR.getArrayRank(), fromF.getArrayFile()).setPiece(takenPiece);
 		if(takenPiece.isBlack()) board.getBlackTakenPieces().remove(takenPieceLetter);
@@ -431,6 +423,7 @@ public class Chess {
 		Move move = this.moves.get(this.movesIndex);
 		Position fromPos = move.getFromPos();
 		Position toPos = move.getToPos();
+		((Piece)board.getPiece(fromPos.getRank(), fromPos.getFile())).incMoveCount();
 		forceMove(fromPos.getFile(), fromPos.getRank(), toPos.getFile(), toPos.getRank());
 	}
 	
@@ -458,7 +451,6 @@ public class Chess {
 		}
 		return noValidMoves;
 	}
-	
 	
 	/**
 	* This function checks if a king is in check by forming an arrayList of "wanted" pieces
@@ -563,6 +555,7 @@ public class Chess {
 		Piece piece = (Piece) board.getPiece(fromR, fromF); //piece from current position
 		
 		if(piece.validateMove(fromPos, toPos)){
+			piece.incMoveCount();
 			this.movesIndex++;
 			PieceIF takenPiece = board.getPiece(toR, toF); //the piece that will be captured
 			this.moves.add(new Move(fromPos, toPos, takenPiece));
@@ -652,7 +645,6 @@ public class Chess {
 	*
 	*/
 	public void endGame(boolean draw, Player loser){
-		
 		this.board = new Board(this);
 		moves.clear();
 		movesIndex = -1;
