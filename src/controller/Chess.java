@@ -647,6 +647,7 @@ public class Chess {
 	public void endGame(boolean draw, Player loser){
 		//Restarts board
 		returnToMain = false;
+		//Restarts board
 		this.board = new Board(this);
 		moves.clear();
 		movesIndex = -1;
