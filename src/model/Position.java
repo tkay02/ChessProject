@@ -64,5 +64,5 @@ public class Position {
     public String toString() {
         return "" + this.file + this.rank;
     }
-
+    
 }
