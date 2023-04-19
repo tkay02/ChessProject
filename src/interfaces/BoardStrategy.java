@@ -17,6 +17,11 @@ public interface BoardStrategy {
 	 */
 	public void drawWhite(BoardIF board, ArrayList<src.model.Position> validMoves, String player1, String player2);
 
+	/**
+	 * Draws the board in an unique color scheme such as mono.
+	 * 
+	 * @param BoardIF board The chess board whose color scheme is being changed.
+	 */
 	public void drawBlack(BoardIF board, ArrayList<src.model.Position> validMoves, String player1, String player2);
 
 	
