@@ -9,30 +9,9 @@ import java.util.LinkedList;
 import src.enums.ChessPieceType;
 import src.enums.File;
 import src.enums.Rank;
-import src.interfaces.BoardIF;
-import src.interfaces.BoardStrategy;
-import src.interfaces.MainMenuIF;
-import src.interfaces.PieceIF;
-import src.interfaces.PlayChessIF;
-import src.interfaces.RulesIF;
-import src.interfaces.SettingsIF;
-import src.interfaces.ShowMovesIF;
-import src.model.Board;
-import src.model.Move;
-import src.model.Piece;
-import src.model.Player;
-import src.model.Position;
-import src.model.Square;
-import src.ui_cli.BoardColorCLI;
-import src.ui_cli.BoardMonoCLI;
-import src.ui_cli.DefinePlayerCLI;
-import src.ui_cli.LoadGameCLI;
-import src.ui_cli.MainMenuCLI;
-import src.ui_cli.PlayChessCLI;
-import src.ui_cli.RulesCLI;
-import src.ui_cli.SaveGameCLI;
-import src.ui_cli.SettingsCLI;
-import src.ui_cli.ShowMovesCLI;
+import src.interfaces.*;
+import src.model.*;
+import src.ui_cli.*;
 
 /**
 * Represents the game of chess. In the future, this class will allow users to start games,
@@ -66,6 +45,9 @@ public class Chess {
 	
 	/** Used to show moves of a piece **/
 	private ShowMovesIF showMovesDisplay;
+
+	/** Used to determine if the user's want to end the match as a draw */
+	private DrawByAgreementIF drawMatch;
 	
 	/** True if players can undo, false if undo is off **/
 	private boolean undo;
@@ -100,6 +82,9 @@ public class Chess {
 	
 	/** Field representing if a player is in check or not **/
 	private boolean inCheck;
+
+	/** Determines if we need to return to main. Set to false once game is completed. **/
+	private boolean returnToMain;
 	
 	/**
 	* Constructor for the game of chess. Initializes scanner, ArrayList's of valid inputs, and
@@ -120,6 +105,7 @@ public class Chess {
 		this.definePlayers = new DefinePlayerCLI();
 		this.gameLoader = new LoadGameCLI();
 		this.gameSaver = new SaveGameCLI();
+		this.drawMatch = new DrawAgreementCLI();
 		this.undo = true; //can undo by default
 		this.showMoves = true; //can showMoves by default
 		this.movesIndex = -1;
@@ -127,6 +113,7 @@ public class Chess {
 		playerOne = new Player("Player 1");
 		playerTwo = new Player("Player 2");
 		this.inCheck = false;
+		returnToMain = true;
 	}
 	
 	/**
@@ -136,7 +123,7 @@ public class Chess {
 	* @param BoardStrategy drawStrategy Determines how the chess board is drawn.
 	*/
 	public void go() {
-		boolean returnToMain = true;
+		returnToMain = true;
 		while(returnToMain){
 			switch(mainMenu.userInteraction()){
 				case "0":
@@ -380,8 +367,18 @@ public class Chess {
 					saveGame(fileLocation, board);
 					quit = true;
 					turnNotOver = false;
-				}else System.out.println("\nNot enough moves made to save game.\n");
+				}else System.out.println("\nNot enough moves made to save game.\n");				
+				break;
 				
+				case "6": //DRAW BY AGREEMENT
+				String drawChoice = drawMatch.respondToDraw();
+				if(drawChoice.equals("Y")){
+					System.out.println("Game ended as a draw.");
+					endGame(true, playerOne);
+					turnNotOver = false;
+					quit = true;
+				}
+
 				break;
 			}
 		}
@@ -641,11 +638,15 @@ public class Chess {
 	}
 	
 	/**
-	* Performs steps to end the game of chess. Not currently implemented, will be in the future.
+	* Restarts the conditions of the chessboard and updates the statuses of the players.
 	*
-	*
+	* @param boolean draw Boolean condition that determines if the end game ended with a draw,
+	* a checkmate, or a resign. If true, the game ended with a draw; checkmate or resign otherwise.
+	* @param Player loser The player that lost the game.
 	*/
 	public void endGame(boolean draw, Player loser){
+		//Restarts board
+		returnToMain = false;
 		this.board = new Board(this);
 		moves.clear();
 		movesIndex = -1;
