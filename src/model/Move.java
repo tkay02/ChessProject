@@ -43,4 +43,10 @@ public class Move {
         return toReturn;
     }
 
+    public boolean equals(Move other){
+        boolean result = false;
+        if(this.from.equals(other.getFromPos()) && this.to.equals(other.getToPos())) result = true;
+        return result;
+    }
+
 }

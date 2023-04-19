@@ -304,8 +304,11 @@ public class Chess {
 					System.out.println("Error, no piece at " + parts[0]);
 				}
 				else if(move(fromF, fromR, toF, toR)){
+					//Removes any extra moves if the user moves after undoing
 					while(this.moves.size() - 1 > this.movesIndex) this.moves.removeLast();
-					if(checkNoValidMoves(true)){
+
+					//Check if the white king has any valid moves when black moves
+					if(turn % 2 == 1 && checkNoValidMoves(true)){
 						if(check(board.getWhiteKingPos(), true)){
 							System.out.println("\t " + playerTwo.getUsername() + " wins by Checkmate!");
 							endGame(false, playerOne);
@@ -316,7 +319,8 @@ public class Chess {
 						quit = true;
 					}
 
-					if(checkNoValidMoves(false)){
+					//Check if the black king has any valid moves when white moves
+					if(turn % 2 == 0 && checkNoValidMoves(false)){
 						if(check(board.getBlackKingPos(), false)){
 							endGame(false, playerTwo);
 							System.out.println("\t " + playerOne.getUsername() + " wins by Checkmate!");
@@ -326,11 +330,22 @@ public class Chess {
 						}
 						quit = true;
 					}
-					if(fiftyMoveDraw == 50){
-						System.out.println("\nDraw my 50 move rule.");
+
+					//Check if a threefold repetition has occured
+					if(threeFoldRepetition()){
+						System.out.println("\nDraw by threefold repetition.");
 						quit = true;
 						endGame(true, playerOne);
 					}
+
+					//Check if the Fifty Move rule has been met
+					if(fiftyMoveDraw == 50){
+						System.out.println("\nDraw by 50 move rule.");
+						quit = true;
+						endGame(true, playerOne);
+					}
+
+					//Check if one of the player's are in check
 					if(check(board.getWhiteKingPos(), true) ||
 					check(board.getBlackKingPos(), false) && !quit)
 					System.out.println("\t### Check! ###");
@@ -441,6 +456,25 @@ public class Chess {
 		forceMove(fromPos.getFile(), fromPos.getRank(), toPos.getFile(), toPos.getRank());
 	}
 	
+	/**
+	 * Checks if the same board state has occured three times in a row by checking the 12 previous
+	 * moves.
+	 * 
+	 * @return true if draw by three fold repetition, false otherwise
+	 */
+	public boolean threeFoldRepetition(){
+		boolean draw = true;
+		if(moves.size() >= 12){
+			int i = moves.size() - 1;
+			while(i > (moves.size() - 5) && draw){
+				Move move = moves.get(i);
+				if(move.equals(moves.get(i - 4)) && move.equals(moves.get(i - 8))) i--;
+				else draw = false;
+			}
+		}else draw = false;
+		return draw;
+	}
+
 	/**
 	* This function checks if a player has valid moves by looking through the board and
 	* checking each piece's valid moves list. If a team has no valid moves while they are in
@@ -666,8 +700,13 @@ public class Chess {
 	public void endGame(boolean draw, Player loser){
 		//Restarts board
 		//returnToMain = false;
-		//Restarts board
-		this.board = new Board(this);
+		ArrayList<Position> empty = new ArrayList<>();
+		//draw the board once more
+		if(turn % 2 == 0) this.board.draw(true, empty, playerOne.getUsername(),
+										  playerTwo.getUsername());
+		else this.board.draw(false, empty, playerOne.getUsername(), 
+							 playerTwo.getUsername());		
+		this.board = new Board(this); //resets board
 		moves.clear();
 		movesIndex = -1;
 		turn = 0;
