@@ -1,24 +1,3 @@
-#Player
-john
-doe
-#Player
-pow
-so
-#Player
-Hello
-No
-#Player
-Please
-work
-#Player
-John
-nuts
-#Player
-john
-no
-#Player
-Pls
-don
-#Player
-yessuh
-nossuh
+nolan:flinchum:0:0:4
+Player 1:Guest:0:0:0
+Player 2:Guest:0:0:0

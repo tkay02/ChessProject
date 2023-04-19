@@ -52,35 +52,15 @@ public class MainMenuCLI implements MainMenuIF{
         String affirm = input.next();
         if(!affirm.toUpperCase().equals("Y"))
             promptSignUp(question);
-
-        // MAKE SURE USERS CANNOT SIGN UP WITH THE SAME USERNAME AS PLAYER IN THE DATABASE ALREADY
-        // TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
-    public String promptSignIn(FileReader database){
-        boolean valid = false;
+    public String[] promptSignIn(){
         System.out.print("Enter your username: ");
         String user = input.next();
         System.out.print("Enter your password: ");
         String password = input.next();
-
-        Scanner dbScan = new Scanner(database);
-        String line = "";
-        while(dbScan.hasNextLine() && !valid){
-            line = dbScan.nextLine();
-            String[] userContent = line.split(":");
-            if(userContent[0].equals(user) && userContent[1].equals(password)) 
-                valid = true;
-            else dbScan.nextLine();
-        }
-
-        dbScan.close();
-
-        if(valid) System.out.println("Succesfully logged in as " + user);
-        else System.out.println("Invalid username or password");
-
-        return line;
+        return new String[]{user, password};
     }
 
     public boolean updateDatabase(FileReader readDb, FileWriter writeDb, String content, 

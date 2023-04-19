@@ -1,8 +1,5 @@
 package src.controller;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -76,11 +73,10 @@ public class Chess {
 	private int turn; 
 	
 	/**Players for the actual chess game*/
-	Player playerOne, playerTwo;
-	
-	/** Field for player database location*/
-	private String PLAYER_DB_LOCATION = "src/databases/PlayerDatabase.txt";
-	// CHANGE TO AN ABSOLUTE PATH ASAP!!!!!!!!!!!!!!!!1
+	private Player playerOne, playerTwo;
+
+	/** Database object to perform database operations */
+	private DatabaseOps database;
 	
 	/** Field representing if a player is in check or not **/
 	private boolean inCheck;
@@ -102,8 +98,6 @@ public class Chess {
 		this.board = new Board(this);
 		drawStrat = new BoardColorCLI(); // Default BoardStrategy is color
 		board.setDrawStrategy(drawStrat); 
-		if(System.getProperty("os.name").startsWith("Windows"))
-		PLAYER_DB_LOCATION = "src\\databases\\PlayerDatabase.txt";
 		this.mainMenu = new MainMenuCLI();
 		this.rulesDisplay = new RulesCLI();
 		this.settingsDisplay = new SettingsCLI();
@@ -115,6 +109,7 @@ public class Chess {
 		this.undo = true; //can undo by default
 		this.showMoves = true; //can showMoves by default
 		this.movesIndex = -1;
+		this.database = new DatabaseOps();
 		this.turn = 0;
 		playerOne = new Player("Player 1");
 		playerTwo = new Player("Player 2");
@@ -161,50 +156,40 @@ public class Chess {
 		}
 	}
 	
+	/** This method is responsible for authenticating a user by prompting them
+	 * for their username and password and attempting to sign them in using a Database 
+	 * object. If the sign-in operation is successful, the method initializes 
+	 * a new Player object with the player's information. 
+	 * */
 	private void signIn(){
-		FileReader playerDatabase = readerFile(PLAYER_DB_LOCATION);
-		String content = mainMenu.promptSignIn(playerDatabase);
+		String[] userPass = mainMenu.promptSignIn();
+		String content = database.signInOperation(userPass[0], userPass[1]);
 		if(!content.isEmpty()){
 			String[] playerInfo = content.split(":");
+			System.out.println(content);
 			playerOne = new Player(playerInfo[0], playerInfo[1], Integer.parseInt(playerInfo[2]),
 			Integer.parseInt(playerInfo[3]), Integer.parseInt(playerInfo[4]));
 		}
 	}
 	
+	/**
+	 * This method is responsible for signing up a user by prompting them for their
+	 * username and password and attempting to sign them in using a Database object. If the sign-in
+	 * operation is successful, the method initializes a new Player object with the player's information.
+	 */
 	private void signUp(){
-		FileWriter playerDatabase = writerFile(PLAYER_DB_LOCATION);
 		String username = mainMenu.promptSignUp("Enter the username you would like: ");
-		playerOne.setUsername(username);
 		String password = mainMenu.promptSignUp("Enter the password you would like: ");
+		playerOne.setUsername(username);
 		playerOne.setPassword(password);
-		try {
-			playerDatabase.append(username + ":" + password + ":" + playerOne.getWins() + ":" +
-			playerOne.getDraws() + ":" + playerOne.getLosses());
-			playerDatabase.close();
-		} catch (IOException e) {
-			System.out.println("Unable to write player" + username + " to database");
-		}
-		
+		database.signUpOperation(playerOne.toString());		
 	}
 	
-	private FileWriter writerFile(String file){
-		FileWriter newFile = null;
-		
-		try { newFile = new FileWriter(file, true); } 
-		catch (IOException exception) { System.out.println("Unable to read " + file); }
-		
-		return newFile;
-	}
-	
-	private FileReader readerFile(String file){
-		FileReader newFile = null;
-		
-		try { newFile = new FileReader(file); } 
-		catch (IOException exception) { System.out.println("Unable to read " + file); }
-		
-		return newFile;
-	}
-	
+	/**
+	 * This private method is responsible for prompting the user to define two players by calling
+	 * the definePlayer() method of a DefinePlayers object and setting the usernames to the playerOne
+	 * and playerTwo objects.
+	 */
 	private void displayPlayerOptions(){
 		playerOne.setUsername(definePlayers.definePlayer(1));
 		playerTwo.setUsername(definePlayers.definePlayer(2));
@@ -245,6 +230,12 @@ public class Chess {
 		
 	}
 	
+	/**
+	 * Initializes a new game of chess and runs the game loop until the game is finished.
+	 * Uses a PlayChessCLI object to handle user input and displays the chessboard using
+	 * the board's draw strategy.
+	 *
+	 */
 	public void playGame(){
 		this.playChess = new PlayChessCLI(undo, showMoves);
 		this.board.setDrawStrategy(drawStrat);
@@ -258,15 +249,13 @@ public class Chess {
 			if(playTurn(turn)) playing = false;
 			else turn++;
 		}
-		
 	}
 	
-	/**
-	* Calls an external UI class to prompt the user with the Play Chess menu. The option that
-	* the user selects while playing a game of chess are evaluated and carried out here.
-	* 
-	* @return boolean value to determine if the game is over through resignation
-	*/
+	/** This method allows a player to make a turn during the chess game. It takes in the turn number as a parameter and
+	 * returns a boolean value indicating whether the player has quit the game.
+	 * @param turn The turn number for the game.
+	 * @return A boolean value indicating whether the player has quit the game.
+	 */
 	public boolean playTurn(int turn){
 		for(Move move : moves){
 			System.out.println(move); //testing
@@ -310,7 +299,6 @@ public class Chess {
 						break;
 					}
 				}
-				
 				if(board.getPiece(fromR, fromF).getChessPieceType() == ChessPieceType.EMPTY){
 					System.out.println("Error, no piece at " + parts[0]);
 				}
@@ -326,7 +314,7 @@ public class Chess {
 						}
 						quit = true;
 					}
-					
+
 					if(checkNoValidMoves(false)){
 						if(check(board.getBlackKingPos(), false)){
 							endGame(false, playerTwo);
@@ -696,8 +684,7 @@ public class Chess {
 	}
 	
 	public void updatePlayers(){
-		mainMenu.updateDatabase(readerFile(PLAYER_DB_LOCATION), writerFile(PLAYER_DB_LOCATION),
-		playerOne.toString(), PLAYER_DB_LOCATION);
+		database.updateOperation(playerOne.toString());
 	}
 	
 	/**
@@ -707,7 +694,7 @@ public class Chess {
 	* @return
 	*/
 	public void loadGame(String file) {
-		
+
 		String fileContent = "";
 		this.board = new Board(this);
 		turn = 0;
@@ -716,16 +703,14 @@ public class Chess {
 		if(!file.isEmpty()){
 			fileContent = gameLoader.loadGame(file);
 			String[] fileData = fileContent.split(";");
-			String[] players = fileData[fileData.length - 2].split(":");
 			System.out.println(fileData[fileData.length - 3]);
-			
 			int moveIndex = Integer.parseInt(fileData[fileData.length - 1]);
 			for(int i = 0; i < fileData.length - 2; i++){
-				String[] positions = fileData[i].split(":");
-				File fromFile = File.getFileByChar(positions[0].charAt(0));
-				Rank fromRank = Rank.getRankByReal(Character.getNumericValue(positions[0].charAt(1)));
-				File toFile = File.getFileByChar(positions[1].charAt(0));
-				Rank toRank = Rank.getRankByReal(Character.getNumericValue(positions[1].charAt(1)));
+				String[] pos = fileData[i].split(":");
+				File fromFile = File.getFileByChar(pos[0].charAt(0));
+				Rank fromRank = Rank.getRankByReal(Character.getNumericValue(pos[0].charAt(1)));
+				File toFile = File.getFileByChar(pos[1].charAt(0));
+				Rank toRank = Rank.getRankByReal(Character.getNumericValue(pos[1].charAt(1)));
 				move(fromFile, fromRank, toFile, toRank);
 				turn++;
 			}
