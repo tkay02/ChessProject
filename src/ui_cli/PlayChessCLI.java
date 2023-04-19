@@ -33,7 +33,7 @@ public class PlayChessCLI implements PlayChessIF {
         this.input = new Scanner(System.in);
 
         //2 -> undo, 4 -> show moves
-        this.playInput.addAll(Arrays.asList("0", "1", "3", "5"));
+        this.playInput.addAll(Arrays.asList("0", "1", "3", "5", "6"));
         if(undoStatus) playInput.add("2");
         if(showMovesStatus) playInput.add("4");
 
@@ -58,7 +58,7 @@ public class PlayChessCLI implements PlayChessIF {
             if(playInput.contains("2")) System.out.println("2: Undo");
             System.out.println("3: Redo");
             if(playInput.contains("4")) System.out.println("4: Show moves");
-            System.out.println("5: Save Game\n0: Concede and exit game");
+            System.out.println("5: Save Game\n6: Offer draw\n0: Concede and exit game");
             result = input.nextLine();
 			//If the player's input is part of the list of answers, ends loop
 			if(playInput.contains(result)) promptAgain = false;

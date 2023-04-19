@@ -10,7 +10,6 @@ public class DrawAgreementCLI implements DrawByAgreementIF{
         System.out.println("Type Y to end the match as a draw. " +
                            "Enter anything else to continue playing");
         String input = sc.nextLine();
-        sc.close();
         return input;
     }
     
