@@ -641,11 +641,14 @@ public class Chess {
 	}
 	
 	/**
-	* Performs steps to end the game of chess. Not currently implemented, will be in the future.
+	* Restarts the conditions of the chessboard and updates the statuses of the players.
 	*
-	*
+	* @param boolean draw Boolean condition that determines if the end game ended with a draw,
+	* a checkmate, or a resign. If true, the game ended with a draw; checkmate or resign otherwise.
+	* @param Player loser The player that lost the game.
 	*/
 	public void endGame(boolean draw, Player loser){
+		//Restarts board
 		this.board = new Board(this);
 		moves.clear();
 		movesIndex = -1;

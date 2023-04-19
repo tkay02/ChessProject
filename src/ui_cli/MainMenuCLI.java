@@ -22,6 +22,10 @@ public class MainMenuCLI implements MainMenuIF{
     /** The input to scan the user's input **/
     private Scanner input;
 
+    /**
+     * Constructor for the main menu CLI. Initializes input as user input and sets all input
+     * values to for all menu options.
+     */
     public MainMenuCLI(){
 		this.input = new Scanner(System.in);
         this.mainMenuInput.addAll(Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7"));
