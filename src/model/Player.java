@@ -170,20 +170,29 @@ public class Player {
     }
 
     /**
-     * This method will increment the designated players 
+     * This method will increment the designated players wins
      */
     public void addWin(){
         this.wins += 1;
     }
 
+    /**
+     * This method will increment the designated players wins
+     */
     public void addLoss(){
         this.losses += 1;
     }
 
+    /**
+     * This method will increment the designated players wins
+     */
     public void addDraw(){
         this.draws += 1;
     }
 
+    /** This method will return out all the attributes of the player object as
+     * a String.
+     */
     public String toString(){
         return username +  ":" + password + ":" + wins + ":" + draws + ":" + losses;
     }

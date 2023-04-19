@@ -46,8 +46,8 @@ public class DatabaseOps {
     public void signUpOperation(String content){
         if(validateContent(content)){
             try {
-                dbWriter = new FileWriter(dbLocation);
-                dbWriter.append(content);
+                dbWriter = new FileWriter(dbLocation, true);
+                dbWriter.append("\n" + content);
                 dbWriter.close();
             } catch (IOException e) {
                 System.out.println("Unable to write player to database");
