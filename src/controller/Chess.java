@@ -739,7 +739,6 @@ public class Chess {
 		if(!file.isEmpty()){
 			// Reset the board, turn, moves and the current movesIndex.
 			resetGame();
-			
 			String fileContent = gameLoader.loadGame(file);
 			String[] fileData = fileContent.split(";");
 			if(fileData.length > 2){
