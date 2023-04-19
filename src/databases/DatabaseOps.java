@@ -56,7 +56,6 @@ public class DatabaseOps {
         }
     }
 
-    /I
     public String signInOperation(String user, String pass){
         String line = "";
         parser = new Scanner(dbReader);

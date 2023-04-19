@@ -193,6 +193,11 @@ public class Chess {
 		database.signUpOperation(playerOne.toString());		
 	}
 	
+	/**
+	 * This private method is responsible for prompting the user to define two players by calling
+	 * the definePlayer() method of a DefinePlayers object and setting the usernames to the playerOne
+	 * and playerTwo objects.
+	 */
 	private void displayPlayerOptions(){
 		playerOne.setUsername(definePlayers.definePlayer(1));
 		playerTwo.setUsername(definePlayers.definePlayer(2));
@@ -233,6 +238,12 @@ public class Chess {
 		
 	}
 	
+	/**
+	 * Initializes a new game of chess and runs the game loop until the game is finished.
+	 * Uses a PlayChessCLI object to handle user input and displays the chessboard using
+	 * the board's draw strategy.
+	 *
+	 */
 	public void playGame(){
 		this.playChess = new PlayChessCLI(undo, showMoves);
 		this.board.setDrawStrategy(drawStrat);
@@ -246,15 +257,13 @@ public class Chess {
 			if(playTurn(turn)) playing = false;
 			else turn++;
 		}
-		
 	}
 	
-	/**
-	* Calls an external UI class to prompt the user with the Play Chess menu. The option that
-	* the user selects while playing a game of chess are evaluated and carried out here.
-	* 
-	* @return boolean value to determine if the game is over through resignation
-	*/
+	/** This method allows a player to make a turn during the chess game. It takes in the turn number as a parameter and
+	 * returns a boolean value indicating whether the player has quit the game.
+	 * @param turn The turn number for the game.
+	 * @return A boolean value indicating whether the player has quit the game.
+	 */
 	public boolean playTurn(int turn){
 		for(Move move : moves){
 			System.out.println(move); //testing
@@ -620,10 +629,16 @@ public class Chess {
 	}
 	
 	/**
-	* Performs steps to end the game of chess. Not currently implemented, will be in the future.
-	*
-	*
-	*/
+	 * This public method is responsible for ending a game and updating the players' statistics. It
+	 * takes in a boolean value indicating whether the game was a draw and a Player object representing
+	 * the loser. The method resets the board and moves, updates the turn counter, and adjusts the
+	 * players' statistics based on the outcome of the game. If the playerOne object has a password
+	 * set, the method also calls the updatePlayers() method of a Database object to update the players'
+	 * statistics in the database.
+	 *
+	 * @param draw a boolean value indicating whether the game was a draw
+	 * @param loser a Player object representing the loser of the game
+	 */
 	public void endGame(boolean draw, Player loser){
 		this.board = new Board(this);
 		moves.clear();
@@ -653,7 +668,7 @@ public class Chess {
 	* @return
 	*/
 	public void loadGame(String file) {
-		
+
 		String fileContent = "";
 		this.board = new Board(this);
 		turn = 0;
@@ -662,16 +677,14 @@ public class Chess {
 		if(!file.isEmpty()){
 			fileContent = gameLoader.loadGame(file);
 			String[] fileData = fileContent.split(";");
-			String[] players = fileData[fileData.length - 2].split(":");
 			System.out.println(fileData[fileData.length - 3]);
-			
 			int moveIndex = Integer.parseInt(fileData[fileData.length - 1]);
 			for(int i = 0; i < fileData.length - 2; i++){
-				String[] positions = fileData[i].split(":");
-				File fromFile = File.getFileByChar(positions[0].charAt(0));
-				Rank fromRank = Rank.getRankByReal(Character.getNumericValue(positions[0].charAt(1)));
-				File toFile = File.getFileByChar(positions[1].charAt(0));
-				Rank toRank = Rank.getRankByReal(Character.getNumericValue(positions[1].charAt(1)));
+				String[] pos = fileData[i].split(":");
+				File fromFile = File.getFileByChar(pos[0].charAt(0));
+				Rank fromRank = Rank.getRankByReal(Character.getNumericValue(pos[0].charAt(1)));
+				File toFile = File.getFileByChar(pos[1].charAt(0));
+				Rank toRank = Rank.getRankByReal(Character.getNumericValue(pos[1].charAt(1)));
 				move(fromFile, fromRank, toFile, toRank);
 				turn++;
 			}
