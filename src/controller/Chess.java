@@ -2,9 +2,7 @@ package src.controller;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-
-import javax.swing.border.EmptyBorder;
-
+import src.databases.DatabaseOps;
 import src.enums.ChessPieceType;
 import src.enums.File;
 import src.enums.Rank;
@@ -178,11 +176,14 @@ public class Chess {
 	 * operation is successful, the method initializes a new Player object with the player's information.
 	 */
 	private void signUp(){
-		String username = mainMenu.promptSignUp("Enter the username you would like: ");
-		String password = mainMenu.promptSignUp("Enter the password you would like: ");
-		playerOne.setUsername(username);
-		playerOne.setPassword(password);
-		database.signUpOperation(playerOne.toString());		
+		if(playerOne.getPassword() == null){
+			String username = mainMenu.promptSignUp("Enter the username you would like: ");
+			String password = mainMenu.promptSignUp("Enter the password you would like: ");
+			playerOne.setUsername(username);
+			playerOne.setPassword(password);
+			database.signUpOperation(playerOne.toString());
+		}
+		else System.out.println("\nUser already logged in as " + playerOne.getUsername());		
 	}
 	
 	/**
