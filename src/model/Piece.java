@@ -2,7 +2,7 @@ package src.model;
 
 
 import src.interfaces.PieceIF;
-import src.movement.MovementStrategy;
+import src.model.movement.MovementStrategy;
 
 import java.util.ArrayList;
 

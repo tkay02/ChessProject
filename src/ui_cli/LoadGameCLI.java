@@ -1,5 +1,6 @@
 package src.ui_cli;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Scanner;
 
@@ -22,11 +23,10 @@ public class LoadGameCLI implements LoadGameIF{
         String fileContent = "";
         try{
             FileReader gameFile = new FileReader(filePath);
-            
             Scanner fileScanner = new Scanner(gameFile);
             fileContent = fileScanner.nextLine();
             fileScanner.close();
-        }catch(Exception e){
+        }catch(FileNotFoundException e){
             System.out.println("There was trouble loading/opening the game instance!");
         }
         return fileContent;

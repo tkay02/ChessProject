@@ -7,11 +7,16 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
 
-
+/**
+ * A class that provides various database operations for managing user information.
+ * @author Nolan Flinchum (90%), Thomas Kay (10%), Joseph Oladeji (0%), Levi Sweat (0%)
+ * @version 4/19/2023
+ */
 public class DatabaseOps {
     /** FileWriter Object used to write data to the player database. */
     private FileWriter dbWriter;
@@ -55,6 +60,14 @@ public class DatabaseOps {
         }
     }
 
+    /**
+     * Performs a sign-in operation using the given username and password.
+     *
+     * @param user - The username to sign in with.
+     * @param pass - The password to sign in with.
+     * @return A String representing the user information if the sign-in operation is successful,
+     *  otherwise an empty String.
+     */
     public String signInOperation(String user, String pass){
         String line = "";
         parser = new Scanner(dbReader);
@@ -75,10 +88,19 @@ public class DatabaseOps {
 
     }
 
+    /**
+     * Validates the given content for creating a new player account.
+     * 
+     * @param content -  The content to validate, containing the username and password separated
+     *  by a colon (example: "username:password").
+     * @return true if the content is valid and doesn't already exist in the database, false otherwise.
+     */
     public boolean validateContent(String content){
         boolean validated = true;
         String[] playerContent = content.split(":");
         parser = new Scanner(dbReader);
+
+        // Check if the username or password already exists in the database
         while(parser.hasNext()){
             String[] otherPlayer = parser.nextLine().split(":");
             if(otherPlayer[0].equals(playerContent[0]) || otherPlayer[1].equals(playerContent[1]))
@@ -93,18 +115,28 @@ public class DatabaseOps {
         return validated;
     }
 
+    /**
+     * Updates the user information in the database file with the given content.
+     * 
+     * @param content - The new content to replace the existing user information in the database.
+     */
     public void updateOperation(String content){
         int lineIndex = 0;
         Path dbPath = Paths.get(dbLocation);
         Scanner dbScan = new Scanner(dbReader);
 
-        List<String> lines = null;
+        List<String> lines = new LinkedList<>();
+
+        // Read all the lines from the database file
         try {
             lines = Files.readAllLines(dbPath, StandardCharsets.UTF_8);
         } catch (IOException e) { e.printStackTrace(); }
 
+        // Split the new content into username and password
         String[] playerContent = content.split(":");
         boolean lineStop = false;
+
+        // Find the line number that matches the given username
         while(dbScan.hasNextLine() && lineStop){
             String[] userContent = dbScan.nextLine().split(":");
             if(userContent[0].equals(playerContent[0])) lineStop = true;
@@ -112,7 +144,11 @@ public class DatabaseOps {
             dbScan.nextLine();
         }
         dbScan.close();
+
+        // Replace the existing line with the new content
         lines.set(lineIndex, content);
+
+        // Write the updated lines back to the database file
         try {
             Files.write(dbPath, lines, StandardCharsets.UTF_8);
         } catch (IOException e) { e.printStackTrace(); }

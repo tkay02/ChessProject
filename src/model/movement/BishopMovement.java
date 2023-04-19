@@ -1,23 +1,24 @@
-package src.movement;
+package src.model.movement;
+
 import src.model.Board;
 import src.model.Piece;
 import src.model.Position;
 
 /**
- * Class for the movement strategy of a rook.
+ * Class for the movement strategy of a bishop.
  * 
  * @author Nolan Flinchum (50%), Thomas Kay, Joseph Oladeji (50%), Levi Sweat
  * @version 3/27/2023
  */
 
-public class RookMovement extends QueenMovement{
+public class BishopMovement extends QueenMovement {
 
     /**
-     * Constructor for the rook's movement strategy.
+     * Constructor for the bishop's movement strategy.
      * 
      * @param board the chess board reference
      */
-    public RookMovement(Board board){
+    public BishopMovement(Board board){
         super(board);
     }
 
@@ -25,14 +26,14 @@ public class RookMovement extends QueenMovement{
      * Generate all the valid moves of a piece from a current spot,
      * and use it to populate the valid moves array.
      * 
-     * @param from the position we're moving from
+     * @param start the position we're moving from
      */
     public void generateValidMoves(Position start) {
         validMoves.clear();
         int row = start.getRank().getArrayRank();
         int col = start.getFile().getArrayFile();
         Piece currentPiece = (Piece) board.getPiece(row, col);
-        plusMoves(currentPiece, row, col, start); //check veritcally and horizontally   
+        crossMoves(currentPiece, row, col, start); // Check diagonally
     }
 
 }

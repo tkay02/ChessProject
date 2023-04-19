@@ -11,13 +11,13 @@ import src.interfaces.BoardIF;
 import src.interfaces.BoardStrategy;
 import src.interfaces.PieceIF;
 import src.interfaces.SquareIF;
-import src.movement.BishopMovement;
-import src.movement.KingMovement;
-import src.movement.KnightMovement;
-import src.movement.MovementStrategy;
-import src.movement.PawnMovement;
-import src.movement.QueenMovement;
-import src.movement.RookMovement;
+import src.model.movement.BishopMovement;
+import src.model.movement.KingMovement;
+import src.model.movement.KnightMovement;
+import src.model.movement.MovementStrategy;
+import src.model.movement.PawnMovement;
+import src.model.movement.QueenMovement;
+import src.model.movement.RookMovement;
 import src.ui_cli.BoardMonoCLI;
 
 /**
