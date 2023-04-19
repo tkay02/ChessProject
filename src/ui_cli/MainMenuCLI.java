@@ -1,15 +1,6 @@
 package src.ui_cli;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 import src.interfaces.MainMenuIF;
@@ -61,34 +52,6 @@ public class MainMenuCLI implements MainMenuIF{
         System.out.print("Enter your password: ");
         String password = input.next();
         return new String[]{user, password};
-    }
-
-    public boolean updateDatabase(FileReader readDb, FileWriter writeDb, String content, 
-    String location){
-        int lineIndex = 0;
-        Path dbPath = Paths.get(location);
-        Scanner dbScan = new Scanner(readDb);
-        PrintWriter printWriter = new PrintWriter(writeDb);
-        List<String> lines = null;
-        try {
-            lines = Files.readAllLines(dbPath, StandardCharsets.UTF_8);
-        } catch (IOException e) { e.printStackTrace(); }
-
-        String[] playerContent = content.split(":");
-        boolean lineStop = false;
-        while(dbScan.hasNextLine() && lineStop){
-            String[] userContent = dbScan.nextLine().split(":");
-            if(userContent[0].equals(playerContent[0])) lineStop = true;
-            lineIndex++;
-            dbScan.nextLine();
-        }
-
-        lines.set(lineIndex, content);
-        try {
-            Files.write(dbPath, lines, StandardCharsets.UTF_8);
-        } catch (IOException e) { e.printStackTrace(); }
-
-        return true;
     }
 
     

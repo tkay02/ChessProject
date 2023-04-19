@@ -13,12 +13,21 @@ public class SettingsCLI implements SettingsIF{
     /** ArrayList representing valid inputs for the settings */
     private ArrayList<String> settingsInput = new  ArrayList<>();
 
+    /** Current undo status of the game */
     private String undoStatus;
 
+    /** Current show moves status of the game */
     private String showMovesStatus;
 
+    /** Current Board Strategy status of the game */
     private String boardStratStatus;
 
+    /**
+     * Constructs a new SettingsCLI object with a new Scanner object that reads from the 
+     * standard input stream. Initializes the `undoStatus`, `showMovesStatus`, and 
+     *`boardStratStatus` fields to empty strings.  Adds the values "0", "1", "2", "3", "4", "5",
+      and "6" to the `settingsInput` list.
+     */
     public SettingsCLI(){
         this.input = new Scanner(System.in);
         
@@ -29,6 +38,16 @@ public class SettingsCLI implements SettingsIF{
         this.settingsInput.addAll(Arrays.asList("0", "1", "2", "3", "4", "5", "6"));
     }
 
+    /**
+     * Displays the current game settings, including the type of board (mono or color), the 
+     * status of the undo and show moves features. Prompts the user to select a new setting, and returns 
+     * the user's input as a String.
+     *
+     * @param boardStrat a BoardStrategy object representing the current board strategy being used.
+     * @param undo a boolean indicating whether or not the undo feature is currently enabled.
+     * @param showMoves a boolean indicating whether or not the show moves feature is currently enabled.
+     * @return a String representing the user's selected setting.
+     */
     public String displaySettings(BoardStrategy boardStrat, boolean undo, boolean showMoves) {
         String result = "";
         boolean promptAgain = true;

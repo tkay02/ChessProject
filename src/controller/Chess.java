@@ -147,7 +147,6 @@ public class Chess {
 				settingsInteraction();
 				break;
 				case "7":
-				this.board = new Board(this);
 				loadGame(gameLoader.getFilePath());
 				break;
 			}
@@ -735,29 +734,50 @@ public class Chess {
 	*/
 	public void loadGame(String file) {
 
-		String fileContent = "";
+		// If file name is not empty, load game state from the file
+		System.out.println("File: " + file);
+		if(!file.isEmpty()){
+			// Reset the board, turn, moves and the current movesIndex.
+			resetGame();
+			String fileContent = gameLoader.loadGame(file);
+			String[] fileData = fileContent.split(";");
+			if(fileData.length > 2){
+				int moveIndex = Integer.parseInt(fileData[fileData.length - 1]);
+
+				// Iterate over the moves in the loaded game state and play them on the board
+				for(int i = 0; i < fileData.length - 2; i++){
+
+					// Get the source and destination squares for the move
+					String[] pos = fileData[i].split(":");
+					if(pos.length > 1){
+						File fromFile = File.getFileByChar(pos[0].charAt(0));
+						Rank fromRank = Rank.getRankByReal(Character.getNumericValue(pos[0].
+						charAt(1)));
+						File toFile = File.getFileByChar(pos[1].charAt(0));
+						Rank toRank = Rank.getRankByReal(Character.getNumericValue(pos[1].
+						charAt(1)));
+
+						// Make the move on the board and update the turn counter
+						move(fromFile, fromRank, toFile, toRank);
+						turn++;
+					}
+				}
+				// Undo moves that were made up until the moveIndex
+				for(int i = moves.size(); i > moveIndex + 1; i--) undo(true);
+			}
+		}
+	}
+
+	/**
+     * Resets the game state to its initial state.
+     * Creates a new Board object, sets the turn to 0, clears the moves list, and
+     * sets the moves index to -1.
+     */
+	private void resetGame(){
 		this.board = new Board(this);
 		turn = 0;
 		moves.clear();
 		movesIndex = -1;
-		if(!file.isEmpty()){
-			fileContent = gameLoader.loadGame(file);
-			String[] fileData = fileContent.split(";");
-			System.out.println(fileData[fileData.length - 3]);
-			int moveIndex = Integer.parseInt(fileData[fileData.length - 1]);
-			for(int i = 0; i < fileData.length - 2; i++){
-				String[] pos = fileData[i].split(":");
-				File fromFile = File.getFileByChar(pos[0].charAt(0));
-				Rank fromRank = Rank.getRankByReal(Character.getNumericValue(pos[0].charAt(1)));
-				File toFile = File.getFileByChar(pos[1].charAt(0));
-				Rank toRank = Rank.getRankByReal(Character.getNumericValue(pos[1].charAt(1)));
-				move(fromFile, fromRank, toFile, toRank);
-				turn++;
-			}
-			
-			for(int i = moves.size(); i > moveIndex + 1; i--) undo(true);
-			
-		}
 	}
 	
 	/**

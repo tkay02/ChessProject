@@ -1,4 +1,4 @@
-package src.movement;
+package src.model.movement;
 import src.enums.ChessPieceType;
 import src.enums.File;
 import src.enums.Rank;
@@ -75,14 +75,19 @@ public abstract class MovementStrategy {
      */
     public boolean validPosition(Piece currentPiece, int row, int col, Position fromPos){
         boolean valid = false;
+        // Check if the destination position is within the board limits
         if(row < board.getHeight() && row >= 0 && col >= 0 && col < board.getWidth()){
             Piece otherPiece = (Piece) board.getPiece(row, col);
+
+            // Check if the destination position is empty
             if(otherPiece.getChessPieceType() == ChessPieceType.EMPTY){
+                // Check if the move is valid and add the position to validMoves if it is
                 if(tryMove(currentPiece, row, col, fromPos)){
                     validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col)));
                     valid = true;
                 }
             }else if(otherPiece.getColor() != currentPiece.getColor()){
+                // Check if the move is valid and add the position to validMoves if it is
                 if(tryMove(currentPiece, row, col, fromPos))
                     validMoves.add(new Position(Rank.getRankByIndex(row), File.getFileByIndex(col)));
             }

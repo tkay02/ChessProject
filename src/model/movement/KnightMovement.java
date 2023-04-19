@@ -1,4 +1,4 @@
-package src.movement;
+package src.model.movement;
 
 import src.model.Board;
 import src.model.Piece;

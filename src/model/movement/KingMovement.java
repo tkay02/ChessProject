@@ -1,24 +1,24 @@
-package src.movement;
+package src.model.movement;
 
 import src.model.Board;
 import src.model.Piece;
 import src.model.Position;
 
 /**
- * Class for the movement strategy of a bishop.
+ * Class for the movement strategy of a king.
  * 
  * @author Nolan Flinchum (50%), Thomas Kay, Joseph Oladeji (50%), Levi Sweat
  * @version 3/27/2023
  */
 
-public class BishopMovement extends QueenMovement {
+public class KingMovement extends MovementStrategy {
 
     /**
-     * Constructor for the bishop's movement strategy.
+     * Constructor for the king's movement strategy.
      * 
      * @param board the chess board reference
      */
-    public BishopMovement(Board board){
+    public KingMovement(Board board){
         super(board);
     }
 
@@ -33,7 +33,13 @@ public class BishopMovement extends QueenMovement {
         int row = start.getRank().getArrayRank();
         int col = start.getFile().getArrayFile();
         Piece currentPiece = (Piece) board.getPiece(row, col);
-        crossMoves(currentPiece, row, col, start); //check diagonally
+        validPosition(currentPiece, row - 1, col, start);
+        validPosition(currentPiece, row + 1, col, start);
+        validPosition(currentPiece, row, col - 1, start);
+        validPosition(currentPiece, row, col + 1, start);
+        validPosition(currentPiece, row - 1, col + 1, start);
+        validPosition(currentPiece, row - 1, col - 1, start);
+        validPosition(currentPiece, row + 1, col - 1, start);
+        validPosition(currentPiece, row + 1, col + 1, start);                
     }
-
 }
