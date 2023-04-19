@@ -1,18 +1,24 @@
 package src.model;
 
+import java.util.ArrayList;
+
 import src.controller.Chess;
 import src.enums.ChessPieceType;
-import src.enums.GameColor;
 import src.enums.File;
+import src.enums.GameColor;
 import src.enums.Rank;
-import src.interfaces.PieceIF;
-import src.interfaces.SquareIF;
-import src.movement.*;
-import src.ui_cli.BoardMonoCLI;
 import src.interfaces.BoardIF;
 import src.interfaces.BoardStrategy;
-
-import java.util.ArrayList;
+import src.interfaces.PieceIF;
+import src.interfaces.SquareIF;
+import src.movement.BishopMovement;
+import src.movement.KingMovement;
+import src.movement.KnightMovement;
+import src.movement.MovementStrategy;
+import src.movement.PawnMovement;
+import src.movement.QueenMovement;
+import src.movement.RookMovement;
+import src.ui_cli.BoardMonoCLI;
 
 /**
  * Class to represent the board to play chess on.
@@ -219,9 +225,14 @@ public class Board implements BoardIF {
      * Will call the drawStrategy's draw method to draw the board based on the strategy.
      */
     public void draw(boolean drawWhite, ArrayList<src.model.Position> validMoves, String player1, String player2){
-        System.out.println("\n" + player1 + "'s Turn");
-        if(drawWhite) this.drawStrategy.drawWhite(this, validMoves, player1, player2);
-        else this.drawStrategy.drawBlack(this, validMoves, player1, player2);
+        if(drawWhite){
+            System.out.println("\n" + player1 + "'s Turn");
+            this.drawStrategy.drawWhite(this, validMoves, player1, player2);
+        }
+        else{
+            System.out.println("\n" + player2 + "'s Turn");
+            this.drawStrategy.drawBlack(this, validMoves, player1, player2);
+        }
     }
 
     /**

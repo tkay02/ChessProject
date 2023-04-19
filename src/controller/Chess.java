@@ -3,34 +3,14 @@ package src.controller;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import src.databases.DatabaseOps;
+import javax.swing.border.EmptyBorder;
+
 import src.enums.ChessPieceType;
 import src.enums.File;
 import src.enums.Rank;
-import src.interfaces.BoardIF;
-import src.interfaces.BoardStrategy;
-import src.interfaces.MainMenuIF;
-import src.interfaces.PieceIF;
-import src.interfaces.PlayChessIF;
-import src.interfaces.RulesIF;
-import src.interfaces.SettingsIF;
-import src.interfaces.ShowMovesIF;
-import src.model.Board;
-import src.model.Move;
-import src.model.Piece;
-import src.model.Player;
-import src.model.Position;
-import src.model.Square;
-import src.ui_cli.BoardColorCLI;
-import src.ui_cli.BoardMonoCLI;
-import src.ui_cli.DefinePlayerCLI;
-import src.ui_cli.LoadGameCLI;
-import src.ui_cli.MainMenuCLI;
-import src.ui_cli.PlayChessCLI;
-import src.ui_cli.RulesCLI;
-import src.ui_cli.SaveGameCLI;
-import src.ui_cli.SettingsCLI;
-import src.ui_cli.ShowMovesCLI;
+import src.interfaces.*;
+import src.model.*;
+import src.ui_cli.*;
 
 /**
 * Represents the game of chess. In the future, this class will allow users to start games,
@@ -64,6 +44,9 @@ public class Chess {
 	
 	/** Used to show moves of a piece **/
 	private ShowMovesIF showMovesDisplay;
+
+	/** Used to determine if the user's want to end the match as a draw */
+	private DrawByAgreementIF drawMatch;
 	
 	/** True if players can undo, false if undo is off **/
 	private boolean undo;
@@ -97,6 +80,13 @@ public class Chess {
 	
 	/** Field representing if a player is in check or not **/
 	private boolean inCheck;
+
+	/** Determines if we need to return to main. Set to false once game is completed. **/
+	private boolean returnToMain;
+
+	/** Keeps track of the number of moves made to determine if a draw has a occured due to 50
+	 *  moves being made without a piece being captured and a pawn having moved. **/
+	private int fiftyMoveDraw;
 	
 	/**
 	* Constructor for the game of chess. Initializes scanner, ArrayList's of valid inputs, and
@@ -115,6 +105,7 @@ public class Chess {
 		this.definePlayers = new DefinePlayerCLI();
 		this.gameLoader = new LoadGameCLI();
 		this.gameSaver = new SaveGameCLI();
+		this.drawMatch = new DrawAgreementCLI();
 		this.undo = true; //can undo by default
 		this.showMoves = true; //can showMoves by default
 		this.movesIndex = -1;
@@ -123,6 +114,7 @@ public class Chess {
 		playerOne = new Player("Player 1");
 		playerTwo = new Player("Player 2");
 		this.inCheck = false;
+		returnToMain = true;
 	}
 	
 	/**
@@ -132,7 +124,7 @@ public class Chess {
 	* @param BoardStrategy drawStrategy Determines how the chess board is drawn.
 	*/
 	public void go() {
-		boolean returnToMain = true;
+		returnToMain = true;
 		while(returnToMain){
 			switch(mainMenu.userInteraction()){
 				case "0":
@@ -292,7 +284,9 @@ public class Chess {
 				Rank fromR = Rank.getRankByReal(Character.getNumericValue(parts[0].charAt(1)));
 				Rank toR = Rank.getRankByReal(Character.getNumericValue(parts[1].charAt(1)));
 				Piece fromPiece1 = (Piece) board.getPiece(fromR, fromF);
-				
+				if(fromPiece1.getChessPieceType() == ChessPieceType.PAWN){
+					fiftyMoveDraw = 0; //resets int keeping track of 50MoveDraw if pawn is moved
+				}
 				if(turn % 2 == 0){
 					if(!fromPiece1.isWhite()){
 						System.out.println("You cannot move a piece that is not yours.");
@@ -331,7 +325,11 @@ public class Chess {
 						}
 						quit = true;
 					}
-
+					if(fiftyMoveDraw == 50){
+						System.out.println("\nDraw my 50 move rule.");
+						quit = true;
+						endGame(true, playerOne);
+					}
 					if(check(board.getWhiteKingPos(), true) ||
 					check(board.getBlackKingPos(), false) && !quit)
 					System.out.println("\t### Check! ###");
@@ -360,7 +358,8 @@ public class Chess {
 				}
 				break;
 				case "4":
-				showMovesDisplay.showMoves(this.board, turn);
+				showMovesDisplay.showMoves(this.board, turn, playerOne.getUsername(), 
+													   playerTwo.getUsername());
 				break;
 				case "5":
 				if(moves.size() > 0){
@@ -368,8 +367,18 @@ public class Chess {
 					saveGame(fileLocation, board);
 					quit = true;
 					turnNotOver = false;
-				}else System.out.println("\nNot enough moves made to save game.\n");
+				}else System.out.println("\nNot enough moves made to save game.\n");				
+				break;
 				
+				case "6": //DRAW BY AGREEMENT
+				String drawChoice = drawMatch.respondToDraw();
+				if(drawChoice.equals("Y")){
+					System.out.println("Game ended as a draw.");
+					endGame(true, playerOne);
+					turnNotOver = false;
+					quit = true;
+				}
+
 				break;
 			}
 		}
@@ -394,7 +403,16 @@ public class Chess {
 		File fromF = fromPos.getFile();
 		Piece takenPiece = (Piece) lastMove.getPiece();
 		String takenPieceLetter = takenPiece.getChessPieceType().getChessPieceLetter();
-		if(userUndo) ((Piece)board.getPiece(fromR, fromF)).decMoveCount();
+		if(userUndo){
+			Piece movedPiece = (Piece) board.getPiece(fromR, fromF);
+			movedPiece.decMoveCount();
+			//if pawn was moved or if piece was captured
+			System.out.println("LASTMOVE: " + lastMove.getPiece().getChessPieceType());
+			System.out.println("MOVEDPIECE: " + movedPiece.getChessPieceType());
+
+			if(takenPiece.getChessPieceType() == ChessPieceType.EMPTY || 
+			   movedPiece.getChessPieceType() != ChessPieceType.PAWN) fiftyMoveDraw--;
+		}
 		forceMove(fromF, fromR, toPos.getFile(), toPos.getRank());
 		board.getSquare(fromR.getArrayRank(), fromF.getArrayFile()).setPiece(takenPiece);
 		if(takenPiece.isBlack()) board.getBlackTakenPieces().remove(takenPieceLetter);
@@ -412,6 +430,12 @@ public class Chess {
 		Move move = this.moves.get(this.movesIndex);
 		Position fromPos = move.getFromPos();
 		Position toPos = move.getToPos();
+
+		Piece movingPiece = (Piece) board.getPiece(toPos.getRank(), toPos.getFile());
+		Piece takenPiece = (Piece) board.getPiece(fromPos.getRank(), fromPos.getFile());
+		if(takenPiece.getChessPieceType() == ChessPieceType.EMPTY || 
+		   movingPiece.getChessPieceType() != ChessPieceType.PAWN) fiftyMoveDraw++;
+
 		((Piece)board.getPiece(fromPos.getRank(), fromPos.getFile())).incMoveCount();
 		forceMove(fromPos.getFile(), fromPos.getRank(), toPos.getFile(), toPos.getRank());
 	}
@@ -547,10 +571,13 @@ public class Chess {
 			piece.incMoveCount();
 			this.movesIndex++;
 			PieceIF takenPiece = board.getPiece(toR, toF); //the piece that will be captured
+			if(takenPiece.getChessPieceType() != ChessPieceType.EMPTY) fiftyMoveDraw = 0;
+			else if(piece.getChessPieceType() != ChessPieceType.PAWN) fiftyMoveDraw++;
 			this.moves.add(new Move(fromPos, toPos, takenPiece));
 			forceMove(fromF, fromR, toF, toR);
 		}
 		else result = false; //return false if move was invalid
+
 		return result;
 	}
 	
@@ -629,17 +656,16 @@ public class Chess {
 	}
 	
 	/**
-	 * This public method is responsible for ending a game and updating the players' statistics. It
-	 * takes in a boolean value indicating whether the game was a draw and a Player object representing
-	 * the loser. The method resets the board and moves, updates the turn counter, and adjusts the
-	 * players' statistics based on the outcome of the game. If the playerOne object has a password
-	 * set, the method also calls the updatePlayers() method of a Database object to update the players'
-	 * statistics in the database.
-	 *
-	 * @param draw a boolean value indicating whether the game was a draw
-	 * @param loser a Player object representing the loser of the game
-	 */
+	* Restarts the conditions of the chessboard and updates the statuses of the players.
+	*
+	* @param boolean draw Boolean condition that determines if the end game ended with a draw,
+	* a checkmate, or a resign. If true, the game ended with a draw; checkmate or resign otherwise.
+	* @param Player loser The player that lost the game.
+	*/
 	public void endGame(boolean draw, Player loser){
+		//Restarts board
+		//returnToMain = false;
+		//Restarts board
 		this.board = new Board(this);
 		moves.clear();
 		movesIndex = -1;
