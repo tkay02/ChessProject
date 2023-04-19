@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import javax.swing.border.EmptyBorder;
+
 import src.enums.ChessPieceType;
 import src.enums.File;
 import src.enums.Rank;
@@ -85,6 +87,10 @@ public class Chess {
 
 	/** Determines if we need to return to main. Set to false once game is completed. **/
 	private boolean returnToMain;
+
+	/** Keeps track of the number of moves made to determine if a draw has a occured due to 50
+	 *  moves being made without a piece being captured and a pawn having moved. **/
+	private int fiftyMoveDraw;
 	
 	/**
 	* Constructor for the game of chess. Initializes scanner, ArrayList's of valid inputs, and
@@ -289,7 +295,9 @@ public class Chess {
 				Rank fromR = Rank.getRankByReal(Character.getNumericValue(parts[0].charAt(1)));
 				Rank toR = Rank.getRankByReal(Character.getNumericValue(parts[1].charAt(1)));
 				Piece fromPiece1 = (Piece) board.getPiece(fromR, fromF);
-				
+				if(fromPiece1.getChessPieceType() == ChessPieceType.PAWN){
+					fiftyMoveDraw = 0; //resets int keeping track of 50MoveDraw if pawn is moved
+				}
 				if(turn % 2 == 0){
 					if(!fromPiece1.isWhite()){
 						System.out.println("You cannot move a piece that is not yours.");
@@ -329,7 +337,11 @@ public class Chess {
 						}
 						quit = true;
 					}
-
+					if(fiftyMoveDraw == 50){
+						System.out.println("\nDraw my 50 move rule.");
+						quit = true;
+						endGame(true, playerOne);
+					}
 					if(check(board.getWhiteKingPos(), true) ||
 					check(board.getBlackKingPos(), false) && !quit)
 					System.out.println("\t### Check! ###");
@@ -403,7 +415,16 @@ public class Chess {
 		File fromF = fromPos.getFile();
 		Piece takenPiece = (Piece) lastMove.getPiece();
 		String takenPieceLetter = takenPiece.getChessPieceType().getChessPieceLetter();
-		if(userUndo) ((Piece)board.getPiece(fromR, fromF)).decMoveCount();
+		if(userUndo){
+			Piece movedPiece = (Piece) board.getPiece(fromR, fromF);
+			movedPiece.decMoveCount();
+			//if pawn was moved or if piece was captured
+			System.out.println("LASTMOVE: " + lastMove.getPiece().getChessPieceType());
+			System.out.println("MOVEDPIECE: " + movedPiece.getChessPieceType());
+
+			if(takenPiece.getChessPieceType() == ChessPieceType.EMPTY || 
+			   movedPiece.getChessPieceType() != ChessPieceType.PAWN) fiftyMoveDraw--;
+		}
 		forceMove(fromF, fromR, toPos.getFile(), toPos.getRank());
 		board.getSquare(fromR.getArrayRank(), fromF.getArrayFile()).setPiece(takenPiece);
 		if(takenPiece.isBlack()) board.getBlackTakenPieces().remove(takenPieceLetter);
@@ -421,6 +442,12 @@ public class Chess {
 		Move move = this.moves.get(this.movesIndex);
 		Position fromPos = move.getFromPos();
 		Position toPos = move.getToPos();
+
+		Piece movingPiece = (Piece) board.getPiece(toPos.getRank(), toPos.getFile());
+		Piece takenPiece = (Piece) board.getPiece(fromPos.getRank(), fromPos.getFile());
+		if(takenPiece.getChessPieceType() == ChessPieceType.EMPTY || 
+		   movingPiece.getChessPieceType() != ChessPieceType.PAWN) fiftyMoveDraw++;
+
 		((Piece)board.getPiece(fromPos.getRank(), fromPos.getFile())).incMoveCount();
 		forceMove(fromPos.getFile(), fromPos.getRank(), toPos.getFile(), toPos.getRank());
 	}
@@ -556,10 +583,13 @@ public class Chess {
 			piece.incMoveCount();
 			this.movesIndex++;
 			PieceIF takenPiece = board.getPiece(toR, toF); //the piece that will be captured
+			if(takenPiece.getChessPieceType() != ChessPieceType.EMPTY) fiftyMoveDraw = 0;
+			else if(piece.getChessPieceType() != ChessPieceType.PAWN) fiftyMoveDraw++;
 			this.moves.add(new Move(fromPos, toPos, takenPiece));
 			forceMove(fromF, fromR, toF, toR);
 		}
 		else result = false; //return false if move was invalid
+
 		return result;
 	}
 	
@@ -646,7 +676,7 @@ public class Chess {
 	*/
 	public void endGame(boolean draw, Player loser){
 		//Restarts board
-		returnToMain = false;
+		//returnToMain = false;
 		//Restarts board
 		this.board = new Board(this);
 		moves.clear();
