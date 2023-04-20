@@ -1,9 +1,9 @@
 package src.interfaces;
 /**
- * A class that provides functionality for saving a game state to a file using a specified
- * implementation of the SaveGameIF interface.
+ * An interface used by classes that provides functionality for saving a game state to a file
+ * using a specified implementation of the SaveGameIF interface.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji (100%), Levi Sweat
  * @version 4/19/2023
  */
 public interface SaveGameIF{
