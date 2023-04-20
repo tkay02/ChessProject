@@ -1,4 +1,5 @@
 package src.enums;
+
 /**
  * This class models the Game Color for the Chess Board and the each player's chess piece.
  * The color enumeraiton holds the corresponding ansi code for the color to be shown in the
@@ -7,11 +8,9 @@ package src.enums;
  * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji (50%), Levi Sweat (50%)
  * @version 4/19/2023
  */
-
 public enum GameColor{
     
     BLACK("\u001b[40m", "\u001b[31m" ), WHITE("\u001b[47m", "\u001b[34m");
-
 
     /** The ansi code representing the background color **/
     private String background;

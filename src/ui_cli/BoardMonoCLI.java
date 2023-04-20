@@ -11,7 +11,6 @@ import src.model.Piece;
  */
 public class BoardMonoCLI extends BoardDisplayCLI{
 	
-
 	/**
 	 * Creates the display of a white square on a chess board. The white squares are represented
 	 * by colons. The display is affected by what kind of piece type is on it ranging from white

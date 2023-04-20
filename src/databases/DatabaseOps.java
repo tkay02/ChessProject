@@ -18,16 +18,16 @@ import java.util.Scanner;
  * @version 4/19/2023
  */
 public class DatabaseOps {
-    /** FileWriter Object used to write data to the player database. */
+    /** FileWriter Object used to write data to the player database. **/
     private FileWriter dbWriter;
 
-    /** FileReader Object used to read data from the player database. */
+    /** FileReader Object used to read data from the player database. **/
     private FileReader dbReader; 
     
-    /** Scanner object used to parse the data in the player database. */
+    /** Scanner object used to parse the data in the player database. **/
     private Scanner parser;    
 
-    /**a String that represents the file path of the player database */
+    /** String that represents the file path of the player database **/
     private String dbLocation = "src/databases/PlayerDatabase.txt";
 
     /** Constructor that initializes the dbReader field by creating a FileReader
@@ -66,7 +66,7 @@ public class DatabaseOps {
      * @param user - The username to sign in with.
      * @param pass - The password to sign in with.
      * @return A String representing the user information if the sign-in operation is successful,
-     *  otherwise an empty String.
+     *         otherwise an empty String.
      */
     public String signInOperation(String user, String pass){
         String line = "";
@@ -93,7 +93,8 @@ public class DatabaseOps {
      * 
      * @param content -  The content to validate, containing the username and password separated
      *  by a colon (example: "username:password").
-     * @return true if the content is valid and doesn't already exist in the database, false otherwise.
+     * @return true if the content is valid and doesn't already exist in the database,
+     *         false otherwise.
      */
     public boolean validateContent(String content){
         boolean validated = true;

@@ -2,7 +2,6 @@ package src.ui_cli;
 
 import java.io.FileWriter;
 import java.util.Scanner;
-
 import src.interfaces.SaveGameIF;
 
 /**
@@ -31,7 +30,6 @@ public class SaveGameCLI implements SaveGameIF {
         " C:\\cms\\Downloads\\Game.txt): ");
         return input.next();
     }
-
 
     /**
      * Saves the current game state to the specified file path with the specified content.

@@ -1,7 +1,6 @@
 package src.ui_cli;
 
 import java.util.Scanner;
-
 import src.interfaces.DrawByAgreementIF;
 
 /**

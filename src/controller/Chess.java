@@ -40,7 +40,7 @@ public class Chess {
 	/** Used to show moves of a piece **/
 	private ShowMovesIF showMovesDisplay;
 
-	/** Used to determine if the user's want to end the match as a draw */
+	/** Used to determine if the user's want to end the match as a draw **/
 	private DrawByAgreementIF drawMatch;
 	
 	/** True if players can undo, false if undo is off **/
@@ -50,27 +50,27 @@ public class Chess {
 	private boolean showMoves;
 	
 	/** Arraylist of the positions of the board. **/
-	private LinkedList<Move> moves = new LinkedList<Move>(); // MOVE TO BOARD???
+	private LinkedList<Move> moves = new LinkedList<Move>();
 	
-	/**Used to define the players settings*/
+	/** Used to define the players settings **/
 	private DefinePlayerCLI definePlayers;
 	
-	/** Used to load previous games */
+	/** Used to load previous games **/
 	private LoadGameIF gameLoader;
 	
-	/** Used to save previous games */
+	/** Used to save previous games **/
 	private SaveGameIF gameSaver;
 	
-	/** Index for the moves LinkedList. **/
+	/** Index for the moves LinkedList **/
 	private int movesIndex;
 	
-	/** Current player's turn as a number */
+	/** Current player's turn as a number **/
 	private int turn; 
 	
-	/**Players for the actual chess game*/
+	/** Players for the actual chess game **/
 	private Player playerOne, playerTwo;
 
-	/** Database object to perform database operations */
+	/** Database object to perform database operations **/
 	private DatabaseOps database;
 	
 	/** Field representing if a player is in check or not **/
@@ -148,11 +148,12 @@ public class Chess {
 		}
 	}
 	
-	/** This method is responsible for authenticating a user by prompting them
+	/** 
+	 * This method is responsible for authenticating a user by prompting them
 	 * for their username and password and attempting to sign them in using a Database 
 	 * object. If the sign-in operation is successful, the method initializes 
 	 * a new Player object with the player's information. 
-	 * */
+	 */
 	private void signIn(){
 		// Prompts the user for the username and pass word
 		String[] userPass = mainMenu.promptSignIn(); 
@@ -170,7 +171,8 @@ public class Chess {
 	/**
 	 * This method is responsible for signing up a user by prompting them for their
 	 * username and password and attempting to sign them in using a Database object. If the sign-in
-	 * operation is successful, the method initializes a new Player object with the player's information.
+	 * operation is successful, the method initializes a new Player object with the player's
+	 * information.
 	 */
 	private void signUp(){
 		// If the current playerOne does not have password meaning their not logged in,
@@ -188,8 +190,8 @@ public class Chess {
 	
 	/**
 	 * This private method is responsible for prompting the user to define two players by calling
-	 * the definePlayer() method of a DefinePlayers object and setting the usernames to the playerOne
-	 * and playerTwo objects.
+	 * the definePlayer() method of a DefinePlayers object and setting the usernames to the 
+	 * playerOne and playerTwo objects.
 	 */
 	private void displayPlayerOptions(){
 		playerOne.setUsername(definePlayers.definePlayer(1));
@@ -235,7 +237,6 @@ public class Chess {
 	 * Initializes a new game of chess and runs the game loop until the game is finished.
 	 * Uses a PlayChessCLI object to handle user input and displays the chessboard using
 	 * the board's draw strategy.
-	 *
 	 */
 	public void playGame(){
 		//starts game, saying whether or not undo can be done and valid moves can be displayed
@@ -254,7 +255,8 @@ public class Chess {
 		}
 	}
 	
-	/** This method allows a player to play a turn during the chess game. It takes in the turn 
+	/** 
+	 * This method allows a player to play a turn during the chess game. It takes in the turn 
 	 * number as a parameter and returns a boolean value indicating whether the player has quit 
 	 * the game.
 	 * 
@@ -270,11 +272,11 @@ public class Chess {
 				case "0": //Resign
 					if(turn % 2 == 0){ //counts win and loss and displays winner of game
 						endGame(false, playerOne);
-						System.out.println(playerTwo.getUsername() + " wins by Resigation.");
+						System.out.println(playerTwo.getUsername() + " wins by Resignation.");
 					}
 					else{ 
 						endGame(false, playerTwo);
-						System.out.println(playerOne.getUsername() + " wins by Resigation.");
+						System.out.println(playerOne.getUsername() + " wins by Resignation.");
 					}
 					turnNotOver = false;
 					quit = true;

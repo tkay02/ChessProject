@@ -1,8 +1,6 @@
 package src.ui_cli;
 import java.util.Scanner;
-
 import src.interfaces.RulesIF;
-
 
 /**
  * A class that implements the RulesIF interface to define the rules of a game in the 
@@ -20,7 +18,6 @@ public class RulesCLI implements RulesIF {
     public RulesCLI(){
 		this.input = new Scanner(System.in);
     }
-
 
     /**
      * Menu layout to navigate through the rules for playing chess. Goes on an 

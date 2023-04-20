@@ -20,23 +20,23 @@ public class SettingsCLI implements SettingsIF{
     /** The input to scan the user's input **/
     private Scanner input;
 
-    /** ArrayList representing valid inputs for the settings */
+    /** ArrayList representing valid inputs for the settings **/
     private ArrayList<String> settingsInput = new  ArrayList<>();
 
-    /** Current undo status of the game */
+    /** Current undo status of the game **/
     private String undoStatus;
 
-    /** Current show moves status of the game */
+    /** Current show moves status of the game **/
     private String showMovesStatus;
 
-    /** Current Board Strategy status of the game */
+    /** Current Board Strategy status of the game **/
     private String boardStratStatus;
 
     /**
      * Constructs a new SettingsCLI object with a new Scanner object that reads from the 
      * standard input stream. Initializes the `undoStatus`, `showMovesStatus`, and 
-     *`boardStratStatus` fields to empty strings.  Adds the values "0", "1", "2", "3", "4", "5",
-      and "6" to the `settingsInput` list.
+     * `boardStratStatus` fields to empty strings.  Adds the values "0", "1", "2", "3", "4", "5",
+     * and "6" to the `settingsInput` list.
      */
     public SettingsCLI(){
         this.input = new Scanner(System.in);

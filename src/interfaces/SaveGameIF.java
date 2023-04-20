@@ -9,10 +9,10 @@ package src.interfaces;
 public interface SaveGameIF{
 
     /**
-    * Prompts the user to enter a file path to save the current game state to.
-    * 
-    * @return The absolute file path entered by the user.
-    */
+     * Prompts the user to enter a file path to save the current game state to.
+     * 
+     * @return The absolute file path entered by the user.
+     */
     public String promptSaveGame();
 
     /**

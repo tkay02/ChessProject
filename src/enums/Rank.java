@@ -74,5 +74,4 @@ public enum Rank {
     public static Rank getRankByReal(int index){
         return Rank.values()[index - 1];
     }
-    
 }

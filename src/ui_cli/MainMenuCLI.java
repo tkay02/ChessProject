@@ -77,5 +77,4 @@ public class MainMenuCLI implements MainMenuIF{
         return new String[]{user, password};
     }
 
-    
 }

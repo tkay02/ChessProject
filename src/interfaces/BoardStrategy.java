@@ -1,6 +1,7 @@
 package src.interfaces;
 
 import java.util.ArrayList;
+
 /**
  * Interface for the way that the chess board is drawn in regards to color.
  * 
@@ -23,5 +24,4 @@ public interface BoardStrategy {
 	 */
 	public void drawBlack(BoardIF board, ArrayList<src.model.Position> validMoves, String player1, String player2);
 
-	
 }

@@ -9,12 +9,13 @@ import src.interfaces.DefinePlayerIF;
  * @version 4/19/2023
  */
 public class DefinePlayerCLI implements DefinePlayerIF {
-
     
     /** The input to scan the user's input **/
     private Scanner input;
 
-    /** This method initializes the scanner to use System in. */
+    /** 
+     * This method initializes the scanner to use System in 
+     */
     public DefinePlayerCLI() {
         input = new Scanner(System.in);
     }

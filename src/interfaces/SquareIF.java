@@ -8,7 +8,6 @@ import src.model.Position;
  * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
  * @version 4/19/2023
  */
-
 public interface SquareIF {
 	
 	/**

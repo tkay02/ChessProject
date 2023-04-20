@@ -3,7 +3,6 @@ package src.ui_cli;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
-
 import src.enums.ChessPieceType;
 import src.enums.File;
 import src.enums.Rank;

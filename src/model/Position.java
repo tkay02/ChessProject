@@ -57,8 +57,10 @@ public class Position {
     }
 
     /**
-     * Returns the string representation of the position. Places the file in front of the rank in regards to
-     * the current position. Can be used to store positions within a file.
+     * Returns the string representation of the position. Places the file in front of the rank in
+     * regards to the current position. Can be used to store positions within a file.
+     * 
+     * @return string representation of a position
      */
     public String toString() {
         return "" + this.file + this.rank;
