@@ -59,10 +59,10 @@ public class Chess {
 	private DefinePlayerCLI definePlayers;
 	
 	/** Used to load previous games */
-	private LoadGameCLI gameLoader;
+	private LoadGameIF gameLoader;
 	
 	/** Used to save previous games */
-	private SaveGameCLI gameSaver;
+	private SaveGameIF gameSaver;
 	
 	/** Index for the moves LinkedList. **/
 	private int movesIndex;
@@ -163,7 +163,6 @@ public class Chess {
 		String content = database.signInOperation(userPass[0], userPass[1]);
 		if(!content.isEmpty()){
 			String[] playerInfo = content.split(":");
-			System.out.println(content);
 			playerOne = new Player(playerInfo[0], playerInfo[1], Integer.parseInt(playerInfo[2]),
 			Integer.parseInt(playerInfo[3]), Integer.parseInt(playerInfo[4]));
 		}
@@ -257,9 +256,6 @@ public class Chess {
 	 * @return A boolean value indicating whether the player has quit the game.
 	 */
 	public boolean playTurn(int turn){
-		for(Move move : moves){
-			System.out.println(move); //testing
-		}
 		boolean quit = false;
 		boolean turnNotOver = true;
 		while(turnNotOver){
@@ -284,24 +280,19 @@ public class Chess {
 				Rank fromR = Rank.getRankByReal(Character.getNumericValue(parts[0].charAt(1)));
 				Rank toR = Rank.getRankByReal(Character.getNumericValue(parts[1].charAt(1)));
 				Piece fromPiece1 = (Piece) board.getPiece(fromR, fromF);
-				if(fromPiece1.getChessPieceType() == ChessPieceType.PAWN){
-					fiftyMoveDraw = 0; //resets int keeping track of 50MoveDraw if pawn is moved
+				if(fromPiece1.getChessPieceType() == ChessPieceType.PAWN) fiftyMoveDraw = 0; 
+				//resets int keeping track of 50MoveDraw if pawn is moved
+				
+				if(turn % 2 == 0 && !fromPiece1.isWhite()){
+					System.out.println("You cannot move a piece that is not yours.");
+					break;
 				}
-				if(turn % 2 == 0){
-					if(!fromPiece1.isWhite()){
-						System.out.println("You cannot move a piece that is not yours.");
-						break;
-					}
+				else if(!fromPiece1.isBlack() && turn % 2 != 0){
+					System.out.println("You cannot move a piece that is not yours.");
+					break;
 				}
-				else{
-					if(!fromPiece1.isBlack()){
-						System.out.println("You cannot move a piece that is not yours.");
-						break;
-					}
-				}
-				if(board.getPiece(fromR, fromF).getChessPieceType() == ChessPieceType.EMPTY){
+				if(board.getPiece(fromR, fromF).getChessPieceType() == ChessPieceType.EMPTY)
 					System.out.println("Error, no piece at " + parts[0]);
-				}
 				else if(move(fromF, fromR, toF, toR)){
 					//Removes any extra moves if the user moves after undoing
 					while(this.moves.size() - 1 > this.movesIndex) this.moves.removeLast();
@@ -358,9 +349,7 @@ public class Chess {
 					turnNotOver = false;
 					undo(true);
 				}
-				else{
-					System.out.println("\nUndo is unavailable right now\n");
-				}
+				else System.out.println("\nUndo is unavailable right now\n");
 				break;
 				case "3":
 				if(this.movesIndex < this.moves.size() - 1){
@@ -368,9 +357,7 @@ public class Chess {
 					redo();
 					turn++;
 				}
-				else{
-					System.out.println("\nRedo is unavailable right now\n");
-				}
+				else System.out.println("\nRedo is unavailable right now\n");
 				break;
 				case "4":
 				showMovesDisplay.showMoves(this.board, turn, playerOne.getUsername(), 
@@ -422,9 +409,6 @@ public class Chess {
 			Piece movedPiece = (Piece) board.getPiece(fromR, fromF);
 			movedPiece.decMoveCount();
 			//if pawn was moved or if piece was captured
-			System.out.println("LASTMOVE: " + lastMove.getPiece().getChessPieceType());
-			System.out.println("MOVEDPIECE: " + movedPiece.getChessPieceType());
-
 			if(takenPiece.getChessPieceType() == ChessPieceType.EMPTY || 
 			   movedPiece.getChessPieceType() != ChessPieceType.PAWN) fiftyMoveDraw--;
 		}
@@ -456,8 +440,8 @@ public class Chess {
 	}
 	
 	/**
-	 * Checks if the same board state has occured three times in a row by checking the 12 previous
-	 * moves.
+	 * Checks if the same board state has occured three times in a row by checking
+	 * the 12 previous moves.
 	 * 
 	 * @return true if draw by three fold repetition, false otherwise
 	 */
@@ -731,8 +715,6 @@ public class Chess {
 	*/
 	public void loadGame(String file) {
 
-		// If file name is not empty, load game state from the file
-		System.out.println("File: " + file);
 		if(!file.isEmpty()){
 			// Reset the board, turn, moves and the current movesIndex.
 			resetGame();
@@ -817,11 +799,11 @@ public class Chess {
 	}
 	
 	/**
-	* Used in settings to set the color of the board.
-	* 
-	* @param strat string representing new drawStrat of board
-	* @return true if drawStrat is set, false if not
-	*/
+	 * Used in settings to set the color of the board.
+	 * 
+	 * @param strat string representing new drawStrat of board
+	 * @return true if drawStrat is set, false if not
+	 */
 	public boolean setDrawStrat(String strat){
 		boolean result = true;
 		if(strat.equals("mono")) this.drawStrat = new BoardMonoCLI();
