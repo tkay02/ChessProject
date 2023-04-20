@@ -27,7 +27,7 @@ Step 1. Click on the Driver.java file in the workspace then press run.
 
 ## Video Walkthrough
 
-<img src='https://i.gyazo.com/ac5503a22e7d2aa182bfe3d02709ef00.mp4'/>
+<img src='https://i.gyazo.com/9436002a405c842b3af74ad5fc8a14e8.mp4'/>
 
 
 

@@ -10,7 +10,6 @@ import src.enums.GameColor;
  * @author Nolan Flinchum (100%), Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 3/27/2023
  */
-
 public class BlackAndWhite implements BlackAndWhiteIF {
     
     /* Represents the actual color of an object */

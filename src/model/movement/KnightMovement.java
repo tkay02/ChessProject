@@ -10,7 +10,6 @@ import src.model.Position;
  * @author Nolan Flinchum, Thomas Kay (80%), Joseph Oladeji (20%), Levi Sweat
  * @version 3/27/2023
  */
-
 public class KnightMovement extends MovementStrategy {
 
     /**

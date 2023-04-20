@@ -56,10 +56,10 @@ public class Chess {
 	private DefinePlayerCLI definePlayers;
 	
 	/** Used to load previous games */
-	private LoadGameCLI gameLoader;
+	private LoadGameIF gameLoader;
 	
 	/** Used to save previous games */
-	private SaveGameCLI gameSaver;
+	private SaveGameIF gameSaver;
 	
 	/** Index for the moves LinkedList. **/
 	private int movesIndex;
@@ -154,11 +154,14 @@ public class Chess {
 	 * a new Player object with the player's information. 
 	 * */
 	private void signIn(){
-		String[] userPass = mainMenu.promptSignIn();
+		// Prompts the user for the username and pass word
+		String[] userPass = mainMenu.promptSignIn(); 
+		// Attempts to authenticate the username and password
 		String content = database.signInOperation(userPass[0], userPass[1]);
+		// If the content was successfully retrieved then create a player object
+		// with the designated player attributes.
 		if(!content.isEmpty()){
 			String[] playerInfo = content.split(":");
-			System.out.println(content);
 			playerOne = new Player(playerInfo[0], playerInfo[1], Integer.parseInt(playerInfo[2]),
 			Integer.parseInt(playerInfo[3]), Integer.parseInt(playerInfo[4]));
 		}
@@ -170,6 +173,8 @@ public class Chess {
 	 * operation is successful, the method initializes a new Player object with the player's information.
 	 */
 	private void signUp(){
+		// If the current playerOne does not have password meaning their not logged in,
+		// then allow the user to sign up.
 		if(playerOne.getPassword() == null){
 			String username = mainMenu.promptSignUp("Enter the username you would like: ");
 			String password = mainMenu.promptSignUp("Enter the password you would like: ");
@@ -177,6 +182,7 @@ public class Chess {
 			playerOne.setPassword(password);
 			database.signUpOperation(playerOne.toString());
 		}
+		// Otherwise tell the user they're logged in.
 		else System.out.println("\nUser already logged in as " + playerOne.getUsername());		
 	}
 	
@@ -450,8 +456,8 @@ public class Chess {
 	}
 	
 	/**
-	 * Checks if the same board state has occured three times in a row by checking the 12 previous
-	 * moves.
+	 * Checks if the same board state has occured three times in a row by checking
+	 * the 12 previous moves.
 	 * 
 	 * @return true if draw by three fold repetition, false otherwise
 	 */
@@ -731,8 +737,6 @@ public class Chess {
 	*/
 	public void loadGame(String file) {
 
-		// If file name is not empty, load game state from the file
-		System.out.println("File: " + file);
 		if(!file.isEmpty()){
 			// Reset the board, turn, moves and the current movesIndex.
 			resetGame();
@@ -817,11 +821,11 @@ public class Chess {
 	}
 	
 	/**
-	* Used in settings to set the color of the board.
-	* 
-	* @param strat string representing new drawStrat of board
-	* @return true if drawStrat is set, false if not
-	*/
+	 * Used in settings to set the color of the board.
+	 * 
+	 * @param strat string representing new drawStrat of board
+	 * @return true if drawStrat is set, false if not
+	 */
 	public boolean setDrawStrat(String strat){
 		boolean result = true;
 		if(strat.equals("mono")) this.drawStrat = new BoardMonoCLI();

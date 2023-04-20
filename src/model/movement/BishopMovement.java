@@ -10,7 +10,6 @@ import src.model.Position;
  * @author Nolan Flinchum (50%), Thomas Kay, Joseph Oladeji (50%), Levi Sweat
  * @version 3/27/2023
  */
-
 public class BishopMovement extends QueenMovement {
 
     /**

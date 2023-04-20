@@ -5,7 +5,7 @@ import src.interfaces.DefinePlayerIF;
 
 /**
  * A class that provides functionality for defining players using a command-line interface.
- * @author Joseph Oladeji, Levi Sweat, Nolan Flinchum, Thomas Kay
+ * @author Joseph Oladeji (100%), Levi Sweat, Nolan Flinchum, Thomas Kay
  */
 public class DefinePlayerCLI implements DefinePlayerIF {
 

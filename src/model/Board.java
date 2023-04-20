@@ -26,7 +26,6 @@ import src.ui_cli.BoardMonoCLI;
  * @author Nolan Flinchum (25%), Thomas Kay (25%), Joseph Oladeji (25%), Levi Sweat (25%)
  * @version 3/27/2023
  */
-
 public class Board implements BoardIF {
 
     /** A reference to the game of chess that is being played **/

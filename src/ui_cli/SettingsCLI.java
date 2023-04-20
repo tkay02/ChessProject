@@ -12,7 +12,7 @@ import java.util.Arrays;
  * The class also defines instance variables to keep track of the current settings, 
  * including the board strategy, undo status, and show moves status.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat (100%)
  * @version 4/19/2023
  */
 public class SettingsCLI implements SettingsIF{

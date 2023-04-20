@@ -2,6 +2,7 @@ package src.ui_cli;
 
 import src.interfaces.BoardIF;
 import src.model.Piece;
+
 /**
  * Implementation of BoardStrategy that creates a monotone version of the chess board.
  * 

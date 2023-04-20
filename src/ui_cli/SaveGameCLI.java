@@ -8,7 +8,7 @@ import src.interfaces.SaveGameIF;
 /**
  * A class that provides functionality for saving a game state to a file using a specified
  * implementation of the SaveGameIF interface.
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji (100%), Levi Sweat
  * @version 4/19/2023
  */
 public class SaveGameCLI implements SaveGameIF {
@@ -41,7 +41,9 @@ public class SaveGameCLI implements SaveGameIF {
      */
     public void saveGame(String filePath, String fileContent){
         try{
+            // Attempt to get the game path
             FileWriter gameFile = new FileWriter(filePath, false); 
+            // Then write the fileContent to the path
             gameFile.write(fileContent);
             gameFile.close();
         }catch(Exception e){
