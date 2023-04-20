@@ -30,6 +30,11 @@ public interface SquareIF {
 	 */
 	public PieceIF getPiece();
 
+	/**
+	 * Gets the the position object of the chess board square.
+	 *
+	 * @return A Position object representing the chosen chess board position.
+	 */
 	public Position getPosition();
 
 }

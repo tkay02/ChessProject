@@ -7,7 +7,7 @@ import src.interfaces.SquareIF;
 /**
  * Class that represents a square object for ChessMeister.
  * 
- * @author Nolan Flinchum (100%), Thomas Kay, Joseph Oladeji, Levi Sweat 
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat 
  * @version 3/27/2023
  */
 
@@ -56,6 +56,11 @@ public class Square extends BlackAndWhite implements SquareIF {
         this.piece = piece;
     }
 
+    /**
+	 * Gets the the position object of the chess board square.
+	 *
+	 * @return A Position object representing the chosen chess board position.
+	 */
     public Position getPosition(){
         return this.pos;
     }

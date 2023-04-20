@@ -15,7 +15,8 @@ import src.model.Position;
 /**
  * Provides an implementation of the ShowMovesIF interface that prompts the user to select
  * a piece and displays a list of valid moves for that piece.
- * @author Joseph Oladeji, Levi Sweat, Nolan Flinchum, Thomas Kay
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 4/19/2023
  */
 public class ShowMovesCLI implements ShowMovesIF{
 
@@ -62,7 +63,8 @@ public class ShowMovesCLI implements ShowMovesIF{
         Rank fromR = Rank.getRankByReal(Character.getNumericValue(userInput.charAt(1)));
         Piece piece = (Piece) board.getPiece(fromR, fromF);
         if(piece.getChessPieceType() != ChessPieceType.EMPTY){
- 		    if(turn % 2 == 0) board.draw(true, piece.showMoves(new Position(fromR, fromF)), player1, player2);
+ 		    if(turn % 2 == 0) board.draw(true, piece.showMoves(new Position(fromR, fromF)),
+             player1, player2);
             else board.draw(false, piece.showMoves(new Position(fromR, fromF)), player1, player2);
         }
         else{

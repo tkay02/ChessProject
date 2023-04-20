@@ -5,6 +5,16 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * A class that implements the SettingsIF interface to define the settings of a
+ * game in the command-line interface (CLI). The SettingsCLI class provides 
+ * implementations for the displaySettings method, which is required by the SettingsIF interface.
+ * The class also defines instance variables to keep track of the current settings, 
+ * including the board strategy, undo status, and show moves status.
+ * 
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 4/19/2023
+ */
 public class SettingsCLI implements SettingsIF{
 
     /** The input to scan the user's input **/

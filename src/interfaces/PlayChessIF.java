@@ -1,8 +1,15 @@
 package src.interfaces;
 
+/**
+ * A interface that defines methods for the command line interface to play chess.
+ *
+ * 
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 4/19/2023
+ */
 public interface PlayChessIF {
     
-    /**
+     /**
      * Menu layout to navigate through the features within the game of chess. Goes on an infinite 
      * loop to accept input from the user to determine which part of the features that they want to 
      * choose for the game. The sections are divided into move, undo (if enabled), redo, show moves
@@ -20,6 +27,6 @@ public interface PlayChessIF {
      * @return A string array that contains the ranks and files of the piece starting position
      * and final position.
      */
-     public String[] makeMove();
+    public String[] makeMove();
 
 }
