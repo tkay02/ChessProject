@@ -13,10 +13,10 @@ import src.interfaces.SaveGameIF;
  */
 public class SaveGameCLI implements SaveGameIF {
     
-    /** Scanner for user input */
+    /** Scanner for user input **/
     private Scanner input;
 
-    /** This method initializes the scanner to use System in. */
+    /** This method initializes the scanner to use System in. **/
     public SaveGameCLI(){
         input = new Scanner(System.in);
     }
