@@ -12,7 +12,6 @@ public enum GameColor{
     
     BLACK("\u001b[40m", "\u001b[31m" ), WHITE("\u001b[47m", "\u001b[34m");
 
-    //BACKGROUND MAGENTA \u001b[45m
 
     /** The ansi code representing the background color **/
     private String background;
