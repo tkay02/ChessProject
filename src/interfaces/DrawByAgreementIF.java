@@ -5,6 +5,7 @@ package src.interfaces;
  * players using a command-line interface.
  * 
  * @author Joseph Oladeji, Levi Sweat (100%), Nolan Flinchum, Thomas Kay
+ * @version 4/19/2023
  */
 public interface DrawByAgreementIF {
 

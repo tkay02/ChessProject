@@ -4,7 +4,7 @@ package src.interfaces;
  * Interface used when prompting the user for the players of the match.
  * 
  * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji (100%), Levi Sweat
- * @version 3/27/2023
+ * @version 4/19/2023
  */
 public interface DefinePlayerIF {
 

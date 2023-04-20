@@ -7,7 +7,7 @@ import src.model.Piece;
  * Implementation of BoardStrategy that creates a monotone version of the chess board.
  * 
  * @author Nolan Flinchum (25%), Thomas Kay, Joseph Oladeji (25%), Levi Sweat (50%)
- * @version 3/27/2023
+ * @version 4/19/2023
  */
 public class BoardMonoCLI extends BoardDisplayCLI{
 	

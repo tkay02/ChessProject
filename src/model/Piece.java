@@ -13,7 +13,7 @@ import src.enums.GameColor;
  * Class that represents a piece object for ChessMeister.
  * 
  * @author Nolan Flinchum (100%), Thomas Kay, Joseph Oladeji, Levi Sweat
- * @version 3/27/2023
+ * @version 4/19/2023
  */
 public class Piece extends BlackAndWhite implements PieceIF {
 

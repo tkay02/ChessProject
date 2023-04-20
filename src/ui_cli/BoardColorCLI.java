@@ -8,7 +8,8 @@ import src.model.Piece;
  * to get the unique color of black and white squares and pieces.
  * 
  * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat (100%)
- * @version 3/27/2023
+ * @version 4/19/2023
+
  */
 public class BoardColorCLI extends BoardDisplayCLI{	
 

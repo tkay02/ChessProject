@@ -4,7 +4,7 @@ package src.enums;
  * chess board.
  * 
  * @author Nolan Flinchum (20%), Thomas Kay, Joseph Oladeji (60%), Levi Sweat (20%)
- * @version 3/27/2023
+ * @version 4/19/2023
  */
 
 public enum Rank {

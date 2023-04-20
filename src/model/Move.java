@@ -6,7 +6,7 @@ import src.interfaces.PieceIF;
  * This class represents a move that a player makes, and holds all the necessary data to
  * undo and redo a move during the game.
  * @author Nolan Flinchum (100%), Thomas Kay, Joseph Oladeji, Levi Sweat
- * @version 3/27/2023
+ * @version 4/19/2023
  */
 public class Move {
     

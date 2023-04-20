@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Interface for the way that the chess board is drawn in regards to color.
  *
  * @author Nolan Flinchum (100%), Thomas Kay, Joseph Oladeji, Levi Sweat
- * @version 3/27/2023
+ * @version 4/19/2023
  */
 public abstract class MovementStrategy {
 

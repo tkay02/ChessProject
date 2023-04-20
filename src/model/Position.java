@@ -7,7 +7,7 @@ import src.enums.Rank;
  * A class that uses ranks and files to represent a position on a chess board.
  * 
  * @author Nolan Flinchum (70%), Thomas Kay, Joseph Oladeji (30%), Levi Sweat
- * @version 3/27/2023
+ * @version 4/19/2023
  */
 public class Position {
 

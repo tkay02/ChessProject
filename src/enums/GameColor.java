@@ -5,7 +5,7 @@ package src.enums;
  * terminal to change to that specified.
  * 
  * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji (50%), Levi Sweat (50%)
- * @version 3/27/2023
+ * @version 4/19/2023
  */
 
 public enum GameColor{
