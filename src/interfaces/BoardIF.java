@@ -2,7 +2,6 @@ package src.interfaces;
 
 import src.enums.Rank;
 import java.util.ArrayList;
-import src.model.Position;
 import src.enums.File;
 
 /**
