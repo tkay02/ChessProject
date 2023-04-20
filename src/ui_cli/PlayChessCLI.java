@@ -93,14 +93,17 @@ public class PlayChessCLI implements PlayChessIF {
                 parts = result.split(",");
                 parts[0] = parts[0].trim();
                 parts[1] = parts[1].trim();
-            } catch(Exception e){}
-            if(fileInput.contains(String.valueOf(parts[0].charAt(0))) && 
-               rankInput.contains(String.valueOf(parts[0].charAt(1))) &&
-               fileInput.contains(String.valueOf(parts[1].charAt(0))) &&
-               rankInput.contains(String.valueOf(parts[1].charAt(1)))){
-                promptAgain = false;
-            }
-            else{
+                if(fileInput.contains(String.valueOf(parts[0].charAt(0))) && 
+                rankInput.contains(String.valueOf(parts[0].charAt(1))) &&
+                fileInput.contains(String.valueOf(parts[1].charAt(0))) &&
+                rankInput.contains(String.valueOf(parts[1].charAt(1)))){
+                    promptAgain = false;
+                }
+                else{
+                    System.out.println("Incorrect Input. You're input should look like: " + 
+                                       "A1, A2. Try Again.");
+                }
+            } catch(Exception e){
                 System.out.println("Incorrect Input. You're input should look like: " + 
                                    "A1, A2. Try Again.");
             }
