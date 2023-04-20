@@ -11,15 +11,12 @@ import src.model.*;
 import src.ui_cli.*;
 
 /**
-* Represents the game of chess. In the future, this class will allow users to start games,
-* end games, save games, load games, and other operations that relate to the ChessMeister
-* service. Currently, it includes the majority of the logic allowing users to play the match,
-* including error handling if the user makes faulty inputs.
+* Represents the game of chess. Includes the majority of the logic for undo, redo, check, checkmate
+* movement, draws, and displaying possible moves. Controlls the majority of the game.
 * 
-* @author Nolan Flinchum (5%), Thomas Kay (5%), Joseph Oladeji (5%), Levi Sweat (85%)
-* @version 3/27/2023
+* @author Nolan Flinchum (30%), Thomas Kay (10%), Joseph Oladeji (30%), Levi Sweat (30%)
+* @version 4/19/2023
 */
-
 public class Chess {
 	
 	/** The board to play chess on **/
@@ -93,10 +90,10 @@ public class Chess {
 	* @param BoardStrategy drawStrategy user's input for the chessboard
 	*/
 	public Chess(){
-		this.board = new Board(this);
+		this.board = new Board(this); //create new board
 		drawStrat = new BoardColorCLI(); // Default BoardStrategy is color
 		board.setDrawStrategy(drawStrat); 
-		this.mainMenu = new MainMenuCLI();
+		this.mainMenu = new MainMenuCLI(); //CLI implementation for user interactions
 		this.rulesDisplay = new RulesCLI();
 		this.settingsDisplay = new SettingsCLI();
 		this.showMovesDisplay = new ShowMovesCLI();
@@ -106,9 +103,9 @@ public class Chess {
 		this.drawMatch = new DrawAgreementCLI();
 		this.undo = true; //can undo by default
 		this.showMoves = true; //can showMoves by default
-		this.movesIndex = -1;
+		this.movesIndex = -1; //initilize # of elements in linked list, 
 		this.database = new DatabaseOps();
-		this.turn = 0;
+		this.turn = 0; 
 		playerOne = new Player("Player 1");
 		playerTwo = new Player("Player 2");
 		this.inCheck = false;
@@ -118,37 +115,35 @@ public class Chess {
 	/**
 	* Sets up and plays a new game of chess. Initializes the board strategy to the chess board.
 	* Determines which player is playing and ends the match if there is a resignation.
-	* 
-	* @param BoardStrategy drawStrategy Determines how the chess board is drawn.
 	*/
 	public void go() {
 		returnToMain = true;
 		while(returnToMain){
 			switch(mainMenu.userInteraction()){
-				case "0":
-				returnToMain = false;
-				break;
-				case "1":
-				playGame();
-				break;
-				case "2":
-				rulesDisplay.displayRules();
-				break;
-				case "3":
-				signIn();
-				break;
-				case "4":
-				signUp();
-				break;
-				case "5":
-				displayPlayerOptions();
-				break;
-				case "6":
-				settingsInteraction();
-				break;
-				case "7":
-				loadGame(gameLoader.getFilePath());
-				break;
+				case "0": //exit
+					returnToMain = false;
+					break;
+				case "1": //play the game
+					playGame();
+					break;
+				case "2": //display rules
+					rulesDisplay.displayRules();
+					break;
+				case "3": //sign in
+					signIn();
+					break;
+				case "4": //sign up
+					signUp();
+					break;
+				case "5": //display player
+					displayPlayerOptions();
+					break;
+				case "6": //settings menu
+					settingsInteraction();
+					break;
+				case "7": //load game
+					loadGame(gameLoader.getFilePath());
+					break;
 			}
 		}
 	}
@@ -204,27 +199,27 @@ public class Chess {
 		while(returnToSettings){
 			String settingsInput = settingsDisplay.displaySettings(drawStrat, undo, showMoves);
 			switch(settingsInput){
-				case "0":
-				returnToSettings = false;
-				break;
-				case "1":
-				setDrawStrat("mono");
-				break;
-				case "2":
-				setDrawStrat("color");
-				break;
-				case "3":
-				setUndo(true);
-				break;
-				case "4":
-				setUndo(false);
-				break;
-				case "5":
-				setShowMoves(true);
-				break;
-				case "6":
-				setShowMoves(false);
-				break;
+				case "0": //return to main menu
+					returnToSettings = false;
+					break;
+				case "1": //set drawStrategy to mono
+					setDrawStrat("mono");
+					break;
+				case "2": //set drawStrategy to color
+					setDrawStrat("color");
+					break;
+				case "3": //allow for moves to be undone
+					setUndo(true);
+					break;
+				case "4": //do not allow for moves to be made
+					setUndo(false);
+					break;
+				case "5": //allow for valid moves to be displayed
+					setShowMoves(true);
+					break;
+				case "6": //do not allow for valid moves to be displayed
+					setShowMoves(false);
+					break;
 			}
 		}
 		
@@ -237,167 +232,165 @@ public class Chess {
 	 *
 	 */
 	public void playGame(){
-		this.playChess = new PlayChessCLI(undo, showMoves);
-		this.board.setDrawStrategy(drawStrat);
+		//starts game, saying whether or not undo can be done and valid moves can be displayed
+		this.playChess = new PlayChessCLI(undo, showMoves); 
+		this.board.setDrawStrategy(drawStrat); //set drawStrategy of board
 		boolean playing = true;
-		ArrayList<Position> empty = new ArrayList<>();
+		//used for displaying valid moves, currently empty
+		ArrayList<Position> empty = new ArrayList<>(); 
 		while(playing){
 			if(turn % 2 == 0) this.board.draw(true, empty, playerOne.getUsername(),
-			playerTwo.getUsername());
+			playerTwo.getUsername()); //display board for white pieces
 			else this.board.draw(false, empty, playerOne.getUsername(), 
-			playerTwo.getUsername());
-			if(playTurn(turn)) playing = false;
+			playerTwo.getUsername()); //display board for black pieces
+			if(playTurn(turn)) playing = false; //player's turn, stops playing if returns true
 			else turn++;
 		}
 	}
 	
-	/** This method allows a player to make a turn during the chess game. It takes in the turn number as a parameter and
-	 * returns a boolean value indicating whether the player has quit the game.
-	 * @param turn The turn number for the game.
+	/** This method allows a player to play a turn during the chess game. It takes in the turn 
+	 * number as a parameter and returns a boolean value indicating whether the player has quit 
+	 * the game.
+	 * 
+	 * @param turn Which player's turn, represented as an int.
 	 * @return A boolean value indicating whether the player has quit the game.
 	 */
 	public boolean playTurn(int turn){
-		for(Move move : moves){
-			System.out.println(move); //testing
-		}
 		boolean quit = false;
 		boolean turnNotOver = true;
 		while(turnNotOver){
-			String userInput = playChess.playChessDisplay();
-			switch(userInput){
+			String userInput = playChess.playChessDisplay(); 
+			switch(userInput){ //user's input, determines what case to take
 				case "0": //Resign
-				if(turn % 2 == 0){
-					endGame(false, playerOne);
-					System.out.println(playerTwo.getUsername() + " wins by Resigation.");
-				}
-				else{ 
-					endGame(false, playerTwo);
-					System.out.println(playerOne.getUsername() + " wins by Resigation.");
-				}
-				turnNotOver = false;
-				quit = true;
-				break;
+					if(turn % 2 == 0){ //counts win and loss and displays winner of game
+						endGame(false, playerOne);
+						System.out.println(playerTwo.getUsername() + " wins by Resigation.");
+					}
+					else{ 
+						endGame(false, playerTwo);
+						System.out.println(playerOne.getUsername() + " wins by Resigation.");
+					}
+					turnNotOver = false;
+					quit = true;
+					break;
 				case "1": //Move
-				String[] parts = playChess.makeMove();
-				File fromF = File.getFileByChar(parts[0].charAt(0));
-				File toF = File.getFileByChar(parts[1].charAt(0));
-				Rank fromR = Rank.getRankByReal(Character.getNumericValue(parts[0].charAt(1)));
-				Rank toR = Rank.getRankByReal(Character.getNumericValue(parts[1].charAt(1)));
-				Piece fromPiece1 = (Piece) board.getPiece(fromR, fromF);
-				if(fromPiece1.getChessPieceType() == ChessPieceType.PAWN){
-					fiftyMoveDraw = 0; //resets int keeping track of 50MoveDraw if pawn is moved
-				}
-				if(turn % 2 == 0){
-					if(!fromPiece1.isWhite()){
-						System.out.println("You cannot move a piece that is not yours.");
-						break;
+					String[] parts = playChess.makeMove(); //user's movement choice
+					File fromF = File.getFileByChar(parts[0].charAt(0));
+					File toF = File.getFileByChar(parts[1].charAt(0));
+					Rank fromR = Rank.getRankByReal(Character.getNumericValue(parts[0].charAt(1)));
+					Rank toR = Rank.getRankByReal(Character.getNumericValue(parts[1].charAt(1)));
+					Piece fromPiece1 = (Piece) board.getPiece(fromR, fromF); //piece to move from
+					if(fromPiece1.getChessPieceType() == ChessPieceType.PAWN){
+						fiftyMoveDraw = 0; //resets int for 50MoveDraw if pawn is moved
 					}
-				}
-				else{
-					if(!fromPiece1.isBlack()){
-						System.out.println("You cannot move a piece that is not yours.");
-						break;
+					if(turn % 2 == 0){//white can only move white pieces
+						if(!fromPiece1.isWhite()){ 
+							System.out.println("You cannot move a piece that is not yours.");
+							break;
+						}
 					}
-				}
-				if(board.getPiece(fromR, fromF).getChessPieceType() == ChessPieceType.EMPTY){
-					System.out.println("Error, no piece at " + parts[0]);
-				}
-				else if(move(fromF, fromR, toF, toR)){
-					//Removes any extra moves if the user moves after undoing
-					while(this.moves.size() - 1 > this.movesIndex) this.moves.removeLast();
+					else{//black can only move black pieces
+						if(!fromPiece1.isBlack()){
+							System.out.println("You cannot move a piece that is not yours.");
+							break;
+						}
+					}
+					//error if no piece at from board position
+					if(board.getPiece(fromR, fromF).getChessPieceType() == ChessPieceType.EMPTY){
+						System.out.println("Error, no piece at " + parts[0]);
+					}
+					else if(move(fromF, fromR, toF, toR)){
+						//Removes any extra moves if the user moves after undoing
+						while(this.moves.size() - 1 > this.movesIndex) this.moves.removeLast();
 
-					//Check if the white king has any valid moves when black moves
-					if(turn % 2 == 1 && checkNoValidMoves(true)){
-						if(check(board.getWhiteKingPos(), true)){
-							System.out.println("\t " + playerTwo.getUsername() + " wins by Checkmate!");
-							endGame(false, playerOne);
-						}else{
-							System.out.println("\t Draw by stalemate!");
+						//Check if the white king has any valid moves when black moves
+						if(turn % 2 == 1 && checkNoValidMoves(true)){
+							if(check(board.getWhiteKingPos(), true)){ //checkmate
+								System.out.println("\t " + playerTwo.getUsername() + 
+												   " wins by Checkmate!");
+								endGame(false, playerOne);
+							}else{ //stalemate
+								System.out.println("\t Draw by stalemate!");
+								endGame(true, playerOne);
+							}
+							quit = true;
+						}
+						//Check if the black king has any valid moves when white moves
+						if(turn % 2 == 0 && checkNoValidMoves(false)){
+							if(check(board.getBlackKingPos(), false)){ //checkmate
+								endGame(false, playerTwo);
+								System.out.println("\t " + playerOne.getUsername() + 
+												   " wins by Checkmate!");
+							}else{ //stalemate
+								System.out.println("\t Draw by stalemate!");
+								endGame(true, playerTwo);
+							}
+							quit = true;
+						}
+						//Check if a threefold repetition has occured
+						if(threeFoldRepetition()){
+							System.out.println("\nDraw by threefold repetition.");
+							quit = true;
 							endGame(true, playerOne);
 						}
-						quit = true;
-					}
-
-					//Check if the black king has any valid moves when white moves
-					if(turn % 2 == 0 && checkNoValidMoves(false)){
-						if(check(board.getBlackKingPos(), false)){
-							endGame(false, playerTwo);
-							System.out.println("\t " + playerOne.getUsername() + " wins by Checkmate!");
-						}else{
-							System.out.println("\t Draw by stalemate!");
-							endGame(true, playerTwo);
+						//Check if the Fifty Move rule has been met
+						if(fiftyMoveDraw == 50){
+							System.out.println("\nDraw by 50 move rule.");
+							quit = true;
+							endGame(true, playerOne);
 						}
-						quit = true;
+						//Check if one of the player's are in check
+						if(check(board.getWhiteKingPos(), true) ||
+						check(board.getBlackKingPos(), false) && !quit)
+						System.out.println("\t### Check! ###");
+						turnNotOver = false; //turn is over
 					}
-
-					//Check if a threefold repetition has occured
-					if(threeFoldRepetition()){
-						System.out.println("\nDraw by threefold repetition.");
+					else System.out.println("Invalid Move");
+					break;
+				case "2": //case for undo
+					if(moves.size() > 0 && movesIndex > -1){// if moves have been made
+						turnNotOver = false;
+						undo(true);
+					}
+					else{
+						System.out.println("\nUndo is unavailable right now\n");
+					}
+					break;
+				case "3": //case for redo
+					//if there are moves that can be redone
+					if(this.movesIndex < this.moves.size() - 1){ 
+						turnNotOver = false;
+						redo();
+						turn++;
+					}
+					else{
+						System.out.println("\nRedo is unavailable right now\n");
+					}
+					break;
+				case "4": //case for show moves
+					showMovesDisplay.showMoves(this.board, turn, playerOne.getUsername(), 
+														playerTwo.getUsername());
+					break;
+				case "5": //case for save game
+					if(moves.size() > 0){ //if moves have been made to save
+						String fileLocation = gameSaver.promptSaveGame();
+						saveGame(fileLocation, board);
 						quit = true;
+						turnNotOver = false;
+					}else System.out.println("\nNot enough moves made to save game.\n");				
+					break;
+				case "6": //case for draw by agreement
+					String drawChoice = drawMatch.respondToDraw();
+					if(drawChoice.equals("Y")){
+						System.out.println("Game ended as a draw.");
 						endGame(true, playerOne);
-					}
-
-					//Check if the Fifty Move rule has been met
-					if(fiftyMoveDraw == 50){
-						System.out.println("\nDraw by 50 move rule.");
+						turnNotOver = false;
 						quit = true;
-						endGame(true, playerOne);
 					}
-
-					//Check if one of the player's are in check
-					if(check(board.getWhiteKingPos(), true) ||
-					check(board.getBlackKingPos(), false) && !quit)
-					System.out.println("\t### Check! ###");
-					
-					turnNotOver = false;
-				}
-				else System.out.println("Invalid Move");
-				break;
-				case "2":
-				if(moves.size() > 0 && movesIndex > -1){
-					turnNotOver = false;
-					undo(true);
-				}
-				else{
-					System.out.println("\nUndo is unavailable right now\n");
-				}
-				break;
-				case "3":
-				if(this.movesIndex < this.moves.size() - 1){
-					turnNotOver = false;
-					redo();
-					turn++;
-				}
-				else{
-					System.out.println("\nRedo is unavailable right now\n");
-				}
-				break;
-				case "4":
-				showMovesDisplay.showMoves(this.board, turn, playerOne.getUsername(), 
-													   playerTwo.getUsername());
-				break;
-				case "5":
-				if(moves.size() > 0){
-					String fileLocation = gameSaver.promptSaveGame();
-					saveGame(fileLocation, board);
-					quit = true;
-					turnNotOver = false;
-				}else System.out.println("\nNot enough moves made to save game.\n");				
-				break;
-				
-				case "6": //DRAW BY AGREEMENT
-				String drawChoice = drawMatch.respondToDraw();
-				if(drawChoice.equals("Y")){
-					System.out.println("Game ended as a draw.");
-					endGame(true, playerOne);
-					turnNotOver = false;
-					quit = true;
-				}
-
-				break;
+					break;
 			}
 		}
-		return quit;
+		return quit; //true if game is over, false if not
 	}
 	
 	/**
@@ -416,23 +409,22 @@ public class Chess {
 		Position fromPos = lastMove.getToPos();
 		Rank fromR = fromPos.getRank();
 		File fromF = fromPos.getFile();
-		Piece takenPiece = (Piece) lastMove.getPiece();
+		Piece takenPiece = (Piece) lastMove.getPiece(); //the last move's taken piece
 		String takenPieceLetter = takenPiece.getChessPieceType().getChessPieceLetter();
 		if(userUndo){
 			Piece movedPiece = (Piece) board.getPiece(fromR, fromF);
-			movedPiece.decMoveCount();
-			//if pawn was moved or if piece was captured
-			System.out.println("LASTMOVE: " + lastMove.getPiece().getChessPieceType());
-			System.out.println("MOVEDPIECE: " + movedPiece.getChessPieceType());
-
+			movedPiece.decMoveCount(); //undoing move so reduce the # of moves for said piece
+			//decrement the int for keeping track of 50movedraw 
+			//because 1 was added when original move was made
 			if(takenPiece.getChessPieceType() == ChessPieceType.EMPTY || 
 			   movedPiece.getChessPieceType() != ChessPieceType.PAWN) fiftyMoveDraw--;
 		}
-		forceMove(fromF, fromR, toPos.getFile(), toPos.getRank());
+		forceMove(fromF, fromR, toPos.getFile(), toPos.getRank()); //force the move
 		board.getSquare(fromR.getArrayRank(), fromF.getArrayFile()).setPiece(takenPiece);
+		//remove any taken pieces from the array of taken pieces for black and white
 		if(takenPiece.isBlack()) board.getBlackTakenPieces().remove(takenPieceLetter);
 		if(takenPiece.isWhite()) board.getWhiteTakenPieces().remove(takenPieceLetter);
-		this.movesIndex--;
+		this.movesIndex--; //decrement the number of moves
 		if(!userUndo) this.moves.removeLast();
 		
 	}
@@ -448,10 +440,12 @@ public class Chess {
 
 		Piece movingPiece = (Piece) board.getPiece(toPos.getRank(), toPos.getFile());
 		Piece takenPiece = (Piece) board.getPiece(fromPos.getRank(), fromPos.getFile());
+		//increments int for 50MoveDraw if no piece is taken and the moved piece is not a pawn
 		if(takenPiece.getChessPieceType() == ChessPieceType.EMPTY || 
 		   movingPiece.getChessPieceType() != ChessPieceType.PAWN) fiftyMoveDraw++;
-
+		//increment the # of moves for the piece being moved
 		((Piece)board.getPiece(fromPos.getRank(), fromPos.getFile())).incMoveCount();
+		//force the move, as it is technically not legal
 		forceMove(fromPos.getFile(), fromPos.getRank(), toPos.getFile(), toPos.getRank());
 	}
 	
@@ -462,15 +456,16 @@ public class Chess {
 	 * @return true if draw by three fold repetition, false otherwise
 	 */
 	public boolean threeFoldRepetition(){
-		boolean draw = true;
-		if(moves.size() >= 12){
+		boolean draw = true; //assume the draw is true
+		if(moves.size() >= 12){ //only check if there are three previous board states
 			int i = moves.size() - 1;
-			while(i > (moves.size() - 5) && draw){
+			while(i > (moves.size() - 5) && draw){ //iterates through 4 times, checking if
+				//the necessary movements are the same for a repetition to have occured
 				Move move = moves.get(i);
 				if(move.equals(moves.get(i - 4)) && move.equals(moves.get(i - 8))) i--;
-				else draw = false;
+				else draw = false; //if there is ever not repetition, then it is not a draw
 			}
-		}else draw = false;
+		}else draw = false; //cannot be a draw if there are not enough board states to check
 		return draw;
 	}
 
@@ -487,11 +482,13 @@ public class Chess {
 	public boolean checkNoValidMoves(boolean isWhite){
 		boolean noValidMoves = true;
 		for(int i = 0; i < board.getWidth(); i++){
-			for(int j = 0; j < board.getHeight(); j++){
+			for(int j = 0; j < board.getHeight(); j++){ //iterate through board
 				Piece piece = (Piece) board.getPiece(i, j);
 				ChessPieceType pieceType = piece.getChessPieceType();
+				//check white or black pieces depending on input param
 				if(piece.isWhite() == isWhite && pieceType != ChessPieceType.EMPTY){
 					Position pos = new Position(Rank.getRankByIndex(i), File.getFileByIndex(j));
+					//if the piece has moves, then there are valid moves
 					if(!piece.showMoves(pos).isEmpty()) noValidMoves = false;
 				}
 			}
@@ -560,7 +557,7 @@ public class Chess {
 			search(isWhite, row + 1, col + 1, wantedPieces);
 		}
 		
-		return this.inCheck;
+		return this.inCheck; //might have been changed to false from search
 	}
 	
 	/**
@@ -576,10 +573,13 @@ public class Chess {
 	*/
 	private boolean search(boolean isWhite, int row, int col, ArrayList<ChessPieceType> wantedP){
 		boolean continueSearch = false;
+		//iterate through provided board based on provided info
 		if(row < board.getHeight() && row >= 0 && col >= 0 && col < board.getWidth()){
 			Piece otherPiece = (Piece) board.getPiece(row, col);
 			ChessPieceType otherType = otherPiece.getChessPieceType();
+			//if the piece is empty keep search for check
 			if(otherType == ChessPieceType.EMPTY) continueSearch = true;
+			//king might be in check
 			else if(wantedP.contains(otherType) && otherPiece.isWhite() != isWhite) inCheck = true;
 		}
 		return continueSearch;
