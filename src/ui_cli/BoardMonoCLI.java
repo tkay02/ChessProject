@@ -12,7 +12,6 @@ import src.model.Piece;
 public class BoardMonoCLI extends BoardDisplayCLI{
 	
 
-	@Override
 	/**
 	 * Creates the display of a white square on a chess board. The white squares are represented
 	 * by colons. The display is affected by what kind of piece type is on it ranging from white
@@ -37,7 +36,6 @@ public class BoardMonoCLI extends BoardDisplayCLI{
 		return result;
 	}
 
-	@Override
 	/**
 	 * Creates the display of a black square on a chess board. The black squares are represented
 	 * by brackets. The display is affected by what kind of piece type is on it ranging from white 
@@ -63,7 +61,6 @@ public class BoardMonoCLI extends BoardDisplayCLI{
 		return result;
 	}
 
-	@Override
 	 /**
 	 * Displays all of the pieces that were captured by each player during the game at the
 	 * specific moment during chess. First it shows the pieces that were captured by player
@@ -91,7 +88,6 @@ public class BoardMonoCLI extends BoardDisplayCLI{
 		return result + "\n";
 	}
 
-	@Override
 	/**
 	 * Retrieves the visual display of the specific rank/row number.
 	 * 
@@ -102,7 +98,6 @@ public class BoardMonoCLI extends BoardDisplayCLI{
 		return String.valueOf(rank) + " ";
 	}
 
-	@Override
 	/**
 	 * Shows the files order when facing the white player's side of the chess board.
 	 * 
@@ -112,7 +107,6 @@ public class BoardMonoCLI extends BoardDisplayCLI{
 		return "   A  B  C  D  E  F  G  H\n";
 	}
 	
-	@Override
 	 /**
 	 * Shows the files order when facing the black player's side of the chess board.
 	 * 

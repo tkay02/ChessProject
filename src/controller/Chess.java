@@ -602,13 +602,18 @@ public class Chess {
 	* @return True if the selected move was valid, false otherwise
 	*/
 	public boolean move(File fromF, Rank fromR, File toF, Rank toR) {
+
+		// Get the positions for from and to positions using the Rank and File objects
 		Position fromPos = new Position(fromR, fromF);
 		Position toPos = new Position(toR, toF);
 		boolean result = true;
 		Piece piece = (Piece) board.getPiece(fromR, fromF); //piece from current position
 		
+		// Attempt to validate the move for the from Position to the to Position
 		if(piece.validateMove(fromPos, toPos)){
+			// If it was validate increase the move count for the piece
 			piece.incMoveCount();
+			// Also increase the moves index
 			this.movesIndex++;
 			PieceIF takenPiece = board.getPiece(toR, toF); //the piece that will be captured
 			if(takenPiece.getChessPieceType() != ChessPieceType.EMPTY) fiftyMoveDraw = 0;
@@ -630,12 +635,13 @@ public class Chess {
 	* @param toR rank of where the piece is going to
 	*/
 	public void forceMove(File fromF, Rank fromR, File toF, Rank toR){
-		//Retrieves the row and column numbers from original and new position
+		// Retrieves the row and column numbers from original and new position
 		int fromFileNum = fromF.getArrayFile();
 		int fromRankNum = fromR.getArrayRank();
 		int toFileNum = toF.getArrayFile();
 		int toRankNum = toR.getArrayRank();
 		
+		// Get the Squares for the from and to positions
 		Square fromSquare = (Square) board.getSquare(fromRankNum, fromFileNum);
 		Square toSquare = (Square) board.getSquare(toRankNum, toFileNum);
 		Piece fromPiece = (Piece) fromSquare.getPiece();
@@ -647,8 +653,11 @@ public class Chess {
 		toSquare.setPiece(fromSquare.getPiece()); //put piece at new location
 		fromSquare.clear(); //remove piece from it's previous position on square
 		
+		// If the piece is a king
 		if(fromPiece.getChessPieceType() == ChessPieceType.KING){
+			// Also if the piece is white then update the white king position
 			if(fromPiece.isWhite()) board.setWhiteKingPos(toR, toF);
+			// Otherwise update the black king position.
 			else board.setBlackKingPos(toR, toF);
 		}
 	}
@@ -666,15 +675,18 @@ public class Chess {
 	*/
 	public boolean tryMove(Piece currentPiece, int row, int col, Position fromPos){
 		boolean wasInCheck = false;
-		if(this.inCheck) wasInCheck = true; //store if the king was already in check
-		//this.inCheck = false; //assume the king isn't in check before we check new positions
+		if(this.inCheck) wasInCheck = true; // Store if the king was already in check
+		// Assume the king isn't in check before we check new positions
 		boolean valid = true;
 		boolean isWhite = true;
+
+		// Get the Ranks and Files for from and to positions.
 		Rank fromRank = fromPos.getRank();
 		File fromFile = fromPos.getFile();
 		Rank toRank = Rank.getRankByIndex(row);
 		File toFile = File.getFileByIndex(col);
 		
+		// Increment the moves Index
 		this.movesIndex++;
 		PieceIF takenPiece = board.getPiece(toRank, toFile); //the piece that will be captured
 		Position toPos = new Position(toRank, toFile);
@@ -710,8 +722,12 @@ public class Chess {
 		if(turn % 2 == 0) this.board.draw(true, empty, playerOne.getUsername(),
 										  playerTwo.getUsername());
 		else this.board.draw(false, empty, playerOne.getUsername(), 
-							 playerTwo.getUsername());		
+							 playerTwo.getUsername());	
+		// Reset the game so none of the previous information is still there
 		resetGame();
+		
+		// Increment the players win, draw or lossses field if they've
+		// won, loss or drawn.
 		if(draw) { 
 			playerOne.addDraw();
 			playerTwo.addDraw();
@@ -722,10 +738,14 @@ public class Chess {
 			playerOne.addWin();
 			playerTwo.addLoss();
 		}
+		
+		// If the player is logged in then update the player's stats in the
+		// player database
 		if(playerOne.getPassword() != null) updatePlayers();
 	}
 	
 	public void updatePlayers(){
+		// Update the players information (wins, losses, draws)
 		database.updateOperation(playerOne.toString());
 	}
 	
@@ -775,9 +795,13 @@ public class Chess {
      * sets the moves index to -1.
      */
 	private void resetGame(){
+		// Reinitialize the board
 		this.board = new Board(this);
+		// Declare the player turn to 0 (White)
 		turn = 0;
+		// Clear the moves array
 		moves.clear();
+		// Reset the move index to -1 
 		movesIndex = -1;
 	}
 	
@@ -789,16 +813,20 @@ public class Chess {
 	*/
 	public void saveGame(String file, BoardIF game) {
 		String fileContent = "";
+		// For all the moves in the moves list. 
 		for(int i = 0; i < moves.size(); i++){
 			Move move = moves.get(i);
+			// Save them to the fileContent string.
 			fileContent += "" + String.valueOf(move.getFromPos().getFile().getRealFile()) + 
 			move.getFromPos().getRank().getRealRank() + ":" + 
 			String.valueOf(move.getToPos().getFile().getRealFile()) + 
 			move.getToPos().getRank().getRealRank() + ";";
 		}
+		// At the very end save the player information and current move index.
 		fileContent += playerOne.getUsername() + ":" + playerTwo.getUsername();
 		fileContent += ";" + movesIndex;
 		
+		// Then save the actual content to the file.
 		gameSaver.saveGame(file, fileContent);
 	}
 	
@@ -828,8 +856,11 @@ public class Chess {
 	 */
 	public boolean setDrawStrat(String strat){
 		boolean result = true;
+		// If the string strat is mono set the draw strategy to mono.
 		if(strat.equals("mono")) this.drawStrat = new BoardMonoCLI();
+		// Otherwise if the string strat is color set the draw strategy to color.
 		else if(strat.equals("color")) this.drawStrat = new BoardColorCLI();
+		// Else return result to show that the draw strat was not set.
 		else result = false;
 		return result;
 	}
