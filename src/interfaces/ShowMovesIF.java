@@ -1,8 +1,10 @@
 package src.interfaces;
 
-import java.util.ArrayList;
-import src.model.Position;
-
+/**
+ * An interface for classes that prompts the user to select
+ * a piece and displays a list of valid moves for that piece.
+ * @author Joseph Oladeji, Levi Sweat, Nolan Flinchum, Thomas Kay
+ */
 public interface ShowMovesIF {
     
     public String showMoves(BoardIF board, int turn, String player1, String player2);
