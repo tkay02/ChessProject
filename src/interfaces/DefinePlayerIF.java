@@ -1,6 +1,11 @@
 package src.interfaces;
 
-
+/**
+ * An interface that defines the methods required to define a player in a game.
+ * Classes that implement this interface must provide implementations for the 
+ * definePlayer method.
+ * @author Joseph Oladeji, Nolan Flinchum, Levi Sweat, Thomas Kay
+ */
 public interface DefinePlayerIF {
 
      /**

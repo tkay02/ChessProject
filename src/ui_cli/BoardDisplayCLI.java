@@ -10,11 +10,12 @@ import src.model.Piece;
 import src.model.Square;
 
 /**
- *  This class allows for methods to draw a chess board with colored pieces,
-where blue pieces represent white pieces and red pieces represent black pieces.
-It also displays the rank and file to help users make moves, and shows
-
-the pieces that have been taken thus far by each player.
+ * This class allows for methods to draw a chess board with colored pieces,
+ * where blue pieces represent white pieces and red pieces represent black pieces.
+ * It also displays the rank and file to help users make moves, and shows
+ * the pieces that have been taken thus far by each player.
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 4/19/2023
  */
 public abstract class BoardDisplayCLI implements BoardStrategy{
     
@@ -133,24 +134,6 @@ public abstract class BoardDisplayCLI implements BoardStrategy{
 	public String showMoves(Piece piece){
 		return displayValidMoves(piece);
 	}
-
-	// public void showMoves(BoardIF board, ArrayList<Position>){
-    //     toDisplay = "\n";
-	// 	for(int i = 7; i >= 0; i--){ //iterate through board
-	// 		toDisplay += displayRank(board.getWidth() - i); //rank to display on side of board
-	// 		for(int j = 7; j >= 0; j--){
-	// 			piece = (Piece)board.getPiece(i, j);
-	// 			//if the square is white
-	// 			if(((Square)board.getSquares()[i][j]).isWhite()){
-    //                 toDisplay += whiteSquare(piece);
-    //             }
-	// 			else{//square must be black
-    //                 toDisplay += blackSquare(piece);
-	// 			}
-	// 		}
-    //         toDisplay += "\n";
-	// 	}
-	// }
 
 	//Abstract methods
 

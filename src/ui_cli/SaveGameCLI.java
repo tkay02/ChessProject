@@ -8,7 +8,8 @@ import src.interfaces.SaveGameIF;
 /**
  * A class that provides functionality for saving a game state to a file using a specified
  * implementation of the SaveGameIF interface.
- * @author Joseph Oladeji, Levi Sweat, Nolan Flinchum, Thomas Kay
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 4/19/2023
  */
 public class SaveGameCLI implements SaveGameIF {
     

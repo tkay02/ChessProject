@@ -2,6 +2,15 @@ package src.ui_cli;
 import java.util.Scanner;
 
 import src.interfaces.RulesIF;
+
+
+/**
+ * A class that implements the RulesIF interface to define the rules of a game in the 
+ * command-line interface (CLI). The RulesCLI class provides custom implementations for 
+ * the displayRules and boardSetup methods, which are required by the RulesIF interface.
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 4/19/2023
+ */
 public class RulesCLI implements RulesIF {
 
     /** The input to scan the user's input **/
@@ -14,10 +23,12 @@ public class RulesCLI implements RulesIF {
 
 
     /**
-     * Menu layout to navigate through the rules for playing chess. Goes on an infinite loop to accept input
-     * from the user to determine which part of the rules that they want to read. The sections are divided into
-     * board setup, the king's movement, the queen's movement, the bishop's movement, the knight's movement, the
-     * rook's movement, the pawn's movement, and the overview of the game from 1-8. Input of 0 ends the loop.
+     * Menu layout to navigate through the rules for playing chess. Goes on an 
+     * infinite loop to accept input
+     * from the user to determine which part of the rules that they want to read. 
+     * The sections are divided into board setup, the king's movement, the queen's movement,
+     * the bishop's movement, the knight's movement, the rook's movement, the pawn's movement,
+     * and the overview of the game from 1-8. Input of 0 ends the loop.
      * 
      * @return The string of 0 when the user is finished reading over the rules.
      */
@@ -470,6 +481,11 @@ public class RulesCLI implements RulesIF {
         input.nextLine();
     }
 
+    /**
+     * Prints information about the conditions that could lead to a draw in a game of chess.
+     * Specifically, the method explains the stalemate condition and provides an example, as well as the condition
+     * of a game ending after 50 moves.
+     */
     private void draw() {
         System.out.println("\nHowever, checkmate is not the only condition that could end the "+
                            "game");

@@ -2,7 +2,6 @@ package src.ui_cli;
 import src.enums.GameColor;
 import src.interfaces.BoardIF;
 import src.model.Piece;
-import src.model.Position;
 
 /**
  * Creates a colored version of chess board. Implements board strategy, and uses GameColor enums

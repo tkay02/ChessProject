@@ -705,10 +705,7 @@ public class Chess {
 										  playerTwo.getUsername());
 		else this.board.draw(false, empty, playerOne.getUsername(), 
 							 playerTwo.getUsername());		
-		this.board = new Board(this); //resets board
-		moves.clear();
-		movesIndex = -1;
-		turn = 0;
+		resetGame();
 		if(draw) { 
 			playerOne.addDraw();
 			playerTwo.addDraw();

@@ -5,6 +5,13 @@ import java.util.Scanner;
 
 import src.interfaces.PlayChessIF;
 
+/**
+ * A class that provides a command line interface for playing chess.
+ *
+ * 
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 4/19/2023
+ */
 public class PlayChessCLI implements PlayChessIF {
     
     /** The input to scan the user's input **/

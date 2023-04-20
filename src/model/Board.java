@@ -76,7 +76,6 @@ public class Board implements BoardIF {
         boolean flipSquare = true;
         for(int row = 0; row < this.width; row++){
             for(int col = 0; col < this.height; col++){
-
                 if(flipSquare) { 
                     setSquare(row, col, true);
                     chessBoard[row][col].setPiece(new Piece(ChessPieceType.EMPTY, GameColor.WHITE));
