@@ -8,7 +8,6 @@ import src.enums.ChessPieceType;
  * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
  * @version 3/27/2023
  */
-
 public interface PieceIF {
 
 	/**

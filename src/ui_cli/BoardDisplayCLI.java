@@ -14,7 +14,7 @@ import src.model.Square;
  * where blue pieces represent white pieces and red pieces represent black pieces.
  * It also displays the rank and file to help users make moves, and shows
  * the pieces that have been taken thus far by each player.
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat (100%)
  * @version 4/19/2023
  */
 public abstract class BoardDisplayCLI implements BoardStrategy{

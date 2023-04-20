@@ -8,7 +8,7 @@ import src.interfaces.RulesIF;
  * A class that implements the RulesIF interface to define the rules of a game in the 
  * command-line interface (CLI). The RulesCLI class provides custom implementations for 
  * the displayRules and boardSetup methods, which are required by the RulesIF interface.
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
  * @version 4/19/2023
  */
 public class RulesCLI implements RulesIF {

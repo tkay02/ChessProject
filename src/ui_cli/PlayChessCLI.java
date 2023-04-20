@@ -8,8 +8,7 @@ import src.interfaces.PlayChessIF;
 /**
  * A class that provides a command line interface for playing chess.
  *
- * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat (100%)
  * @version 4/19/2023
  */
 public class PlayChessCLI implements PlayChessIF {
@@ -87,18 +86,23 @@ public class PlayChessCLI implements PlayChessIF {
         boolean promptAgain = true;
         String[] parts = new String[]{};
         while(promptAgain){
+            // Prompt the user to makea  move
             System.out.println("Make Move:");
             try{
                 result = input.nextLine();
+                // Attempt to break the user input by a comma
                 parts = result.split(",");
+                // Trim the input to remove any extra white space
                 parts[0] = parts[0].trim();
                 parts[1] = parts[1].trim();
+                // Check to see if the strings are apart of the fileInput and rankInput
                 if(fileInput.contains(String.valueOf(parts[0].charAt(0))) && 
                 rankInput.contains(String.valueOf(parts[0].charAt(1))) &&
                 fileInput.contains(String.valueOf(parts[1].charAt(0))) &&
                 rankInput.contains(String.valueOf(parts[1].charAt(1)))){
                     promptAgain = false;
                 }
+                // If not tell the user they've incorrect the wrong input
                 else{
                     System.out.println("Incorrect Input. You're input should look like: " + 
                                        "A1, A2. Try Again.");

@@ -3,7 +3,7 @@ package src.interfaces;
 /**
  * An interface for classes that prompts the user to select
  * a piece and displays a list of valid moves for that piece.
- * @author Joseph Oladeji, Levi Sweat, Nolan Flinchum, Thomas Kay
+ * @author Joseph Oladeji, Levi Sweat (100%), Nolan Flinchum, Thomas Kay
  */
 public interface ShowMovesIF {
     

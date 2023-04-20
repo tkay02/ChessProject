@@ -55,6 +55,10 @@ public enum GameColor{
         return "\u001b[0m";
     }
     
+    /**
+     * This method will return the ansi code for magenta.
+     * @return The ansi code for magenta.
+     */
     public static String showMoveColor(){
         return "\u001b[45m"; //background magenta
     }

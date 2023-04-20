@@ -12,7 +12,6 @@ import java.util.ArrayList;
  * @author Nolan Flinchum (100%), Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 3/27/2023
  */
-
 public abstract class MovementStrategy {
 
      /** Array of valid moves for a selected piece **/

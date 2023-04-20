@@ -15,7 +15,7 @@ import src.model.Position;
 /**
  * Provides an implementation of the ShowMovesIF interface that prompts the user to select
  * a piece and displays a list of valid moves for that piece.
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat (100%)
  * @version 4/19/2023
  */
 public class ShowMovesCLI implements ShowMovesIF{
@@ -52,6 +52,7 @@ public class ShowMovesCLI implements ShowMovesIF{
     public String showMoves(BoardIF board, int turn, String player1, String player2){
         boolean keepGoing = true;
         String userInput = "";
+        // Validate the user input for the correct position
         while(keepGoing){
             System.out.println("Show moves for what piece? ");
             userInput = input.nextLine();
@@ -59,15 +60,21 @@ public class ShowMovesCLI implements ShowMovesIF{
             if(fileList.contains(String.valueOf(userInput.charAt(0)))) keepGoing = false;
             if(rankList.contains(String.valueOf(userInput.charAt(1)))) keepGoing = false;
         }
+        // Get the File and Rank from the user input.
         File fromF = File.getFileByChar(userInput.charAt(0));
         Rank fromR = Rank.getRankByReal(Character.getNumericValue(userInput.charAt(1)));
+        // Get the piece using the file and rank
         Piece piece = (Piece) board.getPiece(fromR, fromF);
+        // If the piece isn't an empty space
         if(piece.getChessPieceType() != ChessPieceType.EMPTY){
+            // Show the moves for the player one on the board.
  		    if(turn % 2 == 0) board.draw(true, piece.showMoves(new Position(fromR, fromF)),
              player1, player2);
+            // Else show the moves for player two on the board.
             else board.draw(false, piece.showMoves(new Position(fromR, fromF)), player1, player2);
         }
         else{
+            // Otherwise tell the user there's no piece at the designated position.
             System.out.println("Error, no piece at " + userInput);
         }
         return "";

@@ -10,16 +10,8 @@ import src.model.Piece;
  * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat (100%)
  * @version 3/27/2023
  */
-public class BoardColorCLI extends BoardDisplayCLI{
-	
-	/**
-	 * Constructor for Board_Color_CLI class. Initilaizes toDisplay.
-	 */
-	public BoardColorCLI(){
-	}
-	
+public class BoardColorCLI extends BoardDisplayCLI{	
 
-	@Override
 	/**
 	 * Creates the display of a white square on a chess board. The white square is represented
 	 * as an actual white square. The display is affected by what kind of piece type is on it 
@@ -54,7 +46,6 @@ public class BoardColorCLI extends BoardDisplayCLI{
 		return result + GameColor.resetColor();
 	}
 
-	@Override
 	/**
 	 * Creates the display of a black square on a chess board. The black square is represented
 	 * as an actual black square. The display is affected by what kind of piece type is on it 
@@ -88,7 +79,6 @@ public class BoardColorCLI extends BoardDisplayCLI{
 		return result + GameColor.resetColor();
 	}
 
-	@Override
 	/**
 	 * Displays all of the pieces that were captured by each player during the game at the
 	 * specific moment during chess. First it shows the pieces that were captured by player
@@ -118,7 +108,6 @@ public class BoardColorCLI extends BoardDisplayCLI{
 
 	}
 
-	@Override
 	/**
 	 * Retrieves the visual display of the specific rank/row number.
 	 * 
@@ -129,7 +118,6 @@ public class BoardColorCLI extends BoardDisplayCLI{
 		return String.valueOf(rank) + "  ";
 	}
 
-	@Override
 	/**
 	 * Shows the files order when facing the white player's side of the chess board.
 	 * 
@@ -139,7 +127,6 @@ public class BoardColorCLI extends BoardDisplayCLI{
 		return "    A   B   C   D   E   F   G   H\n";
 	}
 
-	@Override
 	/**
 	 * Shows the files order when facing the black player's side of the chess board.
 	 * 

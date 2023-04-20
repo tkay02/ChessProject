@@ -3,8 +3,7 @@ package src.interfaces;
 /**
  * A interface that defines methods for the command line interface to play chess.
  *
- * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat (100%)
  * @version 4/19/2023
  */
 public interface PlayChessIF {

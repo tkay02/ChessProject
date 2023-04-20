@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 /**
  * A class that provides various database operations for managing user information.
- * @author Nolan Flinchum (90%), Thomas Kay (10%), Joseph Oladeji (0%), Levi Sweat (0%)
+ * @author Nolan Flinchum, Thomas Kay (10%), Joseph Oladeji (90%), Levi Sweat
  * @version 4/19/2023
  */
 public class DatabaseOps {

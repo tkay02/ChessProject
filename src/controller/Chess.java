@@ -159,8 +159,12 @@ public class Chess {
 	 * a new Player object with the player's information. 
 	 * */
 	private void signIn(){
-		String[] userPass = mainMenu.promptSignIn();
+		// Prompts the user for the username and pass word
+		String[] userPass = mainMenu.promptSignIn(); 
+		// Attempts to authenticate the username and password
 		String content = database.signInOperation(userPass[0], userPass[1]);
+		// If the content was successfully retrieved then create a player object
+		// with the designated player attributes.
 		if(!content.isEmpty()){
 			String[] playerInfo = content.split(":");
 			playerOne = new Player(playerInfo[0], playerInfo[1], Integer.parseInt(playerInfo[2]),
@@ -174,6 +178,8 @@ public class Chess {
 	 * operation is successful, the method initializes a new Player object with the player's information.
 	 */
 	private void signUp(){
+		// If the current playerOne does not have password meaning their not logged in,
+		// then allow the user to sign up.
 		if(playerOne.getPassword() == null){
 			String username = mainMenu.promptSignUp("Enter the username you would like: ");
 			String password = mainMenu.promptSignUp("Enter the password you would like: ");
@@ -181,6 +187,7 @@ public class Chess {
 			playerOne.setPassword(password);
 			database.signUpOperation(playerOne.toString());
 		}
+		// Otherwise tell the user they're logged in.
 		else System.out.println("\nUser already logged in as " + playerOne.getUsername());		
 	}
 	

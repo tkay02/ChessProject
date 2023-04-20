@@ -9,7 +9,7 @@ import src.interfaces.MainMenuIF;
  * A class that implements the MainMenuIF interface and provides a command line interface
  * for the main menu of the chess game.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji (40%), Levi Sweat (60%)
  * @version 4/19/2023
  */
 public class MainMenuCLI implements MainMenuIF{
