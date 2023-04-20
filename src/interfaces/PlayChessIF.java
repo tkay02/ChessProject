@@ -19,7 +19,7 @@ public interface PlayChessIF {
      */
      public String playChessDisplay();
 
-     /**
+    /**
      * Asks the user to input starting position and destination for moving a chess piece. If the
      * user inputs a position that is not valid or in the correct format, the user will be asked
      * again to put in a proper input while showing an example of one.
