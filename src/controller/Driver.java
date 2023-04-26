@@ -19,5 +19,6 @@ public class Driver {
 		Chess ch = new Chess();
 		ch.go();
 	}
+	
 
 }
