@@ -1,30 +1,28 @@
 package src.ui_gui;
 
-import javafx.css.Match;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import src.interfaces.ScreenChangeHandler;
 
 public final class ScreenFactory implements ScreenChangeHandler{
 
-	public enum Screen {SCREEN0, SCREEN1, SCREEN2, SCREEN3};
+	public enum Screen {MAIN_SCREEN, SETTINGS_SCREEN, RULES_SCREEN, MATCH_SCREEN};
 	
-	private static MainMenuGUI screen0;
+	private static MainMenuGUI mainScreen;
 	
-	private static SettingsGUI screen1;
+	private static SettingsGUI settingsScreen;
 	
-	// private static RulesGUI screen2;
+	private static RulesGUI rulesScreen;
 	
-	private static MatchGUI screen3;
-	
+	private static MatchGUI matchScreen;
 	
 	private Scene scene;
 	
 	private static ScreenFactory oneInstance;
 
-	public ScreenFactory(Scene scene){
+	private ScreenFactory(Scene scene){
 		this.scene = scene;
-		setScreen(Screen.SCREEN0);
+		setScreen(Screen.MAIN_SCREEN);
 	}
 
 	public static ScreenFactory getInstance(Scene scene){
@@ -37,22 +35,20 @@ public final class ScreenFactory implements ScreenChangeHandler{
 		Pane screen;
 		
 		switch(screenChoice){
-			case SCREEN1:
-				if(screen0 == null) screen0 = new MainMenuGUI();
-				screen = screen0;
+			case SETTINGS_SCREEN:
+				if(settingsScreen == null) settingsScreen = new SettingsGUI();
+				screen = settingsScreen;
 				break;
-			case SCREEN2:
-				if(screen1 == null) screen1 = new SettingsGUI();
-				screen = screen1;
+			case MATCH_SCREEN:
+				if(matchScreen == null) matchScreen = new MatchGUI();
+				screen = matchScreen;
 				break;
-			case SCREEN3:
-				if(screen3 == null) screen3 = new MatchGUI();
-				screen = screen3;
-				break;
-				default:
-					if(screen0== null) screen0 = new MainMenuGUI();
-						screen0.setScreenChangeHandler(this);
-					screen = screen0;
+			default:
+				if(mainScreen == null){
+					mainScreen = new MainMenuGUI();
+					mainScreen.setScreenChangeHandler(this);
+				}
+				screen = mainScreen;
 		}
 
 		scene.setRoot(screen);
@@ -64,6 +60,5 @@ public final class ScreenFactory implements ScreenChangeHandler{
 		Pane root = setScreen(screenChoice);
 		scene.setRoot(root);
 	}
-
 
 }
