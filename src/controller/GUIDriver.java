@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import src.ui_gui.MainMenuGUI;
+import src.ui_gui.ScreenFactory;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -26,7 +27,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-public class TempMain extends Application {
+public class GUIDriver extends Application {
 	/** buttons for screens**/
 	Button but_screen1, but_screen2;
 
@@ -48,7 +49,7 @@ public class TempMain extends Application {
 			
 			Scene scene = new Scene(new MainMenuGUI(),800,600);
 			this.rootScene = scene;
-			
+			// ScreenFactory.getInstance(scene);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 	
 			primaryStage.setScene(scene);
