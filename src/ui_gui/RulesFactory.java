@@ -3,6 +3,7 @@ package src.ui_gui;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import src.ui_gui.screens.BoardSetup;
+import src.ui_gui.screens.KingRules;
 
 public class RulesFactory {
 
@@ -14,6 +15,7 @@ public class RulesFactory {
 				pane = new BoardSetup().getRoot();
 				break;
 			case KING:
+				pane = new KingRules().getRoot();
 				break;
 			case QUEEN:
 				break;
