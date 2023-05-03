@@ -4,7 +4,7 @@ package src.interfaces;
  * A interface that defines methods for the command line interface
  * to show the main menu of the chess game.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji (50%), Levi Sweat (50%)
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 4/19/2023
  */
 public interface MainMenuIF {

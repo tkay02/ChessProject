@@ -6,8 +6,9 @@ import src.enums.GameColor;
  * Interface for color of the chess pieces and squares.
  * 
  * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
- * @version 4/19/2023
+ * @version 3/27/2023
  */
+
 public interface BlackAndWhiteIF {
 
 	/**

@@ -7,9 +7,10 @@ import src.interfaces.SquareIF;
 /**
  * Class that represents a square object for ChessMeister.
  * 
- * @author Nolan Flinchum(80%), Thomas Kay (20%), Joseph Oladeji, Levi Sweat 
- * @version 4/19/2023
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat 
+ * @version 3/27/2023
  */
+
 public class Square extends BlackAndWhite implements SquareIF {
     
     /** Represents the current piece on the square **/

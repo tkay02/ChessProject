@@ -5,17 +5,15 @@ import src.interfaces.DefinePlayerIF;
 
 /**
  * A class that provides functionality for defining players using a command-line interface.
- * @author Joseph Oladeji (100%), Levi Sweat, Nolan Flinchum, Thomas Kay
- * @version 4/19/2023
+ * @author Joseph Oladeji, Levi Sweat, Nolan Flinchum, Thomas Kay
  */
 public class DefinePlayerCLI implements DefinePlayerIF {
+
     
     /** The input to scan the user's input **/
     private Scanner input;
 
-    /** 
-     * This method initializes the scanner to use System in 
-     */
+    /** This method initializes the scanner to use System in. */
     public DefinePlayerCLI() {
         input = new Scanner(System.in);
     }

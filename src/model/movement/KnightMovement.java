@@ -8,8 +8,9 @@ import src.model.Position;
  * Movement Stragety for the Knight Piece
  * 
  * @author Nolan Flinchum, Thomas Kay (80%), Joseph Oladeji (20%), Levi Sweat
- * @version 4/19/2023
+ * @version 3/27/2023
  */
+
 public class KnightMovement extends MovementStrategy {
 
     /**

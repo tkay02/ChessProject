@@ -7,8 +7,9 @@ import src.model.Position;
  * Class for the movement strategy of a rook.
  * 
  * @author Nolan Flinchum (50%), Thomas Kay, Joseph Oladeji (50%), Levi Sweat
- * @version 4/19/2023
+ * @version 3/27/2023
  */
+
 public class RookMovement extends QueenMovement{
 
     /**

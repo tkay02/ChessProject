@@ -1,7 +1,10 @@
 package src.ui_cli;
 import src.interfaces.BoardStrategy;
+
 import java.util.ArrayList;
+
 import src.model.Position;
+
 import src.interfaces.BoardIF;
 import src.model.Piece;
 import src.model.Square;
@@ -11,8 +14,7 @@ import src.model.Square;
  * where blue pieces represent white pieces and red pieces represent black pieces.
  * It also displays the rank and file to help users make moves, and shows
  * the pieces that have been taken thus far by each player.
- * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat (100%)
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 4/19/2023
  */
 public abstract class BoardDisplayCLI implements BoardStrategy{
@@ -38,9 +40,9 @@ public abstract class BoardDisplayCLI implements BoardStrategy{
 	 * files A-H.
 	 * 
 	 * @param BoardIF board The chess board that has the current piece locations and capture
-	 * 				  history.
+	 * history.
 	 * @param ArrayList<Position> validMoves The list that contains the valid moves for a piece or
-	 * 							  pieces.
+	 * pieces.
 	 * @param String player1 The name of player 1.
 	 * @param String player2 The name of player 2.
 	 */
@@ -83,9 +85,9 @@ public abstract class BoardDisplayCLI implements BoardStrategy{
 	 * bottom and files H-A.
 	 * 
 	 * @param BoardIF board The chess board that has the current piece locations and capture
-	 * 				  history.
+	 * history.
 	 * @param ArrayList<Position> validMoves The list that contains the valid moves for a piece or
-	 * 							  pieces.
+	 * pieces.
 	 * @param String player1 The name of player 1.
 	 * @param String player2 The name of player 2.
 	 */
@@ -112,6 +114,9 @@ public abstract class BoardDisplayCLI implements BoardStrategy{
 						toDisplay += blackSquare(piece);
 					}
 				}
+
+				//Position pos = board.getSquares()[i][j].getPosition();
+				//toDisplay += showMoves(validMoves, pos);
 			}
             toDisplay += "\n";
 		}

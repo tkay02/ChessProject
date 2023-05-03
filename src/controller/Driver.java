@@ -5,8 +5,9 @@ package src.controller;
  * allows the user to select the boardStrategy from the main menu and begin playing.
  * 
  * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat (100%)
- * @version 4/19/2023
+ * @version 3/27/2023
  */
+
 public class Driver {
 
 	/**
