@@ -10,8 +10,9 @@ import src.enums.File;
  * movements a pawn can make given the row and column of the pawn.
  * 
  * @author Nolan Flinchum (100%), Thomas Kay, Joseph Oladeji, Levi Sweat
- * @version 4/19/2023
+ * @version 3/27/2023
  */
+
 public class PawnMovement extends MovementStrategy {
     
     /**

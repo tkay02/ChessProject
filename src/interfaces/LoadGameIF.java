@@ -7,7 +7,7 @@ package src.interfaces;
  * game state accordingly. The class also defines a constructor that sets up a `Scanner` object 
  * for user input and an instance variable to keep track of the saved game file name.
  *
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji (100%), Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 4/19/2023
  */
 public interface LoadGameIF{

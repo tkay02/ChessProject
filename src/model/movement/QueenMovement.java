@@ -8,8 +8,9 @@ import src.model.Position;
  * Class for the movement strategy of a queen.
  * 
  * @author Nolan Flinchum (40%), Thomas Kay (20%), Joseph Oladeji (40%), Levi Sweat
- * @version 4/19/2023
+ * @version 3/27/2023
  */
+
 public class QueenMovement extends MovementStrategy {
 
     /**

@@ -6,8 +6,9 @@ import src.enums.ChessPieceType;
  * Interface for the chess pieces.
  * 
  * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
- * @version 4/19/2023
+ * @version 3/27/2023
  */
+
 public interface PieceIF {
 
 	/**

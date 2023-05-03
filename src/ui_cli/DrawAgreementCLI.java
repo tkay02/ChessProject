@@ -1,13 +1,14 @@
 package src.ui_cli;
 
 import java.util.Scanner;
+
 import src.interfaces.DrawByAgreementIF;
 
 /**
  * A class that provides functionality for managing draw agreements between players using a
  * command-line interface.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat (100%)
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 4/19/2023
  */
 public class DrawAgreementCLI implements DrawByAgreementIF{
