@@ -8,9 +8,11 @@ import java.util.Arrays;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-public class MainMenuGUI extends VBox {
+public class MainMenuGUI extends BorderPane {
 
 	/**The current stage for the application**/
 	Stage stage;
@@ -20,17 +22,31 @@ public class MainMenuGUI extends VBox {
 	
 	/**The button options of the menu**/
 	Button b1, b2, b3, b4, b5, b6, b7, b8;
+	
+	Pane top, bottom, left, right, center;
+	
+	ScreenChangeHandler screenChanger;
+	
 	/**Construct the menu**/
 	public MainMenuGUI(){
 		
-		this.setAlignment(Pos.CENTER);//SET the alignment of the  layout.
-		this.setSpacing(20);//Spacing between components.
+
+		top = new VBox();
+		
+	    this.setTop(top);
+	    this.setBottom(bottom);
+	    this.setRight(right);
+	    this.setLeft(left);
+	    this.setCenter(center);
+		top.setAlignment(Pos.CENTER); //SET the alignment of the  layout.
+		top.setSpacing(20); //Spacing between components.
+		
 		this.setId("Screen0");//The CSS id for this screen
 		
 		//Menu Title
 		Label lbl = new Label("ChessMeister");
 		lbl.getStyleClass().add("screenTitle");
-		this.getChildren().add(lbl);
+		top.getChildren().add(lbl);
 		
 		//menu option1
 		b1 = new Button("Play Chess");  
@@ -55,7 +71,6 @@ public class MainMenuGUI extends VBox {
 	    b5.getStyleClass().add("buttonStyleA");
 	    b5.getStyleClass().add("buttonSizeS");
 	    
-	    
 	    b6 = new Button("Settings");  
 	    b6.getStyleClass().add("buttonStyleA");
 	    b6.getStyleClass().add("buttonSizeS");
@@ -69,10 +84,8 @@ public class MainMenuGUI extends VBox {
 	    b8.getStyleClass().add("buttonSizeS");
 	    this.getChildren().addAll(Arrays.asList(b1, b2, b3, b4, b5, b6, b7, b8));
 	    
+	    
 	}//end Screen0
 	
-    
 
- 
-	
 }
