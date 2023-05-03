@@ -12,7 +12,7 @@ public final class ScreenFactory implements ScreenChangeHandler{
 	
 	private static SettingsGUI settingsScreen;
 	
-	private static RulesGUI rulesScreen;
+	// private static RulesGUI rulesScreen;
 	
 	private static MatchGUI matchScreen;
 	
