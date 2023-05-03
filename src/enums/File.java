@@ -1,4 +1,5 @@
 package src.enums;
+
 /**
  * This enumeration class models the File also known as the column for the
  * chess board. The letters representing the possible selections for the
@@ -7,9 +8,8 @@ package src.enums;
  * index within the array.
  * 
  * @author Nolan Flinchum (5%), Thomas Kay, Joseph Oladeji (95%), Levi Sweat
- * @version 3/27/2023
+ * @version 4/19/2023
  */
-
 public enum File {
 
     A('A', 0), B('B', 1), C('C', 2), D('D', 3),

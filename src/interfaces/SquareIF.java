@@ -6,9 +6,8 @@ import src.model.Position;
  * Interface for the squares on the chess board.
  * 
  * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
- * @version 3/27/2023
+ * @version 4/19/2023
  */
-
 public interface SquareIF {
 	
 	/**

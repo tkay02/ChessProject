@@ -2,21 +2,20 @@ package src.ui_cli;
 
 import java.io.FileWriter;
 import java.util.Scanner;
-
 import src.interfaces.SaveGameIF;
 
 /**
  * A class that provides functionality for saving a game state to a file using a specified
  * implementation of the SaveGameIF interface.
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji (100%), Levi Sweat
  * @version 4/19/2023
  */
 public class SaveGameCLI implements SaveGameIF {
     
-    /** Scanner for user input */
+    /** Scanner for user input **/
     private Scanner input;
 
-    /** This method initializes the scanner to use System in. */
+    /** This method initializes the scanner to use System in. **/
     public SaveGameCLI(){
         input = new Scanner(System.in);
     }
@@ -32,7 +31,6 @@ public class SaveGameCLI implements SaveGameIF {
         return input.next();
     }
 
-
     /**
      * Saves the current game state to the specified file path with the specified content.
      *
@@ -41,7 +39,9 @@ public class SaveGameCLI implements SaveGameIF {
      */
     public void saveGame(String filePath, String fileContent){
         try{
+            // Attempt to get the game path
             FileWriter gameFile = new FileWriter(filePath, false); 
+            // Then write the fileContent to the path
             gameFile.write(fileContent);
             gameFile.close();
         }catch(Exception e){

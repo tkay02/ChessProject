@@ -4,7 +4,7 @@ package src.interfaces;
  * A interface to define the rules of a game in the 
  * command-line interface (CLI).
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
  * @version 4/19/2023
  */
 public interface RulesIF {

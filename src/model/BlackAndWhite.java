@@ -8,9 +8,8 @@ import src.enums.GameColor;
  * Acts as a superclass for squares and pieces in chess.
  * 
  * @author Nolan Flinchum (100%), Thomas Kay, Joseph Oladeji, Levi Sweat
- * @version 3/27/2023
+ * @version 4/19/2023
  */
-
 public class BlackAndWhite implements BlackAndWhiteIF {
     
     /* Represents the actual color of an object */

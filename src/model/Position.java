@@ -7,9 +7,8 @@ import src.enums.Rank;
  * A class that uses ranks and files to represent a position on a chess board.
  * 
  * @author Nolan Flinchum (70%), Thomas Kay, Joseph Oladeji (30%), Levi Sweat
- * @version 3/27/2023
+ * @version 4/19/2023
  */
-
 public class Position {
 
     /** Rank enum to represent the position's rank **/
@@ -58,8 +57,10 @@ public class Position {
     }
 
     /**
-     * Returns the string representation of the position. Places the file in front of the rank in regards to
-     * the current position. Can be used to store positions within a file.
+     * Returns the string representation of the position. Places the file in front of the rank in
+     * regards to the current position. Can be used to store positions within a file.
+     * 
+     * @return string representation of a position
      */
     public String toString() {
         return "" + this.file + this.rank;
