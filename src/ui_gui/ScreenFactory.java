@@ -12,7 +12,7 @@ public final class ScreenFactory implements ScreenChangeHandler{
 	
 	private static SettingsGUI settingsScreen;
 	
-	// private static RulesGUI rulesScreen;
+	private static RulesGUI rulesScreen;
 	
 	private static MatchGUI matchScreen;
 	
@@ -42,6 +42,13 @@ public final class ScreenFactory implements ScreenChangeHandler{
 			case MATCH_SCREEN:
 				if(matchScreen == null) matchScreen = new MatchGUI();
 				screen = matchScreen;
+				break;
+			case RULES_SCREEN:
+				if(rulesScreen == null) {
+					rulesScreen = new RulesGUI();
+					rulesScreen.setScreenChangeHandler(this);
+				}
+				screen = rulesScreen.getRoot();
 				break;
 			default:
 				if(mainScreen == null){
