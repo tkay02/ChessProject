@@ -20,7 +20,7 @@ public class MatchGUI extends BorderPane {
 
     public MatchGUI(){
 		HBox top = new HBox(50);
-		Pane bottom = new HBox();
+		HBox bottom = new HBox();
 		Pane left = new VBox();
 		Pane right = new VBox();
 		Pane center = new Pane();
@@ -32,12 +32,17 @@ public class MatchGUI extends BorderPane {
 		this.getStyleClass().add("backgroundA");
 
 		this.setPadding(new Insets(5));
-		this.setMargin(top, new Insets(5));
+		BorderPane.setMargin(top, new Insets(5));
+		BorderPane.setMargin(bottom, new Insets(5));
+		BorderPane.setMargin(left, new Insets(5));
+		BorderPane.setMargin(right, new Insets(5));
+		BorderPane.setMargin(center, new Insets(5));
+
 
 		//// TOP ////
 		top.setAlignment(Pos.CENTER);
 		top.setMinHeight(20.0);
-		top.getStyleClass().add("mainMenu");
+		top.getStyleClass().add("backgroundB");
 
 		b1 = new Button("Load");
 		b1.getStyleClass().add("buttonStyleA");
@@ -66,8 +71,12 @@ public class MatchGUI extends BorderPane {
 
 		top.getChildren().addAll(b1, b2, b3, b4, b5);
 
+		//// BOTTOM ////
+		bottom.setAlignment(Pos.CENTER);
+		bottom.getStyleClass().add("backgroundB");
+
 		//// LEFT ////
-		left.getStyleClass().add("mainMenu");
+		left.getStyleClass().add("backgroundB");
 
 		b6 = new Button("Show Moves");
 		b6.getStyleClass().add("buttonStyleA");
@@ -76,13 +85,17 @@ public class MatchGUI extends BorderPane {
 		left.getChildren().add(b6);
 
 		//// RIGHT ////
-		right.getStyleClass().add("mainMenu");
+		right.getStyleClass().add("backgroundB");
 
 		b7 = new Button("Exit to Main Menu");
 		b7.getStyleClass().add("buttonStyleA");
 		b7.getStyleClass().add("buttonSizeA");
 		b7.setOnAction(btnHandle);
 		right.getChildren().add(b7);
+
+		//// CENTER ////
+		center.getStyleClass().add("backgroundB");
+
     }
 
     public void setScreenChangeHandler(ScreenChangeHandler screen){

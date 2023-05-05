@@ -4,7 +4,11 @@
 }
 
 .backgroundA{
-    -fx-background-color: #000000;
+    -fx-background-color: #07003c;
+}
+
+.backgroundB{
+    -fx-background-color: #72d0ff;
 }
 
 /** Text field styles */
