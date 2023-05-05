@@ -1,25 +1,88 @@
 package src.ui_gui;
 
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import src.interfaces.ScreenChangeHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 
-public class MatchGUI extends Pane {
+public class MatchGUI extends BorderPane {
 
         
     private ScreenChangeHandler screenChanger;
 
-    private Button b1;
+    private Button b1, b2, b3, b4, b5, b6, b7;
 
     public MatchGUI(){
-		b1 = new Button("Back to Main Menu");
-		this.getStyleClass().add("mainMenu");
+		HBox top = new HBox(50);
+		Pane bottom = new HBox();
+		Pane left = new VBox();
+		Pane right = new VBox();
+		Pane center = new Pane();
+		this.setTop(top);
+		this.setBottom(bottom);
+		this.setRight(right);
+		this.setLeft(left);
+		this.setCenter(center);
+		this.getStyleClass().add("backgroundA");
+
+		this.setPadding(new Insets(5));
+		this.setMargin(top, new Insets(5));
+
+		//// TOP ////
+		top.setAlignment(Pos.CENTER);
+		top.setMinHeight(20.0);
+		top.getStyleClass().add("mainMenu");
+
+		b1 = new Button("Load");
 		b1.getStyleClass().add("buttonStyleA");
-		b1.getStyleClass().add("buttonSizeA");
-		b1.setOnAction(btnHandle);
-		getChildren().add(b1);
+		b1.getStyleClass().add("buttonSizeA");;
+		//b1.setOnAction(btnHandle);
+
+		b2 = new Button("Save");
+		b2.getStyleClass().add("buttonStyleA");
+		b2.getStyleClass().add("buttonSizeA");
+		//b2.setOnAction(btnHandle);
+
+		b3 = new Button("Undo");
+		b3.getStyleClass().add("buttonStyleA");
+		b3.getStyleClass().add("buttonSizeA");
+		//b3.setOnAction(btnHandle);
+
+		b4 = new Button("Redo");
+		b4.getStyleClass().add("buttonStyleA");
+		b4.getStyleClass().add("buttonSizeA");
+		//b4.setOnAction(btnHandle);
+
+		b5 = new Button("Settings");
+		b5.getStyleClass().add("buttonStyleA");
+		b5.getStyleClass().add("buttonSizeA");
+		//b5.setOnAction(btnHandle);
+
+		top.getChildren().addAll(b1, b2, b3, b4, b5);
+
+		//// LEFT ////
+		left.getStyleClass().add("mainMenu");
+
+		b6 = new Button("Show Moves");
+		b6.getStyleClass().add("buttonStyleA");
+		b6.getStyleClass().add("buttonSizeA");
+		//b6.setOnAction(btnHandle);
+		left.getChildren().add(b6);
+
+		//// RIGHT ////
+		right.getStyleClass().add("mainMenu");
+
+		b7 = new Button("Exit to Main Menu");
+		b7.getStyleClass().add("buttonStyleA");
+		b7.getStyleClass().add("buttonSizeA");
+		b7.setOnAction(btnHandle);
+		right.getChildren().add(b7);
     }
 
     public void setScreenChangeHandler(ScreenChangeHandler screen){
@@ -31,7 +94,7 @@ public class MatchGUI extends Pane {
 			if(screenChanger != null){
 				Object o = event.getSource();
 
-				if(o == b1){
+				if(o == b7){
 				   screenChanger.changeScreen(ScreenFactory.Screen.MAIN_SCREEN);
 				}
 		
