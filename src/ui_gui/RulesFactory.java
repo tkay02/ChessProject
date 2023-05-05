@@ -2,8 +2,6 @@ package src.ui_gui;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
-import src.ui_gui.screens.BoardSetup;
-import src.ui_gui.screens.KingRules;
 
 public class RulesFactory {
 
@@ -18,16 +16,22 @@ public class RulesFactory {
 				pane = new KingRules().getRoot();
 				break;
 			case QUEEN:
+				pane = new QueenRules().getRoot();
 				break;
 			case BISHOP:
+				pane = new BishopRules().getRoot();
 				break;
 			case KNIGHT:
+				pane = new KnightRules().getRoot();
 				break;
 			case ROOK:
+				pane = new RookRules().getRoot();
 				break;
 			case PAWN:
+				pane = new PawnRules().getRoot();
 				break;
 			case OVERVIEW:
+				pane = new Overview().getRoot();
 				break;
 		}
 		return pane;

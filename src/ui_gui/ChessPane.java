@@ -24,7 +24,6 @@ public class ChessPane extends TilePane {
 	public ChessPane() {
 		super();
 		this.setAlignment(Pos.BASELINE_CENTER);
-		this.setPrefColumns(9);
 		this.setMaxWidth(MAX_WIDTH);
 		this.setMaxHeight(MAX_HEIGHT);
 		//Change later

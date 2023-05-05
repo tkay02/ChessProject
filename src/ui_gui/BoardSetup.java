@@ -20,9 +20,9 @@ public class BoardSetup {
 		
 		this.root = new VBox();
 		Label title = new Label("Chess Board Setup");
-		this.root.getChildren().add(title);
 		ChessPane board = new ChessPane();
 		this.root.getChildren().add(board);
+		this.root.getChildren().add(title);
 	
 	}
 	public Pane getRoot() {
