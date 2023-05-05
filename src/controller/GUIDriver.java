@@ -6,6 +6,8 @@ import src.ui_gui.ScreenFactory;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class GUIDriver extends Application {
 
