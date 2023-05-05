@@ -14,8 +14,10 @@ public class MatchGUI extends Pane {
     private Button b1;
 
     public MatchGUI(){
-		this.getStyleClass().add("mainMenu");
 		b1 = new Button("Back to Main Menu");
+		this.getStyleClass().add("mainMenu");
+		b1.getStyleClass().add("buttonStyleA");
+		b1.getStyleClass().add("buttonSizeA");
 		b1.setOnAction(btnHandle);
 		getChildren().add(b1);
     }

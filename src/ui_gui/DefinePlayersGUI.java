@@ -16,6 +16,8 @@ public class DefinePlayersGUI extends Pane{
     public DefinePlayersGUI() {
         this.getStyleClass().add("mainMenu");
 		b1 = new Button("Back to Main Menu");
+		b1.getStyleClass().add("buttonStyleA");
+		b1.getStyleClass().add("buttonSizeA");
 		b1.setOnAction(btnHandle);
 		getChildren().add(b1);
     }

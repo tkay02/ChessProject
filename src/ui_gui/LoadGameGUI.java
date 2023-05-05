@@ -15,6 +15,8 @@ public class LoadGameGUI extends Pane {
     public LoadGameGUI() {
         this.getStyleClass().add("mainMenu");
 		b1 = new Button("Back to Main Menu");
+		b1.getStyleClass().add("buttonStyleA");
+		b1.getStyleClass().add("buttonSizeA");
 		b1.setOnAction(btnHandle);
 		getChildren().add(b1);
     }
@@ -27,8 +29,7 @@ public class LoadGameGUI extends Pane {
 		public void handle(ActionEvent event){
 			if(screenChanger != null){
 				Object o = event.getSource();
-
-				if(o == b1){
+				if(o == b1) {
 				   screenChanger.changeScreen(ScreenFactory.Screen.MAIN_SCREEN);
 				}
 				
