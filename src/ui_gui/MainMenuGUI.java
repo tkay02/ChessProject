@@ -3,6 +3,7 @@ package src.ui_gui;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import src.controller.GUIDriver;
 import src.interfaces.ScreenChangeHandler;
 import java.util.Arrays;
 import javafx.event.ActionEvent;
@@ -15,6 +16,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 /**
  * 
@@ -31,8 +36,11 @@ public class MainMenuGUI extends BorderPane {
 	Button b1, b2, b3, b4, b5, b6, b7, b8;
 	
 	/** Panes for the parts of a border pane **/
-	//Pane top, bottom, left, right, center;
+
+
+	// Pane top, bottom, left, right, center;
 	
+
 	/** Handles the screen changing **/
 	ScreenChangeHandler screenChanger;
 	
@@ -42,14 +50,14 @@ public class MainMenuGUI extends BorderPane {
 		Pane top = new HBox();
 		AnchorPane bottom = new AnchorPane();
 		Pane left = new Pane();
-		Pane right = new Pane();
+		VBox right = new VBox();
 		VBox center = new VBox();
-
 		this.setTop(top);
 		this.setBottom(bottom);
 		this.setRight(right);
 		this.setLeft(left);
 		this.setCenter(center);
+		this.getStyleClass().add("mainMenu");
 
 		/////////// CENTER PART /////////////
 		center.setAlignment(Pos.CENTER);
@@ -67,7 +75,7 @@ public class MainMenuGUI extends BorderPane {
 		b2.getStyleClass().add("buttonStyleA");
 		b2.getStyleClass().add("buttonSizeA");
 		
-		b3 = new Button("Sign In");  
+		b3 = new Button("Sign In");
 		b3.getStyleClass().add("buttonStyleA");
 		b3.getStyleClass().add("buttonSizeA");
 		
@@ -103,9 +111,13 @@ public class MainMenuGUI extends BorderPane {
 
 		b7.setOnAction(btnHandle);
 		b8.setOnAction(btnHandle);
-
+		ImageView imv = new ImageView();
+		Image image = new Image(GUIDriver.class.getResourceAsStream("PieceGIF3.gif"));
+		imv.setImage(image);
+		right.getChildren().add(imv);
+		right.setAlignment(Pos.CENTER_RIGHT);
 		bottom.getChildren().addAll(Arrays.asList(b7, b8));
-
+		
 	}
 
 	public void setScreenChangeHandler(ScreenChangeHandler screen){
@@ -116,12 +128,24 @@ public class MainMenuGUI extends BorderPane {
 		public void handle(ActionEvent event){
 			if(screenChanger != null){
 				Object o = event.getSource();
-		   
+
 				if(o == b1){
 				   screenChanger.changeScreen(ScreenFactory.Screen.MATCH_SCREEN);
 				}
 				else if(o == b2){
 				   screenChanger.changeScreen(ScreenFactory.Screen.RULES_SCREEN);
+				}
+				else if(o == b3){
+					screenChanger.changeScreen(ScreenFactory.Screen.SIGN_IN);
+				}
+				else if(o == b4){
+					screenChanger.changeScreen(ScreenFactory.Screen.SIGN_UP);
+				}
+				else if(o == b5){
+					screenChanger.changeScreen(ScreenFactory.Screen.DEFINE_PLAYERS);
+				}
+				else if(o == b6){
+					screenChanger.changeScreen(ScreenFactory.Screen.LOAD_GAME);
 				}
 				else if(o == b7){
 					screenChanger.changeScreen(ScreenFactory.Screen.SETTINGS_SCREEN);

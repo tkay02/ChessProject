@@ -6,15 +6,15 @@ import src.interfaces.ScreenChangeHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
-public class MatchGUI extends Pane {
-
+public class DefinePlayersGUI extends Pane{
+    
         
     private ScreenChangeHandler screenChanger;
 
     private Button b1;
-
-    public MatchGUI(){
-		this.getStyleClass().add("mainMenu");
+	
+    public DefinePlayersGUI() {
+        this.getStyleClass().add("mainMenu");
 		b1 = new Button("Back to Main Menu");
 		b1.setOnAction(btnHandle);
 		getChildren().add(b1);
@@ -32,9 +32,9 @@ public class MatchGUI extends Pane {
 				if(o == b1){
 				   screenChanger.changeScreen(ScreenFactory.Screen.MAIN_SCREEN);
 				}
-		
+				
 			}
 		}
 	};	
-}
 
+}
