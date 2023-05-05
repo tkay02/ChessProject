@@ -15,6 +15,8 @@ public class SignInGUI extends Pane {
     public SignInGUI() {
         this.getStyleClass().add("mainMenu");
 		b1 = new Button("Back to Main Menu");
+		b1.getStyleClass().add("buttonStyleA");
+		b1.getStyleClass().add("buttonSizeA");
 		getChildren().add(b1);
 		b1.setOnAction(btnHandle);
     }

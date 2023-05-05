@@ -93,11 +93,15 @@ public class MainMenuGUI extends BorderPane {
 
 		b1.setOnAction(btnHandle);
 		b2.setOnAction(btnHandle);
-		
+		b3.setOnAction(btnHandle);
+		b4.setOnAction(btnHandle);
+		b5.setOnAction(btnHandle);
+		b6.setOnAction(btnHandle);
+
 		center.getChildren().addAll(Arrays.asList(b1, b2, b3, b4, b5, b6));
 
 		/////// BOTTOM ////////		
-		b7 = new Button("Settings");  
+		b7 = new Button("Settings"); 
 		b7.getStyleClass().add("buttonStyleA");
 		b7.getStyleClass().add("buttonSizeA");
 		AnchorPane.setLeftAnchor(b7, 20.0);
@@ -117,7 +121,6 @@ public class MainMenuGUI extends BorderPane {
 		right.getChildren().add(imv);
 		right.setAlignment(Pos.CENTER_RIGHT);
 		bottom.getChildren().addAll(Arrays.asList(b7, b8));
-		
 	}
 
 	public void setScreenChangeHandler(ScreenChangeHandler screen){
@@ -129,30 +132,22 @@ public class MainMenuGUI extends BorderPane {
 			if(screenChanger != null){
 				Object o = event.getSource();
 
-				if(o == b1){
+				if(o == b1)
 				   screenChanger.changeScreen(ScreenFactory.Screen.MATCH_SCREEN);
-				}
-				else if(o == b2){
+				else if(o == b2)
 				   screenChanger.changeScreen(ScreenFactory.Screen.RULES_SCREEN);
-				}
-				else if(o == b3){
+				else if(o == b3)
 					screenChanger.changeScreen(ScreenFactory.Screen.SIGN_IN);
-				}
-				else if(o == b4){
+				else if(o == b4)
 					screenChanger.changeScreen(ScreenFactory.Screen.SIGN_UP);
-				}
-				else if(o == b5){
+				else if(o == b5)
 					screenChanger.changeScreen(ScreenFactory.Screen.DEFINE_PLAYERS);
-				}
-				else if(o == b6){
+				else if(o == b6)
 					screenChanger.changeScreen(ScreenFactory.Screen.LOAD_GAME);
-				}
-				else if(o == b7){
+				else if(o == b7)
 					screenChanger.changeScreen(ScreenFactory.Screen.SETTINGS_SCREEN);
-				}
-				else if(o == b8){
+				else if(o == b8)
 					System.exit(1);
-				}
 			}
 		}
 	};	
