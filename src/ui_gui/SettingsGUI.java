@@ -10,24 +10,22 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import src.interfaces.ScreenChangeHandler;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 public class SettingsGUI extends VBox{
 
-	/**The current stage for the application**/
-	Stage stage;
-	
-	/**the root scene for this app**/
-	Scene rootScene;
-	
 	/**The button options of the menu**/
 	Button b1, b2, b3, b4, b5, b6, b7, b8;
 	
+	private ScreenChangeHandler screenChanger;
 	/**Construct the menu**/
 	public SettingsGUI(){
 		
 		this.setAlignment(Pos.CENTER);//SET the alignment of the  layout.
 		this.setSpacing(20);//Spacing between components.
-		this.setId("Screen0");//The CSS id for this screen
+		this.getStyleClass().add("mainMenu");
 		
 		//Menu Title
 		Label lbl = new Label("Settings");
@@ -48,6 +46,11 @@ public class SettingsGUI extends VBox{
 		VBox v2 = new VBox();
 		this.getChildren().add(v2);
 		v2.getChildren().add(cb1);
+
+		this.getStyleClass().add("mainMenu");
+		b1 = new Button("Back to Main Menu");
+		b1.setOnAction(btnHandle);
+		getChildren().add(b1);
 		
 		
 //		//menu option1
@@ -88,9 +91,20 @@ public class SettingsGUI extends VBox{
 //	    this.getChildren().addAll(Arrays.asList(b1, b2, b3, b4, b5, b6, b7, b8));
 	}
 	
-	public void setScreenChangeHandler(){
-		
+	public void setScreenChangeHandler(ScreenChangeHandler screen){
+		this.screenChanger = screen;
 	}
 	
+	EventHandler<ActionEvent> btnHandle = new EventHandler<ActionEvent>(){
+		public void handle(ActionEvent event){
+			if(screenChanger != null){
+				Object o = event.getSource();
+
+				if(o == b1){
+				   screenChanger.changeScreen(ScreenFactory.Screen.MAIN_SCREEN);
+				}
+			}
+		}
+	};	
 }
 

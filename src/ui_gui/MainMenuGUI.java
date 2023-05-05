@@ -18,6 +18,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+
 /**
  * 
  */
@@ -33,8 +36,11 @@ public class MainMenuGUI extends BorderPane {
 	Button b1, b2, b3, b4, b5, b6, b7, b8;
 	
 	/** Panes for the parts of a border pane **/
+
+
 	// Pane top, bottom, left, right, center;
 	
+
 	/** Handles the screen changing **/
 	ScreenChangeHandler screenChanger;
 	
@@ -52,6 +58,7 @@ public class MainMenuGUI extends BorderPane {
 		this.setLeft(left);
 		this.setCenter(center);
 		this.getStyleClass().add("mainMenu");
+
 		/////////// CENTER PART /////////////
 		center.setAlignment(Pos.CENTER);
 		center.setSpacing(15);
@@ -68,7 +75,7 @@ public class MainMenuGUI extends BorderPane {
 		b2.getStyleClass().add("buttonStyleA");
 		b2.getStyleClass().add("buttonSizeA");
 		
-		b3 = new Button("Sign In");  
+		b3 = new Button("Sign In");
 		b3.getStyleClass().add("buttonStyleA");
 		b3.getStyleClass().add("buttonSizeA");
 		
@@ -127,6 +134,18 @@ public class MainMenuGUI extends BorderPane {
 				}
 				else if(o == b2){
 				   screenChanger.changeScreen(ScreenFactory.Screen.RULES_SCREEN);
+				}
+				else if(o == b3){
+					screenChanger.changeScreen(ScreenFactory.Screen.SIGN_IN);
+				}
+				else if(o == b4){
+					screenChanger.changeScreen(ScreenFactory.Screen.SIGN_UP);
+				}
+				else if(o == b5){
+					screenChanger.changeScreen(ScreenFactory.Screen.DEFINE_PLAYERS);
+				}
+				else if(o == b6){
+					screenChanger.changeScreen(ScreenFactory.Screen.LOAD_GAME);
 				}
 				else if(o == b7){
 					screenChanger.changeScreen(ScreenFactory.Screen.SETTINGS_SCREEN);

@@ -2,13 +2,10 @@ package src.ui_gui;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import src.interfaces.ScreenChangeHandler;
 import src.ui_gui.ScreenFactory.Screen;
-
 import java.util.Arrays;
-
 import javafx.event.*;
 import javafx.geometry.Pos;
 
@@ -45,17 +42,20 @@ public class RulesGUI implements EventHandler<ActionEvent> {
 	private BorderPane root;
 
 	/**To change the display to different scenes**/
-	RulesFactory fact;
+	private RulesFactory fact;
 
 	/** Handles the screen changing **/
 	private ScreenChangeHandler screenChanger;
 	
 	/**Constructor for class**/
 	public RulesGUI() {
+
 		super();
 		this.root = new BorderPane();
 		this.fact = new RulesFactory();
+		
 		//Creates top panel for RulesGUI
+		root.getStyleClass().add("mainMenu");
 		HBox top = new HBox(300.0);
 		Label rules = new Label("Rules");
 		this.b0 = new Button("Back to Main Menu");
@@ -102,7 +102,7 @@ public class RulesGUI implements EventHandler<ActionEvent> {
 	public void setScreenChangeHandler(ScreenChangeHandler screen){
 		this.screenChanger = screen;
 	}
-	
+
 	public Pane getRoot() {
 		return this.root;
 	}
@@ -112,7 +112,6 @@ public class RulesGUI implements EventHandler<ActionEvent> {
 
 		// Need to add code to buttons
 		if(event.getSource() == this.b0) {
-			System.out.println("Button pressed");
 			screenChanger.changeScreen(Screen.MAIN_SCREEN);
 		}
 		if(event.getSource() == this.b1) {
