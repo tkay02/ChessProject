@@ -74,3 +74,22 @@
     -fx-stroke-dash-offset: 6;
 }
 
+#WhiteSquare {
+    -fx-background-color: #fef9f3;
+    -fx-border-color: #000000;
+}
+
+#BlackSquare {
+    -fx-background-color: #3f301d;
+    -fx-border-color: #000000;
+}
+
+#SelectedSquare {
+    -fx-background-color: #0a0468;
+    -fx-border-color: #000000;
+}
+
+#ValidSquare {
+    -fx-background-color: #5573d6;
+    -fx-border-color: #000000;
+}
