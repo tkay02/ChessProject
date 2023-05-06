@@ -45,6 +45,13 @@
     -fx-font-weight: 800;
 }
 
+/** Label Styles */
+.labelB {
+    -fx-font-size: 32px;
+    -fx-font-family: "Helvetica";
+    -fx-text-fill: #4a0200
+}
+
 /** Button Styles */
 .buttonStyleA {
     -fx-background-color: 
