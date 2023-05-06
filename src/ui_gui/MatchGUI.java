@@ -148,8 +148,15 @@ public class MatchGUI extends BorderPane {
 				if(o == b7) screenChanger.changeScreen(Screen.MAIN_SCREEN);
 				else if(o == b5) screenChanger.changeScreen(Screen.SETTINGS_SCREEN);
 				else if(o == b1){
-					Dialog<String> load = new LoadGameGUI("");
+					Dialog<String> load = new LoadGameGUI();
 					Optional<String> result = load.showAndWait();
+					if (result.isPresent()) {
+						
+					}
+				}
+				else if(o == b2){
+					Dialog<String> save = new SaveGameGUI();
+					Optional<String> result = save.showAndWait();
 					if (result.isPresent()) {
 						
 					}
