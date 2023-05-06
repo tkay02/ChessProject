@@ -23,7 +23,7 @@ public class SmallTester extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		try {
 			boolean playerOneTurn = true;
-			ChessBoardGUI root = new ChessBoardGUI(new Chess(),playerOneTurn);
+			ChessBoardGUI root = new ChessBoardGUI(new Chess(), playerOneTurn);
 			Scene scene = new Scene(root, 540, 540);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);

@@ -12,6 +12,7 @@ import javafx.scene.layout.GridPane;
 import src.controller.Chess;
 import src.enums.ChessPieceType;
 import src.enums.File;
+import src.enums.GameColor;
 import src.enums.Rank;
 import src.model.Board;
 import src.model.Piece;
@@ -35,6 +36,7 @@ public class ChessBoardGUI extends GridPane {
 		this.setAlignment(Pos.BASELINE_CENTER);
 		ChessBoardGUI.board = new ChessSquare[8][8];
 		ChessBoardGUI.game = chessgame;
+		
 		ChessBoardGUI.ogBoard = chessgame.getBoard();
 		ChessBoardGUI.isWhite = isWhite;
 		Square[][] tiles = (Square[][])ogBoard.getSquares();
@@ -76,7 +78,8 @@ public class ChessBoardGUI extends GridPane {
 		Piece piece = (Piece)ChessBoardGUI.ogBoard.getPiece(pos[0], pos[1]);
 		Position space = new Position(Rank.getRankByIndex(pos[0]),File.getFileByIndex(pos[1]));
 		if(piece.isWhite() == ChessBoardGUI.isWhite || 
-		   piece.getChessPieceType() == ChessPieceType.EMPTY) {
+		   piece.getChessPieceType() == ChessPieceType.EMPTY ||
+		   (currentChessPiece.getId().equals("ValidSquare") && piece.isWhite() != isWhite)) {
 			if(ChessBoardGUI.currentChessPiece.getId().equals("SelectedSquare")) {
 				ChessBoardGUI.from = space;
 				ArrayList<Position> moves = piece.showMoves(space);
@@ -91,6 +94,41 @@ public class ChessBoardGUI extends GridPane {
 			if(ChessBoardGUI.from != null && ChessBoardGUI.to != null) {
 				ChessBoardGUI.game.move(from.getFile(), from.getRank(),
 										to.getFile(), to.getRank());
+				update();
+				int oldRow = from.getRank().getArrayRank();
+				int oldCol = from.getFile().getArrayFile();
+				Piece prev = board[oldRow][oldCol].getPiece();
+				if(prev.getChessPieceType() != ChessPieceType.EMPTY) {
+					board[oldRow][oldCol].setPiece((Piece)ogBoard.getPiece(oldRow, oldCol));
+				}
+				from = null; to = null;
+				//swap();
+				ChessBoardGUI.isWhite = !isWhite;
+			}
+		}
+	}
+	
+	public static void update() {
+		int fromRow = from.getRank().getArrayRank();
+		int fromCol = from.getFile().getArrayFile();
+		int toRow = to.getRank().getArrayRank();
+		int toCol = to.getFile().getArrayFile();
+		Piece temp = board[fromRow][fromCol].getPiece();
+		board[fromRow][fromCol].setPiece(board[toRow][toCol].getPiece());
+		board[toRow][toCol].setPiece(temp);
+	}
+	
+	public static void swap() {
+		for(int i = 0; i < board.length/2; i++) {
+			for(int j = 0; j < board[i].length; j++) {
+				ChessSquare old = board[i][j];
+				Piece oldPiece = board[i][j].getPiece();
+				ChessSquare neu = board[board.length-(i+1)][board.length-(j+1)];
+				Piece newPiece = board[board.length-(i+1)][board.length-(j+1)].getPiece();
+				board[i][j] = neu;
+				board[i][j].setPiece(newPiece);
+				board[board.length-(i+1)][board.length-(j+1)] = old;
+				board[board.length-(i+1)][board.length-(j+1)].setPiece(oldPiece);
 			}
 		}
 	}
@@ -109,6 +147,14 @@ public class ChessBoardGUI extends GridPane {
 			}
 		}
 		return pos;
+	}
+	
+	public static void clearAll() {
+		for(int row = 0; row < board.length; row++) {
+			for(int col = 0; col < board[row].length; col++) {
+				board[row][col].setSquareColor();
+			}
+		}
 	}
 	
 	public static void showValidMoves(ArrayList<Position> moves) {

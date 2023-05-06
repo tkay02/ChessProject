@@ -13,11 +13,14 @@ public class ChessSquare extends Pane {
 	
 	/**Square is black or white**/
 	boolean isWhite;
+	
 	/**Potential chess piece on square**/
 	ImageView chessPiece;
-	/**Name of the piece on the square**/
-	String name;
 	
+	/** Actual Chess Piece **/
+	Piece piece;
+	
+	/** ChessBlard refere
 	/**
 	 * Constructor for ChessSquare.
 	 * 
@@ -32,7 +35,6 @@ public class ChessSquare extends Pane {
 		//Sets square color
 		this.isWhite = isWhite;
 		this.setSquareColor();
-		this.name = "";
 		this.chessPiece = new ImageView();
 		this.setPiece(piece);
 		this.getChildren().add(this.chessPiece);
@@ -101,11 +103,11 @@ public class ChessSquare extends Pane {
 	 * type.
 	 */
 	public void setPiece(Piece piece) {
+		this.piece = piece;
 		String imageName = "";
 		//Clears image if chess piece type of piece is "EMPTY"
 		if(piece.getChessPieceType() == ChessPieceType.EMPTY) {
 			this.chessPiece.setImage(null);
-			this.name = "";
 		}
 		else {
 			imageName += chessPieceColor(piece.getColor());
@@ -118,6 +120,9 @@ public class ChessSquare extends Pane {
 		}
 	}
 	
+	public Piece getPiece() {
+		return piece;
+	}
 	/**
 	 * Obtains the color of the chess piece.
 	 * 
@@ -140,37 +145,13 @@ public class ChessSquare extends Pane {
 	 */
 	private String chessPieceName(ChessPieceType type) {
 		String playerPiece = "";
-		if(type == ChessPieceType.KING) {
-			playerPiece = "K";
-			this.name = "King";
-		}
-		else if(type == ChessPieceType.QUEEN) {
-			playerPiece = "Q";
-			this.name = "Queen";
-		}
-		else if(type == ChessPieceType.BISHOP) {
-			playerPiece = "B";
-			this.name = "Bishop";
-		}
-		else if(type == ChessPieceType.KNIGHT) {
-			playerPiece = "N";
-			this.name = "Knight";
-		}
-		else if(type == ChessPieceType.ROOK) {
-			playerPiece = "R";
-			this.name = "Rook";
-		}
-		else if(type == ChessPieceType.PAWN) {
-			playerPiece = "P";
-			this.name = "Pawn";
-		}
+		if(type == ChessPieceType.KING) playerPiece = "K";
+		else if(type == ChessPieceType.QUEEN) playerPiece = "Q";
+		else if(type == ChessPieceType.BISHOP) playerPiece = "B";
+		else if(type == ChessPieceType.KNIGHT) playerPiece = "N";
+		else if(type == ChessPieceType.ROOK) playerPiece = "R";
+		else if(type == ChessPieceType.PAWN) playerPiece = "P";
 		return playerPiece;
 	}
 	
-	/**
-	 * Returns the name of the current piece.
-	 */
-	public String getName() {
-		return this.name;
-	}
 }
