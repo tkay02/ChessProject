@@ -1,40 +1,64 @@
 package src.ui_gui;
 
-import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
-import src.interfaces.ScreenChangeHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.util.Callback;
 
-public class LoadGameGUI extends Pane {
-    
-    private ScreenChangeHandler screenChanger;
+public class LoadGameGUI extends Dialog<String> {
 
-    private Button b1;
+    private String load = "";
 
-    public LoadGameGUI() {
-        this.getStyleClass().add("mainMenu");
-		b1 = new Button("Back to Main Menu");
-		b1.getStyleClass().add("buttonStyleA");
-		b1.getStyleClass().add("buttonSizeA");
-		b1.setOnAction(btnHandle);
-		getChildren().add(b1);
+    public LoadGameGUI(String load) {
+        super();
+        this.setTitle("Load Game");
+        buildUI();
+        setResultConverter();
     }
 
-	public void setScreenChangeHandler(ScreenChangeHandler screen){
-		this.screenChanger = screen;
-	}
+    private void buildUI() {
+		
 
-	EventHandler<ActionEvent> btnHandle = new EventHandler<ActionEvent>(){
-		public void handle(ActionEvent event){
-			if(screenChanger != null){
-				Object o = event.getSource();
-				if(o == b1) {
-				   screenChanger.changeScreen(ScreenFactory.Screen.MAIN_SCREEN);
-				}
-				
-			}
-		}
-	};	
+        getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        Button button = (Button) getDialogPane().lookupButton(ButtonType.OK);
+        button.addEventFilter(ActionEvent.ACTION, new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (!validateDialog()) {
+                    event.consume();
+                }
+            }
+
+            private boolean validateDialog() {
+                if (load.isEmpty()) {
+                    return false;
+                }
+                return true;
+            }
+        });
+        getDialogPane().expandableContentProperty().set(new Button("Choose a file to load"));
+        getDialogPane().setExpanded(true);
+		
+    }
+
+
+    private void setResultConverter() {
+        Callback<ButtonType, String> loadGameConverter = new Callback<ButtonType, String>() {
+            @Override
+            public String call(ButtonType guiBtn) {
+                if (guiBtn == ButtonType.OK) {
+                    return load;
+                } else {
+                    return null;
+                }
+            }
+        };
+        setResultConverter(loadGameConverter);
+    }
+
     
 }
