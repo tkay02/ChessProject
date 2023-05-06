@@ -1,42 +1,115 @@
 package src.ui_gui;
 
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import src.interfaces.ScreenChangeHandler;
+
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 
-public class DefinePlayersGUI extends Pane{
-    
+
+/**
+ * 
+ * This class creates the Define Players scene and allows the user
+ * to define the player names.
+ * @author Nolan Flinchum , Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 5/5/2023
+ */
+public class DefinePlayersGUI extends VBox implements EventHandler<ActionEvent>{
         
     private ScreenChangeHandler screenChanger;
 
-    private Button b1;
+    private Button mainMenuBtn, playNameBtn;
+
+	private String playerOneName = "";
+	
+	private String playerTwoName = "";
+
+	public TextField playerOneDefine, playerTwoDefine;
 	
     public DefinePlayersGUI() {
-        this.getStyleClass().add("mainMenu");
-		b1 = new Button("Back to Main Menu");
-		b1.getStyleClass().add("buttonStyleA");
-		b1.getStyleClass().add("buttonSizeA");
-		b1.setOnAction(btnHandle);
-		getChildren().add(b1);
+
+		this.getStyleClass().add("mainMenu");
+
+		setAlignment(Pos.CENTER);
+
+		HBox btns = new HBox();
+
+		playNameBtn = new Button("Play");
+		mainMenuBtn = new Button("Exit");
+
+		mainMenuBtn.getStyleClass().add("buttonStyleA");
+		mainMenuBtn.getStyleClass().add("buttonSizeA");
+
+		playNameBtn.getStyleClass().add("buttonStyleA");
+		playNameBtn.getStyleClass().add("buttonSizeA");
+		
+		Label title = new Label("Define Players");
+
+		Label playerOneBox = new Label("Define Player One Name");
+		Label playerTwoBox = new Label("Define Player One Name");
+		
+		playerOneBox.getStyleClass().add("labelB");
+		playerTwoBox.getStyleClass().add("labelB");
+
+		playerOneBox.setMinSize(50, 50);
+		playerTwoBox.setMinSize(50, 50);
+		
+		playerOneDefine = new TextField();
+		playerOneDefine.setMaxWidth(400);
+		playerOneDefine.setMinHeight(75);
+
+		playerTwoDefine = new TextField();
+		playerTwoDefine.setMaxWidth(400);
+		playerTwoDefine.setMinHeight(75);
+
+		title.getStyleClass().add("labelA");
+
+		this.getChildren().add(title);
+		this.getChildren().addAll(playerOneBox, playerOneDefine);
+		this.getChildren().addAll(playerTwoBox, playerTwoDefine);
+
+		mainMenuBtn.setOnAction(this);
+		playNameBtn.setOnAction(this);
+
+		VBox verticalSep = new VBox();
+		verticalSep.setPrefHeight(150);
+		getChildren().add(verticalSep);
+
+		HBox horizontalSep = new HBox();
+		btns.setAlignment(Pos.CENTER);
+		horizontalSep.setPrefWidth(125);
+
+		btns.getChildren().add(playNameBtn);
+		btns.getChildren().add(horizontalSep);
+		btns.getChildren().add(mainMenuBtn);
+		getChildren().add(btns);
+
     }
 
     public void setScreenChangeHandler(ScreenChangeHandler screen){
 		this.screenChanger = screen;
 	}
 
-	EventHandler<ActionEvent> btnHandle = new EventHandler<ActionEvent>(){
-		public void handle(ActionEvent event){
-			if(screenChanger != null){
-				Object o = event.getSource();
-
-				if(o == b1){
-				   screenChanger.changeScreen(ScreenFactory.Screen.MAIN_SCREEN);
-				}
-				
+	public void handle(ActionEvent event){
+		if(screenChanger != null){
+			Object o = event.getSource();
+			if(o == playNameBtn){
+				String nameOne = playerOneDefine.getText();
+				String nameTwo = playerTwoDefine.getText();
+				playerOneName = nameOne == "" ? "Player One" : nameOne;
+				playerTwoName = nameTwo == "" ? "Player Two" : nameTwo;
+				System.out.println("Name One: " + playerOneName);
+				System.out.println("Name Two: " + playerTwoName);
 			}
+			screenChanger.changeScreen(ScreenFactory.Screen.MAIN_SCREEN);
+			
 		}
-	};	
+	}
 
 }
