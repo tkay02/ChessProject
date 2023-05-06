@@ -46,11 +46,17 @@ public class ChessSquare extends Pane {
 						sq.setId("SelectedSquare");
 						ChessBoardGUI.updateCurrentChessPiece(sq);
 					}
+					else {
+						ChessBoardGUI.updateCurrentChessPiece(sq);
+					}
 				}
 				else if(sq.getId().equals("SelectedSquare")) {
 					sq.setSquareColor();
+					ChessBoardGUI.updateCurrentChessPiece(sq);
 				}
-				System.out.println("Name of piece: " + sq.name);
+				else if(sq.getId().equals("ValidSquare")) {
+					ChessBoardGUI.updateCurrentChessPiece(sq);
+				}
 			}
 		});
 	}

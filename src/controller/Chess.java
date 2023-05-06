@@ -153,6 +153,10 @@ public class Chess {
 		}
 	}
 	
+	public Board getBoard() {
+		return this.board;
+	}
+	
 	/** This method is responsible for authenticating a user by prompting them
 	 * for their username and password and attempting to sign them in using a Database 
 	 * object. If the sign-in operation is successful, the method initializes 

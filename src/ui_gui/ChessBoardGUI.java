@@ -9,6 +9,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import src.controller.Chess;
+import src.enums.ChessPieceType;
 import src.enums.File;
 import src.enums.Rank;
 import src.model.Board;
@@ -19,18 +21,24 @@ import src.model.Square;
 public class ChessBoardGUI extends GridPane {
 
 	static ChessSquare[][] board;
+	public static Chess game;
 	public static Board ogBoard;
+	public static boolean isWhite;
+	public static Position from = null;
+	public static Position to = null;
 	public static ChessSquare currentChessPiece = null;
 	String[] ranks = {"1","2","3","4","5","6","7","8"};
 	String[] files = {"A","B","C","D","E","F","G","H"};
 	
-	public ChessBoardGUI(Board board, boolean isWhite) {
+	public ChessBoardGUI(Chess chessgame, boolean isWhite) {
 		super();
 		this.setAlignment(Pos.BASELINE_CENTER);
 		ChessBoardGUI.board = new ChessSquare[8][8];
-		ChessBoardGUI.ogBoard = board;
+		ChessBoardGUI.game = chessgame;
+		ChessBoardGUI.ogBoard = chessgame.getBoard();
+		ChessBoardGUI.isWhite = isWhite;
 		Square[][] tiles = (Square[][])ogBoard.getSquares();
-		if(isWhite) this.drawWhite(tiles);
+		if(ChessBoardGUI.isWhite) this.drawWhite(tiles);
 		else this.drawBlack(tiles);
 	}
 	
@@ -67,17 +75,24 @@ public class ChessBoardGUI extends GridPane {
 		int[] pos = ChessBoardGUI.clear();
 		Piece piece = (Piece)ChessBoardGUI.ogBoard.getPiece(pos[0], pos[1]);
 		Position space = new Position(Rank.getRankByIndex(pos[0]),File.getFileByIndex(pos[1]));
-		ArrayList<Position> moves = piece.showMoves(space);
-		ChessBoardGUI.showValidMoves(moves);
-		/*
-		for(int row = 0; row < board.length; row++) {
-			for(int col = 0; col < board[row].length; col++) {
-				if(board[row][col] != square && board[row][col].getId().equals("SelectedSquare")) {
-					 board[row][col].setSquareColor();
-				}
+		if(piece.isWhite() == ChessBoardGUI.isWhite || 
+		   piece.getChessPieceType() == ChessPieceType.EMPTY) {
+			if(ChessBoardGUI.currentChessPiece.getId().equals("SelectedSquare")) {
+				ChessBoardGUI.from = space;
+				ArrayList<Position> moves = piece.showMoves(space);
+				ChessBoardGUI.showValidMoves(moves);
+			}
+			else if(ChessBoardGUI.currentChessPiece.getId().equals("ValidSquare")) {
+				ChessBoardGUI.to = space;
+			}
+			else {
+				ChessBoardGUI.from = null; ChessBoardGUI.to = null;
+			}
+			if(ChessBoardGUI.from != null && ChessBoardGUI.to != null) {
+				ChessBoardGUI.game.move(from.getFile(), from.getRank(),
+										to.getFile(), to.getRank());
 			}
 		}
-		*/
 	}
 	
 	public static int[] clear() {
