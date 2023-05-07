@@ -105,12 +105,52 @@ public class ChessBoardGUI extends GridPane {
 				currentChessPiece.setSquareColor();
 				update();
 				displayCapture();
-				from = null; to = null;
-				ChessBoardGUI.isWhite = !isWhite;
-				swap();
-				changePlayerLabel();
+				endTurn();
 			}
 		}
+	}
+	
+	public static void endTurn() {
+		from = null; to = null;
+		ChessBoardGUI.isWhite = !isWhite;
+		updateCheck();
+		if(game.checkNoValidMoves(isWhite)) {
+			if(isWhite && game.getCheck()) {
+				ChessBoardGUI.playerTurn.setText("Player Two wins by Checkmate!");
+				disableAll();
+			}
+			else if(!isWhite && game.getCheck()) {
+				ChessBoardGUI.playerTurn.setText("Player One wins by Checkmate!");
+				disableAll();
+			}
+			else {
+				ChessBoardGUI.playerTurn.setText("Draw by Stalemate!");
+				disableAll();
+			}
+		}
+		else if(game.threeFoldRepetition()) {
+			ChessBoardGUI.playerTurn.setText("Draw by Threefold Repetition");
+			disableAll();
+		}
+		else if(game.getFiftyMove() == 50) {
+			ChessBoardGUI.playerTurn.setText("Draw by Fifty Move Rule");
+			disableAll();
+		}
+		else {
+			swap();
+			changePlayerLabel();
+		}
+	}
+	
+	public static void updateCheck() {
+		Position king;
+		if(isWhite) king = ogBoard.getWhiteKingPos();
+		else king = ogBoard.getBlackKingPos();
+		game.check(king, isWhite);
+		int row = king.getRank().getArrayRank();
+		int col = king.getFile().getArrayFile();
+		if(game.getCheck()) board[row][col].setCheckColor();
+		else board[row][col].setSquareColor();
 	}
 	
 	public static void displayCapture() {
@@ -135,16 +175,16 @@ public class ChessBoardGUI extends GridPane {
 	public static void swap() {
 		for(int i = 0; i < board.length/2; i++) {
 			for(int j = 0; j < board[i].length; j++) {
-				//ChessSquare old = board[i][j];
+				String oldId = board[i][j].getId();
 				Piece oldPiece = board[i][j].getPiece();
 				ChessSquare old = board[i][j];
-				//ChessSquare neu = board[board.length-(i+1)][board.length-(j+1)];
+				String newId = board[board.length-(i+1)][board.length-(j+1)].getId();
 				Piece newPiece = board[board.length-(i+1)][board.length-(j+1)].getPiece();
 				ChessSquare neu = board[board.length-(i+1)][board.length-(j+1)];
-				//board[i][j] = neu;
+				board[i][j].setId(newId);
 				board[i][j].setPiece(newPiece);
 				board[i][j] = neu;
-				//board[board.length-(i+1)][board.length-(j+1)] = old;
+				board[board.length-(i+1)][board.length-(j+1)].setId(oldId);
 				board[board.length-(i+1)][board.length-(j+1)].setPiece(oldPiece);
 				board[board.length-(i+1)][board.length-(j+1)] = old;
 				swapLabels();
@@ -169,10 +209,11 @@ public class ChessBoardGUI extends GridPane {
 		int[] pos = new int[2];
 		for(int row = 0; row < board.length; row++) {
 			for(int col = 0; col < board[row].length; col++) {
-				if(board[row][col] != ChessBoardGUI.currentChessPiece) {
+				if(board[row][col] != ChessBoardGUI.currentChessPiece ||
+				   board[row][col].getId().equals("CheckSquare")) {
 					board[row][col].setSquareColor();
 				}
-				else {
+				else if(board[row][col] == ChessBoardGUI.currentChessPiece) {
 					pos[0] = row;
 					pos[1] = col;
 				}
@@ -189,6 +230,13 @@ public class ChessBoardGUI extends GridPane {
 			board[row][col].setValidColor();
 		}
 	}
-
+	
+	public static void disableAll() {
+		for(int i = 0; i < board.length; i++) {
+			for(int j = 0; j < board.length; j++) {
+				board[i][j].disable();
+			}
+		}
+	}
 	
 }

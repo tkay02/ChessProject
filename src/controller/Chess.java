@@ -404,6 +404,10 @@ public class Chess {
 		return quit;
 	}
 	
+	public int getFiftyMove() {
+		return this.fiftyMoveDraw;
+	}
+	
 	/**
 	* This method will undo a move during the game if the user selects the option. If the user
 	* is performing the undo, the boolean in the parameter will be true, and the undone move
@@ -564,6 +568,10 @@ public class Chess {
 			search(isWhite, row + 1, col + 1, wantedPieces);
 		}
 		
+		return this.inCheck;
+	}
+	
+	public boolean getCheck() {
 		return this.inCheck;
 	}
 	

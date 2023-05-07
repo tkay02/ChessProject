@@ -94,6 +94,11 @@
     -fx-border-color: #000000;
 }
 
+#CheckSquare {
+    -fx-background-color: #d1f72c;
+    -fx-border-color: #000000;
+}
+
 #Title {
     -fx-font-size: 32px;
     -fx-font-family: "Helvetica";

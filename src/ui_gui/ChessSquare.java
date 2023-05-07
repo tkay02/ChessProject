@@ -39,7 +39,6 @@ public class ChessSquare extends Pane {
 		this.setPiece(piece);
 		this.getChildren().add(this.chessPiece);
 		
-		//Move this chess grid?
 		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
 				ChessSquare sq = (ChessSquare)e.getTarget();
@@ -57,6 +56,9 @@ public class ChessSquare extends Pane {
 					ChessBoardGUI.updateCurrentChessPiece(sq);
 				}
 				else if(sq.getId().equals("ValidSquare")) {
+					ChessBoardGUI.updateCurrentChessPiece(sq);
+				}
+				else if(sq.getId().equals("CheckSquare")) {
 					ChessBoardGUI.updateCurrentChessPiece(sq);
 				}
 			}
@@ -93,6 +95,13 @@ public class ChessSquare extends Pane {
 	 */
 	public void setValidColor() {
 		this.setId("ValidSquare");
+	}
+	
+	/**
+	 * Sets the color of a king square when it's in check.
+	 */
+	public void setCheckColor() {
+		this.setId("CheckSquare");
 	}
 	
 	/**
@@ -152,6 +161,13 @@ public class ChessSquare extends Pane {
 		else if(type == ChessPieceType.ROOK) playerPiece = "R";
 		else if(type == ChessPieceType.PAWN) playerPiece = "P";
 		return playerPiece;
+	}
+	
+	/**
+	 * Disables clicking on a chess square (used for display or when a game of chess is over.
+	 */
+	public void disable() {
+		this.setDisable(true);
 	}
 	
 }
