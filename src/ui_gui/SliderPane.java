@@ -64,9 +64,9 @@ public class SliderPane extends VBox{
 		this.getChildren().add(slider);
 		
 		//Apply CSS Styles
-		title.getStyleClass().add("slider_title");
-		valueTitle.getStyleClass().add("value_title");
-		value.getStyleClass().add("text_input");
+		title.getStyleClass().add("sliderTitle");
+		valueTitle.getStyleClass().add("valueTitle");
+		value.getStyleClass().add("textInput");
 		
 		//Set up slider
 		slider.setMin(min);

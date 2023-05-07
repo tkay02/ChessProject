@@ -1,8 +1,45 @@
 
 .mainMenu{
     -fx-background-color: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, rgb(74, 107, 123) 50%);
-
 }
+
+/** Pane for color of white squares */
+.buttonWhiteSquares{
+    -fx-min-width: 70px;
+    -fx-min-height: 70px;
+    -fx-background-color: #ffffff;
+}
+    
+/** Pane for color of black squares */
+.buttonBlackSquares{
+    -fx-min-width: 70px;
+    -fx-min-height: 70px;
+    -fx-background-color: #000000;
+}
+
+.HBoxDialogue{
+    -fx-min-width: 50px;
+    -fx-nin-height: 25px;
+    -fx-background-color: #000000;
+}
+
+    /** Styles for ColorChooser */
+.color{
+    -fx-background-color: #000000;
+    -fx-border-radius: 0;
+    -fx-border-width: 1;
+    -fx-background-insets: 10 10 10 10;
+}
+
+.sliderTitle{
+    -fx-font-size: 27px;
+    -fx-padding: 5 5 20 5;
+}
+
+.valueTitle, .textInput{
+    -fx-border-width: 20px;
+}
+
 /** Text field styles */
 .textField1{
 	-fx-min-width: 300px;
@@ -25,6 +62,12 @@
     -fx-font-size: 64px;
     -fx-font-family: "Helvetica";
     -fx-text-fill: #4a0200
+}
+
+.labelB {
+    -fx-font-size: 48px;
+    -fx-font-family: "Helvetica";
+    -fx-text-fill: #000000
 }
 
 /** Button Styles */
@@ -59,8 +102,7 @@
     -fx-padding: 10 20 10 20;
 }
 
-.buttonSizeA{
-	    
+.buttonSizeA{  
     -fx-min-width: 135px;
     -fx-min-height: 37px;
     -fx-max-width: 150px;
