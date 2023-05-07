@@ -2,7 +2,6 @@ package src.ui_gui;
 
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import src.enums.GameColor;
@@ -147,6 +146,7 @@ public class ChessSquare extends Pane {
 	public Piece getPiece() {
 		return piece;
 	}
+
 	/**
 	 * Obtains the color of the chess piece.
 	 * 
@@ -183,6 +183,14 @@ public class ChessSquare extends Pane {
 	 */
 	public void disable() {
 		this.setDisable(true);
+	}
+
+	public ChessView getChessView(){
+		return chessPiece;
+	}
+
+	public void setChessView(ChessView view){
+		this.chessPiece = view;
 	}
 	
 }

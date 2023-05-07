@@ -1,7 +1,6 @@
 package src.ui_gui;
 
 import java.util.ArrayList;
-
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -162,6 +161,12 @@ public class ChessBoardGUI extends GridPane {
 			//If from and to positions are valid
 			if(ChessBoardGUI.from != null && ChessBoardGUI.to != null) {
 				//Moves piece
+				Piece takenPiece = (Piece)ogBoard.getPiece(to.getRank(), to.getFile());
+				ChessSquare takenPieceImage = board[to.getRank().getArrayRank()][to.getFile().getArrayFile()];
+				if(takenPiece.getChessPieceType() != ChessPieceType.EMPTY){
+					if(takenPiece.isWhite()) ChessBoardGUI.addBlackTakenPiece(takenPieceImage.getChessView().getCopy());
+					else ChessBoardGUI.addWhiteTakenPiece(takenPieceImage.getChessView().getCopy());
+				}
 				ChessBoardGUI.game.move(from.getFile(), from.getRank(),
 										to.getFile(), to.getRank());
 				ChessBoardGUI.setPlayerAction();
@@ -363,6 +368,22 @@ public class ChessBoardGUI extends GridPane {
 		if(to == null) actionText += " has selected " + from;
 		else actionText += " has moved from " + from + " to " + to;
 		MatchGUI.setPlayerAction(actionText);
+	}
+
+	/**
+	 * Adds to the list of white's captured pieces
+	 * @param image visualization of captured piece
+	 */
+	public static void addWhiteTakenPiece(ChessView image){
+		MatchGUI.addWhiteTakenPiece(image);
+	}
+
+	/**
+	 * Adds to the list of black's captured pieces.
+	 * @param image visualization of captured piece
+	 */
+	public static void addBlackTakenPiece(ChessView image){
+		MatchGUI.addBlackTakenPiece(image);
 	}
 	
 }
