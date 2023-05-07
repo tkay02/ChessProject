@@ -88,6 +88,12 @@
     -fx-text-fill: #4a0200
 }
 
+.labelB {
+    -fx-font-size: 48px;
+    -fx-font-family: "Helvetica";
+    -fx-text-fill: #000000
+}
+
 /** Button Styles */
 .buttonStyleA {
     -fx-background-color: 
