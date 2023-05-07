@@ -2,27 +2,35 @@ package src.ui_gui;
 
 import java.util.Arrays;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import javafx.stage.Modality;
+import javafx.stage.StageStyle;
 import src.interfaces.ScreenChangeHandler;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import src.ui_gui.screens.ColoramaGUI;
 
 public class SettingsGUI extends VBox{
 
 	/**The button options of the menu**/
-	Button b1, b2, b3, b4, b5, b6, b7, b8;
+	Button b1, b2, b3, b4, b5, b6, b7, b8, whiteButton, blackButton;
+
+	private String whiteColor; //color of the white squares
+
+	String blackColor; //color of the black squares
 	
 	private ScreenChangeHandler screenChanger;
 	/**Construct the menu**/
 	public SettingsGUI(){
+		
+		whiteColor = "#ffffff";
 		
 		this.setAlignment(Pos.CENTER);//SET the alignment of the  layout.
 		this.setSpacing(20);//Spacing between components.
@@ -36,11 +44,40 @@ public class SettingsGUI extends VBox{
 		//colors label
 		Label lb2 = new Label("Colors:");
 		lb2.getStyleClass().add("screenTitle");
-		//this.getChildren().add(lb2);
+		Label lb3 = new Label("White Squares:   ");//Squares labels
+		Label lb4 = new Label("Black Squares:    ");//will need to set styleclass
+
+		whiteButton = new Button(); 
+        whiteButton.getStyleClass().add("buttonWhiteSquares"); //color and style for white squares
+		whiteButton.setStyle("-fx-background-color: " + whiteColor);
+
+		blackButton = new Button(); 
+        blackButton.getStyleClass().add("buttonBlackSquares"); // color and style for black squares
+		//blackButton.setStyle("-fx-background-color: rgb(125, 43, 43)");
 		
-		VBox v1 = new VBox();
+		whiteButton.setOnAction(btnHandle);
+		blackButton.setOnAction(btnHandle);
+		
+		//VBOX FOR CHANGING COLORS
+		VBox v1 = new VBox(); 
 		this.getChildren().add(v1);
-		v1.getChildren().add(lb2);
+
+		//HBox for white colors
+		HBox whiteHBox = new HBox();
+		v1.getChildren().add(whiteHBox);
+		whiteHBox.getChildren().add(lb3);
+		whiteHBox.getChildren().add(whiteButton);
+
+		//HBox for black colors
+		HBox blackHBox = new HBox();
+		v1.getChildren().add(blackHBox);
+		blackHBox.getChildren().add(lb4);
+		blackHBox.getChildren().add(blackButton);
+
+		v1.getChildren().add(lb2); //colors header
+
+
+
 		
 		
 		CheckBox cb1 = new CheckBox("Show Moves");
@@ -58,43 +95,8 @@ public class SettingsGUI extends VBox{
 		AnchorPane.setLeftAnchor(b1, 20.0);
 		AnchorPane.setBottomAnchor(b1, 20.0);
 		getChildren().add(b1);
-		
-//		//menu option1
-		// b1 = new Button("Play Chess");  
-		// b1.getStyleClass().add("buttonStyleA");
-		// b1.getStyleClass().add("buttonSizeS");
-//	    
-	    // Menu option2
-		// b2 = new Button("View Rules");  
-		// b2.getStyleClass().add("buttonStyleA");
-		// b2.getStyleClass().add("buttonSizeS");
-//	    
-	    // Menu option3
-	    // b3 = new Button("Sign In");  
-		// b3.getStyleClass().add("buttonStyleA");
-		// b3.getStyleClass().add("buttonSizeS");
-	    // 
-	    // b4 = new Button("Sign Up");  
-	    // b4.getStyleClass().add("buttonStyleA");
-	    // b4.getStyleClass().add("buttonSizeS");
-	    
-	    // b5 = new Button("Define Players");  
-	    // b5.getStyleClass().add("buttonStyleA");
-	    // b5.getStyleClass().add("buttonSizeS");
-//	    
-//	    
-	    // b6 = new Button("Settings");  
-	    // b6.getStyleClass().add("buttonStyleA");
-	    // b6.getStyleClass().add("buttonSizeS");
-	    // 
-	    // b7 = new Button("Load Game");  
-	    // b7.getStyleClass().add("buttonStyleA");
-	    // b7.getStyleClass().add("buttonSizeS");
-	    // 
-	    // b8 = new Button("Quit");  
-	    // b8.getStyleClass().add("buttonStyleA");
-	    // b8.getStyleClass().add("buttonSizeS");
-	    // this.getChildren().addAll(Arrays.asList(b1, b2, b3, b4, b5, b6, b7, b8));
+
+
 	}
 	
 	public void setScreenChangeHandler(ScreenChangeHandler screen){
@@ -109,8 +111,16 @@ public class SettingsGUI extends VBox{
 				if(o == b1){
 				   screenChanger.changeScreen(ScreenFactory.Screen.MAIN_SCREEN);
 				}
+				else if(o == whiteButton || o == blackButton){
+					Dialog<String> colorama = new ColoramaGUI(whiteColor);
+					colorama.showAndWait();
+				}
+
 			}
 		}
 	};	
+
 }
+
+
 
