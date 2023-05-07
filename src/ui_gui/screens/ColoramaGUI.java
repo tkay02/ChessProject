@@ -19,8 +19,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import src.ui_gui.SliderPane;
+import src.ui_gui.sliderListener;
 
-public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEvent>{
+public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEvent>, SliderListener{
 
 	/**Confirms a color choice**/
 	private Button ok;
@@ -54,7 +55,7 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
 
 	/**Create a singleton instance of a ColorChooser**/
 	public static ColoramaGUI getInstance(){
-		if (instance == null) instance = new ColoramaGUI("#000000");
+		if (instance == null) instance = new ColoramaGUI("000000");
 		return instance;
 	}//end getInstance
 
@@ -81,7 +82,6 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
     private Pane makeBorderPane() {
         GridPane grid = new GridPane();
 		grid.setVgap(20);
-        grid.setGridLinesVisible(true);
 
 		//Grid contstraints for row
 		RowConstraints row0 = new RowConstraints();
@@ -105,10 +105,11 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
 		//Top panel for color
 		color = new StackPane();
 		color.getStyleClass().add("color");
+		System.out.println(strColor);
 		hexColor = new Label();
 		hexColor.getStyleClass().add("color_text");
 		color.getChildren().add(hexColor);
-		setBackround(0, 0, 0);//set to black
+		setBackground(Integer.parseInt(strColor.substring(0, 2), 16), Integer.parseInt(strColor.substring(2, 4), 16), Integer.parseInt(strColor.substring(4, 6), 16));//set to black
 		
 		
 		//Create Panel for sliders with centered layout
@@ -117,9 +118,9 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
 		sliders.setAlignment(Pos.TOP_CENTER);
 
 		//Construct 3 sliders for RGB 2nd param determines value
-		red = new SliderPane("Red",55, MIN_INTEN, MAX_INTEN);
-		green = new SliderPane("Green",13, MIN_INTEN, MAX_INTEN);
-		blue = new SliderPane("Blue",23, MIN_INTEN, MAX_INTEN);
+		red = new SliderPane("Red", Integer.parseInt(strColor.substring(0, 2), 16), MIN_INTEN, MAX_INTEN, this);
+		green = new SliderPane("Green", Integer.parseInt(strColor.substring(2, 4), 16), MIN_INTEN, MAX_INTEN, this);
+		blue = new SliderPane("Blue", Integer.parseInt(strColor.substring(4, 6), 16), MIN_INTEN, MAX_INTEN, this);
 
 		sliders.getChildren().add(red);
 		sliders.getChildren().add(green);
@@ -130,6 +131,11 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
         this.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
 		ok.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
 		//cancel.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
+		// Scene window = this.getDialogPane().getScene();
+		// window.setOnCloseRequest((EventHandler<ActionEvent>) -> {
+		// 	System.out.println("YEEEEEEES");
+		// 	this.hide();
+		// });
 		
 		sliders.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
 		color.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
@@ -140,52 +146,29 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
 		grid.add(ok, 0,2,2,1);
 		
 		ok.setOnAction(this);
-		//cancel.setOnAction(this);
 
 
-        // BorderPane bp = new BorderPane();
-
-        // //Top part is a color button
-        // Button button = new Button("");
-        // HBox hbTop = new HBox();
-        // hbTop.getChildren().add(button);
-        // hbTop.setAlignment(Pos.TOP_CENTER);
-        // hbTop.getStyleClass().add("HBoxDialogue");
-        // bp.setTop(hbTop);
-
-        // //Middle part is a HBox
-        // HBox hb = new HBox();
-        // bp.setCenter(hb); //set centeer of the border pane to an HBox
-
-        // //makes the VBoxes
-        // VBox vb1 = createVBox("Red");
-        // VBox vb2 = createVBox("Green");
-        // VBox vb3 = createVBox("Blue");
-
-        // //adds vbox to surrounding hbox
-        // hb.getChildren().add(vb1);
-        // hb.getChildren().add(vb2);
-        // hb.getChildren().add(vb3);
-
-
-        // GridPane grid = new GridPane();
-        // grid.setGridLinesVisible(true);
-        // Button select = new Button("Select");
-        // Button exit = new Button("Exit");
-        // grid.add(select, 0, 0, 1, 1);
-        // grid.add(exit, 1, 0, 1, 1);
-        // ColumnConstraints c0 = new ColumnConstraints();
-        // c0.setPercentWidth(50);
-        // RowConstraints r0 = new RowConstraints();
-        // r0.setPercentHeight(100);
-        // bp.setBottom(grid);
-
-
-
-
-        
+        color.setStyle("-fx-background-color: #" +  this.strColor);
         return grid;
     }
+
+	public String stringToHex(String input) {
+		String stringy = String.valueOf(Integer.parseInt(input, 16));
+		System.out.println("stringy: " + stringy);
+		return "";
+	}
+
+	public void sliderChanged(SliderPane s, int value){
+		//check which slider its coming from, update the respective portion of the background color
+		//rgb
+		this.setBackground(red.getValue(), green.getValue(), blue.getValue());
+	
+	}
+
+	public String intToHex(int value){
+		String result = "";
+		return result;
+	}
 
     public VBox createVBox(String label){
         VBox vb = new VBox();
@@ -206,15 +189,19 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
         return vb;
     }
 
+	public void setPaneColor(String newColor){
+		this.color.setStyle("-fx-background-color: #" + newColor);
+	}
+
 	/**
 	 * Set the background color of the  chooser
 	 * @param r The red intensity 0..255
 	 * @param g The blue intensity 0..255
 	 * @param b The green intensity 0..255
 	 */
-	public String setBackround(int r, int g, int b){
+	public void setBackground(int r, int g, int b){
 		//Avoid invalid values
-		if(r > 255 || g > 255 || b >255) return null;
+		if(r > 255 || g > 255 || b >255) return;
 		
 		String hr = Integer.toHexString(r);
 		String hg = Integer.toHexString(g);
@@ -234,22 +221,32 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
 			hb = 0 + hb;
 		
 		selectedColor = hr+hg+hb;
+		//this.strColor = selectedColor;
 		
 		color.setStyle("-fx-background-color: #" + selectedColor);
 		
 		hexColor.setText("#" + selectedColor);
         
-        return selectedColor;
-		//System.out.println(col + " : " + hr + ", " + hg + ", " + hb);
 	}//end setBackground
+
+	public String getSelectedColor(){
+		return this.selectedColor;
+	}
+
+	public void setUndoRedo(){
+		//TODOOOOOOOOOOOOOOOOOOOO
+	}
 
     @Override
 	public void handle(ActionEvent event) {
 		
 		if(event.getSource() == ok){
-            setBackround(red.getValue(), green.getValue(), blue.getValue());
+            setBackground(red.getValue(), green.getValue(), blue.getValue());
+			System.out.println("SELECT");
+			ColoramaGUI.this.close();
 		}
 		else if(event.getSource() == cancel){
+			System.out.println("CLOSE");
             ColoramaGUI.this.close();
         }
 	}//end handle

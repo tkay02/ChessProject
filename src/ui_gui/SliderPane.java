@@ -28,6 +28,9 @@ public class SliderPane extends VBox{
 	
 	/**The maximum slider value**/
 	private int max;
+
+
+	private SliderListener listener;
 	
 	//TODO: EXTRA FIELDS HERE
 	
@@ -39,8 +42,10 @@ public class SliderPane extends VBox{
 	 * @param min The minimum value on the slider.
 	 * @param max The maximum value on  the slider
 	 */
-	public SliderPane(String titleText, int initVal, int min , int max){
+	public SliderPane(String titleText, int initVal, int min , int max, SliderListener listener){
 		
+		this.listener = listener;
+
 		this.min = min;
 		this.max = max;
 		
@@ -55,7 +60,11 @@ public class SliderPane extends VBox{
 		slider.setOrientation(Orientation.VERTICAL);
 
         ////////////////
-        set(initVal);
+        
+		//set(initVal);
+
+		//value.setText(initVal+"");
+		//slider.setValue(initVal);
 		
 		//Add them to the layout
 		this.getChildren().add(title);
@@ -76,6 +85,8 @@ public class SliderPane extends VBox{
 		slider.setMajorTickUnit(max);
 		slider.setMinorTickCount(5);
 		slider.setBlockIncrement(10);
+		System.out.println("INITVAL: " + initVal);
+		slider.setValue(initVal);
 
 		slider.valueProperty().addListener(valueChangeListener);
 		value.textProperty().addListener(textValueChangeListener);
@@ -86,12 +97,14 @@ public class SliderPane extends VBox{
 	public void set(int newValue){
 		value.setText(newValue+"");
 		slider.setValue(newValue);
-		
+		listener.sliderChanged(this, newValue);
+		//sliderListener.sliderChanged(this, newValue); BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 		//TODO: EXTRA CODE HERE
 
 	
 	}//end set
 	
+
 	/**Get the selected value on the slider**/
 	public int getValue(){
 		return (int) slider.getValue();
@@ -129,3 +142,4 @@ public class SliderPane extends VBox{
 		}	
 	};
 }
+
