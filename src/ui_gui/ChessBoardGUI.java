@@ -2,17 +2,12 @@ package src.ui_gui;
 
 import java.util.ArrayList;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import src.controller.Chess;
 import src.enums.ChessPieceType;
 import src.enums.File;
-import src.enums.GameColor;
 import src.enums.Rank;
 import src.model.Board;
 import src.model.Piece;
@@ -263,9 +258,8 @@ public class ChessBoardGUI extends GridPane {
 		int toCol = to.getFile().getArrayFile();
 		//Grabs piece of from position
 		Piece temp = board[fromRow][fromCol].getPiece();
-		//Switches from piece to to piece
+		//Switches from piece with to piece and vice versa
 		board[fromRow][fromCol].setPiece(board[toRow][toCol].getPiece());
-		//Switches to piece to from piece
 		board[toRow][toCol].setPiece(temp);
 	}
 	
@@ -339,8 +333,7 @@ public class ChessBoardGUI extends GridPane {
 	/**
 	 * Displays all of the valid positions of the current piece onto the GUI.
 	 * 
-	 * @param moves The list of all of the valid positions that the current chess piece can move
-	 * to,
+	 * @param moves The list of all of the valid positions that the current piece can move to
 	 */
 	public static void showValidMoves(ArrayList<Position> moves) {
 		for(int i = 0; i < moves.size(); i++) {
@@ -362,6 +355,9 @@ public class ChessBoardGUI extends GridPane {
 		}
 	}
 
+	/**
+	 * Sets the text for the player's action label in MatchGUI
+	 */
 	public static void setPlayerAction(){
 		String actionText = isWhite ? "Player One": "Player Two";
 		if(to == null) actionText += " has selected " + from;
