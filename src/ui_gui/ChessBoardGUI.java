@@ -258,21 +258,21 @@ public class ChessBoardGUI extends GridPane {
 	 * Swaps the board layout when a new turn occurs. When it's the black player's turn, displays 
 	 * their pieces from their perspective and vice versa.
 	 */
-	public static void swap() { 
+	public static void swap() {
 		for(int i = 0; i < board.length/2; i++) {
 			for(int j = 0; j < board[i].length; j++) {
 				String oldId = board[i][j].getId();
 				Piece oldPiece = board[i][j].getPiece();
 				ChessSquare old = board[i][j];
-				String newId = board[board.length-(i+1)][j].getId();
-				Piece newPiece = board[board.length-(i+1)][j].getPiece();
-				ChessSquare neu = board[board.length-(i+1)][j];
+				String newId = board[board.length-(i+1)][board.length-(j+1)].getId();
+				Piece newPiece = board[board.length-(i+1)][board.length-(j+1)].getPiece();
+				ChessSquare neu = board[board.length-(i+1)][board.length-(j+1)];
 				board[i][j].setId(newId);
 				board[i][j].setPiece(newPiece);
 				board[i][j] = neu;
-				board[board.length-(i+1)][j].setId(oldId);
-				board[board.length-(i+1)][j].setPiece(oldPiece);
-				board[board.length-(i+1)][j] = old;
+				board[board.length-(i+1)][board.length-(j+1)].setId(oldId);
+				board[board.length-(i+1)][board.length-(j+1)].setPiece(oldPiece);
+				board[board.length-(i+1)][board.length-(j+1)] = old;
 				//Updates the labels to represent positions from other player's perspective
 				swapLabels();
 			}

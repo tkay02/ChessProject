@@ -121,12 +121,15 @@ public class RulesGUI implements EventHandler<ActionEvent> {
 			this.root.setCenter(this.fact.makeScreen(RuleScreens.KING));
 		}
 		else if(event.getSource() == this.b3) {
+			this.root.setCenter(this.fact.makeScreen(RuleScreens.QUEEN));
 		}
 		else if(event.getSource() == this.b4) {
+			this.root.setCenter(this.fact.makeScreen(RuleScreens.BISHOP));
 		}
 		else if(event.getSource() == this.b5) {
 		}
 		else if(event.getSource() == this.b6) {
+			this.root.setCenter(this.fact.makeScreen(RuleScreens.ROOK));
 		}
 		else if(event.getSource() == this.b7) {
 		}

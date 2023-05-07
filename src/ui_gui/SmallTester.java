@@ -22,7 +22,8 @@ public class SmallTester extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		try {
-			ChessBoardGUI root = new ChessBoardGUI(new Chess());
+			RulesGUI rules = new RulesGUI();
+			Pane root = rules.getRoot();
 			Scene scene = new Scene(root, 540, 640);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
