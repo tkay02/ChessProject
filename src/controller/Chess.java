@@ -559,6 +559,18 @@ public class Chess {
 			search(isWhite, row + 1, col - 1, wantedPieces);
 			search(isWhite, row + 1, col + 1, wantedPieces);
 		}
+
+		//search for "checking" kings
+		wantedPieces.clear();
+		wantedPieces.add(ChessPieceType.KING);
+		search(isWhite, row - 1, col, wantedPieces);
+		search(isWhite, row + 1, col, wantedPieces);
+		search(isWhite, row, col - 1, wantedPieces);
+		search(isWhite, row, col + 1, wantedPieces);
+		search(isWhite, row - 1, col + 1, wantedPieces);
+		search(isWhite, row - 1, col - 1, wantedPieces);
+		search(isWhite, row + 1, col - 1, wantedPieces);
+		search(isWhite, row + 1, col + 1, wantedPieces);   
 		
 		return this.inCheck;
 	}

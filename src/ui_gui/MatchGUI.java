@@ -2,6 +2,8 @@ package src.ui_gui;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -28,7 +30,10 @@ public class MatchGUI extends BorderPane {
     private ScreenChangeHandler screenChanger;
 
 	/** Buttons for the match screen **/
-    private Button b1, b2, b3, b4, b5, b6, b7;
+    private Button b1, b2, b3, b4, b5, b6;
+
+	/** Player names that were defined */
+	private String playerOneName, playerTwoName;
 
 	/**
 	 * Constructor for MatchGUI.
@@ -56,13 +61,19 @@ public class MatchGUI extends BorderPane {
 
 		// LEFT
 		makeSide(left);
-		b6 = buttonMaker("Show Moves", "buttonStyleA", "buttonSizeA");
-		left.getChildren().add(b6);
+		Label label1 = new Label("Player One:");
+		label1.getStyleClass().add("labelB");
+		Label label2 = new Label(playerOneName);
+		label2.getStyleClass().add("labelB");
+		left.getChildren().addAll(label1, label2);
 
 		// RIGHT
 		makeSide(right);
-		b7 = buttonMaker("Exit", "buttonStyleA", "buttonSizeA");
-		right.getChildren().add(b7);
+		Label label3 = new Label("Player Two:");
+		label3.getStyleClass().add("labelB");
+		Label label4 = new Label(playerTwoName);
+		label4.getStyleClass().add("labelB");
+		right.getChildren().addAll(label3, label4);
     }
 
 	/**
@@ -81,7 +92,8 @@ public class MatchGUI extends BorderPane {
 		b3 = buttonMaker("Undo", "buttonStyleA", "buttonSizeA");
 		b4 = buttonMaker("Redo", "buttonStyleA", "buttonSizeA");
 		b5 = buttonMaker("Settings", "buttonStyleA", "buttonSizeA");
-		top.getChildren().addAll(b1, b2, b3, b4, b5);
+		b6 = buttonMaker("Exit", "buttonStyleA", "buttonSizeA");
+		top.getChildren().addAll(b1, b2, b3, b4, b5, b6);
 	}
 
 	/**
@@ -91,7 +103,7 @@ public class MatchGUI extends BorderPane {
 	 */
 	private void makeSide(VBox side){
 		BorderPane.setMargin(side, new Insets(3));
-		side.setAlignment(Pos.CENTER);
+		side.setPadding(new Insets(20, 0, 20, 20));
 		side.getStyleClass().add("backgroundC");
 		side.setPrefWidth(400.0);
 	}
@@ -145,7 +157,7 @@ public class MatchGUI extends BorderPane {
 			if(screenChanger != null){
 				Object o = event.getSource();
 
-				if(o == b7) screenChanger.changeScreen(Screen.MAIN_SCREEN);
+				if(o == b6) screenChanger.changeScreen(Screen.MAIN_SCREEN);
 				else if(o == b5) screenChanger.changeScreen(Screen.SETTINGS_SCREEN);
 				else if(o == b1){
 					Dialog<String> load = new LoadGameGUI();

@@ -74,18 +74,11 @@
 
 /** Label Styles */
 .labelA {
-    -fx-effect: innershadow(#000000,5,0,5,5);
+    -fx-effect: innershadow(one-pass-box, #000000,5,0,5,5);
     -fx-font-size: 128px;
     -fx-font-family: "'Libre Baskerville', serif";
     -fx-text-fill: linear-gradient(#000000, #181818, #f8f8f8);
     -fx-font-weight: 800;
-}
-
-/** Label Styles */
-.labelB {
-    -fx-font-size: 32px;
-    -fx-font-family: "Helvetica";
-    -fx-text-fill: #4a0200
 }
 
 .labelB {
@@ -157,8 +150,7 @@
     -fx-padding: 10 20 10 20;
 }
 
-.buttonSizeA{
-	    
+.buttonSizeA{    
     -fx-min-width: 135px;
     -fx-min-height: 37px;
     -fx-max-width: 150px;
@@ -172,18 +164,12 @@
     -fx-stroke-dash-offset: 6;
 }
 
-.buttonSizeB{
-	    
+.buttonSizeB{    
     -fx-min-width: 200px;
     -fx-min-height: 30px;
     -fx-max-width: 450px;
     -fx-max-height: 60px;
     -fx-pref-width: 450px;
     -fx-pref-height: 60px;
-    
-    /* -fx-stroke: green;
-    -fx-stroke-width: 5;
-    -fx-stroke-dash-array: 12 2 4 2;
-    -fx-stroke-dash-offset: 6; */
 }
 
