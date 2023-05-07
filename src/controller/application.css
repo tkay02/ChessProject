@@ -93,3 +93,12 @@
     -fx-background-color: #5573d6;
     -fx-border-color: #000000;
 }
+
+#Title {
+    -fx-font-size: 32px;
+    -fx-font-family: "Helvetica";
+}
+
+.rank_fileLabel {
+    -fx-font-size: 32px;
+}

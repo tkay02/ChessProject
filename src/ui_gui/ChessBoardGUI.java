@@ -21,56 +21,64 @@ import src.model.Square;
 
 public class ChessBoardGUI extends GridPane {
 
+	/**Oops! All static variables!**/
 	static ChessSquare[][] board;
 	public static Chess game;
 	public static Board ogBoard;
 	public static boolean isWhite;
+	public static Label playerTurn;
 	public static Position from = null;
 	public static Position to = null;
 	public static ChessSquare currentChessPiece = null;
-	String[] ranks = {"1","2","3","4","5","6","7","8"};
-	String[] files = {"A","B","C","D","E","F","G","H"};
+	public static Label[] rankLabel = new Label[8];
+	public static Label[] fileLabel = new Label[8];
+	public static String[] ranks = {"1","2","3","4","5","6","7","8"};
+	public static String[] files = {"A","B","C","D","E","F","G","H"};
 	
-	public ChessBoardGUI(Chess chessgame, boolean isWhite) {
+	public ChessBoardGUI(Chess chessgame) {
 		super();
 		this.setAlignment(Pos.BASELINE_CENTER);
 		ChessBoardGUI.board = new ChessSquare[8][8];
 		ChessBoardGUI.game = chessgame;
 		
 		ChessBoardGUI.ogBoard = chessgame.getBoard();
-		ChessBoardGUI.isWhite = isWhite;
+		ChessBoardGUI.isWhite = true;
 		Square[][] tiles = (Square[][])ogBoard.getSquares();
-		if(ChessBoardGUI.isWhite) this.drawWhite(tiles);
-		else this.drawBlack(tiles);
+		this.draw(tiles);
 	}
 	
-	private void drawWhite(Square[][] tiles) {
+	private void draw(Square[][] tiles) {
+		playerTurn = new Label("Player One's Turn");
+		playerTurn.setId("Title");
+		this.add(playerTurn, 0, 0, 9, 1);
+		this.createGridLabels();
 		for(int i = 0; i < tiles.length; i++) {
-			this.add(new Label(this.ranks[this.ranks.length - (i+1)]), 0, i);
+			this.add(rankLabel[i], 0, i + 1);
 			for(int j = 0; j < tiles[i].length; j++) {
 				Piece piece = (Piece)tiles[i][j].getPiece();
-				this.board[i][j] = new ChessSquare(tiles[i][j].isWhite(), piece);
-				this.add(this.board[i][j], j + 1, i);
+				board[i][j] = new ChessSquare(tiles[i][j].isWhite(), piece);
+				this.add(board[i][j], j + 1, i + 1);
 			}
 		}
 		for(int i = 0; i < this.files.length; i++) {
-			this.add(new Label(this.files[i]), i+1, 8);
+			this.add(fileLabel[i], i+1, 9);
 		}
 	}
 	
-	private void drawBlack(Square[][] tiles) {
-		for(int i = tiles.length - 1; i >= 0; i--) {
-			this.add(new Label(this.ranks[i]), 0, i);
-			for(int j = tiles.length - 1; j >= 0; j--) {
-				Piece piece = (Piece)tiles[i][j].getPiece();
-				board[i][j] = new ChessSquare(tiles[i][j].isWhite(), piece);
-				this.add(board[i][j], tiles[i].length - j, tiles.length - (i+1));
-			}
-		}
-		for(int i = this.files.length - 1; i >= 0; i--) {
-			this.add(new Label(this.files[i]), this.files.length - i, 8);
+	private void createGridLabels() {
+		for(int i = 0; i < rankLabel.length; i++) {
+			rankLabel[i] = new Label(ranks[ranks.length - (i+1)]);
+			rankLabel[i].getStyleClass().add("rank_fileLabel");
+			fileLabel[i] = new Label(files[i]);
+			fileLabel[i].getStyleClass().add("rank_fileLabel");
 		}
 	}
+	
+	private static void changePlayerLabel() {
+		if(isWhite) playerTurn.setText("Player One's Turn");
+		else playerTurn.setText("Player Two's Turn");
+	}
+	
 	
 	public static void updateCurrentChessPiece(ChessSquare square) {
 		ChessBoardGUI.currentChessPiece = square;
@@ -94,17 +102,23 @@ public class ChessBoardGUI extends GridPane {
 			if(ChessBoardGUI.from != null && ChessBoardGUI.to != null) {
 				ChessBoardGUI.game.move(from.getFile(), from.getRank(),
 										to.getFile(), to.getRank());
+				currentChessPiece.setSquareColor();
 				update();
-				int oldRow = from.getRank().getArrayRank();
-				int oldCol = from.getFile().getArrayFile();
-				Piece prev = board[oldRow][oldCol].getPiece();
-				if(prev.getChessPieceType() != ChessPieceType.EMPTY) {
-					board[oldRow][oldCol].setPiece((Piece)ogBoard.getPiece(oldRow, oldCol));
-				}
+				displayCapture();
 				from = null; to = null;
-				//swap();
 				ChessBoardGUI.isWhite = !isWhite;
+				swap();
+				changePlayerLabel();
 			}
+		}
+	}
+	
+	public static void displayCapture() {
+		int oldRow = from.getRank().getArrayRank();
+		int oldCol = from.getFile().getArrayFile();
+		Piece prev = board[oldRow][oldCol].getPiece();
+		if(prev.getChessPieceType() != ChessPieceType.EMPTY) {
+			board[oldRow][oldCol].setPiece((Piece)ogBoard.getPiece(oldRow, oldCol));
 		}
 	}
 	
@@ -121,14 +135,32 @@ public class ChessBoardGUI extends GridPane {
 	public static void swap() {
 		for(int i = 0; i < board.length/2; i++) {
 			for(int j = 0; j < board[i].length; j++) {
-				ChessSquare old = board[i][j];
+				//ChessSquare old = board[i][j];
 				Piece oldPiece = board[i][j].getPiece();
-				ChessSquare neu = board[board.length-(i+1)][board.length-(j+1)];
+				ChessSquare old = board[i][j];
+				//ChessSquare neu = board[board.length-(i+1)][board.length-(j+1)];
 				Piece newPiece = board[board.length-(i+1)][board.length-(j+1)].getPiece();
-				board[i][j] = neu;
+				ChessSquare neu = board[board.length-(i+1)][board.length-(j+1)];
+				//board[i][j] = neu;
 				board[i][j].setPiece(newPiece);
-				board[board.length-(i+1)][board.length-(j+1)] = old;
+				board[i][j] = neu;
+				//board[board.length-(i+1)][board.length-(j+1)] = old;
 				board[board.length-(i+1)][board.length-(j+1)].setPiece(oldPiece);
+				board[board.length-(i+1)][board.length-(j+1)] = old;
+				swapLabels();
+			}
+		}
+	}
+	
+	public static void swapLabels() {
+		for(int i = 0; i < rankLabel.length; i++) {
+			if(isWhite) {
+				rankLabel[i].setText(ranks[ranks.length - (i+1)]);
+				fileLabel[i].setText(files[i]);
+			}
+			else {
+				rankLabel[i].setText(ranks[i]);
+				fileLabel[i].setText(files[files.length - (i+1)]);
 			}
 		}
 	}
@@ -147,14 +179,6 @@ public class ChessBoardGUI extends GridPane {
 			}
 		}
 		return pos;
-	}
-	
-	public static void clearAll() {
-		for(int row = 0; row < board.length; row++) {
-			for(int col = 0; col < board[row].length; col++) {
-				board[row][col].setSquareColor();
-			}
-		}
 	}
 	
 	public static void showValidMoves(ArrayList<Position> moves) {
