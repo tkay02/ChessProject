@@ -19,31 +19,47 @@ import src.model.Piece;
 import src.model.Position;
 import src.model.Square;
 
+/**
+ * GUI component that holds the chess board.
+ * 
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 5/5/2023
+ */
 public class ChessBoardGUI extends GridPane {
 
-	/**Oops! All static variables!**/
 	/**Board the contains the visual chess squares**/
 	public static ChessSquare[][] board;
+
 	/**Reference to the current chess game**/
 	public static Chess game;
+
 	/**Reference to the board in the chess game**/
 	public static Board ogBoard;
+
 	/**Boolean that indictates if it's the white player's turn or not**/
 	public static boolean isWhite;
+
 	/**Label that updates the status of the game**/
 	public static Label playerTurn;
+	
 	/**The position where the chess piece is being moved from**/
 	public static Position from = null;
+
 	/**The position where the chess piece is being moved to**/
 	public static Position to = null;
+
 	/**The current chess square that contains the chess piece that the user selected**/
 	public static ChessSquare currentChessPiece = null;
+
 	/**Array that stores labels for rank rows**/
 	public static Label[] rankLabel = new Label[8];
+
 	/**Array that stores labels for file rows**/
 	public static Label[] fileLabel = new Label[8];
+
 	/**Array that stores rank values**/
 	public static String[] ranks = {"1","2","3","4","5","6","7","8"};
+
 	/**Array that stores file values**/
 	public static String[] files = {"A","B","C","D","E","F","G","H"};
 	
@@ -135,6 +151,7 @@ public class ChessBoardGUI extends GridPane {
 			   ChessBoardGUI.currentChessPiece.getId().equals("CheckSquare")) {
 				//Updates from position and shows all valid moves of chess piece
 				ChessBoardGUI.from = space;
+				ChessBoardGUI.setPlayerAction();
 				ArrayList<Position> moves = piece.showMoves(space);
 				ChessBoardGUI.showValidMoves(moves);
 			}
@@ -152,6 +169,7 @@ public class ChessBoardGUI extends GridPane {
 				//Moves piece
 				ChessBoardGUI.game.move(from.getFile(), from.getRank(),
 										to.getFile(), to.getRank());
+				ChessBoardGUI.setPlayerAction();
 				currentChessPiece.setSquareColor();
 				//Updates the board
 				update();
@@ -342,6 +360,13 @@ public class ChessBoardGUI extends GridPane {
 				board[i][j].disable();
 			}
 		}
+	}
+
+	public static void setPlayerAction(){
+		String actionText = isWhite ? "Player One": "Player Two";
+		if(to == null) actionText += " has selected " + from;
+		else actionText += " has moved from " + from + " to " + to;
+		MatchGUI.setPlayerAction(actionText);
 	}
 	
 }

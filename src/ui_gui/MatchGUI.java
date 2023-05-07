@@ -36,6 +36,9 @@ public class MatchGUI extends BorderPane {
 	/** Player names that were defined */
 	private String playerOneName, playerTwoName;
 
+	/** Describes what the players do */
+	private static Label playerAction;
+
 	/**
 	 * Constructor for MatchGUI.
 	 */
@@ -124,6 +127,9 @@ public class MatchGUI extends BorderPane {
 		bottom.setAlignment(Pos.CENTER);
 		bottom.setMinHeight(100.0);
 		bottom.getStyleClass().add("backgroundD");
+		playerAction = new Label();
+		playerAction.getStyleClass().add("labelB");
+		bottom.getChildren().add(playerAction);
 	}
 
 	/**
@@ -182,5 +188,9 @@ public class MatchGUI extends BorderPane {
 			}
 		}
 	};	
+
+	public static void setPlayerAction(String text){
+		playerAction.setText(text);
+	}
 }
 
