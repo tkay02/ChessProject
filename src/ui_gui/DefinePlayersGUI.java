@@ -26,9 +26,9 @@ public class DefinePlayersGUI extends VBox implements EventHandler<ActionEvent>{
 
     private Button mainMenuBtn, playNameBtn;
 
-	private String playerOneName = "";
+	private static String playerOneName = "";
 	
-	private String playerTwoName = "";
+	private static String playerTwoName = "";
 
 	public TextField playerOneDefine, playerTwoDefine;
 	
@@ -100,16 +100,20 @@ public class DefinePlayersGUI extends VBox implements EventHandler<ActionEvent>{
 		if(screenChanger != null){
 			Object o = event.getSource();
 			if(o == playNameBtn){
-				String nameOne = playerOneDefine.getText();
-				String nameTwo = playerTwoDefine.getText();
-				playerOneName = nameOne == "" ? "Player One" : nameOne;
-				playerTwoName = nameTwo == "" ? "Player Two" : nameTwo;
-				System.out.println("Name One: " + playerOneName);
-				System.out.println("Name Two: " + playerTwoName);
+				playerOneName = playerOneDefine.getText();
+				playerTwoName = playerTwoDefine.getText();
 			}
 			screenChanger.changeScreen(ScreenFactory.Screen.MAIN_SCREEN);
 			
 		}
+	}
+
+	public static String getPlayerOneName(){
+		return playerOneName;
+	}
+
+	public static String getPlayerTwoName(){
+		return playerTwoName;
 	}
 
 }

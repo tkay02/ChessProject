@@ -51,10 +51,8 @@ public final class ScreenFactory implements ScreenChangeHandler{
 				screen = settingsScreen;
 				break;
 			case MATCH_SCREEN:
-				if(matchScreen == null){
-					matchScreen = new MatchGUI();
-					matchScreen.setScreenChangeHandler(this);
-				} 
+				matchScreen = new MatchGUI();
+				matchScreen.setScreenChangeHandler(this);
 				screen = matchScreen;
 				break;
 			case RULES_SCREEN:
