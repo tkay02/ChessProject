@@ -1,4 +1,3 @@
-
 .mainMenu{
     -fx-background-color: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, #4A6B7B 50%);
 }
@@ -17,6 +16,43 @@
 
 .backgroundD{
     -fx-background-color: linear-gradient(rgb(41, 119, 167), #2f6a87);
+}
+
+/** Pane for color of white squares */
+.buttonWhiteSquares{
+    -fx-min-width: 70px;
+    -fx-min-height: 70px;
+    -fx-background-color: #ffffff;
+}
+    
+/** Pane for color of black squares */
+.buttonBlackSquares{
+    -fx-min-width: 70px;
+    -fx-min-height: 70px;
+    -fx-background-color: #000000;
+}
+
+.HBoxDialogue{
+    -fx-min-width: 50px;
+    -fx-nin-height: 25px;
+    -fx-background-color: #000000;
+}
+
+    /** Styles for ColorChooser */
+.color{
+    -fx-background-color: #000000;
+    -fx-border-radius: 0;
+    -fx-border-width: 1;
+    -fx-background-insets: 10 10 10 10;
+}
+
+.sliderTitle{
+    -fx-font-size: 27px;
+    -fx-padding: 5 5 20 5;
+}
+
+.valueTitle, .textInput{
+    -fx-border-width: 20px;
 }
 
 /** Text field styles */
