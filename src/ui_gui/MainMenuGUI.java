@@ -30,7 +30,7 @@ public class MainMenuGUI extends BorderPane {
 	Scene rootScene;
 	
 	/** The button options of the menu **/
-	Button b1, b2, b3, b4, b5, b6, b7, b8;
+	Button b1, b2, b3, b4, b5, b7, b8;
 
 	/** Handles the screen changing **/
 	ScreenChangeHandler screenChanger;
@@ -106,8 +106,7 @@ public class MainMenuGUI extends BorderPane {
 		b3 = buttonMaker("Sign In", "buttonStyleB", "buttonSizeB");
 		b4 = buttonMaker("Sign Up", "buttonStyleB", "buttonSizeB");
 		b5 = buttonMaker("Define Players", "buttonStyleB", "buttonSizeB");
-		b6 = buttonMaker("Load Game", "buttonStyleB", "buttonSizeB");
-		center.getChildren().addAll(b1, b2, b3, b4, b5, b6);
+		center.getChildren().addAll(b1, b2, b3, b4, b5);
 	}
 
 	/**
@@ -156,8 +155,6 @@ public class MainMenuGUI extends BorderPane {
 					screenChanger.changeScreen(ScreenFactory.Screen.SIGN_UP);
 				else if(o == b5)
 					screenChanger.changeScreen(ScreenFactory.Screen.DEFINE_PLAYERS);
-				else if(o == b6)
-					screenChanger.changeScreen(ScreenFactory.Screen.LOAD_GAME);
 				else if(o == b7)
 					screenChanger.changeScreen(ScreenFactory.Screen.SETTINGS_SCREEN);
 				else if(o == b8)

@@ -51,8 +51,8 @@ public class DefinePlayersGUI extends VBox implements EventHandler<ActionEvent>{
 		
 		Label title = new Label("Define Players");
 
-		Label playerOneBox = new Label("Define Player One Name");
-		Label playerTwoBox = new Label("Define Player One Name");
+		Label playerOneBox = new Label("Define Player One's Name");
+		Label playerTwoBox = new Label("Define Player Two's Name");
 		
 		playerOneBox.getStyleClass().add("labelB");
 		playerTwoBox.getStyleClass().add("labelB");

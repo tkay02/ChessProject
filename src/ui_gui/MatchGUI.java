@@ -1,12 +1,16 @@
 package src.ui_gui;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import src.interfaces.ScreenChangeHandler;
 import src.ui_gui.ScreenFactory.Screen;
+
+import java.util.Optional;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -141,13 +145,22 @@ public class MatchGUI extends BorderPane {
 			if(screenChanger != null){
 				Object o = event.getSource();
 
-				if(o == b7){
-					screenChanger.changeScreen(Screen.MAIN_SCREEN);
+				if(o == b7) screenChanger.changeScreen(Screen.MAIN_SCREEN);
+				else if(o == b5) screenChanger.changeScreen(Screen.SETTINGS_SCREEN);
+				else if(o == b1){
+					Dialog<String> load = new LoadGameGUI();
+					Optional<String> result = load.showAndWait();
+					if (result.isPresent()) {
+						
+					}
 				}
-				else if(o == b5){
-					screenChanger.changeScreen(Screen.SETTINGS_SCREEN);
+				else if(o == b2){
+					Dialog<String> save = new SaveGameGUI();
+					Optional<String> result = save.showAndWait();
+					if (result.isPresent()) {
+						
+					}
 				}
-		
 			}
 		}
 	};	
