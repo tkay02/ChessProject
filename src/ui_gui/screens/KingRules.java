@@ -1,4 +1,4 @@
-package src.ui_gui;
+package src.ui_gui.screens;
 
 import javafx.geometry.Pos;
 import javafx.scene.layout.TilePane;
