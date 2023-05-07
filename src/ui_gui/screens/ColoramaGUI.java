@@ -7,7 +7,6 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.ColumnConstraints;
@@ -19,7 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import src.ui_gui.SliderPane;
-import src.ui_gui.sliderListener;
+import src.ui_gui.SliderListener;
 
 public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEvent>, SliderListener{
 
@@ -105,7 +104,6 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
 		//Top panel for color
 		color = new StackPane();
 		color.getStyleClass().add("color");
-		System.out.println(strColor);
 		hexColor = new Label();
 		hexColor.getStyleClass().add("color_text");
 		color.getChildren().add(hexColor);
@@ -130,12 +128,6 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
 
         this.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
 		ok.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
-		//cancel.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
-		// Scene window = this.getDialogPane().getScene();
-		// window.setOnCloseRequest((EventHandler<ActionEvent>) -> {
-		// 	System.out.println("YEEEEEEES");
-		// 	this.hide();
-		// });
 		
 		sliders.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
 		color.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
@@ -152,17 +144,10 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
         return grid;
     }
 
-	public String stringToHex(String input) {
-		String stringy = String.valueOf(Integer.parseInt(input, 16));
-		System.out.println("stringy: " + stringy);
-		return "";
-	}
-
 	public void sliderChanged(SliderPane s, int value){
 		//check which slider its coming from, update the respective portion of the background color
 		//rgb
 		this.setBackground(red.getValue(), green.getValue(), blue.getValue());
-	
 	}
 
 	public String intToHex(int value){
@@ -242,11 +227,9 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
 		
 		if(event.getSource() == ok){
             setBackground(red.getValue(), green.getValue(), blue.getValue());
-			System.out.println("SELECT");
 			ColoramaGUI.this.close();
 		}
 		else if(event.getSource() == cancel){
-			System.out.println("CLOSE");
             ColoramaGUI.this.close();
         }
 	}//end handle

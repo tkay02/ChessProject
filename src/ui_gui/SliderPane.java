@@ -85,7 +85,6 @@ public class SliderPane extends VBox{
 		slider.setMajorTickUnit(max);
 		slider.setMinorTickCount(5);
 		slider.setBlockIncrement(10);
-		System.out.println("INITVAL: " + initVal);
 		slider.setValue(initVal);
 
 		slider.valueProperty().addListener(valueChangeListener);
