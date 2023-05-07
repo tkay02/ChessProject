@@ -271,7 +271,6 @@ public class ChessBoardGUI extends GridPane {
 				board[board.length-(i+1)][j].setId(oldId);
 				board[board.length-(i+1)][j].setPiece(oldPiece);
 				board[board.length-(i+1)][j].isWhite = !board[board.length-(i+1)][j].isWhite;
-				//board[board.length-(i+1)][j].setChessView(old.getChessView());
 				board[board.length-(i+1)][j] = old;
 				//Updates the labels to represent positions from other player's perspective
 				swapLabels();
