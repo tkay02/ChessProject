@@ -2,13 +2,18 @@ package src.ui_gui;
 
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import src.enums.GameColor;
 import src.model.Piece;
 import src.enums.ChessPieceType;
 
+/**
+ * GUI component that makes up a chess board GUI.
+ * 
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 5/5/2023
+ */
 public class ChessSquare extends Pane {
 	
 	/**Square is black or white**/
@@ -141,6 +146,7 @@ public class ChessSquare extends Pane {
 	public Piece getPiece() {
 		return piece;
 	}
+
 	/**
 	 * Obtains the color of the chess piece.
 	 * 
@@ -177,6 +183,14 @@ public class ChessSquare extends Pane {
 	 */
 	public void disable() {
 		this.setDisable(true);
+	}
+
+	public ChessView getChessView(){
+		return chessPiece;
+	}
+
+	public void setChessView(ChessView view){
+		this.chessPiece = view;
 	}
 	
 }

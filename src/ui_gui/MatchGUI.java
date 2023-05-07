@@ -3,10 +3,9 @@ package src.ui_gui;
 import javafx.scene.control.Button;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import src.controller.Chess;
 import src.interfaces.ScreenChangeHandler;
@@ -17,6 +16,7 @@ import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 
 /**
@@ -35,6 +35,12 @@ public class MatchGUI extends BorderPane {
 
 	/** Player names that were defined */
 	private String playerOneName, playerTwoName;
+
+	/** Describes what the players do */
+	private static Label playerAction;
+
+	/** FlowPanes that hold captured pieces */
+	private static FlowPane whiteTakenPieces, blackTakenPieces;
 
 	/**
 	 * Constructor for MatchGUI.
@@ -70,7 +76,12 @@ public class MatchGUI extends BorderPane {
 		label1.getStyleClass().add("labelB");
 		Label label2 = new Label(playerOneName);
 		label2.getStyleClass().add("labelB");
-		left.getChildren().addAll(label1, label2);
+
+		Label label5 = new Label("Captured:");
+		label5.getStyleClass().add("labelB");
+		whiteTakenPieces = new FlowPane(Orientation.HORIZONTAL);
+
+		left.getChildren().addAll(label1, label2, label5, whiteTakenPieces);
 
 		// RIGHT
 		makeSide(right);
@@ -79,7 +90,12 @@ public class MatchGUI extends BorderPane {
 		label3.getStyleClass().add("labelB");
 		Label label4 = new Label(playerTwoName);
 		label4.getStyleClass().add("labelB");
-		right.getChildren().addAll(label3, label4);
+
+		Label label6 = new Label("Captured:");
+		label6.getStyleClass().add("labelB");
+		blackTakenPieces = new FlowPane();
+
+		right.getChildren().addAll(label3, label4, label6, blackTakenPieces);
     }
 
 	/**
@@ -124,6 +140,9 @@ public class MatchGUI extends BorderPane {
 		bottom.setAlignment(Pos.CENTER);
 		bottom.setMinHeight(100.0);
 		bottom.getStyleClass().add("backgroundD");
+		playerAction = new Label();
+		playerAction.getStyleClass().add("labelB");
+		bottom.getChildren().add(playerAction);
 	}
 
 	/**
@@ -182,5 +201,29 @@ public class MatchGUI extends BorderPane {
 			}
 		}
 	};	
+
+	/**
+	 * Sets the text of the player action label.
+	 * @param text describes the players' actions
+	 */
+	public static void setPlayerAction(String text){
+		playerAction.setText(text);
+	}
+
+	/**
+	 * Adds to the list of white's captured pieces.
+	 * @param image visualization of captured piece
+	 */
+	public static void addWhiteTakenPiece(ChessView image){
+		whiteTakenPieces.getChildren().add(image);
+	}
+
+	/**
+	 * Adds to the list of black's captured pieces.
+	 * @param image visualization of captured piece
+	 */
+	public static void addBlackTakenPiece(ChessView image){
+		blackTakenPieces.getChildren().add(image);
+	}
 }
 

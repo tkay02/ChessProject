@@ -6,18 +6,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import src.interfaces.ScreenChangeHandler;
-
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 
-
 /**
- * 
  * This class creates the Define Players scene and allows the user
  * to define the player names.
- * @author Nolan Flinchum , Thomas Kay, Joseph Oladeji, Levi Sweat
+ * 
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 5/5/2023
  */
 public class DefinePlayersGUI extends VBox implements EventHandler<ActionEvent>{
