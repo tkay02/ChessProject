@@ -153,6 +153,9 @@ public class Chess {
 		}
 	}
 	
+	/**
+	 * Retrieves the board that the chess game uses.
+	 */
 	public Board getBoard() {
 		return this.board;
 	}
@@ -404,6 +407,9 @@ public class Chess {
 		return quit;
 	}
 	
+	/**
+	 * Returns number of moves that indictate a fifty move draw has occurred.
+	 */
 	public int getFiftyMove() {
 		return this.fiftyMoveDraw;
 	}
@@ -571,6 +577,9 @@ public class Chess {
 		return this.inCheck;
 	}
 	
+	/**
+	 * Returns current check status.
+	 */
 	public boolean getCheck() {
 		return this.inCheck;
 	}

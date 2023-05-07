@@ -59,6 +59,7 @@ public class ChessSquare extends Pane {
 					ChessBoardGUI.updateCurrentChessPiece(sq);
 				}
 				else if(sq.getId().equals("CheckSquare")) {
+					sq.setId("SelectedSquare");
 					ChessBoardGUI.updateCurrentChessPiece(sq);
 				}
 			}
