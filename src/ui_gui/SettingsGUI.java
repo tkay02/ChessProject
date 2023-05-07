@@ -22,9 +22,9 @@ public class SettingsGUI extends BorderPane{
 	/**The button options of the menu**/
 	Button b1, b2, whiteButton, blackButton;
 
-	private String whiteColor = "#ffffff"; //color of the white squares
+	private String whiteColor = "ffffff"; //color of the white squares
 
-	String blackColor = "#000000"; //color of the black squares
+	String blackColor = "000000"; //color of the black squares
 	
 	private ScreenChangeHandler screenChanger;
 
@@ -60,10 +60,10 @@ public class SettingsGUI extends BorderPane{
 
 		whiteButton = new Button(); 
         whiteButton.getStyleClass().add("buttonWhiteSquares"); //color and style for white squares
-		whiteButton.setStyle("-fx-background-color: " + whiteColor);
+		whiteButton.setStyle("-fx-background-color: #" + whiteColor);
 		blackButton = new Button(); 
         blackButton.getStyleClass().add("buttonBlackSquares"); // color and style for black squares
-		blackButton.setStyle("-fx-background-color:" + blackColor);
+		blackButton.setStyle("-fx-background-color: #" + blackColor);
 		whiteButton.setOnAction(btnHandle);
 		blackButton.setOnAction(btnHandle);
 
@@ -120,15 +120,20 @@ public class SettingsGUI extends BorderPane{
 				if(o == b2){
 				   screenChanger.changeScreen(ScreenFactory.Screen.MAIN_SCREEN);
 				}
-				else if(o == whiteButton || o == blackButton){
-					Dialog<String> colorama = new ColoramaGUI(whiteColor);
+				else if(o == whiteButton){
+					ColoramaGUI colorama = new ColoramaGUI(whiteColor);
 					colorama.showAndWait();
+					whiteColor = colorama.getSelectedColor();
+					whiteButton.setStyle("-fx-background-color: #" + whiteColor);
+				}
+				else if(o == blackButton){
+					ColoramaGUI colorama = new ColoramaGUI(blackColor);
+					colorama.showAndWait();
+					blackColor = colorama.getSelectedColor();
+					blackButton.setStyle("-fx-background-color: #" + blackColor);
 				}
 			}
 		}
 	};	
 
 }
-
-
-
