@@ -8,6 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import src.controller.Chess;
 import src.interfaces.ScreenChangeHandler;
 import src.ui_gui.ScreenFactory.Screen;
 
@@ -43,7 +44,7 @@ public class MatchGUI extends BorderPane {
 		HBox bottom = new HBox();
 		VBox left = new VBox();
 		VBox right = new VBox();
-		Pane center = new Pane();
+		VBox center = new VBox();
 		this.setTop(top);
 		this.setBottom(bottom);
 		this.setRight(right);
@@ -57,7 +58,10 @@ public class MatchGUI extends BorderPane {
 
 		// CENTER
 		center.getStyleClass().add("backgroundC"); 
+		center.setAlignment(Pos.CENTER);
 		BorderPane.setMargin(center, new Insets(3));
+		ChessBoardGUI root = new ChessBoardGUI(new Chess());
+		center.getChildren().add(root);
 
 		// LEFT
 		makeSide(left);
