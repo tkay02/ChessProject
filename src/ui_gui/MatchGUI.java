@@ -65,6 +65,7 @@ public class MatchGUI extends BorderPane {
 
 		// LEFT
 		makeSide(left);
+		this.playerOneName = DefinePlayersGUI.getPlayerOneName();
 		Label label1 = new Label("Player One:");
 		label1.getStyleClass().add("labelB");
 		Label label2 = new Label(playerOneName);
@@ -73,6 +74,7 @@ public class MatchGUI extends BorderPane {
 
 		// RIGHT
 		makeSide(right);
+		this.playerTwoName = DefinePlayersGUI.getPlayerTwoName();
 		Label label3 = new Label("Player Two:");
 		label3.getStyleClass().add("labelB");
 		Label label4 = new Label(playerTwoName);
