@@ -138,7 +138,7 @@ public class ChessSquare extends Pane {
 			imageName += chessPieceColor(piece.getColor());
 			imageName += chessPieceName(piece.getChessPieceType());
 			//Uses Driver class
-			Image image = new Image(ChessSquare.class.getResourceAsStream(imageName += ".png"));
+			Image image = new Image(SmallTester.class.getResourceAsStream(imageName += ".png"));
 			this.chessPiece.setImage(image);
 			this.chessPiece.fitWidthProperty().bind(this.widthProperty());
 			this.chessPiece.fitHeightProperty().bind(this.heightProperty());
