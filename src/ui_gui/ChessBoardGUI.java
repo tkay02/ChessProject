@@ -82,7 +82,7 @@ public class ChessBoardGUI extends GridPane {
 				this.add(board[i][j], j + 1, i + 1);
 			}
 		}
-		for(int i = 0; i < this.files.length; i++) {
+		for(int i = 0; i < ChessBoardGUI.files.length; i++) {
 			this.add(fileLabel[i], i+1, 9);
 		}
 	}
@@ -119,6 +119,7 @@ public class ChessBoardGUI extends GridPane {
 	 * @param ChessSquare square The square that contains the current chess piece.
 	 */
 	public static void updateCurrentChessPiece(ChessSquare square) {
+		System.out.println("Initial From Pos: " + from + " To Pos: " + to);
 		//Updates current piece
 		ChessBoardGUI.currentChessPiece = square;
 		//Grabs position of selected piece
@@ -154,10 +155,12 @@ public class ChessBoardGUI extends GridPane {
 										to.getFile(), to.getRank());
 				currentChessPiece.setSquareColor();
 				//Updates the board
+				System.out.println("Before From Pos: " + from + " To Pos: " + to);
 				update();
 				displayCapture();
 				//Ends the player's turn
 				endTurn();
+				System.out.println("After From Pos: " + from + " To Pos: " + to);
 			}
 		}
 	}
@@ -178,16 +181,14 @@ public class ChessBoardGUI extends GridPane {
 			//Checks for checkmates; otherwise it's draw by stalemate
 			if(isWhite && game.getCheck()) {
 				ChessBoardGUI.playerTurn.setText("Player Two wins by Checkmate!");
-				disableAll();
 			}
 			else if(!isWhite && game.getCheck()) {
 				ChessBoardGUI.playerTurn.setText("Player One wins by Checkmate!");
-				disableAll();
 			}
 			else {
 				ChessBoardGUI.playerTurn.setText("Draw by Stalemate!");
-				disableAll();
 			}
+			disableAll();
 		}
 		//Checks for threefold repetition condition
 		else if(game.threeFoldRepetition()) {
@@ -257,21 +258,21 @@ public class ChessBoardGUI extends GridPane {
 	 * Swaps the board layout when a new turn occurs. When it's the black player's turn, displays 
 	 * their pieces from their perspective and vice versa.
 	 */
-	public static void swap() {
+	public static void swap() { 
 		for(int i = 0; i < board.length/2; i++) {
 			for(int j = 0; j < board[i].length; j++) {
 				String oldId = board[i][j].getId();
 				Piece oldPiece = board[i][j].getPiece();
 				ChessSquare old = board[i][j];
-				String newId = board[board.length-(i+1)][board.length-(j+1)].getId();
-				Piece newPiece = board[board.length-(i+1)][board.length-(j+1)].getPiece();
-				ChessSquare neu = board[board.length-(i+1)][board.length-(j+1)];
+				String newId = board[board.length-(i+1)][j].getId();
+				Piece newPiece = board[board.length-(i+1)][j].getPiece();
+				ChessSquare neu = board[board.length-(i+1)][j];
 				board[i][j].setId(newId);
 				board[i][j].setPiece(newPiece);
 				board[i][j] = neu;
-				board[board.length-(i+1)][board.length-(j+1)].setId(oldId);
-				board[board.length-(i+1)][board.length-(j+1)].setPiece(oldPiece);
-				board[board.length-(i+1)][board.length-(j+1)] = old;
+				board[board.length-(i+1)][j].setId(oldId);
+				board[board.length-(i+1)][j].setPiece(oldPiece);
+				board[board.length-(i+1)][j] = old;
 				//Updates the labels to represent positions from other player's perspective
 				swapLabels();
 			}

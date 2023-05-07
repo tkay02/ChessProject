@@ -15,7 +15,7 @@ public class ChessSquare extends Pane {
 	boolean isWhite;
 	
 	/**Potential chess piece on square**/
-	ImageView chessPiece;
+	ChessView chessPiece;
 	
 	/** Actual Chess Piece **/
 	Piece piece;
@@ -35,14 +35,21 @@ public class ChessSquare extends Pane {
 		//Sets square color
 		this.isWhite = isWhite;
 		this.setSquareColor();
-		this.chessPiece = new ImageView();
+		this.chessPiece = new ChessView();
+		chessPiece.setChessSquare(this);
 		this.setPiece(piece);
 		this.getChildren().add(this.chessPiece);
 		
 		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
-				ChessSquare sq = (ChessSquare)e.getTarget();
-				if(sq.getId().equals("WhiteSquare") || sq.getId().equals("BlackSquare")) {
+				ChessSquare sq = null;
+				if(e.getTarget() instanceof ChessSquare) sq = (ChessSquare) e.getTarget();
+				else{
+					ChessView chessImg = (ChessView) e.getTarget();
+					sq = chessImg.getChessSquare();
+				}
+				if((sq.piece.getChessPieceType() != ChessPieceType.EMPTY) && (sq.getId().equals("WhiteSquare") 
+				|| sq.getId().equals("BlackSquare"))) {
 					if(sq.chessPiece.getImage() != null) {
 						sq.setId("SelectedSquare");
 						ChessBoardGUI.updateCurrentChessPiece(sq);
@@ -63,6 +70,7 @@ public class ChessSquare extends Pane {
 					ChessBoardGUI.updateCurrentChessPiece(sq);
 				}
 			}
+			
 		});
 	}
 	
