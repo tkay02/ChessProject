@@ -24,6 +24,8 @@ public class ChessSquare extends Pane {
 	
 	/** Actual Chess Piece **/
 	Piece piece;
+
+	private final double MAX_SIZE = 64.0;
 	
 	/** ChessBlard refere
 	/**
@@ -36,7 +38,7 @@ public class ChessSquare extends Pane {
 	public ChessSquare(boolean isWhite, Piece piece) {
 		super();
 		//Size of the square
-		this.setSize(64.0, 64.0);
+		this.setSize(MAX_SIZE, MAX_SIZE);
 		//Sets square color
 		this.isWhite = isWhite;
 		this.setSquareColor();
