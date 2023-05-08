@@ -58,6 +58,8 @@ public class ChessBoardGUI extends GridPane {
 	public static String player1 = "Player One";
 	/**Player Two's name; default is "Player Two"**/
 	public static String player2 = "Player Two";
+	/**List of valid positions for the chess piece selected**/
+	public static ArrayList<Position> moves;
 	
 	private static HashMap<Character, String> mapFlip = new HashMap<>();
 	
@@ -155,18 +157,19 @@ public class ChessBoardGUI extends GridPane {
 		//empty, or if the current piece is an enemy piece.
 		if(piece.isWhite() == ChessBoardGUI.isWhite || 
 		   piece.getChessPieceType() == ChessPieceType.EMPTY ||
-		   (currentChessPiece.getId().equals("ValidSquare") && piece.isWhite() != isWhite)) {
+		   checkPosition(space)) {
 			//If the current piece is on a selected square or a checked square
-			if(ChessBoardGUI.currentChessPiece.getId().equals("SelectedSquare") ||
-			   ChessBoardGUI.currentChessPiece.getId().equals("CheckSquare")) {
+			if((ChessBoardGUI.currentChessPiece.getId().equals("SelectedSquare") ||
+			    ChessBoardGUI.currentChessPiece.getId().equals("CheckSquare")) &&
+				piece.isWhite() == ChessBoardGUI.isWhite) {
 				//Updates from position and shows all valid moves of chess piece
 				ChessBoardGUI.from = space;
 				ChessBoardGUI.setPlayerAction();
-				ArrayList<Position> moves = piece.showMoves(space);
-				ChessBoardGUI.showValidMoves(moves);
+				moves = piece.showMoves(space);
+				//Insert if statement if valid check option is enabled
+				//ChessBoardGUI.showValidMoves(moves);
 			}
-			//If the current piece is on a valid square
-			else if(ChessBoardGUI.currentChessPiece.getId().equals("ValidSquare")) {
+			else if(checkPosition(space)) {
 				//Updates to position
 				ChessBoardGUI.to = space;
 			}
@@ -195,6 +198,23 @@ public class ChessBoardGUI extends GridPane {
 				endTurn();
 			}
 		}
+	}
+	
+	/**
+	 * Helper method. Checks if the position that the user chose was valid since the contains
+	 * function acts iffy for Position objects.
+	 * 
+	 * @param Position pos The positions that is being checked as part of valid moves.
+	 * @return True if position was part of list of valid moves; false otherwise.
+	 */
+	private static boolean checkPosition(Position pos) {
+		boolean isValid = false;
+		int i = 0;
+		while(!isValid && i < moves.size()) {
+			isValid = pos.equals(moves.get(i));
+			i++;
+		}
+		return isValid;
 	}
 	
 	/**

@@ -54,8 +54,18 @@ public class ChessSquare extends Pane {
 					ChessView chessImg = (ChessView) e.getTarget();
 					sq = chessImg.getChessSquare();
 				}
-				if((sq.piece.getChessPieceType() != ChessPieceType.EMPTY) && (sq.getId().equals("WhiteSquare") 
-				|| sq.getId().equals("BlackSquare"))) {
+				if(sq.getId().equals("WhiteSquare") || sq.getId().equals("BlackSquare")) {
+					if(sq.piece.getChessPieceType() != ChessPieceType.EMPTY) {
+						sq.setSelectedColor();
+						ChessBoardGUI.updateCurrentChessPiece(sq);
+					}
+					else {
+						ChessBoardGUI.updateCurrentChessPiece(sq);
+					}
+				}
+				/*
+				if((sq.piece.getChessPieceType() != ChessPieceType.EMPTY) && 
+						(sq.getId().equals("WhiteSquare") || sq.getId().equals("BlackSquare"))) {
 					if(sq.chessPiece.getImage() != null) {
 						sq.setSelectedColor();
 						ChessBoardGUI.updateCurrentChessPiece(sq);
@@ -64,6 +74,7 @@ public class ChessSquare extends Pane {
 						ChessBoardGUI.updateCurrentChessPiece(sq);
 					}
 				}
+				*/
 				else if(sq.getId().equals("SelectedSquare")) {
 					sq.setSquareColor();
 					ChessBoardGUI.updateCurrentChessPiece(sq);
