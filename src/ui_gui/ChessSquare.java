@@ -20,6 +20,12 @@ public class ChessSquare extends Pane {
 	/** Actual Chess Piece **/
 	Piece piece;
 	
+	/**Color for white squares**/
+	public static String whiteSquare;
+	
+	/**Color for black squares**/
+	public static String blackSquare;
+	
 	/** ChessBlard refere
 	/**
 	 * Constructor for ChessSquare.
@@ -93,6 +99,7 @@ public class ChessSquare extends Pane {
 		if(this.isWhite) this.setId("WhiteSquare");
 		else this.setId("BlackSquare");
 	}
+	
 	
 	/*t	 */
 	public void setSelectedColor() {

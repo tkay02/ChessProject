@@ -27,6 +27,12 @@
     -fx-text-fill: #4a0200
 }
 
+.subtitle {
+    -fx-font-size: 20px;
+    -fx-font-family: "Helvetica";
+}
+
+
 /** Button Styles */
 .buttonStyleA {
     -fx-background-color: 
@@ -106,4 +112,8 @@
 
 .rank_fileLabel {
     -fx-font-size: 32px;
+}
+
+.square {
+    -fx-boarder-color: #000000;
 }

@@ -7,6 +7,9 @@ import src.ui_gui.screens.KingRules;
 import src.ui_gui.screens.QueenRules;
 import src.ui_gui.screens.RookRules;
 import src.ui_gui.screens.BishopRules;
+import src.ui_gui.screens.KnightRules;
+import src.ui_gui.screens.PawnRules;
+import src.ui_gui.screens.Overview;
 
 public class RulesFactory {
 
@@ -27,16 +30,16 @@ public class RulesFactory {
 				pane = new BishopRules();
 				break;
 			case KNIGHT:
-				//pane = new KnightRules().getRoot();
+				pane = new KnightRules();
 				break;
 			case ROOK:
 				pane = new RookRules();
 				break;
 			case PAWN:
-				//pane = new PawnRules().getRoot();
+				pane = new PawnRules();
 				break;
 			case OVERVIEW:
-				//pane = new Overview().getRoot();
+				pane = new Overview();
 				break;
 		}
 		return pane;

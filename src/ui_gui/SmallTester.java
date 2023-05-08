@@ -24,7 +24,8 @@ public class SmallTester extends Application {
 		try {
 			RulesGUI rules = new RulesGUI();
 			Pane root = rules.getRoot();
-			Scene scene = new Scene(root, 540, 640);
+			//ChessBoardGUI game = new ChessBoardGUI(new Chess());
+			Scene scene = new Scene(root, 600, 600);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();

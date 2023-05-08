@@ -1,18 +1,52 @@
 package src.ui_gui.screens;
 
+import java.util.ArrayList;
+
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import src.enums.ChessPieceType;
 import src.enums.GameColor;
 import src.model.Piece;
 import src.ui_gui.ChessSquare;
 
-public class QueenRules extends GridPane {
+public class QueenRules extends BorderPane {
 	
 	public QueenRules() {
 		super();
-		this.setAlignment(Pos.TOP_CENTER);
+		Label title = new Label("Queen Movement");
+		title.setId("Title");
+		this.setTop(title);
 		
+		VBox rules = new VBox();
+		ArrayList<Label> subtitles = new ArrayList<>();
+		
+		Label s0 = new Label("The queen is the most powerful piece in the game");
+		subtitles.add(s0);
+		Label s1 = new Label("The queen can move in all possible directions vertically, "+
+                             "\nhorizontally, and diagonally");
+		subtitles.add(s1);
+		Label s2 = new Label("However, the queen cannot past through over pieces like \nthe knight");
+		subtitles.add(s2);
+		Label s3 = new Label("Additional notes:");
+		subtitles.add(s3);
+		Label s4 = new Label(">The queen cannot move if its path is blocked by a piece with \nthe "+
+			                 "same color as the queen or after capturing an opposing piece");
+		subtitles.add(s4);
+		Label s5 = new Label(">Even though each side starts with one queen, another queen \ncan be "+
+				             "brought into the game if a pawn successfully promotes");
+		subtitles.add(s5);
+		subtitles.forEach(n -> {
+			n.getStyleClass().add("subtitle");
+			rules.getChildren().add(n);
+		});
+		
+		this.setLeft(rules);
+		
+		GridPane board = new GridPane();
+		board.setAlignment(Pos.CENTER);
 		for(int i = 0; i < 5; i++) {
 			for(int j = 0; j < 5; j++) {
 				ChessSquare sq;
@@ -31,9 +65,10 @@ public class QueenRules extends GridPane {
 					sq.setValidColor();
 				}
 				sq.disable();
-				this.add(sq, j, i);
+				board.add(sq, j, i);
 			}
 		}
+		this.setCenter(board);
 	}
 
 }
