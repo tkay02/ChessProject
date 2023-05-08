@@ -153,13 +153,6 @@ public class Chess {
 		}
 	}
 	
-	/**
-	 * Retrieves the board that the chess game uses.
-	 */
-	public Board getBoard() {
-		return this.board;
-	}
-	
 	/** This method is responsible for authenticating a user by prompting them
 	 * for their username and password and attempting to sign them in using a Database 
 	 * object. If the sign-in operation is successful, the method initializes 
@@ -408,13 +401,6 @@ public class Chess {
 	}
 	
 	/**
-	 * Returns number of moves that indictate a fifty move draw has occurred.
-	 */
-	public int getFiftyMove() {
-		return this.fiftyMoveDraw;
-	}
-	
-	/**
 	* This method will undo a move during the game if the user selects the option. If the user
 	* is performing the undo, the boolean in the parameter will be true, and the undone move
 	* will not be popped off of the list of moves. If the system is performing the undo, the
@@ -586,13 +572,6 @@ public class Chess {
 		search(isWhite, row + 1, col - 1, wantedPieces);
 		search(isWhite, row + 1, col + 1, wantedPieces);   
 		
-		return this.inCheck;
-	}
-	
-	/**
-	 * Returns current check status.
-	 */
-	public boolean getCheck() {
 		return this.inCheck;
 	}
 	

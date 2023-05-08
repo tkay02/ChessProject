@@ -287,6 +287,7 @@ public class ChessBoardGUI extends GridPane {
 				String oldId = board[i][j].getId();
 				Piece oldPiece = board[i][j].getPiece();
 				ChessSquare old = board[i][j];
+				/*
 				String newId = board[board.length-(i+1)][j].getId();
 				Piece newPiece = board[board.length-(i+1)][j].getPiece();
 				ChessSquare neu = board[board.length-(i+1)][j];
@@ -296,8 +297,7 @@ public class ChessBoardGUI extends GridPane {
 				board[board.length-(i+1)][board.length-(j+1)].setId(oldId);
 				board[board.length-(i+1)][board.length-(j+1)].setPiece(oldPiece);
 				board[board.length-(i+1)][board.length-(j+1)] = old;
-/*
-				=======
+				*/
 				String newId = board[board.length-(i+1)][j].getId();
 				Piece newPiece = board[board.length-(i+1)][j].getPiece();
 				ChessSquare neu = board[board.length-(i+1)][j];
@@ -309,8 +309,6 @@ public class ChessBoardGUI extends GridPane {
 				board[board.length-(i+1)][j].setPiece(oldPiece);
 				board[board.length-(i+1)][j].isWhite = !board[board.length-(i+1)][j].isWhite;
 				board[board.length-(i+1)][j] = old;
->>>>>>> baa1029816c80b896816895d4e7ca40961c3662d
-*/
 				//Updates the labels to represent positions from other player's perspective
 				swapLabels();
 			}
