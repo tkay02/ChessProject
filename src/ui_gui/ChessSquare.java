@@ -26,7 +26,7 @@ public class ChessSquare extends Pane {
 	/** Actual Chess Piece **/
 	Piece piece;
 
-	/** Colors of the squares **/
+	private final double MAX_SIZE = 64.0;
 	
 	/**
 	 * Constructor for ChessSquare.
@@ -36,7 +36,9 @@ public class ChessSquare extends Pane {
 	 */
 	public ChessSquare(boolean isWhite, Piece piece) {
 		super();
-		this.setSize(64.0, 64.0); //Size of the square
+		//Size of the square
+		this.setSize(MAX_SIZE, MAX_SIZE);
+		//Sets square color
 		this.isWhite = isWhite;
 		this.setSquareColor(); //Sets square color
 		this.chessPiece = new ChessView();

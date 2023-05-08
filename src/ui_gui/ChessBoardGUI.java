@@ -1,6 +1,8 @@
 package src.ui_gui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -57,6 +59,8 @@ public class ChessBoardGUI extends GridPane {
 	/**Array that stores file values**/
 	public static String[] files = {"A","B","C","D","E","F","G","H"};
 	
+	private static HashMap<Character, String> mapFlip = new HashMap<>();
+	
 	/**
 	 * Constructor for ChessBoardGUI.
 	 * 
@@ -71,6 +75,12 @@ public class ChessBoardGUI extends GridPane {
 		ChessBoardGUI.isWhite = true;
 		Square[][] tiles = (Square[][])ogBoard.getSquares();
 		this.draw(tiles);
+		initMap();
+	}
+
+	private void initMap(){
+		for(int idx = 0; idx < files.length; idx++)
+			mapFlip.put(files[idx].charAt(0), files[files.length - idx - 1]);
 	}
 	
 	/**
@@ -167,9 +177,10 @@ public class ChessBoardGUI extends GridPane {
 					if(takenPiece.isWhite()) ChessBoardGUI.addBlackTakenPiece(takenPieceImage.getChessView().getCopy());
 					else ChessBoardGUI.addWhiteTakenPiece(takenPieceImage.getChessView().getCopy());
 				}
+				ChessBoardGUI.setPlayerAction();
+			
 				ChessBoardGUI.game.move(from.getFile(), from.getRank(),
 										to.getFile(), to.getRank());
-				ChessBoardGUI.setPlayerAction();
 				currentChessPiece.setSquareColor();
 				//Updates the board
 				update();
@@ -364,9 +375,15 @@ public class ChessBoardGUI extends GridPane {
 	 * Sets the text for the player's action label in MatchGUI
 	 */
 	public static void setPlayerAction(){
+		String fromS = from.toString();
+		String toS = to != null ? to.toString() : "";
+		if(!isWhite){
+			fromS = mapFlip.get(fromS.charAt(0)) + String.valueOf(fromS.charAt(1));
+			toS =  to != null ? mapFlip.get(toS.charAt(0)) + String.valueOf(toS.charAt(1)) : "";
+		}
 		String actionText = isWhite ? "Player One": "Player Two";
-		if(to == null) actionText += " has selected " + from;
-		else actionText += " has moved from " + from + " to " + to;
+		if(to == null) actionText += " has selected " + fromS;
+		else actionText += " has moved from " + fromS + " to " + toS;
 		MatchGUI.setPlayerAction(actionText);
 	}
 
