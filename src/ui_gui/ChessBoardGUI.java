@@ -406,6 +406,12 @@ public class ChessBoardGUI extends GridPane {
 		MatchGUI.addWhiteTakenPiece(image);
 	}
 
+	public static void paintSquares(){
+		for(int row = 0; row < board.length; row++)
+			for(int col = 0; col < board[row].length; col++)
+				board[row][col].setSquareColor();
+	}
+
 	/**
 	 * Adds to the list of black's captured pieces.
 	 * @param image visualization of captured piece
