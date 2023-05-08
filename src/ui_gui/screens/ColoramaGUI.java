@@ -20,6 +20,12 @@ import javafx.scene.paint.Color;
 import src.ui_gui.SliderPane;
 import src.ui_gui.SliderListener;
 
+/**
+ * This class provides an interface where users can change the color of their chess pieces.
+ * 
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 5/8/2023
+ */
 public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEvent>, SliderListener{
 
 	/**Confirms a color choice**/
@@ -46,8 +52,8 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
 	/**Minimum color intensity**/
 	private final int MIN_INTEN = 0;
 
+	/**The slider panes**/
 	private SliderPane red, green, blue;
-
 
 	/**The singleton instance of this class**/
 	private static ColoramaGUI instance;

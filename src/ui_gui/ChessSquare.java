@@ -6,6 +6,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import src.enums.GameColor;
 import src.model.Piece;
+import src.controller.GUIDriver;
 import src.enums.ChessPieceType;
 
 /**
@@ -24,22 +25,20 @@ public class ChessSquare extends Pane {
 	
 	/** Actual Chess Piece **/
 	Piece piece;
+
+	/** Colors of the squares **/
 	
-	/** ChessBlard refere
 	/**
 	 * Constructor for ChessSquare.
 	 * 
-	 * @param boolean isWhite Boolean that determines if the square is a white square or a black
-	 * square.
+	 * @param boolean isWhite Boolean that determines if the square is white or black
 	 * @param Piece piece The chess piece on the square.
 	 */
 	public ChessSquare(boolean isWhite, Piece piece) {
 		super();
-		//Size of the square
-		this.setSize(64.0, 64.0);
-		//Sets square color
+		this.setSize(64.0, 64.0); //Size of the square
 		this.isWhite = isWhite;
-		this.setSquareColor();
+		this.setSquareColor(); //Sets square color
 		this.chessPiece = new ChessView();
 		chessPiece.setChessSquare(this);
 		this.setPiece(piece);
@@ -136,7 +135,7 @@ public class ChessSquare extends Pane {
 			imageName += chessPieceColor(piece.getColor());
 			imageName += chessPieceName(piece.getChessPieceType());
 			//Uses Driver class
-			Image image = new Image(SmallTester.class.getResourceAsStream(imageName += ".png"));
+			Image image = new Image(ChessSquare.class.getResourceAsStream(imageName += ".png"));
 			this.chessPiece.setImage(image);
 			this.chessPiece.fitWidthProperty().bind(this.widthProperty());
 			this.chessPiece.fitHeightProperty().bind(this.heightProperty());
@@ -179,7 +178,7 @@ public class ChessSquare extends Pane {
 	}
 	
 	/**
-	 * Disables clicking on a chess square (used for display or when a game of chess is over.
+	 * Disables clicking on a chess square (used for display or when a game of chess is over).
 	 */
 	public void disable() {
 		this.setDisable(true);

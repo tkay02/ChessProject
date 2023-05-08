@@ -1,14 +1,10 @@
 package src.ui_gui;
-
-import java.util.Arrays;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -22,9 +18,9 @@ public class SettingsGUI extends BorderPane{
 	/**The button options of the menu**/
 	Button b1, b2, whiteButton, blackButton;
 
-	private String whiteColor = "ffffff"; //color of the white squares
+	static String whiteColor = "ffffff"; //color of the white squares
 
-	String blackColor = "000000"; //color of the black squares
+	static String blackColor = "000000"; //color of the black squares
 	
 	private ScreenChangeHandler screenChanger;
 
