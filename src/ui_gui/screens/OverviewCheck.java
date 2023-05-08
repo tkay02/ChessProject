@@ -14,14 +14,20 @@ import src.ui_gui.ChessSquare;
 
 public class OverviewCheck extends VBox {
 
+	/**
+	 * Displays information about check condition such as what the condition means, an example of
+	 * being in check, and how to get out of check.
+	 */
 	public OverviewCheck() {
 		super();
 		
+		//Title
 		this.setAlignment(Pos.TOP_LEFT);
 		Label title = new Label("Check Condition");
 		title.setId("Title");
 		this.getChildren().add(title);
 		
+		//Subtitles
 		ArrayList<Label> subtitles = new ArrayList<>();
 		Label s0 = new Label("The main objection of the game is to checkmate the enemy king");
 		subtitles.add(s0);
@@ -37,6 +43,7 @@ public class OverviewCheck extends VBox {
 		});
 		subtitles.clear();
 		
+		//Board to display check example
 		GridPane board = new GridPane();
 		board.setAlignment(Pos.TOP_CENTER);
 		for(int i = 0; i < 3; i++) {
@@ -62,6 +69,7 @@ public class OverviewCheck extends VBox {
 		}
 		this.getChildren().add(board);
 		
+		//More subtitles
 		Label s3 = new Label("When placed in check, the player only has three possible moves:");
 		subtitles.add(s3);
 		Label s4 = new Label(">Move the king away from incoming danger");

@@ -13,16 +13,23 @@ import src.ui_gui.ChessSquare;
 
 public class BishopRules extends BorderPane {
 
+	/**
+	 * Displays information about the bishop, including a picture that displays all of the
+	 * possible moves that a bishop piece can do.
+	 */
 	public BishopRules() {
 		super();
 		
+		//Title
 		Label title = new Label("Bishop Movement");
 		title.setId("Title");
 		this.setTop(title);
 		
+		//Pane that displays the subtitles
 		VBox rules = new VBox();
 		ArrayList<Label> subtitles = new ArrayList<>();
 		
+		//Subtitles
 		Label s0 = new Label("The bishop moves in an unique way to say the least");
 		subtitles.add(s0);
 		Label s1 = new Label("Like the king and queen, the bishop moves in diagonal directions");
@@ -46,6 +53,7 @@ public class BishopRules extends BorderPane {
 		
 		this.setLeft(rules);
 		
+		//Board for bishop movement
 		GridPane board = new GridPane();
 		board.setAlignment(Pos.CENTER);
 		for(int i = 0; i < 5; i++) {

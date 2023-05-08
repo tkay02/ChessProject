@@ -14,16 +14,23 @@ import src.ui_gui.ChessSquare;
 
 public class KnightRules extends BorderPane {
 
+	/**
+	 * Displays information about the knight, including a picture that displays all of the
+	 * possible moves that a knight piece can do.
+	 */
 	public KnightRules() {
 		super();
 		
+		//Title
 		Label title = new Label("Knight Movement");
 		title.setId("Title");
 		this.setTop(title);
 		
+		//Pane for displaying subtitles
 		VBox rules = new VBox();
 		ArrayList<Label> subtitles = new ArrayList<>();
 		
+		//Subtitles
 		Label s0 = new Label("The knight is 'odd' compared to the other pieces");
 		subtitles.add(s0);
 		Label s1 = new Label("Instead of moving in a straight line, the knight moves in \nan " +
@@ -60,6 +67,7 @@ public class KnightRules extends BorderPane {
 		
 		this.setLeft(rules);
 		
+		//Board for knight movement
 		GridPane board = new GridPane();
 		board.setAlignment(Pos.CENTER);
 		for(int i = 0; i < 5; i++) {

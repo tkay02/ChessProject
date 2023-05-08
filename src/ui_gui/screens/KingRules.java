@@ -20,16 +20,23 @@ import src.ui_gui.ChessSquare;
 
 public class KingRules extends BorderPane {
 	
+	/**
+	 * Displays information about the king, including a picture that displays all of the
+	 * possible moves that a king piece can do.
+	 */
 	public KingRules() {
 		super();
 		
+		//Title
 		Label title = new Label("King Movement");
 		title.setId("Title");
 		this.setTop(title);
 		
+		//Pane that stores subtitles
 		VBox rules = new VBox();
 		ArrayList<Label> subtitles = new ArrayList<>();
 		
+		//Subtitles
 		Label s0 = new Label("The king is the most important piece in the game");
 		subtitles.add(s0);
 		Label s1 = new Label("The king can move in any direction vertically, horizontally, \nand "+
@@ -54,6 +61,7 @@ public class KingRules extends BorderPane {
 		
 		this.setLeft(rules);
 		
+		//Board to display king movement
 		GridPane board = new GridPane();
 		board.setAlignment(Pos.CENTER);
 		for(int i = 0; i < 5; i++) {

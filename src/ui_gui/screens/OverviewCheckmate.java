@@ -13,13 +13,18 @@ import src.ui_gui.ChessSquare;
 
 public class OverviewCheckmate extends VBox {
 	
+	/**
+	 * Displays information about checkmate such as it checkmate means and an example.
+	 */
 	public OverviewCheckmate() {
 		
+		//Title
 		this.setAlignment(Pos.TOP_LEFT);
 		Label title = new Label("Checkmate Condition");
 		title.setId("Title");
 		this.getChildren().add(title);
 		
+		//Subtitles
 		ArrayList<Label> subtitles = new ArrayList<>();
 		
 		Label s0 = new Label("When the king's in check and there's no possible moves to get out "+
@@ -33,6 +38,7 @@ public class OverviewCheckmate extends VBox {
 		});
 		subtitles.clear();
 		
+		//Board to represent example
 		GridPane board = new GridPane();
 		board.setAlignment(Pos.TOP_CENTER);
 		for(int i = 0; i < 3; i++) {
@@ -61,6 +67,7 @@ public class OverviewCheckmate extends VBox {
 		}
 		this.getChildren().add(board);
 		
+		//More subtitles
 		Label s2 = new Label("In this example, checkmate is achieved by the rook makes the enemy " +
 				             "king into check vertically and the queen makes \nthe king " +
 				             "into check horizontally and diagonally with nothing that the enemy "+

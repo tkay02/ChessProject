@@ -14,15 +14,23 @@ import src.ui_gui.ChessSquare;
 
 public class QueenRules extends BorderPane {
 	
+	/**
+	 * Displays information about the queen, including a picture that displays all of the
+	 * possible moves that a queen piece can do.
+	 */
 	public QueenRules() {
 		super();
+		
+		//Title
 		Label title = new Label("Queen Movement");
 		title.setId("Title");
 		this.setTop(title);
 		
+		//Pane that displays the subtitles
 		VBox rules = new VBox();
 		ArrayList<Label> subtitles = new ArrayList<>();
 		
+		//Subtitles
 		Label s0 = new Label("The queen is the most powerful piece in the game");
 		subtitles.add(s0);
 		Label s1 = new Label("The queen can move in all possible directions vertically, "+
@@ -45,6 +53,7 @@ public class QueenRules extends BorderPane {
 		
 		this.setLeft(rules);
 		
+		//Board to display queen movement
 		GridPane board = new GridPane();
 		board.setAlignment(Pos.CENTER);
 		for(int i = 0; i < 5; i++) {

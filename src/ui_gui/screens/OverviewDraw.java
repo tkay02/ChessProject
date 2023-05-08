@@ -13,8 +13,13 @@ import src.ui_gui.ChessSquare;
 
 public class OverviewDraw extends VBox {
 
+	/**
+	 * Displays information about draw condition such as draw by stalemate (with an exmaple), draw
+	 * by fifty-move rule, and draw by threefold repetition.
+	 */
 	public OverviewDraw() {
 		
+		//Title
 		this.setAlignment(Pos.TOP_LEFT);
 		Label title = new Label("Draw Conditions");
 		title.setId("Title");
@@ -22,6 +27,7 @@ public class OverviewDraw extends VBox {
 		
 		ArrayList<Label> subtitles = new ArrayList<>();
 		
+		//Subtitles
 		Label s0 = new Label("However, checkmate is not the only condition that could end the "+
                            "game");
 		subtitles.add(s0);
@@ -42,6 +48,7 @@ public class OverviewDraw extends VBox {
 		});
 		subtitles.clear();
 		
+		//Stalemate example
 		GridPane board = new GridPane();
 		board.setAlignment(Pos.TOP_CENTER);
 		for(int i = 0; i < 3; i++) {
@@ -66,6 +73,7 @@ public class OverviewDraw extends VBox {
 		}
 		this.getChildren().add(board);
 		
+		//More subtitles
 		Label s5 = new Label("In this example, with the king being the only piece left, cannot "+
                              "move as all possible moves will bring itself to be \nchecked by the enemy queen");
 		subtitles.add(s5);

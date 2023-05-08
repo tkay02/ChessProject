@@ -5,6 +5,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import src.interfaces.ScreenChangeHandler;
 import src.ui_gui.ScreenFactory.Screen;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.event.*;
 import javafx.geometry.Pos;
@@ -13,37 +15,27 @@ public class RulesGUI implements EventHandler<ActionEvent> {
 	
 	/**Button that returns user back to main menu**/
 	Button b0;
-
 	/**Button that displays board overview**/
 	Button b1;
-
 	/**Button that displays king movement**/
 	Button b2;
-
 	/**Button that displays queen movement**/
 	Button b3;
-
 	/**Button that displays bishop movement**/
 	Button b4;
-
 	/**Button that displays knight movement**/
 	Button b5;
-
 	/**Button that displays rook movement**/
 	Button b6;
-
 	/**Button that displays pawn movement**/
 	Button b7;
-
 	/**Button that displays overview of conditions**/
 	Button b8;
 	
 	/**Root of the layout**/
 	private BorderPane root;
-
 	/**To change the display to different scenes**/
 	private RulesFactory fact;
-
 	/** Handles the screen changing **/
 	private ScreenChangeHandler screenChanger;
 	
@@ -58,7 +50,10 @@ public class RulesGUI implements EventHandler<ActionEvent> {
 		root.getStyleClass().add("mainMenu");
 		HBox top = new HBox(300.0);
 		Label rules = new Label("Rules");
-		this.b0 = new Button("Back to Main Menu");
+		rules.setId("Title");
+		this.b0 = new Button("Main Menu");
+		this.b0.getStyleClass().add("buttonStyleA");
+		this.b0.getStyleClass().add("buttonSizeA");
 		top.getChildren().add(rules);
 		top.getChildren().add(this.b0);
 		
@@ -69,33 +64,22 @@ public class RulesGUI implements EventHandler<ActionEvent> {
 		left.setAlignment(Pos.BASELINE_LEFT);
 		this.b1 = new Button("Board Setup");
 		this.b2 = new Button("King Movement");
-		this.b3 = new Button("Queen Movement");
-		this.b4 = new Button("Bishop Movement");
-		this.b5 = new Button("Knight Movement");
+		this.b3 = new Button("Queen Mov");
+		this.b4 = new Button("Bishop Mov");
+		this.b5 = new Button("Knight Mov");
 		this.b6 = new Button("Rook Movement");
 		this.b7 = new Button("Pawn Movement");
 		this.b8 = new Button("Overview");
-		// Setting button actions to work with scene
-		this.b0.setOnAction(this);
-		this.b1.setOnAction(this);
-		this.b2.setOnAction(this);
-		this.b3.setOnAction(this);
-		this.b4.setOnAction(this);
-		this.b5.setOnAction(this);
-		this.b6.setOnAction(this);
-		this.b7.setOnAction(this);
-		this.b8.setOnAction(this);
-		left.getChildren().addAll(Arrays.asList(b1, b2, b3, b4, b5, b6, b7, b8));
 		
+		ArrayList<Button> b = new ArrayList<>(Arrays.asList(b1,b2,b3,b4,b5,b6,b7,b8));
+		b.forEach(n -> {
+			// Setting button actions to work with scene
+			n.setOnAction(this);
+			n.getStyleClass().add("buttonStyleA");
+			n.getStyleClass().add("buttonSizeA");
+			left.getChildren().add(n);
+		});
 		root.setLeft(left);
-		
-		//Sets screen to be used to display rule information
-		TilePane display = new TilePane();
-		display.setAlignment(Pos.BASELINE_CENTER);
-		Label test = new Label("Select a button to view a rule");
-		display.getChildren().add(test);
-		
-		root.setCenter(display);
 	
 	}
 	
@@ -103,14 +87,20 @@ public class RulesGUI implements EventHandler<ActionEvent> {
 		this.screenChanger = screen;
 	}
 
+	/**
+	 * Returns the root of the RulesGUI.
+	 */
 	public Pane getRoot() {
 		return this.root;
 	}
 
 	@Override
+	/**
+	 * When a button is pressed, created a scene in the center of the GUI to display the rules
+	 * in regards to which button was pressed. For instance, pressing the king movement button
+	 * will present rules about the kings movement. Uses factory field to create screens.
+	 */
 	public void handle(ActionEvent event) {
-
-		// Need to add code to buttons
 		if(event.getSource() == this.b0) {
 			screenChanger.changeScreen(Screen.MAIN_SCREEN);
 		}
@@ -137,10 +127,7 @@ public class RulesGUI implements EventHandler<ActionEvent> {
 		}
 		else if(event.getSource() == this.b8) {
 			this.root.setCenter(this.fact.makeScreen(RuleScreens.OVERVIEW));
-		}
-		
+		}	
 	}
-
-	
 
 }

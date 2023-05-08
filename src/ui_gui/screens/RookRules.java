@@ -14,16 +14,23 @@ import src.ui_gui.ChessSquare;
 
 public class RookRules extends BorderPane {
 
+	/**
+	 * Displays information about the rook, including a picture that displays all of the
+	 * possible moves that a rook piece can do.
+	 */
 	public RookRules() {
 		super();
 		
+		//Title
 		Label title = new Label("Rook Movement");
 		title.setId("Title");
 		this.setTop(title);
 		
+		//Pane to display subtitles
 		VBox rules = new VBox();
 		ArrayList<Label> subtitles = new ArrayList<>();
 		
+		//Subtitles
 		Label s0 = new Label("Among chess players, the rook is the most vital chess piece \nafter "+
 				             "the queen");
 		subtitles.add(s0);
@@ -46,6 +53,7 @@ public class RookRules extends BorderPane {
 		
 		this.setLeft(rules);
 		
+		//Board to display rook movement
 		GridPane board = new GridPane();
 		board.setAlignment(Pos.CENTER);
 		for(int i = 0; i < 5; i++) {

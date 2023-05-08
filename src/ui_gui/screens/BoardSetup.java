@@ -22,20 +22,31 @@ import src.ui_gui.ChessSquare;
 
 public class BoardSetup extends BorderPane implements EventHandler<ActionEvent> {
 	
+	/**Board from the white player's perspective**/
 	GridPane board1;
+	/**Board from the black player's perspective**/
 	GridPane board2;
+	/**Button that switches between the screens**/
 	Button swap;
 	
+	/**
+	 * Displays board information that the player can understand, such as the board layout,
+	 * the amount/type of pieces, and what the rows/cols are called.
+	 */
 	public BoardSetup() {
 		super();
 		
+		//Title
 		Label title = new Label("Board Setup");
 		title.setId("Title");
 		title.setAlignment(Pos.TOP_CENTER);
 		this.setTop(title);
+		
+		//Pane that stores the subtitles
 		VBox rules = new VBox();
 		rules.setAlignment(Pos.TOP_LEFT);
 		
+		//Subtitles
 		ArrayList<Label> subtitles = new ArrayList<>();
 		Label s0 = new Label("The game is played on an 8x8 black and white board with \neach player " +
 						     "receiving 16 pieces each");
@@ -69,17 +80,22 @@ public class BoardSetup extends BorderPane implements EventHandler<ActionEvent> 
 			rules.getChildren().add(n);
 		});
 		
-		this.swap = new Button("To switch sides of the board");
+		//Creates button to switch scenes
+		this.swap = new Button("Switch sides");
 		this.swap.setOnAction(this);
+		this.swap.getStyleClass().add("buttonStyleA");
+		this.swap.getStyleClass().add("buttonSizeA");
 		rules.getChildren().add(this.swap);
 		
 		this.setLeft(rules);
 		
+		//Board information such as the tile order and name of the ranks/files
 		Board toDisplay = new Board(new Chess());
 		String[] ranks = {"8", "7", "6", "5", "4", "3", "2", "1"};
 		String[] files = {"A", "B", "C", "D", "E", "F", "G", "H"};
 		Square[][] tiles = (Square[][])toDisplay.getSquares();
 		
+		//Board for white player's perspective
 		this.board1 = new GridPane();
 		board1.setAlignment(Pos.CENTER);
 		for(int i = 0; i < tiles.length; i++) {
@@ -100,6 +116,7 @@ public class BoardSetup extends BorderPane implements EventHandler<ActionEvent> 
 			GridPane.setConstraints(file, k+1, 8);
 		}
 		
+		//Board for black player's perspective
 		this.board2 = new GridPane();
 		board2.setAlignment(Pos.CENTER);
 		for(int i = tiles.length - 1; i >= 0; i--) {
@@ -120,12 +137,17 @@ public class BoardSetup extends BorderPane implements EventHandler<ActionEvent> 
 			GridPane.setConstraints(file, i+1, 8);
 		}
 		
+		//White player's perspective is set as default
 		this.setCenter(board1);
 		
 		
 	}
 
 	@Override
+	/**
+	 * When swap is pressed, switches the board setup to show the black player's perspective
+	 * if it originally showed the whote player's perspective and vice versa.
+	 */
 	public void handle(ActionEvent event) {
 		if(event.getSource() == this.swap) {
 			if(this.getCenter() == this.board1) this.setCenter(board2);

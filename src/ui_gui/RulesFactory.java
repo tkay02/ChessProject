@@ -13,6 +13,13 @@ import src.ui_gui.screens.Overview;
 
 public class RulesFactory {
 
+	/**
+	 * Produces a screen that is used in the RulesGUI. Determines which screen to create when
+	 * the user selects a specific button in the GUI, which is represented by an enum.
+	 * 
+	 * @param RuleScreens scr Enum value of the screen that is being searched for.
+	 * @return The screen that matches the enum.
+	 */
 	public Pane makeScreen(RuleScreens scr) {
 		
 		Pane pane = new TilePane();

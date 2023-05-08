@@ -14,16 +14,24 @@ import src.ui_gui.ChessSquare;
 
 public class PawnRules extends BorderPane {
 
+	/**
+	 * Displays information about the pawns, including picturse that displays all of the
+	 * possible moves that a pawn piece can do such as when a pawn hasn't moved yet or a
+	 * pawn capturing an enemy.
+	 */
 	public PawnRules() {
 		super();
 		
+		//Title
 		Label title = new Label("Pawn Movement");
 		title.setId("Title");
 		this.setTop(title);
 		
+		//Pane to display subtitles
 		VBox rule = new VBox();
 		ArrayList<Label> subtitles = new ArrayList<>();
 		
+		//Subtitles
 		Label s0 = new Label("The pawn is the most diverse piece in regards to movement");
 		subtitles.add(s0);
 		Label s1 = new Label("The pawn is also the only piece in chess that moves forward, \nnever "+
@@ -56,9 +64,11 @@ public class PawnRules extends BorderPane {
 		
 		this.setLeft(rule);
 		
+		//Board to display pawn movement
 		GridPane board = new GridPane();
 		board.setAlignment(Pos.TOP_CENTER);
 		
+		//For normal movement
 		for(int i = 0; i < 3; i++) {
 			for(int j = 0; j < 3; j++) {
 				ChessSquare sq;
@@ -82,6 +92,7 @@ public class PawnRules extends BorderPane {
 		}
 		board.add(new Label("\n"), 0, 3, 3, 1);
 		
+		//For a pawn that hasn't moved yet
 		for(int i = 0; i < 3; i++) {
 			for(int j = 0; j < 3; j++) {
 				ChessSquare sq;
@@ -105,6 +116,7 @@ public class PawnRules extends BorderPane {
 		}
 		board.add(new Label("\n"),0, 7, 3, 1);
 		
+		//For capturing
 		for(int i = 0; i < 3; i++) {
 			for(int j = 0; j < 3; j++) {
 				ChessSquare sq;
