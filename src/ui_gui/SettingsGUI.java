@@ -11,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import src.interfaces.ScreenChangeHandler;
+import src.ui_gui.ScreenFactory.Screen;
 import src.ui_gui.screens.ColoramaGUI;
 
 public class SettingsGUI extends BorderPane{
@@ -114,8 +115,9 @@ public class SettingsGUI extends BorderPane{
 				Object o = event.getSource();
 
 				if(o == b2){
-				   screenChanger.changeScreen(ScreenFactory.Screen.MAIN_SCREEN);
-				}
+					if(ScreenFactory.prevScreen == Screen.MATCH_SCREEN) ChessBoardGUI.paintSquares();
+					screenChanger.changeScreen(ScreenFactory.prevScreen);
+				} 
 				else if(o == whiteButton){
 					ColoramaGUI colorama = new ColoramaGUI(whiteColor);
 					colorama.showAndWait();

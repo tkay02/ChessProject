@@ -1,60 +1,8 @@
+
 .mainMenu{
-    -fx-background-color: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, #4A6B7B 50%);
-}
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, rgb(74, 107, 123) 50%);
 
-.backgroundA{
-    -fx-background-color: #000000;
 }
-
-.backgroundB{
-    -fx-background-color: linear-gradient(aqua, rgb(25, 186, 186));
-}
-
-.backgroundC{
-    -fx-background-color: linear-gradient(rgb(25, 186, 186), rgb(41, 119, 167));
-}
-
-.backgroundD{
-    -fx-background-color: linear-gradient(rgb(41, 119, 167), #2f6a87);
-}
-
-/** Pane for color of white squares */
-.buttonWhiteSquares{
-    -fx-min-width: 70px;
-    -fx-min-height: 70px;
-    -fx-background-color: #ffffff;
-}
-    
-/** Pane for color of black squares */
-.buttonBlackSquares{
-    -fx-min-width: 70px;
-    -fx-min-height: 70px;
-    -fx-background-color: #000000;
-}
-
-.HBoxDialogue{
-    -fx-min-width: 50px;
-    -fx-nin-height: 25px;
-    -fx-background-color: #000000;
-}
-
-    /** Styles for ColorChooser */
-.color{
-    -fx-background-color: #000000;
-    -fx-border-radius: 0;
-    -fx-border-width: 1;
-    -fx-background-insets: 10 10 10 10;
-}
-
-.sliderTitle{
-    -fx-font-size: 27px;
-    -fx-padding: 5 5 20 5;
-}
-
-.valueTitle, .textInput{
-    -fx-border-width: 20px;
-}
-
 /** Text field styles */
 .textField1{
 	-fx-min-width: 300px;
@@ -74,17 +22,14 @@
 
 /** Label Styles */
 .labelA {
-    -fx-effect: innershadow(one-pass-box, #000000,5,0,5,5);
-    -fx-font-size: 128px;
-    -fx-font-family: "'Libre Baskerville', serif";
-    -fx-text-fill: linear-gradient(#000000, #181818, #f8f8f8);
-    -fx-font-weight: 800;
+    -fx-font-size: 64px;
+    -fx-font-family: "Helvetica";
+    -fx-text-fill: #4a0200
 }
 
-.labelB {
-    -fx-font-size: 48px;
+.subtitle {
+    -fx-font-size: 20px;
     -fx-font-family: "Helvetica";
-    -fx-text-fill: #000000
 }
 
 /** Button Styles */
@@ -119,38 +64,8 @@
     -fx-padding: 10 20 10 20;
 }
 
-.buttonStyleB {
-    -fx-background-color: 
-        #090a0c,
-        linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
-        linear-gradient(#20262b, #191d22),
-        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
-    -fx-background-radius: 5,4,3,5;
-    -fx-background-insets: 0,1,2,0;
-    -fx-text-fill: white;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
-    -fx-font-family: "Monospace";
-    -fx-font-weight: 800;
-    -fx-text-fill: linear-gradient(white, #d0d0d0);
-    -fx-font-size: 18px;
-    -fx-padding: 10 20 10 20;
-}
-
-.buttonStyleB:armed{
- -fx-background-color: linear-gradient(#800000, #191d22);
-    -fx-background-radius: 5,4,3,5;
-    -fx-background-insets: 0,1,2,0;
-    -fx-text-fill: white;
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
-    -fx-font-family: "Monospace";
-    -fx-font-weight: 800;
-    -fx-text-fill: linear-gradient(white, #d0d0d0);
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-padding: 10 20 10 20;
-}
-
-.buttonSizeA{    
+.buttonSizeA{
+	    
     -fx-min-width: 135px;
     -fx-min-height: 37px;
     -fx-max-width: 150px;
@@ -164,38 +79,19 @@
     -fx-stroke-dash-offset: 6;
 }
 
-.buttonSizeB{    
-    -fx-min-width: 200px;
-    -fx-min-height: 30px;
-    -fx-max-width: 450px;
-    -fx-max-height: 60px;
-    -fx-pref-width: 450px;
-    -fx-pref-height: 60px;
-}
-
 #WhiteSquare {
-    -fx-background-color: #fef9f3;
-    -fx-border-color: #000000;
 }
 
 #BlackSquare {
-    -fx-background-color: #3f301d;
-    -fx-border-color: #000000;
 }
 
 #SelectedSquare {
-    -fx-background-color: #0a0468;
-    -fx-border-color: #000000;
 }
 
 #ValidSquare {
-    -fx-background-color: #5573d6;
-    -fx-border-color: #000000;
 }
 
 #CheckSquare {
-    -fx-background-color: #d1f72c;
-    -fx-border-color: #000000;
 }
 
 #Title {
@@ -206,4 +102,3 @@
 .rank_fileLabel {
     -fx-font-size: 32px;
 }
-

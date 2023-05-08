@@ -3,6 +3,13 @@ package src.ui_gui;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import java.util.HashMap;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -25,39 +32,32 @@ public class ChessBoardGUI extends GridPane {
 
 	/**Board the contains the visual chess squares**/
 	public static ChessSquare[][] board;
-
 	/**Reference to the current chess game**/
 	public static Chess game;
-
 	/**Reference to the board in the chess game**/
 	public static Board ogBoard;
-
 	/**Boolean that indictates if it's the white player's turn or not**/
 	public static boolean isWhite;
-
 	/**Label that updates the status of the game**/
 	public static Label playerTurn;
-	
 	/**The position where the chess piece is being moved from**/
 	public static Position from = null;
-
 	/**The position where the chess piece is being moved to**/
 	public static Position to = null;
-
 	/**The current chess square that contains the chess piece that the user selected**/
 	public static ChessSquare currentChessPiece = null;
-
 	/**Array that stores labels for rank rows**/
 	public static Label[] rankLabel = new Label[8];
-
 	/**Array that stores labels for file rows**/
 	public static Label[] fileLabel = new Label[8];
-
 	/**Array that stores rank values**/
 	public static String[] ranks = {"1","2","3","4","5","6","7","8"};
-
 	/**Array that stores file values**/
 	public static String[] files = {"A","B","C","D","E","F","G","H"};
+	/**Player One's name; default is "Player One"**/
+	public static String player1 = "Player One";
+	/**Player Two's name; default is "Player Two"**/
+	public static String player2 = "Player Two";
 	
 	private static HashMap<Character, String> mapFlip = new HashMap<>();
 	
@@ -90,7 +90,13 @@ public class ChessBoardGUI extends GridPane {
 	 * board GUI off from. 
 	 */
 	private void draw(Square[][] tiles) {
-		playerTurn = new Label("Player One's Turn");
+		if(!DefinePlayersGUI.getPlayerOneName().equals("")) {
+			player1 = DefinePlayersGUI.getPlayerOneName();
+		}
+		if(!DefinePlayersGUI.getPlayerTwoName().equals("")) {
+			player2 = DefinePlayersGUI.getPlayerTwoName();
+		}
+		playerTurn = new Label(player1 + "'s Turn");
 		playerTurn.setId("Title");
 		this.add(playerTurn, 0, 0, 9, 1);
 		this.createGridLabels();
@@ -125,8 +131,8 @@ public class ChessBoardGUI extends GridPane {
 	 * the text to display their turn and vice versa.
 	 */
 	private static void changePlayerLabel() {
-		if(isWhite) playerTurn.setText("Player One's Turn");
-		else playerTurn.setText("Player Two's Turn");
+		if(isWhite) playerTurn.setText(player1 + "'s Turn");
+		else playerTurn.setText(player2 + "'s Turn");
 	}
 	
 	
@@ -206,10 +212,10 @@ public class ChessBoardGUI extends GridPane {
 		if(game.checkNoValidMoves(isWhite)) {
 			//Checks for checkmates; otherwise it's draw by stalemate
 			if(isWhite && game.getCheck()) {
-				ChessBoardGUI.playerTurn.setText("Player Two wins by Checkmate!");
+				ChessBoardGUI.playerTurn.setText(player2 + " wins by Checkmate!");
 			}
 			else if(!isWhite && game.getCheck()) {
-				ChessBoardGUI.playerTurn.setText("Player One wins by Checkmate!");
+				ChessBoardGUI.playerTurn.setText(player1 + " wins by Checkmate!");
 			}
 			else {
 				ChessBoardGUI.playerTurn.setText("Draw by Stalemate!");
@@ -276,6 +282,7 @@ public class ChessBoardGUI extends GridPane {
 		Piece temp = board[fromRow][fromCol].getPiece();
 		//Switches from piece with to piece and vice versa
 		board[fromRow][fromCol].setPiece(board[toRow][toCol].getPiece());
+		//Switches to piece to from piece
 		board[toRow][toCol].setPiece(temp);
 	}
 	
@@ -286,20 +293,24 @@ public class ChessBoardGUI extends GridPane {
 	public static void swap() { 
 		for(int i = 0; i < board.length/2; i++) {
 			for(int j = 0; j < board[i].length; j++) {
+				int row = board.length-(i+1);
+				int col = board.length-(j+1);
 				String oldId = board[i][j].getId();
 				Piece oldPiece = board[i][j].getPiece();
 				ChessSquare old = board[i][j];
-				String newId = board[board.length-(i+1)][j].getId();
-				Piece newPiece = board[board.length-(i+1)][j].getPiece();
-				ChessSquare neu = board[board.length-(i+1)][j];
+				String newId = board[row][col].getId();
+				Piece newPiece = board[row][col].getPiece();
+				ChessSquare neu = board[row][col];
 				board[i][j].setId(newId);
+				if(newId.equals("CheckSquare")) board[i][j].setCheckColor();
+				else board[i][j].setSquareColor();
 				board[i][j].setPiece(newPiece);
-				board[i][j].isWhite = !board[i][j].isWhite;
 				board[i][j] = neu;
-				board[board.length-(i+1)][j].setId(oldId);
-				board[board.length-(i+1)][j].setPiece(oldPiece);
-				board[board.length-(i+1)][j].isWhite = !board[board.length-(i+1)][j].isWhite;
-				board[board.length-(i+1)][j] = old;
+				board[row][col].setId(oldId);
+				if(oldId.equals("CheckSquare")) board[row][col].setCheckColor();
+				else board[row][col].setSquareColor();
+				board[row][col].setPiece(oldPiece);
+				board[row][col] = old;
 				//Updates the labels to represent positions from other player's perspective
 				swapLabels();
 			}
@@ -393,6 +404,12 @@ public class ChessBoardGUI extends GridPane {
 	 */
 	public static void addWhiteTakenPiece(ChessView image){
 		MatchGUI.addWhiteTakenPiece(image);
+	}
+
+	public static void paintSquares(){
+		for(int row = 0; row < board.length; row++)
+			for(int col = 0; col < board[row].length; col++)
+				board[row][col].setSquareColor();
 	}
 
 	/**
