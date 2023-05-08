@@ -170,7 +170,6 @@ public class MatchGUI extends BorderPane {
 		this.screenChanger = screen;
 	}
 
-
 	// Variable that holds how a button press is handled
 	EventHandler<ActionEvent> btnHandle = new EventHandler<ActionEvent>(){
 
@@ -183,14 +182,8 @@ public class MatchGUI extends BorderPane {
 			if(screenChanger != null){
 				Object o = event.getSource();
 
-				if(o == b6) {
-					ScreenFactory.prevScreen = null;
-					screenChanger.changeScreen(Screen.MAIN_SCREEN);
-				}
-				else if(o == b5){
-					ScreenFactory.prevScreen = Screen.MATCH_SCREEN;
-					screenChanger.changeScreen(Screen.SETTINGS_SCREEN);
-				}
+				if(o == b6) screenChanger.changeScreen(Screen.MAIN_SCREEN);
+				else if(o == b5) screenChanger.changeScreen(Screen.SETTINGS_SCREEN);
 				else if(o == b1){
 					Dialog<String> load = new LoadGameGUI();
 					Optional<String> result = load.showAndWait();

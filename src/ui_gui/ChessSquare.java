@@ -57,7 +57,7 @@ public class ChessSquare extends Pane {
 				if((sq.piece.getChessPieceType() != ChessPieceType.EMPTY) && (sq.getId().equals("WhiteSquare") 
 				|| sq.getId().equals("BlackSquare"))) {
 					if(sq.chessPiece.getImage() != null) {
-						sq.setSelectedColor();
+						sq.setId("SelectedSquare");
 						ChessBoardGUI.updateCurrentChessPiece(sq);
 					}
 					else {
@@ -72,7 +72,7 @@ public class ChessSquare extends Pane {
 					ChessBoardGUI.updateCurrentChessPiece(sq);
 				}
 				else if(sq.getId().equals("CheckSquare")) {
-					sq.setSelectedColor();
+					sq.setId("SelectedSquare");
 					ChessBoardGUI.updateCurrentChessPiece(sq);
 				}
 			}
@@ -96,31 +96,13 @@ public class ChessSquare extends Pane {
 	 * Sets the color of the square to a specific ID in the CSS application.
 	 */
 	public void setSquareColor() {
-		if(this.isWhite) {
-			this.setId("WhiteSquare");
-			paintWhite();
-		}
-		else {
-			this.setId("BlackSquare");
-			paintBlack();
-		}
-	}
-	
-	public void paintWhite() {
-		this.setStyle("-fx-border-color: #000000; "
-				+     "-fx-background-color: #" + SettingsGUI.whiteColor + ";");
-	}
-	
-	public void paintBlack() {
-		this.setStyle("-fx-border-color: #000000; " +
-	                  "-fx-background-color: #" + SettingsGUI.blackColor + ";");
+		if(this.isWhite) this.setId("WhiteSquare");
+		else this.setId("BlackSquare");
 	}
 	
 	/*t	 */
 	public void setSelectedColor() {
 		this.setId("SelectedSquare");
-		this.setStyle("-fx-border-color: #000000; "
-				    + "-fx-background-color: #0a0468;");
 	}
 	
 	/**
@@ -128,8 +110,6 @@ public class ChessSquare extends Pane {
 	 */
 	public void setValidColor() {
 		this.setId("ValidSquare");
-		this.setStyle("-fx-border-color: #000000; " +
-					  "-fx-background-color: #5573d6;");
 	}
 	
 	/**
@@ -137,8 +117,6 @@ public class ChessSquare extends Pane {
 	 */
 	public void setCheckColor() {
 		this.setId("CheckSquare");
-		this.setStyle("-fx-border-color: #000000; " +
-					  "-fx-background-color: #d1f72c;");
 	}
 	
 	/**

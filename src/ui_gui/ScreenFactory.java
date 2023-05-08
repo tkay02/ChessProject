@@ -23,8 +23,6 @@ public final class ScreenFactory implements ScreenChangeHandler{
 	private static SignUpGUI signUpScreen;
 
 	private static DefinePlayersGUI definePlayersGUI;
-
-	public static Screen prevScreen;
 	
 	private Scene scene;
 	
@@ -46,17 +44,15 @@ public final class ScreenFactory implements ScreenChangeHandler{
 		
 		switch(screenChoice){
 			case SETTINGS_SCREEN:
-				if(settingsScreen == null || prevScreen == null){
+				if(settingsScreen == null){
 					settingsScreen = new SettingsGUI();
 					settingsScreen.setScreenChangeHandler(this);
 				} 
 				screen = settingsScreen;
 				break;
 			case MATCH_SCREEN:
-				if(ScreenFactory.prevScreen == null){
-					matchScreen = new MatchGUI();
-					matchScreen.setScreenChangeHandler(this);
-				}
+				matchScreen = new MatchGUI();
+				matchScreen.setScreenChangeHandler(this);
 				screen = matchScreen;
 				break;
 			case RULES_SCREEN:
@@ -64,7 +60,7 @@ public final class ScreenFactory implements ScreenChangeHandler{
 					rulesScreen = new RulesGUI();
 					rulesScreen.setScreenChangeHandler(this);
 				}
-				screen = rulesScreen;
+				screen = rulesScreen.getRoot();
 				break;
 			case SIGN_IN:
 				if(signInScreen == null){
