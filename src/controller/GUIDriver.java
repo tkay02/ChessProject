@@ -28,7 +28,8 @@ public class GUIDriver extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			this.stage = primaryStage;
-			primaryStage.setFullScreen(true);
+			primaryStage.setMaximized(true);
+			primaryStage.setTitle("ChessMeister");
 			
 			Scene scene = new Scene(new Pane(),800,600);
 			this.rootScene = scene;

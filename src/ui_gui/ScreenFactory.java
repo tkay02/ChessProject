@@ -8,7 +8,7 @@ import src.interfaces.ScreenChangeHandler;
 public final class ScreenFactory implements ScreenChangeHandler{
 
 	public enum Screen {MAIN_SCREEN, SETTINGS_SCREEN, RULES_SCREEN, MATCH_SCREEN,
-	SIGN_IN,  SIGN_UP, DEFINE_PLAYERS, LOAD_GAME};
+	SIGN_IN, SIGN_UP, DEFINE_PLAYERS};
 	
 	private static MainMenuGUI mainScreen;
 	
@@ -23,8 +23,6 @@ public final class ScreenFactory implements ScreenChangeHandler{
 	private static SignUpGUI signUpScreen;
 
 	private static DefinePlayersGUI definePlayersGUI;
-
-	private static LoadGameGUI loadGame;
 	
 	private Scene scene;
 	
@@ -53,10 +51,8 @@ public final class ScreenFactory implements ScreenChangeHandler{
 				screen = settingsScreen;
 				break;
 			case MATCH_SCREEN:
-				if(matchScreen == null){
-					matchScreen = new MatchGUI();
-					matchScreen.setScreenChangeHandler(this);
-				} 
+				matchScreen = new MatchGUI();
+				matchScreen.setScreenChangeHandler(this);
 				screen = matchScreen;
 				break;
 			case RULES_SCREEN:
@@ -64,7 +60,7 @@ public final class ScreenFactory implements ScreenChangeHandler{
 					rulesScreen = new RulesGUI();
 					rulesScreen.setScreenChangeHandler(this);
 				}
-				screen = rulesScreen.getRoot();
+				screen = rulesScreen;
 				break;
 			case SIGN_IN:
 				if(signInScreen == null){
@@ -86,13 +82,6 @@ public final class ScreenFactory implements ScreenChangeHandler{
 					definePlayersGUI.setScreenChangeHandler(this);
 				} 
 				screen = definePlayersGUI;
-				break;
-			case LOAD_GAME:
-				if(loadGame == null){
-					loadGame = new LoadGameGUI();
-					loadGame.setScreenChangeHandler(this);
-				}
-				screen = loadGame;
 				break;
 			default:
 				if(mainScreen == null){

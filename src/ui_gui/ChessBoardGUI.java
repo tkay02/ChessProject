@@ -1,6 +1,7 @@
 package src.ui_gui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -8,17 +9,25 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import java.util.HashMap;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import src.controller.Chess;
 import src.enums.ChessPieceType;
 import src.enums.File;
-import src.enums.GameColor;
 import src.enums.Rank;
 import src.model.Board;
 import src.model.Piece;
 import src.model.Position;
 import src.model.Square;
 
+/**
+ * GUI component that holds the chess board.
+ * 
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 5/5/2023
+ */
 public class ChessBoardGUI extends GridPane {
 
 	/**Oops! All static variables!**/
@@ -47,6 +56,8 @@ public class ChessBoardGUI extends GridPane {
 	/**Array that stores file values**/
 	public static String[] files = {"A","B","C","D","E","F","G","H"};
 	
+	private static HashMap<Character, String> mapFlip = new HashMap<>();
+	
 	/**
 	 * Constructor for ChessBoardGUI.
 	 * 
@@ -61,6 +72,12 @@ public class ChessBoardGUI extends GridPane {
 		ChessBoardGUI.isWhite = true;
 		Square[][] tiles = (Square[][])ogBoard.getSquares();
 		this.draw(tiles);
+		initMap();
+	}
+
+	private void initMap(){
+		for(int idx = 0; idx < files.length; idx++)
+			mapFlip.put(files[idx].charAt(0), files[files.length - idx - 1]);
 	}
 	
 	/**
@@ -119,7 +136,6 @@ public class ChessBoardGUI extends GridPane {
 	 * @param ChessSquare square The square that contains the current chess piece.
 	 */
 	public static void updateCurrentChessPiece(ChessSquare square) {
-		System.out.println("Initial From Pos: " + from + " To Pos: " + to);
 		//Updates current piece
 		ChessBoardGUI.currentChessPiece = square;
 		//Grabs position of selected piece
@@ -136,6 +152,7 @@ public class ChessBoardGUI extends GridPane {
 			   ChessBoardGUI.currentChessPiece.getId().equals("CheckSquare")) {
 				//Updates from position and shows all valid moves of chess piece
 				ChessBoardGUI.from = space;
+				ChessBoardGUI.setPlayerAction();
 				ArrayList<Position> moves = piece.showMoves(space);
 				ChessBoardGUI.showValidMoves(moves);
 			}
@@ -151,16 +168,22 @@ public class ChessBoardGUI extends GridPane {
 			//If from and to positions are valid
 			if(ChessBoardGUI.from != null && ChessBoardGUI.to != null) {
 				//Moves piece
+				Piece takenPiece = (Piece)ogBoard.getPiece(to.getRank(), to.getFile());
+				ChessSquare takenPieceImage = board[to.getRank().getArrayRank()][to.getFile().getArrayFile()];
+				if(takenPiece.getChessPieceType() != ChessPieceType.EMPTY){
+					if(takenPiece.isWhite()) ChessBoardGUI.addBlackTakenPiece(takenPieceImage.getChessView().getCopy());
+					else ChessBoardGUI.addWhiteTakenPiece(takenPieceImage.getChessView().getCopy());
+				}
+				ChessBoardGUI.setPlayerAction();
+			
 				ChessBoardGUI.game.move(from.getFile(), from.getRank(),
 										to.getFile(), to.getRank());
 				currentChessPiece.setSquareColor();
 				//Updates the board
-				System.out.println("Before From Pos: " + from + " To Pos: " + to);
 				update();
 				displayCapture();
 				//Ends the player's turn
 				endTurn();
-				System.out.println("After From Pos: " + from + " To Pos: " + to);
 			}
 		}
 	}
@@ -248,7 +271,7 @@ public class ChessBoardGUI extends GridPane {
 		int toCol = to.getFile().getArrayFile();
 		//Grabs piece of from position
 		Piece temp = board[fromRow][fromCol].getPiece();
-		//Switches from piece to to piece
+		//Switches from piece with to piece and vice versa
 		board[fromRow][fromCol].setPiece(board[toRow][toCol].getPiece());
 		//Switches to piece to from piece
 		board[toRow][toCol].setPiece(temp);
@@ -258,21 +281,36 @@ public class ChessBoardGUI extends GridPane {
 	 * Swaps the board layout when a new turn occurs. When it's the black player's turn, displays 
 	 * their pieces from their perspective and vice versa.
 	 */
-	public static void swap() {
+	public static void swap() { 
 		for(int i = 0; i < board.length/2; i++) {
 			for(int j = 0; j < board[i].length; j++) {
 				String oldId = board[i][j].getId();
 				Piece oldPiece = board[i][j].getPiece();
 				ChessSquare old = board[i][j];
-				String newId = board[board.length-(i+1)][board.length-(j+1)].getId();
-				Piece newPiece = board[board.length-(i+1)][board.length-(j+1)].getPiece();
-				ChessSquare neu = board[board.length-(i+1)][board.length-(j+1)];
+				String newId = board[board.length-(i+1)][j].getId();
+				Piece newPiece = board[board.length-(i+1)][j].getPiece();
+				ChessSquare neu = board[board.length-(i+1)][j];
 				board[i][j].setId(newId);
 				board[i][j].setPiece(newPiece);
 				board[i][j] = neu;
 				board[board.length-(i+1)][board.length-(j+1)].setId(oldId);
 				board[board.length-(i+1)][board.length-(j+1)].setPiece(oldPiece);
 				board[board.length-(i+1)][board.length-(j+1)] = old;
+/*
+				=======
+				String newId = board[board.length-(i+1)][j].getId();
+				Piece newPiece = board[board.length-(i+1)][j].getPiece();
+				ChessSquare neu = board[board.length-(i+1)][j];
+				board[i][j].setId(newId);
+				board[i][j].setPiece(newPiece);
+				board[i][j].isWhite = !board[i][j].isWhite;
+				board[i][j] = neu;
+				board[board.length-(i+1)][j].setId(oldId);
+				board[board.length-(i+1)][j].setPiece(oldPiece);
+				board[board.length-(i+1)][j].isWhite = !board[board.length-(i+1)][j].isWhite;
+				board[board.length-(i+1)][j] = old;
+>>>>>>> baa1029816c80b896816895d4e7ca40961c3662d
+*/
 				//Updates the labels to represent positions from other player's perspective
 				swapLabels();
 			}
@@ -322,8 +360,7 @@ public class ChessBoardGUI extends GridPane {
 	/**
 	 * Displays all of the valid positions of the current piece onto the GUI.
 	 * 
-	 * @param moves The list of all of the valid positions that the current chess piece can move
-	 * to,
+	 * @param moves The list of all of the valid positions that the current piece can move to
 	 */
 	public static void showValidMoves(ArrayList<Position> moves) {
 		for(int i = 0; i < moves.size(); i++) {
@@ -343,6 +380,38 @@ public class ChessBoardGUI extends GridPane {
 				board[i][j].disable();
 			}
 		}
+	}
+
+	/**
+	 * Sets the text for the player's action label in MatchGUI
+	 */
+	public static void setPlayerAction(){
+		String fromS = from.toString();
+		String toS = to != null ? to.toString() : "";
+		if(!isWhite){
+			fromS = mapFlip.get(fromS.charAt(0)) + String.valueOf(fromS.charAt(1));
+			toS =  to != null ? mapFlip.get(toS.charAt(0)) + String.valueOf(toS.charAt(1)) : "";
+		}
+		String actionText = isWhite ? "Player One": "Player Two";
+		if(to == null) actionText += " has selected " + fromS;
+		else actionText += " has moved from " + fromS + " to " + toS;
+		MatchGUI.setPlayerAction(actionText);
+	}
+
+	/**
+	 * Adds to the list of white's captured pieces
+	 * @param image visualization of captured piece
+	 */
+	public static void addWhiteTakenPiece(ChessView image){
+		MatchGUI.addWhiteTakenPiece(image);
+	}
+
+	/**
+	 * Adds to the list of black's captured pieces.
+	 * @param image visualization of captured piece
+	 */
+	public static void addBlackTakenPiece(ChessView image){
+		MatchGUI.addBlackTakenPiece(image);
 	}
 	
 }

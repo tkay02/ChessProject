@@ -11,7 +11,7 @@ import java.util.Arrays;
 import javafx.event.*;
 import javafx.geometry.Pos;
 
-public class RulesGUI implements EventHandler<ActionEvent> {
+public class RulesGUI extends BorderPane implements EventHandler<ActionEvent> {
 	
 	/**Button that returns user back to main menu**/
 	Button b0;
@@ -32,32 +32,30 @@ public class RulesGUI implements EventHandler<ActionEvent> {
 	/**Button that displays overview of conditions**/
 	Button b8;
 	
-	/**Root of the layout**/
-	private BorderPane root;
 	/**To change the display to different scenes**/
 	private RulesFactory fact;
 	/** Handles the screen changing **/
-	private ScreenChangeHandler screenChanger;
+	ScreenChangeHandler screenChanger;
 	
 	/**Constructor for class**/
 	public RulesGUI() {
 
 		super();
-		this.root = new BorderPane();
 		this.fact = new RulesFactory();
 		
 		//Creates top panel for RulesGUI
-		root.getStyleClass().add("mainMenu");
+		this.getStyleClass().add("mainMenu");
 		HBox top = new HBox(300.0);
 		Label rules = new Label("Rules");
 		rules.setId("Title");
 		this.b0 = new Button("Main Menu");
 		this.b0.getStyleClass().add("buttonStyleA");
 		this.b0.getStyleClass().add("buttonSizeA");
+		this.b0.setOnAction(this);
 		top.getChildren().add(rules);
 		top.getChildren().add(this.b0);
 		
-		root.setTop(top);
+		this.setTop(top);
 		
 		//Creates left side menu
 		VBox left = new VBox(10);
@@ -79,7 +77,7 @@ public class RulesGUI implements EventHandler<ActionEvent> {
 			n.getStyleClass().add("buttonSizeA");
 			left.getChildren().add(n);
 		});
-		root.setLeft(left);
+		this.setLeft(left);
 	
 	}
 	
@@ -91,7 +89,7 @@ public class RulesGUI implements EventHandler<ActionEvent> {
 	 * Returns the root of the RulesGUI.
 	 */
 	public Pane getRoot() {
-		return this.root;
+		return this;
 	}
 
 	@Override
@@ -101,33 +99,35 @@ public class RulesGUI implements EventHandler<ActionEvent> {
 	 * will present rules about the kings movement. Uses factory field to create screens.
 	 */
 	public void handle(ActionEvent event) {
-		if(event.getSource() == this.b0) {
-			screenChanger.changeScreen(Screen.MAIN_SCREEN);
+		if(screenChanger != null) {
+			if(event.getSource() == this.b0) {
+				screenChanger.changeScreen(ScreenFactory.Screen.MAIN_SCREEN);
+			}
+			if(event.getSource() == this.b1) {
+				this.setCenter(this.fact.makeScreen(RuleScreens.BOARD));
+			}
+			else if(event.getSource() == this.b2) {
+				this.setCenter(this.fact.makeScreen(RuleScreens.KING));
+			}
+			else if(event.getSource() == this.b3) {
+				this.setCenter(this.fact.makeScreen(RuleScreens.QUEEN));
+			}
+			else if(event.getSource() == this.b4) {
+				this.setCenter(this.fact.makeScreen(RuleScreens.BISHOP));
+			}
+			else if(event.getSource() == this.b5) {
+				this.setCenter(this.fact.makeScreen(RuleScreens.KNIGHT));
+			}
+			else if(event.getSource() == this.b6) {
+				this.setCenter(this.fact.makeScreen(RuleScreens.ROOK));
+			}
+			else if(event.getSource() == this.b7) {
+				this.setCenter(this.fact.makeScreen(RuleScreens.PAWN));
+			}
+			else if(event.getSource() == this.b8) {
+				this.setCenter(this.fact.makeScreen(RuleScreens.OVERVIEW));
+			}	
 		}
-		if(event.getSource() == this.b1) {
-			this.root.setCenter(this.fact.makeScreen(RuleScreens.BOARD));
-		}
-		else if(event.getSource() == this.b2) {
-			this.root.setCenter(this.fact.makeScreen(RuleScreens.KING));
-		}
-		else if(event.getSource() == this.b3) {
-			this.root.setCenter(this.fact.makeScreen(RuleScreens.QUEEN));
-		}
-		else if(event.getSource() == this.b4) {
-			this.root.setCenter(this.fact.makeScreen(RuleScreens.BISHOP));
-		}
-		else if(event.getSource() == this.b5) {
-			this.root.setCenter(this.fact.makeScreen(RuleScreens.KNIGHT));
-		}
-		else if(event.getSource() == this.b6) {
-			this.root.setCenter(this.fact.makeScreen(RuleScreens.ROOK));
-		}
-		else if(event.getSource() == this.b7) {
-			this.root.setCenter(this.fact.makeScreen(RuleScreens.PAWN));
-		}
-		else if(event.getSource() == this.b8) {
-			this.root.setCenter(this.fact.makeScreen(RuleScreens.OVERVIEW));
-		}	
 	}
 
 }

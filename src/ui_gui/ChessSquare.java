@@ -2,13 +2,19 @@ package src.ui_gui;
 
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import src.enums.GameColor;
 import src.model.Piece;
+import src.controller.GUIDriver;
 import src.enums.ChessPieceType;
 
+/**
+ * GUI component that makes up a chess board GUI.
+ * 
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 5/5/2023
+ */
 public class ChessSquare extends Pane {
 	
 	/**Square is black or white**/
@@ -19,28 +25,22 @@ public class ChessSquare extends Pane {
 	
 	/** Actual Chess Piece **/
 	Piece piece;
+
+	private final double MAX_SIZE = 64.0;
 	
-	/**Color for white squares**/
-	public static String whiteSquare;
-	
-	/**Color for black squares**/
-	public static String blackSquare;
-	
-	/** ChessBlard refere
 	/**
 	 * Constructor for ChessSquare.
 	 * 
-	 * @param boolean isWhite Boolean that determines if the square is a white square or a black
-	 * square.
+	 * @param boolean isWhite Boolean that determines if the square is white or black
 	 * @param Piece piece The chess piece on the square.
 	 */
 	public ChessSquare(boolean isWhite, Piece piece) {
 		super();
 		//Size of the square
-		this.setSize(64.0, 64.0);
+		this.setSize(MAX_SIZE, MAX_SIZE);
 		//Sets square color
 		this.isWhite = isWhite;
-		this.setSquareColor();
+		this.setSquareColor(); //Sets square color
 		this.chessPiece = new ChessView();
 		chessPiece.setChessSquare(this);
 		this.setPiece(piece);
@@ -96,10 +96,21 @@ public class ChessSquare extends Pane {
 	 * Sets the color of the square to a specific ID in the CSS application.
 	 */
 	public void setSquareColor() {
-		if(this.isWhite) this.setId("WhiteSquare");
-		else this.setId("BlackSquare");
+		if(this.isWhite) {
+			this.setId("WhiteSquare");
+		}
+		else {
+			this.setId("BlackSquare");
+		}
 	}
 	
+	public void paintWhite() {
+		this.setStyle("-fx-background-color: " + SettingsGUI.whiteColor);
+	}
+	
+	public void paintBlack() {
+		this.setStyle("-fx-background-color: " + SettingsGUI.blackColor);
+	}
 	
 	/*t	 */
 	public void setSelectedColor() {
@@ -138,7 +149,7 @@ public class ChessSquare extends Pane {
 			imageName += chessPieceColor(piece.getColor());
 			imageName += chessPieceName(piece.getChessPieceType());
 			//Uses Driver class
-			Image image = new Image(SmallTester.class.getResourceAsStream(imageName += ".png"));
+			Image image = new Image(ChessSquare.class.getResourceAsStream(imageName += ".png"));
 			this.chessPiece.setImage(image);
 			this.chessPiece.fitWidthProperty().bind(this.widthProperty());
 			this.chessPiece.fitHeightProperty().bind(this.heightProperty());
@@ -148,6 +159,7 @@ public class ChessSquare extends Pane {
 	public Piece getPiece() {
 		return piece;
 	}
+
 	/**
 	 * Obtains the color of the chess piece.
 	 * 
@@ -180,10 +192,18 @@ public class ChessSquare extends Pane {
 	}
 	
 	/**
-	 * Disables clicking on a chess square (used for display or when a game of chess is over.
+	 * Disables clicking on a chess square (used for display or when a game of chess is over).
 	 */
 	public void disable() {
 		this.setDisable(true);
+	}
+
+	public ChessView getChessView(){
+		return chessPiece;
+	}
+
+	public void setChessView(ChessView view){
+		this.chessPiece = view;
 	}
 	
 }

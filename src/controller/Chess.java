@@ -573,6 +573,18 @@ public class Chess {
 			search(isWhite, row + 1, col - 1, wantedPieces);
 			search(isWhite, row + 1, col + 1, wantedPieces);
 		}
+
+		//search for "checking" kings
+		wantedPieces.clear();
+		wantedPieces.add(ChessPieceType.KING);
+		search(isWhite, row - 1, col, wantedPieces);
+		search(isWhite, row + 1, col, wantedPieces);
+		search(isWhite, row, col - 1, wantedPieces);
+		search(isWhite, row, col + 1, wantedPieces);
+		search(isWhite, row - 1, col + 1, wantedPieces);
+		search(isWhite, row - 1, col - 1, wantedPieces);
+		search(isWhite, row + 1, col - 1, wantedPieces);
+		search(isWhite, row + 1, col + 1, wantedPieces);   
 		
 		return this.inCheck;
 	}
@@ -849,5 +861,26 @@ public class Chess {
 		else if(strat.equals("color")) this.drawStrat = new BoardColorCLI();
 		else result = false;
 		return result;
+	}
+
+	/**
+	 * Retrieves the board that the chess game uses.
+	 */
+	public Board getBoard() {
+		return this.board;
+	}
+
+	/**
+	 * Returns number of moves that indictate a fifty move draw has occurred.
+	 */
+	public int getFiftyMove() {
+		return this.fiftyMoveDraw;
+	}
+
+	/**
+	 * Returns current check status.
+	 */
+	public boolean getCheck() {
+		return this.inCheck;
 	}
 }
