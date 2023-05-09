@@ -25,7 +25,7 @@ import src.model.Square;
 /**
  * GUI component that holds the chess board.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay (80%), Joseph Oladeji, Levi Sweat
  * @version 5/5/2023
  */
 public class ChessBoardGUI extends GridPane {
@@ -256,6 +256,29 @@ public class ChessBoardGUI extends GridPane {
 			//Swaps board and change player
 			swap();
 			changePlayerLabel();
+		}
+	}
+
+	/**
+	 * Undoes the move using the undo command and the reference to the chess game.
+	 */
+	public static void undo(){
+		if(game.getMoves().size() > 0 && game.getMovesIndex() > -1){
+			isWhite = !isWhite;
+			swap();
+			game.undo(true);
+		}
+	}
+
+	/**
+	 * Redoes the undone move using the redo command and the reference to the chess game.
+	 */
+	public static void redo(){
+		if(game.getMovesIndex() < game.getMoves().size() - 1){
+			isWhite = !isWhite;
+			swap();			
+			game.redo();
+			game.incTurn();
 		}
 	}
 	

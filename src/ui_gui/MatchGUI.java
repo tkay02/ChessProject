@@ -205,6 +205,9 @@ public class MatchGUI extends BorderPane {
 						
 					}
 				}
+				else if(o == b3){
+					ChessBoardGUI.undo();
+				}
 			}
 		}
 	};	

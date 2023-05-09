@@ -53,7 +53,7 @@ public class Chess {
 	private boolean showMoves;
 	
 	/** Arraylist of the positions of the board. **/
-	private LinkedList<Move> moves = new LinkedList<Move>(); // MOVE TO BOARD???
+	private LinkedList<Move> moves = new LinkedList<Move>();
 	
 	/**Used to define the players settings*/
 	private DefinePlayerCLI definePlayers;
@@ -422,9 +422,6 @@ public class Chess {
 			Piece movedPiece = (Piece) board.getPiece(fromR, fromF);
 			movedPiece.decMoveCount();
 			//if pawn was moved or if piece was captured
-			System.out.println("LASTMOVE: " + lastMove.getPiece().getChessPieceType());
-			System.out.println("MOVEDPIECE: " + movedPiece.getChessPieceType());
-
 			if(takenPiece.getChessPieceType() == ChessPieceType.EMPTY || 
 			   movedPiece.getChessPieceType() != ChessPieceType.PAWN) fiftyMoveDraw--;
 		}
@@ -433,8 +430,32 @@ public class Chess {
 		if(takenPiece.isBlack()) board.getBlackTakenPieces().remove(takenPieceLetter);
 		if(takenPiece.isWhite()) board.getWhiteTakenPieces().remove(takenPieceLetter);
 		this.movesIndex--;
-		if(!userUndo) this.moves.removeLast();
-		
+		if(!userUndo) this.moves.removeLast();	
+	}
+
+	/**
+	 * Getter method for the moves history linked list.
+	 * 
+	 * @return moves history
+	 */
+	public LinkedList<Move> getMoves(){
+		return this.moves;
+	}
+
+	/**
+	 * Getter method for the moves index.
+	 * 
+	 * @return the moves index
+	 */
+	public int getMovesIndex(){
+		return this.movesIndex;
+	}
+
+	/**
+	 * Increments the turn count.
+	 */
+	public void incTurn(){
+		this.turn++;
 	}
 	
 	/**
