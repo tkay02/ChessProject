@@ -414,7 +414,14 @@ public class ChessBoardGUI extends GridPane {
 			fromS = mapFlip.get(fromS.charAt(0)) + String.valueOf(fromS.charAt(1));
 			toS =  to != null ? mapFlip.get(toS.charAt(0)) + String.valueOf(toS.charAt(1)) : "";
 		}
-		String actionText = isWhite ? "Player One": "Player Two";
+		String playerOne = "Player One";
+		String playerTwo = "Player Two";
+		String playerOneName = DefinePlayersGUI.getPlayerOneName();
+		String playerTwoName = DefinePlayersGUI.getPlayerTwoName();
+		if(DefinePlayersGUI.getPlayerOneName() != "") playerOne = playerOneName;
+		if(DefinePlayersGUI.getPlayerTwoName() != "") playerTwo = playerTwoName;
+
+		String actionText = isWhite ? playerOne: playerTwo;
 		if(to == null) actionText += " has selected " + fromS;
 		else actionText += " has moved from " + fromS + " to " + toS;
 		MatchGUI.setPlayerAction(actionText);
