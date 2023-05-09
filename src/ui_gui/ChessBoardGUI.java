@@ -165,9 +165,9 @@ public class ChessBoardGUI extends GridPane {
 				//Updates from position and shows all valid moves of chess piece
 				ChessBoardGUI.from = space;
 				ChessBoardGUI.setPlayerAction();
-				moves = piece.showMoves(space);
+				moves = piece.showMoves(from);
 				//Insert if statement if valid check option is enabled
-				ChessBoardGUI.showValidMoves(moves);
+				if(SettingsGUI.showMoves) ChessBoardGUI.showValidMoves(moves);
 			}
 			else if(checkPosition(space)) {
 				//Updates to position

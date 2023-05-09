@@ -35,6 +35,20 @@ public class SettingsGUI extends BorderPane{
 	/**field for changing the current screen */
 	private ScreenChangeHandler screenChanger;
 
+	/**Boolean determining if moves need to be shown, false by default */
+	public static boolean showMoves = false;
+
+	/**Original value of the whiteColor, updated if settings is saved*/
+	private String saveWhiteColor;
+
+	/**Original value of the blackColor, updated if settings is saved*/
+	private String saveBlackColor;
+
+	/**Original value of the showMoves, updated if settings is saved*/
+	private boolean saveShowMoves;
+
+	CheckBox cb2;
+
 	/**
 	 * Constructor for the settings menu. Creates the necessary labels and buttons for the menu to
 	 * properly function.
@@ -42,6 +56,11 @@ public class SettingsGUI extends BorderPane{
 	public SettingsGUI(){
 		/**uses the same style as the mainMenu */
 		this.getStyleClass().add("mainMenu");
+
+		//set the original values to be remember if settings is changed but not saved
+		this.saveWhiteColor = whiteColor;
+		this.saveBlackColor = blackColor;
+		this.saveShowMoves = showMoves;
 
 		VBox top = new VBox(); //top of the border pane is a VBox
 		VBox left = new VBox(); //left of the border pane is a VBox
@@ -95,8 +114,12 @@ public class SettingsGUI extends BorderPane{
 		CheckBox cb1 = new CheckBox("Undo/Redo Moves");
 		cb1.getStyleClass().add("labelB");
 		cb1.setPadding(new Insets(100, 0, 40, 0));
-		CheckBox cb2 = new CheckBox("Show Moves");
+		cb2 = new CheckBox("Show Moves");
 		cb2.getStyleClass().add("labelB");
+		//listener for when the ShowMoves label is checked
+		cb2.selectedProperty().addListener((obs, oldVal, newVal) -> {
+        	this.showMoves = newVal; //newVal is true when checked, false when not checked
+   		});
 		//cb2.setPadding(new Insets(40));
 
 		//add the created elements to the left side of the borderpane
@@ -121,7 +144,7 @@ public class SettingsGUI extends BorderPane{
 		AnchorPane.setBottomAnchor(buttons, 50.0);
 		right.getChildren().add(buttons);
 	}
-	
+
 	/**
 	 * Sets the screenChanger to whatever screen needs to be changed.
 	 * 
@@ -138,9 +161,23 @@ public class SettingsGUI extends BorderPane{
 		public void handle(ActionEvent event){
 			if(screenChanger != null){
 				Object o = event.getSource();
+				if(o == b1){
+					//saved versions are only updated if the setting is saved
+					saveWhiteColor = whiteColor;
+					saveBlackColor = blackColor;
+					saveShowMoves = showMoves;
 
+				}
 				//Exit button, returns to the previous screen
-				if(o == b2){ 
+				else if(o == b2){ 
+					//change these versions to the versions that only are updated if saved
+					whiteColor = saveWhiteColor;
+					blackColor = saveBlackColor;
+					showMoves = saveShowMoves;
+					whiteButton.setStyle("-fx-background-color: #" + whiteColor);
+					blackButton.setStyle("-fx-background-color: #" + blackColor);
+					cb2.setSelected(showMoves);
+
 					if(ScreenFactory.prevScreen == Screen.MATCH_SCREEN){
 						ChessBoardGUI.paintSquares();
 					}
