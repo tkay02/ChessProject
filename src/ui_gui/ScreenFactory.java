@@ -53,7 +53,8 @@ public final class ScreenFactory implements ScreenChangeHandler{
 				screen = settingsScreen;
 				break;
 			case MATCH_SCREEN:
-				if(ScreenFactory.prevScreen == null){
+				Screen previous = ScreenFactory.prevScreen;
+				if(previous == Screen.MAIN_SCREEN || previous == null){
 					matchScreen = new MatchGUI();
 					matchScreen.setScreenChangeHandler(this);
 				}
