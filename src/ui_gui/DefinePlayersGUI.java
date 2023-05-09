@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import src.interfaces.ScreenChangeHandler;
+import src.ui_gui.ScreenFactory.Screen;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -99,9 +100,11 @@ public class DefinePlayersGUI extends VBox implements EventHandler<ActionEvent>{
 			if(o == playNameBtn){
 				playerOneName = playerOneDefine.getText();
 				playerTwoName = playerTwoDefine.getText();
+				screenChanger.changeScreen(ScreenFactory.Screen.MATCH_SCREEN);
 			}
-			screenChanger.changeScreen(ScreenFactory.Screen.MAIN_SCREEN);
-			
+			else if(o == mainMenuBtn){
+				screenChanger.changeScreen(Screen.MAIN_SCREEN);
+			}
 		}
 	}
 
