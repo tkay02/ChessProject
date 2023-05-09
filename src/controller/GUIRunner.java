@@ -9,7 +9,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class GUIDriver extends Application {
+/**
+ * Initial entry point for GUI application of the program. Called from the driver.
+ * 
+ * Authors: Levi Sweat, Joseph Oladeji, Nolan Flinchum, Thomas Kay
+ */
+public class GUIRunner extends Application {
 
 	/** Buttons for screens **/
 	Button but_screen1, but_screen2;
@@ -21,7 +26,8 @@ public class GUIDriver extends Application {
 	Scene rootScene;
 
 	/**
-	 * Start our application
+	 * Start our GUI application.
+	 * 
 	 * @param primaryStage The main application window
 	 */
 	@Override
@@ -38,13 +44,22 @@ public class GUIDriver extends Application {
 	
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			primaryStage.setAlwaysOnTop(true); //This line makes sure the window is displayed
+			//when run. This was an issue due to the CLI & GUI application of our program.
+			//The following line is used to make sure dialog boxes appear in front of the window.
+			primaryStage.setAlwaysOnTop(false);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static void main(String[] args) {
+	/**
+	 * Called from the driver, used to call the start function and begin the GUI application.
+	 * 
+	 * @param args user input args from the main method in the driver
+	 */
+	public static void run(String[] args) {
 		launch(args);
 	}
 	
-}
+}	
