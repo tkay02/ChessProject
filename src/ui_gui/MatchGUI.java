@@ -201,24 +201,14 @@ public class MatchGUI extends BorderPane {
 					Dialog<String> load = new LoadGameGUI();
 					Optional<String> result = load.showAndWait();
 					if (result.isPresent()) {
-						// String location = System.getProperty("os.name").startsWith("Windows") ? 
-						// "src\\databases\\" :  "src/databases/";
 
 
 						Chess game = new Chess();
 						root = new ChessBoardGUI(new Chess());
+						System.out.println(LoadGameGUI.getFilePath());
 						game.loadGame(LoadGameGUI.getFilePath());
-						// LinkedList<Move> moves = game.getMoves();
-						// for(int idx = 0; idx < moves.size() - 1; idx++){
-						// 	Position fromPos = moves.get(idx).getFromPos();
-						// 	Position toPos = moves.get(idx).getToPos();
-						// 	System.out.println("From: " + fromPos);
-						// 	System.out.println("To: " + toPos);
-						// 	// ChessBoardGUI.currentChessPiece = ChessBoardGUI.board[fromPos.getRank().getArrayRank()][fromPos.getFile().getArrayFile()];
-						// 	ChessBoardGUI.from = fromPos;
-						// 	ChessBoardGUI.to = toPos;
-						// 	ChessBoardGUI.updateCurrentChessPiece(ChessBoardGUI.board[fromPos.getRank().getArrayRank()][fromPos.getFile().getArrayFile()]);
-						// }
+						
+						LinkedList<Move> moves = game.getMoves();
 						
 					}
 				}

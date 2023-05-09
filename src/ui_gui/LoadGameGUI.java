@@ -51,6 +51,7 @@ public class LoadGameGUI extends Dialog<String> {
             fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/src/databases"));
             FileChooser.ExtensionFilter eFilter = new FileChooser.ExtensionFilter("Text Files", "*.txt");
             fileChooser.getExtensionFilters().add(eFilter);
+            System.out.println(fileChooser.getInitialFileName());
             File selectedFile = fileChooser.showOpenDialog(loadButton.getScene().getWindow());
             if(selectedFile != null){
                 setFilePath(selectedFile.getAbsolutePath());
@@ -115,7 +116,6 @@ public class LoadGameGUI extends Dialog<String> {
     public static String getFilePath(){
         return filePath;
     }
-
 
     
 }

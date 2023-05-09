@@ -863,7 +863,7 @@ public class Chess {
 		return this.inCheck;
 	}
 
-	public Chess getChess(){
-		return game;
+	public LinkedList<Move> getMoves(){
+		return this.moves;
 	}
 }

@@ -210,9 +210,11 @@ public class ChessBoardGUI extends GridPane {
 	private static boolean checkPosition(Position pos) {
 		boolean isValid = false;
 		int i = 0;
-		while(!isValid && i < moves.size()) {
-			isValid = pos.equals(moves.get(i));
-			i++;
+		if(moves != null){
+			while(!isValid && i < moves.size()) {
+				isValid = pos.equals(moves.get(i));
+				i++;
+			}
 		}
 		return isValid;
 	}
