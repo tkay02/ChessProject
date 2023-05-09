@@ -9,6 +9,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -21,10 +22,10 @@ import src.ui_gui.SliderPane;
 import src.ui_gui.SliderListener;
 
 /**
- * This class provides an interface where users can change the color of their chess pieces.
+ * This class provides a dialog where users can change the color of their chess pieces.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
- * @version 5/8/2023
+ * @author Dr.Scott, edited by Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 5/9/2023
  */
 public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEvent>, SliderListener{
 
@@ -33,15 +34,15 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
 	
     /**The selected color as a hex value (RGB)**/
 	String selectedColor;
-
-	/**Cancels a color choice**/
-	private Button cancel;
 	
 	/**The area on to which the color is shown**/
 	StackPane color;
 
     /**String representing color of square */
     String strColor;
+
+	/**Original representation of the color, used to return the default color if dialog closed through  */
+	String ogStrColor;
 	
 	/**The color text label**/
 	Label hexColor;
@@ -58,33 +59,40 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
 	/**The singleton instance of this class**/
 	private static ColoramaGUI instance;
 
-	/**Create a singleton instance of a ColorChooser**/
+	/**
+	 * Create a singleton instance of a ColorChooser
+	 */
 	public static ColoramaGUI getInstance(){
 		if (instance == null) instance = new ColoramaGUI("000000");
 		return instance;
 	}//end getInstance
 
+	/**
+	 * Constructor that creates the coloramaGUI
+	 * @param strColor color determined based on color of button selected in SettingsGUI
+	 */
     public ColoramaGUI(String strColor){
         super();
         this.setTitle("Change color of square");
-        this.strColor = strColor;
-        buildUI();        
-        setPropertyBindings();
-        setResultConverter();
+		this.ogStrColor = strColor; //original value of color string
+        this.strColor = strColor; //sets the input color to the color of this Colorama
+        buildUI(); //builds the UI
     }
 
-    private void setResultConverter() {
-    }
-
-    private void setPropertyBindings() {
-    }
-
+	/**
+	 * Creates a pane to be built on, then calls the makeGridPane to build rest of UI.
+	 */
     private void buildUI() {
-        Pane pane = makeBorderPane();
+        Pane pane = makeGridPane();
         getDialogPane().setContent(pane);
     }
 
-    private Pane makeBorderPane() {
+	/**
+	 * Builds the majority of the UI, including the labels, sliders, and buttons.
+	 * 
+	 * @return returns the grid pane everything is built on
+	 */
+    private Pane makeGridPane() {
         GridPane grid = new GridPane();
 		grid.setVgap(20);
 
@@ -113,29 +121,49 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
 		hexColor = new Label();
 		hexColor.getStyleClass().add("color_text");
 		color.getChildren().add(hexColor);
-		setBackground(Integer.parseInt(strColor.substring(0, 2), 16), Integer.parseInt(strColor.substring(2, 4), 16), Integer.parseInt(strColor.substring(4, 6), 16));//set to black
-		
+		//sets the color of the background by splitting up the strColor field
+		setBackground(Integer.parseInt(strColor.substring(0, 2), 16), 
+					  Integer.parseInt(strColor.substring(2, 4), 16), 
+					  Integer.parseInt(strColor.substring(4, 6), 16));
 		
 		//Create Panel for sliders with centered layout
 		HBox  sliders = new HBox();
 		sliders.setSpacing(20.0);
 		sliders.setAlignment(Pos.TOP_CENTER);
 
-		//Construct 3 sliders for RGB 2nd param determines value
-		red = new SliderPane("Red", Integer.parseInt(strColor.substring(0, 2), 16), MIN_INTEN, MAX_INTEN, this);
-		green = new SliderPane("Green", Integer.parseInt(strColor.substring(2, 4), 16), MIN_INTEN, MAX_INTEN, this);
-		blue = new SliderPane("Blue", Integer.parseInt(strColor.substring(4, 6), 16), MIN_INTEN, MAX_INTEN, this);
+		//Construct 3 sliders for RGB, 2nd param determines the value of each slider on creation
+		red = new SliderPane("Red", 
+							 Integer.parseInt(strColor.substring(0, 2), 16), 
+							 MIN_INTEN, MAX_INTEN, this);
+		green = new SliderPane("Green", 
+							   Integer.parseInt(strColor.substring(2, 4), 16), 
+							   MIN_INTEN, MAX_INTEN, this);
+		blue = new SliderPane("Blue", 
+							  Integer.parseInt(strColor.substring(4, 6), 16), 
+							  MIN_INTEN, MAX_INTEN, this);
 
+		//add the now created sliders to the HBox
 		sliders.getChildren().add(red);
 		sliders.getChildren().add(green);
 		sliders.getChildren().add(blue);
 
-		ok = new Button("Select");
-
-        this.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+		ok = new Button("Select"); //for selecting the color of the squares
 		ok.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
+
 		
-		sliders.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
+		ButtonType closeButton = new ButtonType("Close", ButtonData.CANCEL_CLOSE);
+		this.getDialogPane().getButtonTypes().add(closeButton);
+
+		//button for closing the dialog
+		Button closeBtn = (Button) this.getDialogPane().lookupButton(closeButton);
+
+		closeBtn.setOnAction(e -> {
+			selectedColor = ogStrColor; //set the selected color to the original color
+			System.out.println("HERE");
+			this.close();
+		});
+
+		sliders.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE); //formatting
 		color.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
 		
 		//col, row, colspan, rowspan
@@ -143,24 +171,27 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
 		grid.add(sliders, 0, 1,2,1);
 		grid.add(ok, 0,2,2,1);
 		
-		ok.setOnAction(this);
+		ok.setOnAction(this); //if selected
 
 
+		//set the color of the top pane to the desired input color
         color.setStyle("-fx-background-color: #" +  this.strColor);
+
         return grid;
     }
 
+	/**
+	 * Updates the background whenever one of the sliders is changed
+	 */
 	public void sliderChanged(SliderPane s, int value){
-		//check which slider its coming from, update the respective portion of the background color
-		//rgb
 		this.setBackground(red.getValue(), green.getValue(), blue.getValue());
 	}
 
-	public String intToHex(int value){
-		String result = "";
-		return result;
-	}
-
+	/**
+	 * Helper method used to create a VBox and set the desired values.
+	 * @param label label to be added to the VBox
+	 * @return the VBox after creation and UI specification
+	 */
     public VBox createVBox(String label){
         VBox vb = new VBox();
         Label l1 = new Label(label);
@@ -180,6 +211,10 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
         return vb;
     }
 
+	/**
+	 * Used to update the background color of the pane displaying the current color of the sliders.
+	 * @param newColor color to be updated to 
+	 */
 	public void setPaneColor(String newColor){
 		this.color.setStyle("-fx-background-color: #" + newColor);
 	}
@@ -220,24 +255,24 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
         
 	}//end setBackground
 
+	/**
+	 * Returns the selectedColor.
+	 * @return selectedColor field
+	 */
 	public String getSelectedColor(){
 		return this.selectedColor;
 	}
 
-	public void setUndoRedo(){
-		//TODOOOOOOOOOOOOOOOOOOOO
-	}
-
     @Override
+	/**
+	 * Used to handle events when selecting the color or closing the dialog
+	 * @param event the button that was selected, needs to be handled 
+	 */
 	public void handle(ActionEvent event) {
-		
 		if(event.getSource() == ok){
             setBackground(red.getValue(), green.getValue(), blue.getValue());
 			ColoramaGUI.this.close();
 		}
-		else if(event.getSource() == cancel){
-            ColoramaGUI.this.close();
-        }
 	}//end handle
 
 }

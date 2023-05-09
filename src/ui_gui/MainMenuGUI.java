@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import src.controller.GUIDriver;
 import src.interfaces.ScreenChangeHandler;
+import src.ui_gui.ScreenFactory.Screen;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -35,6 +36,7 @@ public class MainMenuGUI extends BorderPane {
 	/** Handles the screen changing **/
 	ScreenChangeHandler screenChanger;
 	
+
 	/**
 	 * Constructor that creates the main menu by initializes and setting up the
 	 * appropriate sections of the BorderPane.
@@ -155,8 +157,10 @@ public class MainMenuGUI extends BorderPane {
 					screenChanger.changeScreen(ScreenFactory.Screen.SIGN_UP);
 				else if(o == b5)
 					screenChanger.changeScreen(ScreenFactory.Screen.DEFINE_PLAYERS);
-				else if(o == b7)
+				else if(o == b7){
+					ScreenFactory.prevScreen = Screen.MAIN_SCREEN;
 					screenChanger.changeScreen(ScreenFactory.Screen.SETTINGS_SCREEN);
+				}
 				else if(o == b8)
 					System.exit(1);
 			}

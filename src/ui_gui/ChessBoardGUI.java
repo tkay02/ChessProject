@@ -225,7 +225,7 @@ public class ChessBoardGUI extends GridPane {
 		//Sets from and to positions to null
 		from = null; to = null;
 		//Changes player
-		ChessBoardGUI.isWhite = !isWhite;
+		isWhite = !isWhite;
 		//Checks for check status
 		updateCheck();
 		//If there's no valid moves
@@ -322,11 +322,13 @@ public class ChessBoardGUI extends GridPane {
 				Piece newPiece = board[row][col].getPiece();
 				ChessSquare neu = board[row][col];
 				board[i][j].setId(newId);
+				board[i][j].isWhite = !board[i][j].isWhite;
 				if(newId.equals("CheckSquare")) board[i][j].setCheckColor();
 				else board[i][j].setSquareColor();
 				board[i][j].setPiece(newPiece);
 				board[i][j] = neu;
 				board[row][col].setId(oldId);
+				board[row][col].isWhite = !board[row][col].isWhite;
 				if(oldId.equals("CheckSquare")) board[row][col].setCheckColor();
 				else board[row][col].setSquareColor();
 				board[row][col].setPiece(oldPiece);
@@ -424,6 +426,12 @@ public class ChessBoardGUI extends GridPane {
 	 */
 	public static void addWhiteTakenPiece(ChessView image){
 		MatchGUI.addWhiteTakenPiece(image);
+	}
+
+	public static void paintSquares(){
+		for(int row = 0; row < board.length; row++)
+			for(int col = 0; col < board[row].length; col++)
+				board[row][col].setSquareColor();
 	}
 
 	/**
