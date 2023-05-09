@@ -441,5 +441,9 @@ public class ChessBoardGUI extends GridPane {
 	public static void addBlackTakenPiece(ChessView image){
 		MatchGUI.addBlackTakenPiece(image);
 	}
+
+	public static Chess getChessGame(){
+		return game;
+	}
 	
 }

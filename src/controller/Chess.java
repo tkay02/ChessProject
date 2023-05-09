@@ -862,4 +862,8 @@ public class Chess {
 	public boolean getCheck() {
 		return this.inCheck;
 	}
+
+	public Chess getChess(){
+		return game;
+	}
 }

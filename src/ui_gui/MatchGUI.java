@@ -8,9 +8,13 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import src.controller.Chess;
+import src.databases.DatabaseOps;
 import src.interfaces.ScreenChangeHandler;
+import src.model.Move;
+import src.model.Position;
 import src.ui_gui.ScreenFactory.Screen;
 
+import java.util.LinkedList;
 import java.util.Optional;
 
 import javafx.event.ActionEvent;
@@ -42,6 +46,8 @@ public class MatchGUI extends BorderPane {
 	/** FlowPanes that hold captured pieces */
 	private static FlowPane whiteTakenPieces, blackTakenPieces;
 
+	private ChessBoardGUI root;
+	private VBox center;
 	/**
 	 * Constructor for MatchGUI.
 	 */
@@ -50,7 +56,7 @@ public class MatchGUI extends BorderPane {
 		HBox bottom = new HBox();
 		VBox left = new VBox();
 		VBox right = new VBox();
-		VBox center = new VBox();
+		center = new VBox();
 		this.setTop(top);
 		this.setBottom(bottom);
 		this.setRight(right);
@@ -66,7 +72,7 @@ public class MatchGUI extends BorderPane {
 		center.getStyleClass().add("backgroundC"); 
 		center.setAlignment(Pos.CENTER);
 		BorderPane.setMargin(center, new Insets(3));
-		ChessBoardGUI root = new ChessBoardGUI(new Chess());
+		root = new ChessBoardGUI(new Chess());
 		center.getChildren().add(root);
 
 		// LEFT
@@ -195,6 +201,24 @@ public class MatchGUI extends BorderPane {
 					Dialog<String> load = new LoadGameGUI();
 					Optional<String> result = load.showAndWait();
 					if (result.isPresent()) {
+						// String location = System.getProperty("os.name").startsWith("Windows") ? 
+						// "src\\databases\\" :  "src/databases/";
+
+
+						Chess game = new Chess();
+						root = new ChessBoardGUI(new Chess());
+						game.loadGame(LoadGameGUI.getFilePath());
+						// LinkedList<Move> moves = game.getMoves();
+						// for(int idx = 0; idx < moves.size() - 1; idx++){
+						// 	Position fromPos = moves.get(idx).getFromPos();
+						// 	Position toPos = moves.get(idx).getToPos();
+						// 	System.out.println("From: " + fromPos);
+						// 	System.out.println("To: " + toPos);
+						// 	// ChessBoardGUI.currentChessPiece = ChessBoardGUI.board[fromPos.getRank().getArrayRank()][fromPos.getFile().getArrayFile()];
+						// 	ChessBoardGUI.from = fromPos;
+						// 	ChessBoardGUI.to = toPos;
+						// 	ChessBoardGUI.updateCurrentChessPiece(ChessBoardGUI.board[fromPos.getRank().getArrayRank()][fromPos.getFile().getArrayFile()]);
+						// }
 						
 					}
 				}
@@ -202,7 +226,11 @@ public class MatchGUI extends BorderPane {
 					Dialog<String> save = new SaveGameGUI();
 					Optional<String> result = save.showAndWait();
 					if (result.isPresent()) {
-						
+						String location = System.getProperty("os.name").startsWith("Windows") ? 
+						"src\\databases\\" :  "src/databases/";
+						Chess game = ChessBoardGUI.getChessGame();
+						game.saveGame(location + SaveGameGUI.getFileName(),
+						 game.getBoard());
 					}
 				}
 			}
