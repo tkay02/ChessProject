@@ -159,7 +159,6 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
 
 		closeBtn.setOnAction(e -> {
 			selectedColor = ogStrColor; //set the selected color to the original color
-			System.out.println("HERE");
 			this.close();
 		});
 
