@@ -9,6 +9,13 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
+/**
+ * Class that creates the sliders within the ColoramaGUI. 
+ * 
+ * @author Dr.Scott, edited by Nolan Flinchum (25%), Thomas Kay (25%), Joseph Oladeji (25%),
+ * Levi Sweat (25%)
+ * @version 5/9/2023
+ */
 public class SliderPane extends VBox{
     
 	/**The label of the control**/
@@ -29,14 +36,13 @@ public class SliderPane extends VBox{
 	/**The maximum slider value**/
 	private int max;
 
-
+	/**Listener used to determine when slider changes */
 	private SliderListener listener;
-	
-	//TODO: EXTRA FIELDS HERE
-	
+		
 	
 	/**
-	 * Construct a slider
+	 * Constructs a slider.
+	 * 
 	 * @param titleText The title of the slider.
 	 * @param initVal The initial value of the slider.
 	 * @param min The minimum value on the slider.
@@ -44,9 +50,11 @@ public class SliderPane extends VBox{
 	 */
 	public SliderPane(String titleText, int initVal, int min , int max, SliderListener listener){
 		
+		//initializes the listener based on the input
 		this.listener = listener;
 
-		this.min = min;
+		//minimum and maximum values of the slider
+		this.min = min;  
 		this.max = max;
 		
 		this.setAlignment(Pos.TOP_CENTER);
@@ -58,13 +66,6 @@ public class SliderPane extends VBox{
 		value = new TextField(initVal+"");
 		slider = new Slider();
 		slider.setOrientation(Orientation.VERTICAL);
-
-        ////////////////
-        
-		//set(initVal);
-
-		//value.setText(initVal+"");
-		//slider.setValue(initVal);
 		
 		//Add them to the layout
 		this.getChildren().add(title);
@@ -92,27 +93,37 @@ public class SliderPane extends VBox{
 	}//end constructor
 
 	
-	/**Set the value of the slider**/
+	/**
+	 * Sets the value of the slider.
+	 *
+	 * @param newValue new value of the slider
+	 */
 	public void set(int newValue){
-		value.setText(newValue+"");
-		slider.setValue(newValue);
-		listener.sliderChanged(this, newValue);
-		//sliderListener.sliderChanged(this, newValue); BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-		//TODO: EXTRA CODE HERE
-
+		value.setText(newValue+""); //update textbox
+		slider.setValue(newValue); //update slider value
+		listener.sliderChanged(this, newValue); //update the lisener to the new value
 	
 	}//end set
 	
 
-	/**Get the selected value on the slider**/
+	/**
+	 * Return the selected value on the slider
+	 */
 	public int getValue(){
 		return (int) slider.getValue();
 	}//end getValue
 	
-	/**Change listender for when the slider is changed**/
+	/**Change listener for when the slider is changed**/
 	ChangeListener<Number> valueChangeListener = new ChangeListener<Number>(){
 
 		@Override
+		/**
+		 * Updates the value of the slider when changed.
+		 * 
+		 * @param observable Observer that something changed
+		 * @param oldValue For checking if the value of the slider actually changed
+		 * @param newValue New value of the slider
+		 */
 		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 			if(!oldValue.equals(newValue))
 			   set(newValue.intValue());
@@ -125,6 +136,13 @@ public class SliderPane extends VBox{
 	ChangeListener<String> textValueChangeListener = new ChangeListener<String>(){
 
 		@Override
+		/**
+		 * Updates the value of the slider when slider's text box is changed.
+		 * 
+		 * @param observable Observer that something changed
+		 * @param oldValue For checking if the value of the slider actually changed
+		 * @param newValue New value of the slider
+		 */
 		public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 			// TODO Auto-generated method stub
 			if(!oldValue.equals(newValue)){
