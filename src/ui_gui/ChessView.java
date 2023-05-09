@@ -5,27 +5,50 @@ import javafx.scene.image.ImageView;
 
 public class ChessView extends ImageView {
 
-    public ChessSquare currentSquare;
+    /**Points to the current square that the chess piece is on**/
+	public ChessSquare currentSquare;
 
-    public final int MAX_SIZE = 64;
+    /**Max size of the chess image**/
+	public final int MAX_SIZE = 64;
     
-    public ChessView(){
+    /**
+     * Constructor for the chess view.
+     */
+	public ChessView(){
         super();
     }
 
-    public ChessView(Image view){
+    /**
+     * Constructor for the chess view.
+     * 
+     * @param Image view The image that displays the chess piece.
+     */
+	public ChessView(Image view){
         super(view);
     }
 
-    public void setChessSquare(ChessSquare square){
+    /**
+     * Sets the current square of the chess view.
+     * 
+     * @param square The square that the chess piece is on.
+     */
+	public void setChessSquare(ChessSquare square){
         this.currentSquare = square;
     }
 
-    public ChessSquare getChessSquare(){
+    /**
+     * Returns the chess square that the chess piece is currently on.
+     */
+	public ChessSquare getChessSquare(){
         return currentSquare;
     }
 
-    public ChessView getCopy(){
+    /**
+     * Creates a copy of the current chess view.
+     * 
+     * @return A clone of the chess view.
+     */
+	public ChessView getCopy(){
         ChessView imgCopy = new ChessView(getImage());
         imgCopy.fitWidthProperty().bind(currentSquare.widthProperty());
         imgCopy.fitHeightProperty().bind(currentSquare.heightProperty());

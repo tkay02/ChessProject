@@ -47,14 +47,21 @@ public class ChessSquare extends Pane {
 		this.getChildren().add(this.chessPiece);
 		
 		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			/**
+			 * When a square/chess piece is pressed on, retrieves the selected square and
+			 * updates the game in regards to which type of square is selected.
+			 */
 			public void handle(MouseEvent e) {
 				ChessSquare sq = null;
+				//Retrieves the selected square when the square or its chess piece is pressed on.
 				if(e.getTarget() instanceof ChessSquare) sq = (ChessSquare) e.getTarget();
 				else{
 					ChessView chessImg = (ChessView) e.getTarget();
 					sq = chessImg.getChessSquare();
 				}
+				//If a white/black square is selected
 				if(sq.getId().equals("WhiteSquare") || sq.getId().equals("BlackSquare")) {
+					//If the square isn't empty
 					if(sq.piece.getChessPieceType() != ChessPieceType.EMPTY) {
 						sq.setSelectedColor();
 						ChessBoardGUI.updateCurrentChessPiece(sq);
@@ -63,25 +70,16 @@ public class ChessSquare extends Pane {
 						ChessBoardGUI.updateCurrentChessPiece(sq);
 					}
 				}
-				/*
-				if((sq.piece.getChessPieceType() != ChessPieceType.EMPTY) && 
-						(sq.getId().equals("WhiteSquare") || sq.getId().equals("BlackSquare"))) {
-					if(sq.chessPiece.getImage() != null) {
-						sq.setSelectedColor();
-						ChessBoardGUI.updateCurrentChessPiece(sq);
-					}
-					else {
-						ChessBoardGUI.updateCurrentChessPiece(sq);
-					}
-				}
-				*/
+				//If a selected square is selected
 				else if(sq.getId().equals("SelectedSquare")) {
 					sq.setSquareColor();
 					ChessBoardGUI.updateCurrentChessPiece(sq);
 				}
+				//If a valid square is selected
 				else if(sq.getId().equals("ValidSquare")) {
 					ChessBoardGUI.updateCurrentChessPiece(sq);
 				}
+				//If a checked square is selected
 				else if(sq.getId().equals("CheckSquare")) {
 					sq.setSelectedColor();
 					ChessBoardGUI.updateCurrentChessPiece(sq);
@@ -117,17 +115,25 @@ public class ChessSquare extends Pane {
 		}
 	}
 	
+	/**
+	 * Paints the background of the square as white.
+	 */
 	public void paintWhite() {
 		this.setStyle("-fx-border-color: #000000; "
 				+     "-fx-background-color: #" + SettingsGUI.whiteColor + ";");
 	}
 	
+	/**
+	 * Paints the background of the square as black.
+	 */
 	public void paintBlack() {
 		this.setStyle("-fx-border-color: #000000; " +
 	                  "-fx-background-color: #" + SettingsGUI.blackColor + ";");
 	}
 	
-	/*t	 */
+	/**
+	 * Sets the color of the square when the user selects on it.
+	 */
 	public void setSelectedColor() {
 		this.setId("SelectedSquare");
 		this.setStyle("-fx-border-color: #000000; "
@@ -219,10 +225,18 @@ public class ChessSquare extends Pane {
 		this.setDisable(true);
 	}
 
+	/**
+	 * Returns the chess square that's currently on the square.
+	 */
 	public ChessView getChessView(){
 		return chessPiece;
 	}
 
+	/**
+	 * Sets a chess piece on the square.
+	 * 
+	 * @param ChessView view The chess piece that's being placed on the square.
+	 */
 	public void setChessView(ChessView view){
 		this.chessPiece = view;
 	}

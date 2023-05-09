@@ -167,7 +167,7 @@ public class ChessBoardGUI extends GridPane {
 				ChessBoardGUI.setPlayerAction();
 				moves = piece.showMoves(space);
 				//Insert if statement if valid check option is enabled
-				//ChessBoardGUI.showValidMoves(moves);
+				ChessBoardGUI.showValidMoves(moves);
 			}
 			else if(checkPosition(space)) {
 				//Updates to position
