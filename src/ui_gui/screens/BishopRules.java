@@ -1,58 +1,50 @@
 package src.ui_gui.screens;
 
 import java.util.ArrayList;
-
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import src.enums.ChessPieceType;
 import src.enums.GameColor;
 import src.model.Piece;
 import src.ui_gui.ChessSquare;
 
-public class KingRules extends BorderPane {
-	
+public class BishopRules extends BorderPane {
+
 	/**
-	 * Displays information about the king, including a picture that displays all of the
-	 * possible moves that a king piece can do.
+	 * Displays information about the bishop, including a picture that displays all of the
+	 * possible moves that a bishop piece can do.
 	 */
-	public KingRules() {
+	public BishopRules() {
 		super();
 		
 		//Title
-		Label title = new Label("King Movement");
+		Label title = new Label("Bishop Movement");
 		title.setId("Title");
 		this.setTop(title);
 		
-		//Pane that stores subtitles
+		//Pane that displays the subtitles
 		VBox rules = new VBox();
 		ArrayList<Label> subtitles = new ArrayList<>();
 		
 		//Subtitles
-		Label s0 = new Label("The king is the most important piece in the game");
+		Label s0 = new Label("The bishop moves in an unique way to say the least");
 		subtitles.add(s0);
-		Label s1 = new Label("The king can move in any direction vertically, horizontally, \nand "+
-							 "diagonally");
+		Label s1 = new Label("Like the king and queen, the bishop moves in diagonal directions");
 		subtitles.add(s1);
-		Label s2 = new Label("However, the king could move only 1 space compared to the queen");
+		Label s2 = new Label("However, unlike the rook, the bishop cannot move horizontally or "+
+				             "\nvertically");
 		subtitles.add(s2);
 		Label s3 = new Label("Additional notes:");
 		subtitles.add(s3);
-		Label s4 = new Label(">The king cannot move that will makes itself into check");
+		Label s4 = new Label(">The bishop cannot move if its path is blocked by a piece \nwith the "+
+				              "same color as the bishop or after capturing \nan opposing piece");
 		subtitles.add(s4);
-		Label s5 = new Label(">The king cannot move if its path is blocked by a \npiece with the "+
-				             "same color as the king or after capturing an \nopposing piece");
+		Label s5 = new Label(">A bishop can only move onto squares that match the color of \nits "+
+				             "initial starting position");
 		subtitles.add(s5);
-		Label s6 = new Label(">The king can capture opposing pieces");
-		subtitles.add(s6);
 		
 		subtitles.forEach(n -> {
 			n.getStyleClass().add("subtitle");
@@ -61,7 +53,7 @@ public class KingRules extends BorderPane {
 		
 		this.setLeft(rules);
 		
-		//Board to display king movement
+		//Board for bishop movement
 		GridPane board = new GridPane();
 		board.setAlignment(Pos.CENTER);
 		for(int i = 0; i < 5; i++) {
@@ -75,10 +67,10 @@ public class KingRules extends BorderPane {
 					sq = new ChessSquare(true,new Piece(ChessPieceType.EMPTY, GameColor.BLACK));
 				}
 				if(i == 2 && j == 2) {
-					sq.setPiece(new Piece(ChessPieceType.KING, GameColor.WHITE));
+					sq.setPiece(new Piece(ChessPieceType.BISHOP, GameColor.WHITE));
 					sq.setSelectedColor();
 				}
-				else if(i >= 1 && i <= 3 && j >= 1 && j <= 3) {
+				else if(i == j || (i == 5 - (j+1))) {
 					sq.setValidColor();
 				}
 				sq.disable();
@@ -86,7 +78,5 @@ public class KingRules extends BorderPane {
 			}
 		}
 		this.setCenter(board);
-		
 	}
-	
 }

@@ -64,7 +64,7 @@ public final class ScreenFactory implements ScreenChangeHandler{
 					rulesScreen = new RulesGUI();
 					rulesScreen.setScreenChangeHandler(this);
 				}
-				screen = rulesScreen.getRoot();
+				screen = rulesScreen;
 				break;
 			case SIGN_IN:
 				if(signInScreen == null){
