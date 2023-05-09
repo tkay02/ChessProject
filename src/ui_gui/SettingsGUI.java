@@ -30,7 +30,7 @@ public class SettingsGUI extends BorderPane{
 	static String whiteColor = "ffffff";
 
 	/**original color of the black squares **/
-	static String blackColor = "000000";
+	static String blackColor = "4b4b4b";
 	
 	/**field for changing the current screen */
 	private ScreenChangeHandler screenChanger;
