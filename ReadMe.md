@@ -28,7 +28,7 @@ Step 1. Click on the Driver.java file in the workspace then Hit Green Run Button
 ## Video Walkthrough CLI
 <img src='https://i.gyazo.com/ac5503a22e7d2aa182bfe3d02709ef00.mp4'/>
 
-## Video Walkthrough gui
+## Video Walkthrough GUI
 <img src='https://i.gyazo.com/d7d368c090be932c6fd0c5b0536dfe75.mp4'/>
 
 ## Description 'What is the program supposed to do?'
