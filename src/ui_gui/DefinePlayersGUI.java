@@ -15,21 +15,31 @@ import javafx.geometry.Pos;
  * This class creates the Define Players scene and allows the user
  * to define the player names.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
- * @version 5/5/2023
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji (100%), Levi Sweat
+ * @version 5/9/2023
  */
 public class DefinePlayersGUI extends VBox implements EventHandler<ActionEvent>{
         
+	/**
+	 * Setter method for the screen change handler.
+	 * 
+	 * @param screen screen change handler to use
+	 */
     private ScreenChangeHandler screenChanger;
 
+	/** Buttons for going back to main menu and applying the name to the game */
     private Button mainMenuBtn, playNameBtn;
 
+	/** The first player names for the Chess Game */
 	private static String playerOneName = "";
 	
+	/** The second player names for the Chess Game */
 	private static String playerTwoName = "";
 
+	/** Text field for the player names */
 	public TextField playerOneDefine, playerTwoDefine;
 	
+	/** Constructor for creating the define player GUI */
     public DefinePlayersGUI() {
 
 		this.getStyleClass().add("mainMenu");
@@ -90,10 +100,20 @@ public class DefinePlayersGUI extends VBox implements EventHandler<ActionEvent>{
 
     }
 
+	/**
+	 * Setter method for the screen change handler.
+	 * 
+	 * @param screen screen change handler to use
+	 */
     public void setScreenChangeHandler(ScreenChangeHandler screen){
 		this.screenChanger = screen;
 	}
 
+	/**
+	 * Defines what action to do based on what button is pressed.
+	 * 
+	 * @param event the action event that occured
+	 */
 	public void handle(ActionEvent event){
 		if(screenChanger != null){
 			Object o = event.getSource();
@@ -108,10 +128,12 @@ public class DefinePlayersGUI extends VBox implements EventHandler<ActionEvent>{
 		}
 	}
 
+	/** Retrieves the player one's name */
 	public static String getPlayerOneName(){
 		return playerOneName;
 	}
 
+	/** Retrieves the player two's name */
 	public static String getPlayerTwoName(){
 		return playerTwoName;
 	}

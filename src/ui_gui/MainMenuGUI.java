@@ -24,17 +24,11 @@ import javafx.scene.image.ImageView;
  */
 public class MainMenuGUI extends BorderPane {
 
-	/** The current stage for the application **/
-	Stage stage;
-	
-	/** The root scene for this app **/
-	Scene rootScene;
-	
 	/** The button options of the menu **/
-	Button b1, b2, b3, b4, b5, b6;
+	private Button b1, b2, b3, b4, b5, b6;
 
 	/** Handles the screen changing **/
-	ScreenChangeHandler screenChanger;
+	private ScreenChangeHandler screenChanger;
 	
 
 	/**
@@ -146,7 +140,7 @@ public class MainMenuGUI extends BorderPane {
 		this.screenChanger = screen;
 	}
 
-	// Variable that holds how a button press is handled
+	/** Object that holds how a button press is handled */
 	EventHandler<ActionEvent> btnHandle = new EventHandler<ActionEvent>(){
 
 		/**

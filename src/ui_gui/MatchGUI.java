@@ -9,16 +9,10 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import src.controller.Chess;
-import src.databases.DatabaseOps;
 import src.interfaces.ScreenChangeHandler;
-import src.model.Move;
-import src.model.Position;
 import src.ui_gui.ScreenFactory.Screen;
-
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Optional;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -48,9 +42,16 @@ public class MatchGUI extends BorderPane {
 	/** FlowPanes that hold captured pieces */
 	private static FlowPane whiteTakenPieces, blackTakenPieces;
 
+	/** ChessBoardGUI instance to refrence the gui's chess game and other
+	 * gui features.
+	 */
 	private ChessBoardGUI root;
 	
+	/** The pane for the center borderpane (Chess Game), which will
+	 * be refreshed if a player chooses to load game.
+	 */
 	private VBox center;
+
 	/**
 	 * Constructor for MatchGUI.
 	 */
@@ -237,6 +238,14 @@ public class MatchGUI extends BorderPane {
 		}
 	};	
 
+	/**
+	 * This method will add the list of taken pieces to either player 1's or 2's
+	 * side depending if they have taken pieces from the previous game.
+	 * @param game - Chess game instance
+	 * @param list - List of taken pieces
+	 * @param isWhite - Boolean value whether or not the list of taken pieces is 
+	 * black or white
+	 */
 	public void checkTakenPieces(Chess game, ArrayList<String> list, boolean isWhite){
 		for(int idx = 0; idx < list.size(); idx++){
 			String image = isWhite ? "W" : "B";
