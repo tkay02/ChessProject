@@ -1,28 +1,27 @@
 package src.ui_gui.screens;
 
 import java.util.ArrayList;
-
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import src.enums.ChessPieceType;
 import src.enums.GameColor;
 import src.model.Piece;
 import src.ui_gui.ChessSquare;
 
+/**
+ * Displays information about the king, including a picture that displays all of the
+ * possible moves that a king piece can do.
+ * 
+ * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
+ * @date 5/9/2023
+ */
 public class KingRules extends BorderPane {
 	
 	/**
-	 * Displays information about the king, including a picture that displays all of the
-	 * possible moves that a king piece can do.
+	 * Constructor for king rules.
 	 */
 	public KingRules() {
 		super();
@@ -86,7 +85,6 @@ public class KingRules extends BorderPane {
 			}
 		}
 		this.setCenter(board);
-		
 	}
 	
 }

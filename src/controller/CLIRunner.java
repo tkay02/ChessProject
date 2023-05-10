@@ -10,7 +10,6 @@ public class CLIRunner {
 
 	/**
 	 * Function that is called from the driver.
-	 * 
 	 */
 	public static void run(){
 		Chess ch = new Chess(); //creates a new game of chess

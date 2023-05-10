@@ -2,7 +2,6 @@ package src.ui_gui.screens;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -10,14 +9,23 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
+/**
+ * Overview component that holds the buttons for check, checkmate, draw, and chess notation.
+ * 
+ * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
+ * @date 5/9/2023
+ */
 public class Overview extends BorderPane implements EventHandler<ActionEvent> {
 
 	/**Button that displays check conditions**/
 	Button check;
+
 	/**Button that displays checkmate conditions**/
 	Button checkMate;
+
 	/**Button that displays draw conditions**/
 	Button draw;
+
 	/**Button that displays chess notation convention**/
 	Button notation;
 	

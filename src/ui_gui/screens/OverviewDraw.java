@@ -1,7 +1,6 @@
 package src.ui_gui.screens;
 
 import java.util.ArrayList;
-
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -11,6 +10,13 @@ import src.enums.GameColor;
 import src.model.Piece;
 import src.ui_gui.ChessSquare;
 
+/**
+ * Class that provides a general description of draws, including the different
+ * kinds of draws.
+ * 
+ * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
+ * @date 5/9/2023
+ */
 public class OverviewDraw extends VBox {
 
 	/**
@@ -75,7 +81,8 @@ public class OverviewDraw extends VBox {
 		
 		//More subtitles
 		Label s5 = new Label("In this example, with the king being the only piece left, cannot "+
-                             "move as all possible moves will bring itself to be \nchecked by the enemy queen");
+                             "move as all possible moves will bring itself to be \n"+
+							 "checked by the enemy queen");
 		subtitles.add(s5);
 		Label s6 = new Label("Other conditions that cause a draw are the fifty-move rule, where "+
 							 "a draw is called if 50 moves were made without \na capture or a pawn "+

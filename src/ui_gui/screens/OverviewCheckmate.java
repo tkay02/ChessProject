@@ -11,6 +11,12 @@ import src.enums.GameColor;
 import src.model.Piece;
 import src.ui_gui.ChessSquare;
 
+/**
+ * Screen that gives a general overview about what checkmate is and how it works.
+ * 
+ * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
+ * @date 5/9/2023
+ */
 public class OverviewCheckmate extends VBox {
 	
 	/**

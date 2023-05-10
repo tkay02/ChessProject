@@ -12,11 +12,17 @@ import src.enums.GameColor;
 import src.model.Piece;
 import src.ui_gui.ChessSquare;
 
+/**
+ * Displays information about the knight, including a picture that displays all of the
+ * possible moves that a knight piece can do.
+ * 
+ * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
+ * @date 5/9/2023
+ */
 public class KnightRules extends BorderPane {
 
 	/**
-	 * Displays information about the knight, including a picture that displays all of the
-	 * possible moves that a knight piece can do.
+	 * Constructor for knight rules.
 	 */
 	public KnightRules() {
 		super();

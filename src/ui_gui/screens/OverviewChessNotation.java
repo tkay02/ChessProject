@@ -1,7 +1,6 @@
 package src.ui_gui.screens;
 
 import java.util.ArrayList;
-
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -12,6 +11,12 @@ import src.enums.GameColor;
 import src.model.Piece;
 import src.ui_gui.ChessSquare;
 
+/**
+ * Class that provides a general description of chess notation and how to read it.
+ * 
+ * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
+ * @date 5/9/2023
+ */
 public class OverviewChessNotation extends VBox {
 
 	/**

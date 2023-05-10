@@ -38,7 +38,7 @@
     -fx-background-color: #000000;
 }
 
-    /** Styles for ColorChooser */
+/** Styles for ColorChooser */
 .color{
     -fx-background-color: #000000;
     -fx-border-radius: 0;
