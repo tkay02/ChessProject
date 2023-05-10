@@ -112,7 +112,11 @@ public class LoadGameGUI extends Dialog<String> {
         LoadGameGUI.filePath = filePath;
     }
 
-    
+    /**
+     * This method will retrieve and return the file path initialized
+     * from the fileChooser.
+     * @return filePath - Chosen file path the user would like to load a game from.
+     */
     public static String getFilePath(){
         return filePath;
     }
