@@ -6,7 +6,7 @@
 
 
 ## Date of Submission
-03/02/2023
+05/09/2023
 
 
 ## Usage 'How to run the program?' via Command Line
@@ -14,7 +14,7 @@
 Step 0. Ensure you are in the folder where the src folder is, you can check by running the command
 'ls' if on MacOS/Linux or 'DIR' on Windows 
 
-Step 1. javac src/controller/*.java src/enums/*.java src/interfaces/*.java src/model/*.java src/ui_di/*.java
+Step 1. javac src/controller/*.java src/enums/*.java src/interfaces/*.java src/model/*.java src/ui_di/*.java src/ui_gui/*.java src/ui_gui/screens/*.java
 
 Step 2. java Driver
 
@@ -32,12 +32,14 @@ Step 1. Click on the Driver.java file in the workspace then Hit Green Run Button
 
 
 ## Description 'What is the program supposed to do?'
-Currently this program will allow you choose between a Monotone and Colored Chess Board.
-Once the user has chosen a board they will be prompted to resign, if they choose not too
-the user will be prompted to select a piece to move on the chess board. Once a piece is 
-chosen to move, the destination is prompted. Once a valid destination is chosen the piece
-is moved and then player 2 is prompted to move, then the cycle repeats until all pieces are
-gone or either player resigns.
+This program allows the choice between playing chess on a command line or on a gui. If the player
+selects the gui option, they will be greeted with a menu screen where they can choose between the
+options of playing chess, viewing the rules, and alternating the settings. In the settings, the
+player can alter the color of the squares, enable displaying moves, and/or enable the option of
+undo/redo. The player can view view through the rules which displays information about piece
+movement, board setup, and an overview. When the player wants to play a game, they can define who's
+playing they are playing with/against then the game can begin. During playing, the player can
+save/load while playing so that can save/return to a match.
 
 
 ## Existing Errors
