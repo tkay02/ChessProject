@@ -884,7 +884,4 @@ public class Chess {
 		return this.inCheck;
 	}
 
-	public LinkedList<Move> getMoves(){
-		return this.moves;
-	}
 }

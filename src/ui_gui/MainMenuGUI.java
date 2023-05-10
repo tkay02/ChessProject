@@ -3,7 +3,8 @@ package src.ui_gui;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import src.controller.GUIDriver;
+import src.controller.GUIRunner;
+import src.controller.GUIRunner;
 import src.interfaces.ScreenChangeHandler;
 import src.ui_gui.ScreenFactory.Screen;
 import javafx.event.ActionEvent;
@@ -101,7 +102,7 @@ public class MainMenuGUI extends BorderPane {
 		side.setMinWidth(500);
 		side.setAlignment(Pos.CENTER);
 		ImageView imv = new ImageView();
-		imv.setImage(new Image(GUIDriver.class.getResourceAsStream(gif)));
+		imv.setImage(new Image(GUIRunner.class.getResourceAsStream(gif)));
 		side.getChildren().add(imv);
 	}
 

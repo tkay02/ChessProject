@@ -38,6 +38,9 @@ public class SettingsGUI extends BorderPane{
 	/**Boolean determining if moves need to be shown, false by default */
 	public static boolean showMoves = false;
 
+	/**Boolean determining if undo/redo is avaialble, false by default */
+	public static boolean undoRedo = false;
+
 	/**Original value of the whiteColor, updated if settings is saved*/
 	private String saveWhiteColor;
 
@@ -47,7 +50,11 @@ public class SettingsGUI extends BorderPane{
 	/**Original value of the showMoves, updated if settings is saved*/
 	private boolean saveShowMoves;
 
-	CheckBox cb2;
+	/**Original value of the undoRedo, updated if settings is saved*/
+	private boolean saveUndoRedo = false;
+
+	/**Checkboxes for showmoves and undoredo */
+	CheckBox cb2, cb1;
 
 	/**
 	 * Constructor for the settings menu. Creates the necessary labels and buttons for the menu to
@@ -61,6 +68,7 @@ public class SettingsGUI extends BorderPane{
 		this.saveWhiteColor = whiteColor;
 		this.saveBlackColor = blackColor;
 		this.saveShowMoves = showMoves;
+		this.saveUndoRedo = undoRedo;
 
 		VBox top = new VBox(); //top of the border pane is a VBox
 		VBox left = new VBox(); //left of the border pane is a VBox
@@ -111,7 +119,7 @@ public class SettingsGUI extends BorderPane{
 		blackHBox.getChildren().add(blackButton);
 
 		//Checkboxes and styling for undo/redo and showing the moves
-		CheckBox cb1 = new CheckBox("Undo/Redo Moves");
+		cb1 = new CheckBox("Undo/Redo Moves");
 		cb1.getStyleClass().add("labelB");
 		cb1.setPadding(new Insets(100, 0, 40, 0));
 		cb2 = new CheckBox("Show Moves");
@@ -119,6 +127,9 @@ public class SettingsGUI extends BorderPane{
 		//listener for when the ShowMoves label is checked
 		cb2.selectedProperty().addListener((obs, oldVal, newVal) -> {
         	this.showMoves = newVal; //newVal is true when checked, false when not checked
+   		});
+		cb1.selectedProperty().addListener((obs, oldVal, newVal) -> {
+        	this.undoRedo = newVal; //newVal is true when checked, false when not checked
    		});
 		//cb2.setPadding(new Insets(40));
 
@@ -166,6 +177,7 @@ public class SettingsGUI extends BorderPane{
 					saveWhiteColor = whiteColor;
 					saveBlackColor = blackColor;
 					saveShowMoves = showMoves;
+					saveUndoRedo = undoRedo;
 
 				}
 				//Exit button, returns to the previous screen
@@ -174,9 +186,11 @@ public class SettingsGUI extends BorderPane{
 					whiteColor = saveWhiteColor;
 					blackColor = saveBlackColor;
 					showMoves = saveShowMoves;
+					undoRedo = saveUndoRedo;
 					whiteButton.setStyle("-fx-background-color: #" + whiteColor);
 					blackButton.setStyle("-fx-background-color: #" + blackColor);
 					cb2.setSelected(showMoves);
+					cb1.setSelected(undoRedo);
 
 					if(ScreenFactory.prevScreen == Screen.MATCH_SCREEN){
 						ChessBoardGUI.paintSquares();
