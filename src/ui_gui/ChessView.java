@@ -3,6 +3,12 @@ package src.ui_gui;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * ChessView (Chess Piece Image) used for the boardGUI.
+ * 
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @version 5/9/2023
+ */
 public class ChessView extends ImageView {
 
     /**Points to the current square that the chess piece is on**/
