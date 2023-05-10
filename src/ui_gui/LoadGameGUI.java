@@ -17,7 +17,7 @@ import javafx.stage.FileChooser;
 /**
  * GUI class for the dialog box that pops up when the user chooses to load in a saved game.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum (%50), Thomas Kay, Joseph Oladeji (50%), Levi Sweat
  * @version 5/8/2023
  */
 public class LoadGameGUI extends Dialog<String> {

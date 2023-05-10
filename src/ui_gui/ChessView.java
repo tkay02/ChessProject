@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 /**
  * ChessView (Chess Piece Image) used for the boardGUI.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji (100%), Levi Sweat
  * @version 5/9/2023
  */
 public class ChessView extends ImageView {

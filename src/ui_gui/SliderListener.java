@@ -2,7 +2,7 @@ package src.ui_gui;
 /**
  * This class is used to implement an observer pattern within ColoramaGUI
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat (100%)
  * @version 5/9/2023
  */
 public interface SliderListener {

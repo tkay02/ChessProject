@@ -7,7 +7,7 @@ import src.interfaces.SquareIF;
 /**
  * Class that represents a square object for ChessMeister.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat 
+ * @author Nolan Flinchum (100%), Thomas Kay, Joseph Oladeji, Levi Sweat 
  * @version 3/27/2023
  */
 

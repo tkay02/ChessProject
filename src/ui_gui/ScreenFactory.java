@@ -4,13 +4,11 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import src.interfaces.ScreenChangeHandler;
 
-
-
 /**
  * Screen Factory for handling creation of all screens within the
  * program. Also handling sreen changes within the application.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum (%50), Thomas Kay, Joseph Oladeji (50%), Levi Sweat
  * @version 5/8/2023
  */
 public final class ScreenFactory implements ScreenChangeHandler{

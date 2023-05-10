@@ -11,7 +11,7 @@ import javafx.geometry.Pos;
 
 /* Graphical user interface for the sign in menu.
 * 
-* @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+* @author Nolan Flinchum (100%), Thomas Kay, Joseph Oladeji, Levi Sweat
 * @version 5/9/2023
 */
 public class SignUpGUI extends VBox{

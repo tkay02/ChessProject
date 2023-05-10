@@ -1,9 +1,6 @@
 package src.ui_gui;
 
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
-import src.controller.GUIRunner;
 import src.controller.GUIRunner;
 import src.interfaces.ScreenChangeHandler;
 import src.ui_gui.ScreenFactory.Screen;
@@ -20,7 +17,7 @@ import javafx.scene.image.ImageView;
 /**
  * Graphical user interface for the main menu.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum (100%), Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 5/8/2023
  */
 public class MainMenuGUI extends BorderPane {

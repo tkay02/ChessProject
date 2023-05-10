@@ -6,13 +6,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import src.enums.GameColor;
 import src.model.Piece;
-import src.controller.GUIRunner;
 import src.enums.ChessPieceType;
 
 /**
  * GUI component that makes up a chess board GUI.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
  * @version 5/5/2023
  */
 public class ChessSquare extends Pane {

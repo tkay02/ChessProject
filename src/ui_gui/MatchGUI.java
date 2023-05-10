@@ -22,7 +22,7 @@ import javafx.geometry.Pos;
 /**
  * Graphical user interface for the player vs. player screen.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum (100%), Thomas Kay, Joseph Oladeji, Levi Sweat
  * @version 5/8/2023
  */
 public class MatchGUI extends BorderPane {

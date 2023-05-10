@@ -6,13 +6,11 @@ import src.ui_gui.ScreenFactory;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  * Initial entry point for GUI application of the program. Called from the driver.
  * 
- * Authors: Levi Sweat, Joseph Oladeji, Nolan Flinchum, Thomas Kay
+ * @authors Levi Sweat (100%), Joseph Oladeji, Nolan Flinchum, Thomas Kay
  */
 public class GUIRunner extends Application {
 

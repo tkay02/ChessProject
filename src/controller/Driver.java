@@ -3,14 +3,12 @@ package src.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
-import src.controller.GUIRunner;
-import src.controller.CLIRunner;
 
 /**
  * Entry Point of program, prompts the user to ask if they would like to play chess through the
  * command line or through the GUI. Calls the respective runner class to run each type.
  * 
- * Authors: Levi Sweat, Joseph Oladeji, Nolan Flinchum, Thomas Kay
+ * @authors Levi Sweat (100%), Joseph Oladeji, Nolan Flinchum, Thomas Kay
  */
 public class Driver {
 

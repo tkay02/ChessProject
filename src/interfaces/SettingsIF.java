@@ -3,7 +3,7 @@ package src.interfaces;
 /** An Interface that defines the settings of a
  * game in the command-line interface (CLI). 
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat (100%)
  * @version 4/19/2023
  */
 public interface SettingsIF {
