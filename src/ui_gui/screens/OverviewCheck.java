@@ -1,8 +1,6 @@
 package src.ui_gui.screens;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -12,11 +10,17 @@ import src.enums.GameColor;
 import src.model.Piece;
 import src.ui_gui.ChessSquare;
 
+/**
+ * Displays information about check condition such as what the condition means, an example of
+ * being in check, and how to get out of check.
+ * 
+ * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
+ * @date 5/9/2023
+ */
 public class OverviewCheck extends VBox {
 
 	/**
-	 * Displays information about check condition such as what the condition means, an example of
-	 * being in check, and how to get out of check.
+	 * Constructor for check description
 	 */
 	public OverviewCheck() {
 		super();
@@ -87,5 +91,4 @@ public class OverviewCheck extends VBox {
 			this.getChildren().add(n);
 		});
 	}
-	
 }

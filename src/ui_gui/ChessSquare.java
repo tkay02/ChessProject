@@ -6,7 +6,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import src.enums.GameColor;
 import src.model.Piece;
-import src.controller.GUIDriver;
+import src.controller.GUIRunner;
 import src.enums.ChessPieceType;
 
 /**

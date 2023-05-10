@@ -4,13 +4,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import src.interfaces.ScreenChangeHandler;
-import src.ui_gui.ScreenFactory.Screen;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.event.*;
 import javafx.geometry.Pos;
 
+/**
+ * Graphical user interface for the rules page.
+ * 
+ * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
+ * @date 5/9/2023
+ */
 public class RulesGUI extends BorderPane implements EventHandler<ActionEvent> {
 	
 	/**Button that returns user back to main menu**/
@@ -34,12 +38,14 @@ public class RulesGUI extends BorderPane implements EventHandler<ActionEvent> {
 	
 	/**To change the display to different scenes**/
 	private RulesFactory fact;
+
 	/** Handles the screen changing **/
 	ScreenChangeHandler screenChanger;
 	
-	/**Constructor for class**/
+	/**
+	 * Constructor for RulesGUI.
+	 */
 	public RulesGUI() {
-
 		super();
 		this.fact = new RulesFactory();
 		
@@ -82,6 +88,11 @@ public class RulesGUI extends BorderPane implements EventHandler<ActionEvent> {
 	
 	}
 	
+	/**
+	 * Setter for screen change handler.
+	 * 
+	 * @param screen screen change handler
+	 */
 	public void setScreenChangeHandler(ScreenChangeHandler screen){
 		this.screenChanger = screen;
 	}
@@ -93,12 +104,12 @@ public class RulesGUI extends BorderPane implements EventHandler<ActionEvent> {
 		return this;
 	}
 
-	@Override
 	/**
 	 * When a button is pressed, created a scene in the center of the GUI to display the rules
 	 * in regards to which button was pressed. For instance, pressing the king movement button
 	 * will present rules about the kings movement. Uses factory field to create screens.
 	 */
+	@Override
 	public void handle(ActionEvent event) {
 		if(screenChanger != null) {
 			if(event.getSource() == this.b0) {

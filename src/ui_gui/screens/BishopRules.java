@@ -11,6 +11,12 @@ import src.enums.GameColor;
 import src.model.Piece;
 import src.ui_gui.ChessSquare;
 
+/**
+ * BorderPane screen that holds the rules for bishops and their movement.
+ * 
+ * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
+ * @date 5/9/2023
+ */
 public class BishopRules extends BorderPane {
 
 	/**

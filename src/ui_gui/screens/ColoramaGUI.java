@@ -24,10 +24,11 @@ import src.ui_gui.SliderListener;
 /**
  * This class provides a dialog where users can change the color of their chess pieces.
  * 
- * @author Dr.Scott, edited by Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Dr.Scott, edited by Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat (100%)
  * @version 5/9/2023
  */
-public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEvent>, SliderListener{
+public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEvent>, 
+	SliderListener{
 
 	/**Confirms a color choice**/
 	private Button ok;
@@ -41,7 +42,7 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
     /**String representing color of square */
     String strColor;
 
-	/**Original representation of the color, used to return the default color if dialog closed through  */
+	/**Original representation of the color, used to return default color if dialog closes*/
 	String ogStrColor;
 	
 	/**The color text label**/
@@ -61,6 +62,7 @@ public class ColoramaGUI extends Dialog<String> implements EventHandler<ActionEv
 
 	/**
 	 * Create a singleton instance of a ColorChooser
+	 * @return instance of a ColorChooser
 	 */
 	public static ColoramaGUI getInstance(){
 		if (instance == null) instance = new ColoramaGUI("000000");

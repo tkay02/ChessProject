@@ -229,10 +229,10 @@ public class MatchGUI extends BorderPane {
 					}
 				}
 				else if(o == b3){
-					ChessBoardGUI.undo();
+					if(SettingsGUI.undoRedo) ChessBoardGUI.undo();
 				}
 				else if(o == b4) {
-					ChessBoardGUI.redo();
+					if(SettingsGUI.undoRedo) ChessBoardGUI.redo();
 				}
 			}
 		}

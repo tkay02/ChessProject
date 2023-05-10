@@ -2,6 +2,12 @@ package src.ui_gui.screens;
 
 import javafx.scene.layout.Pane;
 
+/**
+ * Class that makes overview screens.
+ * 
+ * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
+ * @date 5/9/2023
+ */
 public class OverViewFactory {
 
 	/**

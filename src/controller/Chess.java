@@ -16,7 +16,7 @@ import src.ui_cli.*;
 * service. Currently, it includes the majority of the logic allowing users to play the match,
 * including error handling if the user makes faulty inputs.
 * 
-* @author Nolan Flinchum (5%), Thomas Kay (5%), Joseph Oladeji (5%), Levi Sweat (85%)
+* @author Nolan Flinchum (10%), Thomas Kay (5%), Joseph Oladeji (5%), Levi Sweat (80%)
 * @version 3/27/2023
 */
 
@@ -234,7 +234,6 @@ public class Chess {
 	 * Initializes a new game of chess and runs the game loop until the game is finished.
 	 * Uses a PlayChessCLI object to handle user input and displays the chessboard using
 	 * the board's draw strategy.
-	 *
 	 */
 	public void playGame(){
 		this.playChess = new PlayChessCLI(undo, showMoves);
@@ -251,8 +250,11 @@ public class Chess {
 		}
 	}
 	
-	/** This method allows a player to make a turn during the chess game. It takes in the turn number as a parameter and
-	 * returns a boolean value indicating whether the player has quit the game.
+	/** 
+	 * This method allows a player to make a turn during the chess game. It takes in the turn
+	 * number as a parameter and returns a boolean value indicating whether the player has quit
+	 * the game.
+	 * 
 	 * @param turn The turn number for the game.
 	 * @return A boolean value indicating whether the player has quit the game.
 	 */
@@ -496,15 +498,15 @@ public class Chess {
 	}
 
 	/**
-	* This function checks if a player has valid moves by looking through the board and
-	* checking each piece's valid moves list. If a team has no valid moves while they are in
-	* check, it's checkmate. If a team has no valid moves while they are not in check, it's
-	* a draw by stalemate.
-	* 
-	* @param isWhite true if we're looking for white pieces, false if we're looking for
-	*                   black pieces
-	* @return true if the player has no valid moves, false otherwise
-	*/
+	 * This function checks if a player has valid moves by looking through the board and
+	 * checking each piece's valid moves list. If a team has no valid moves while they are in
+	 * check, it's checkmate. If a team has no valid moves while they are not in check, it's
+	 * a draw by stalemate.
+	 * 
+	 * @param isWhite true if we're looking for white pieces, false if we're looking for
+	 *                   black pieces
+	 * @return true if the player has no valid moves, false otherwise
+	 */
 	public boolean checkNoValidMoves(boolean isWhite){
 		boolean noValidMoves = true;
 		for(int i = 0; i < board.getWidth(); i++){
@@ -760,7 +762,6 @@ public class Chess {
 	* Setup for loading a game in. Not currently implemented, will be in the future.
 	* 
 	* @param file name of the file that holds the saved game
-	* @return
 	*/
 	public void loadGame(String file) {
 
@@ -811,11 +812,11 @@ public class Chess {
 	}
 	
 	/**
-	* Process of saving a game.
-	* 
-	* @param file name of file to save game as
-	* @param game interface of game to be saved
-	*/
+	 * Process of saving a game.
+	 * 
+	 * @param file name of file to save game as
+	 * @param game interface of game to be saved
+	 */
 	public void saveGame(String file, BoardIF game) {
 		String fileContent = "";
 		for(int i = 0; i < moves.size(); i++){
@@ -831,30 +832,30 @@ public class Chess {
 		gameSaver.saveGame(file, fileContent);
 	}
 	
-	/**
-	* Used in the settings to determine if the undo is usable in match or not
-	* 
-	* @param status true if players can undo, false if not
-	*/
+    /**
+	 * Used in the settings to determine if the undo is usable in match or not
+	 * 
+	 * @param status true if players can undo, false if not
+	 */
 	public void setUndo(boolean status){
 		this.undo = status;
 	}
 	
-	/**
-	* Used in the settings to determine if the showMoves is usable in match or not.
-	* 
-	* @param status true if players can showMoves, false if not
-	*/
+    /**
+ 	 * Used in the settings to determine if the showMoves is usable in match or not.
+	 * 
+	 * @param status true if players can showMoves, false if not
+	 */
 	public void setShowMoves(boolean status){
 		this.showMoves = status;
 	}
 	
-	/**
-	* Used in settings to set the color of the board.
-	* 
-	* @param strat string representing new drawStrat of board
-	* @return true if drawStrat is set, false if not
-	*/
+    /**
+	 * Used in settings to set the color of the board.
+	 * 
+	 * @param strat string representing new drawStrat of board
+	 * @return true if drawStrat is set, false if not
+	 */
 	public boolean setDrawStrat(String strat){
 		boolean result = true;
 		if(strat.equals("mono")) this.drawStrat = new BoardMonoCLI();
@@ -884,7 +885,4 @@ public class Chess {
 		return this.inCheck;
 	}
 
-	public LinkedList<Move> getMoves(){
-		return this.moves;
-	}
 }

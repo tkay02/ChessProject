@@ -11,6 +11,12 @@ import src.ui_gui.screens.KnightRules;
 import src.ui_gui.screens.PawnRules;
 import src.ui_gui.screens.Overview;
 
+/**
+ * Makes screens that are used in the RulesGUI.
+ *
+ * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
+ * @date 5/9/2023
+ */
 public class RulesFactory {
 
 	/**
@@ -21,7 +27,6 @@ public class RulesFactory {
 	 * @return The screen that matches the enum.
 	 */
 	public Pane makeScreen(RuleScreens scr) {
-		
 		Pane pane = new TilePane();
 		switch(scr) {
 			case BOARD:
@@ -48,8 +53,7 @@ public class RulesFactory {
 			case OVERVIEW:
 				pane = new Overview();
 				break;
-		}
-		
+		}	
 		return pane;
 	}
 

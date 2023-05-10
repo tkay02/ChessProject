@@ -9,24 +9,28 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import src.controller.Chess;
 import src.model.Board;
 import src.model.Piece;
 import src.model.Square;
 import src.ui_gui.ChessSquare;
 
+/**
+ * BorderPane to explain different aspects of board setup in chess.
+ * 
+ * @author Nolan Flinchum, Thomas Kay (100%), Joseph Oladeji, Levi Sweat
+ * @date 5/9/2023
+ */
 public class BoardSetup extends BorderPane implements EventHandler<ActionEvent> {
 	
-	/**Board from the white player's perspective**/
+	/** Board from the white player's perspective **/
 	GridPane board1;
-	/**Board from the black player's perspective**/
+	
+	/** Board from the black player's perspective **/
 	GridPane board2;
-	/**Button that switches between the screens**/
+	
+	/** Button that switches between the screens **/
 	Button swap;
 	
 	/**
