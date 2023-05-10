@@ -23,7 +23,7 @@ import javafx.stage.FileChooser;
 public class LoadGameGUI extends Dialog<String> {
 
     /** Absolute path the file that holds a saved game */
-    private String filePath = "";
+    private static String filePath = "";
 
     /**
      * Constructor that builds the dialog box used for loading in a game.
@@ -51,6 +51,7 @@ public class LoadGameGUI extends Dialog<String> {
             fileChooser.setInitialDirectory(new File(System.getProperty("user.dir") + "/src/databases"));
             FileChooser.ExtensionFilter eFilter = new FileChooser.ExtensionFilter("Text Files", "*.txt");
             fileChooser.getExtensionFilters().add(eFilter);
+            System.out.println(fileChooser.getInitialFileName());
             File selectedFile = fileChooser.showOpenDialog(loadButton.getScene().getWindow());
             if(selectedFile != null){
                 setFilePath(selectedFile.getAbsolutePath());
@@ -108,7 +109,13 @@ public class LoadGameGUI extends Dialog<String> {
      * @param file name of the file that holds a saved game
      */
     private void setFilePath(String filePath){
-        this.filePath = filePath;
+        LoadGameGUI.filePath = filePath;
     }
+
+    
+    public static String getFilePath(){
+        return filePath;
+    }
+
     
 }

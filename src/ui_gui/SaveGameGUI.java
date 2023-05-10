@@ -19,7 +19,7 @@ import javafx.scene.layout.VBox;
 public class SaveGameGUI extends Dialog<String> {
 
     /** Name of the file that the user names their game */
-    private String fileName = "";
+    private static String fileName = "";
 
     /**
      * Constructor that builds the dialog box used for saving a game.
@@ -66,8 +66,12 @@ public class SaveGameGUI extends Dialog<String> {
      * 
      * @param file name of the file that will hold a saved game
      */
-    private void setFileName(String fileName){
-        this.fileName = fileName;
+    private static void setFileName(String fileName){
+        SaveGameGUI.fileName = fileName + ".txt";
+    }
+
+    public static String getFileName(){
+        return fileName;
     }
 
 }
