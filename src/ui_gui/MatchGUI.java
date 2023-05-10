@@ -3,6 +3,7 @@ package src.ui_gui;
 import javafx.scene.control.Button;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -14,6 +15,7 @@ import src.model.Move;
 import src.model.Position;
 import src.ui_gui.ScreenFactory.Screen;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Optional;
 
@@ -47,6 +49,7 @@ public class MatchGUI extends BorderPane {
 	private static FlowPane whiteTakenPieces, blackTakenPieces;
 
 	private ChessBoardGUI root;
+	
 	private VBox center;
 	/**
 	 * Constructor for MatchGUI.
@@ -201,15 +204,16 @@ public class MatchGUI extends BorderPane {
 					Dialog<String> load = new LoadGameGUI();
 					Optional<String> result = load.showAndWait();
 					if (result.isPresent()) {
-
-
+						center.getChildren().clear();
+						setCenter(null);
 						Chess game = new Chess();
-						root = new ChessBoardGUI(new Chess());
-						System.out.println(LoadGameGUI.getFilePath());
 						game.loadGame(LoadGameGUI.getFilePath());
-						
-						LinkedList<Move> moves = game.getMoves();
-						
+						root = new ChessBoardGUI(game);
+						checkTakenPieces(game, game.getBoard().getBlackTakenPieces(), true);
+						checkTakenPieces(game, game.getBoard().getWhiteTakenPieces(), false);
+
+						center.getChildren().add(root);
+						setCenter(center);
 					}
 				}
 				else if(o == b2){
@@ -226,6 +230,20 @@ public class MatchGUI extends BorderPane {
 			}
 		}
 	};	
+
+	public void checkTakenPieces(Chess game, ArrayList<String> list, boolean isWhite){
+		for(int idx = 0; idx < list.size(); idx++){
+			String image = isWhite ? "W" : "B";
+			image = image += list.get(idx);
+			ChessView addImage = new ChessView 
+			(new Image(ChessSquare.class.getResourceAsStream(image += ".png")));
+			if(isWhite)
+				addBlackTakenPiece(addImage);
+			else
+				addWhiteTakenPiece(addImage);
+		}
+
+	}
 
 	/**
 	 * Sets the text of the player action label.

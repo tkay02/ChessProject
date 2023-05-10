@@ -25,6 +25,8 @@ public class ChessView extends ImageView {
      */
 	public ChessView(Image view){
         super(view);
+        this.setFitHeight(MAX_SIZE);
+        this.setFitWidth(MAX_SIZE);
     }
 
     /**
