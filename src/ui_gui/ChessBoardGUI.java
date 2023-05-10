@@ -21,11 +21,13 @@ import src.model.Board;
 import src.model.Piece;
 import src.model.Position;
 import src.model.Square;
+import java.util.LinkedList;
+import src.model.Move;
 
 /**
  * GUI component that holds the chess board.
  * 
- * @author Nolan Flinchum, Thomas Kay, Joseph Oladeji, Levi Sweat
+ * @author Nolan Flinchum, Thomas Kay (80%), Joseph Oladeji, Levi Sweat
  * @version 5/5/2023
  */
 public class ChessBoardGUI extends GridPane {
@@ -60,6 +62,7 @@ public class ChessBoardGUI extends GridPane {
 	public static String player2 = "Player Two";
 	/**List of valid positions for the chess piece selected**/
 	public static ArrayList<Position> moves;
+	public static int turn = 0;
 	
 	private static HashMap<Character, String> mapFlip = new HashMap<>();
 	
@@ -260,6 +263,48 @@ public class ChessBoardGUI extends GridPane {
 			changePlayerLabel();
 		}
 	}
+
+	/**
+	 * Undoes the move using the undo command and the reference to the chess game.
+	 */
+	public static void undo(){
+		if(game.getMovesIndex() != -1) { 
+			game.undo(true);
+			quickRedraw(game.getBoard());
+			isWhite = !isWhite; 
+			swap();
+			changePlayerLabel();
+		}
+	}
+
+	/**
+	 * Helper method for redo/undo methods. Redraws the board after undo/redo is called.
+	 * 
+	 * @param Board board The board that contains the updated chess pieces.
+	 */
+	public static void quickRedraw(Board board) {
+		Square[][] tiles = (Square[][])board.getSquares();
+		for(int i = 0; i < tiles.length; i++) {
+			for(int j = 0; j < tiles[i].length; j++) {
+				Piece piece = (Piece)tiles[i][j].getPiece();
+				ChessBoardGUI.board[i][j].setPiece(piece);
+			} 
+		}
+	}
+
+	/**
+	 * Redoes the undone move using the redo command and the reference to the chess game.
+	 */
+	public static void redo(){
+		if(game.getMovesIndex() < game.getMoves().size() - 1){
+			game.redo();
+			game.incTurn();
+			quickRedraw(game.getBoard());
+			isWhite = !isWhite;
+			swap();			
+			changePlayerLabel();
+		}
+	}
 	
 	/**
 	 * Checks if the player's turn puts the other player into check. If the other player was caught
@@ -416,7 +461,14 @@ public class ChessBoardGUI extends GridPane {
 			fromS = mapFlip.get(fromS.charAt(0)) + String.valueOf(fromS.charAt(1));
 			toS =  to != null ? mapFlip.get(toS.charAt(0)) + String.valueOf(toS.charAt(1)) : "";
 		}
-		String actionText = isWhite ? "Player One": "Player Two";
+		String playerOne = "Player One";
+		String playerTwo = "Player Two";
+		String playerOneName = DefinePlayersGUI.getPlayerOneName();
+		String playerTwoName = DefinePlayersGUI.getPlayerTwoName();
+		if(DefinePlayersGUI.getPlayerOneName() != "") playerOne = playerOneName;
+		if(DefinePlayersGUI.getPlayerTwoName() != "") playerTwo = playerTwoName;
+
+		String actionText = isWhite ? playerOne: playerTwo;
 		if(to == null) actionText += " has selected " + fromS;
 		else actionText += " has moved from " + fromS + " to " + toS;
 		MatchGUI.setPlayerAction(actionText);
@@ -430,6 +482,9 @@ public class ChessBoardGUI extends GridPane {
 		MatchGUI.addWhiteTakenPiece(image);
 	}
 
+	/**
+	 * Repaint squares after settings have been changed.
+	 */
 	public static void paintSquares(){
 		for(int row = 0; row < board.length; row++)
 			for(int col = 0; col < board[row].length; col++)
